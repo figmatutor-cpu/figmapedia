@@ -8,6 +8,7 @@ import {
   mapArticlePage,
   mapUxuiTermPage,
   mapShortcutPage,
+  mapPluginPage,
 } from "@/lib/notion-mapper";
 import { SECTION_DB_IDS } from "@/lib/section-databases";
 import type { SearchIndex } from "@/types";
@@ -24,6 +25,7 @@ export const getCachedSearchIndex = unstable_cache(
       termPages,
       macPages,
       winPages,
+      pluginPages,
     ] = await Promise.all([
       fetchAllEntries(),
       fetchAllFromDatabase(SECTION_DB_IDS.prompt),
@@ -33,6 +35,7 @@ export const getCachedSearchIndex = unstable_cache(
       fetchAllFromDatabase(SECTION_DB_IDS.uxuiTerms),
       fetchAllFromDatabase(SECTION_DB_IDS.macShortcuts),
       fetchAllFromDatabase(SECTION_DB_IDS.winShortcuts),
+      fetchAllFromDatabase(SECTION_DB_IDS.plugins),
     ]);
 
     // Map main entries
@@ -49,6 +52,7 @@ export const getCachedSearchIndex = unstable_cache(
       ...termPages.map(mapUxuiTermPage),
       ...macPages.map(mapShortcutPage),
       ...winPages.map(mapShortcutPage),
+      ...pluginPages.map(mapPluginPage),
     ];
 
     // Merge all items, dedup by id

@@ -6,6 +6,7 @@ import {
   mapArticlePage,
   mapUxuiTermPage,
   mapShortcutPage,
+  mapPluginPage,
 } from "@/lib/notion-mapper";
 import { SECTION_DB_IDS } from "@/lib/section-databases";
 import type { SearchIndexItem } from "@/types";
@@ -17,7 +18,8 @@ type SectionKey =
   | "uxui-blogs"
   | "uxui-terms"
   | "mac-shortcuts"
-  | "win-shortcuts";
+  | "win-shortcuts"
+  | "plugins";
 
 const getCachedSectionData = unstable_cache(
   async (): Promise<Record<SectionKey, SearchIndexItem[]>> => {
@@ -29,6 +31,7 @@ const getCachedSectionData = unstable_cache(
       termPages,
       macPages,
       winPages,
+      pluginPages,
     ] = await Promise.all([
       fetchAllFromDatabase(SECTION_DB_IDS.prompt),
       fetchAllFromDatabase(SECTION_DB_IDS.kiosk),
@@ -37,6 +40,7 @@ const getCachedSectionData = unstable_cache(
       fetchAllFromDatabase(SECTION_DB_IDS.uxuiTerms),
       fetchAllFromDatabase(SECTION_DB_IDS.macShortcuts),
       fetchAllFromDatabase(SECTION_DB_IDS.winShortcuts),
+      fetchAllFromDatabase(SECTION_DB_IDS.plugins),
     ]);
 
     return {
@@ -47,6 +51,7 @@ const getCachedSectionData = unstable_cache(
       "uxui-terms": termPages.map(mapUxuiTermPage),
       "mac-shortcuts": macPages.map(mapShortcutPage),
       "win-shortcuts": winPages.map(mapShortcutPage),
+      plugins: pluginPages.map(mapPluginPage),
     };
   },
   ["section-data"],

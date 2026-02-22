@@ -78,6 +78,19 @@ export function mapUxuiTermPage(page: any): SearchIndexItem {
   };
 }
 
+/** 유용한 피그마 플러그인 DB — properties: ﻿테마별 플러그인(title, BOM prefix), 진행일자, 작성자 */
+export function mapPluginPage(page: any): SearchIndexItem {
+  const props = page.properties;
+  return {
+    id: page.id,
+    title: extractPlainText(props["\uFEFF테마별 플러그인"]?.title),
+    categories: ["플러그인"],
+    author: extractPlainText(props["작성자"]?.rich_text),
+    link: null,
+    publishedDate: props["진행일자"]?.date?.start ?? null,
+  };
+}
+
 /** Mac/Win 단축키 DB — properties: 항목(title), 단축키, 카테고리, 설명(Mac only) */
 export function mapShortcutPage(page: any): SearchIndexItem {
   const props = page.properties;

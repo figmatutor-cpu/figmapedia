@@ -64,6 +64,11 @@ export const NAV_ITEMS: NavItem[] = [
         label: "Win 단축키",
         sectionDataKey: "win-shortcuts",
       },
+      {
+        key: "plugins",
+        label: "플러그인",
+        sectionDataKey: "plugins",
+      },
     ],
   },
   {

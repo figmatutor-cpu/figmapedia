@@ -24,4 +24,7 @@ export const SECTION_DB_IDS = {
 
   /** Win 피그마 단축키 리스트 */
   winShortcuts: "df06f1d5-fca8-45bb-873f-c52ba79dd5bb",
+
+  /** 유용한 피그마 플러그인 */
+  plugins: "ddc8b180-7f6c-439a-ac53-3f51868d34db",
 } as const;
