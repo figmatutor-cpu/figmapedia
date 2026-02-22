@@ -1,0 +1,288 @@
+"use client";
+
+import { useState, useMemo, useEffect } from "react";
+import { useSearchIndex } from "@/hooks/useSearchIndex";
+import { filterItems } from "@/hooks/useSectionFilter";
+import { EntryCard } from "@/components/cards/EntryCard";
+import { Skeleton } from "@/components/ui/Skeleton";
+import { EmptyState } from "@/components/ui/EmptyState";
+import type { SubTab, FilterConfig } from "@/lib/navigation";
+import type { SearchIndexItem } from "@/types";
+
+interface SectionPageLayoutProps {
+  title: string;
+  description?: string;
+  subTabs?: SubTab[];
+  defaultFilter?: FilterConfig;
+  sectionDataKey?: string;
+}
+
+function useSectionItems(sectionKey: string | undefined) {
+  const [items, setItems] = useState<SearchIndexItem[]>([]);
+  const [isLoading, setIsLoading] = useState(!!sectionKey);
+
+  useEffect(() => {
+    if (!sectionKey) return;
+    setIsLoading(true);
+    fetch(`/api/section-data?section=${sectionKey}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.items && Array.isArray(data.items)) setItems(data.items);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setItems([]);
+        setIsLoading(false);
+      });
+  }, [sectionKey]);
+
+  return { items, isLoading };
+}
+
+function useMultiSectionItems(sectionKeys: string[]) {
+  const [data, setData] = useState<Record<string, SearchIndexItem[]>>({});
+  const [isLoading, setIsLoading] = useState(sectionKeys.length > 0);
+  const keysStr = sectionKeys.join(",");
+
+  useEffect(() => {
+    if (sectionKeys.length === 0) return;
+    setIsLoading(true);
+    Promise.all(
+      sectionKeys.map((key) =>
+        fetch(`/api/section-data?section=${key}`)
+          .then((res) => res.json())
+          .then((d) => ({
+            key,
+            items: d.items && Array.isArray(d.items) ? d.items : [],
+          }))
+          .catch(() => ({ key, items: [] as SearchIndexItem[] }))
+      )
+    ).then((results) => {
+      const combined: Record<string, SearchIndexItem[]> = {};
+      for (const r of results) combined[r.key] = r.items;
+      setData(combined);
+      setIsLoading(false);
+    });
+  }, [keysStr]);
+
+  return { data, isLoading };
+}
+
+/** Filter items by category names (exact match on any) */
+function filterByCategory(
+  items: SearchIndexItem[],
+  categories: string[]
+): SearchIndexItem[] {
+  if (categories.length === 0) return items;
+  return items.filter((item) =>
+    item.categories.some((c) => categories.includes(c))
+  );
+}
+
+export function SectionPageLayout({
+  title,
+  description,
+  subTabs,
+  defaultFilter,
+  sectionDataKey,
+}: SectionPageLayoutProps) {
+  const [activeTab, setActiveTab] = useState(subTabs?.[0]?.key ?? null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const subTabSectionKeys = useMemo(
+    () =>
+      subTabs
+        ?.filter((t) => t.sectionDataKey)
+        .map((t) => t.sectionDataKey!) ?? [],
+    [subTabs]
+  );
+  const hasSubTabSections = subTabSectionKeys.length > 0;
+
+  const { items: mainItems, isLoading: mainLoading } = useSearchIndex();
+  const { items: singleSectionItems, isLoading: singleLoading } =
+    useSectionItems(sectionDataKey);
+  const { data: multiSectionData, isLoading: multiLoading } =
+    useMultiSectionItems(hasSubTabSections ? subTabSectionKeys : []);
+
+  // Items before search filtering
+  const baseItems = useMemo(() => {
+    // Page-level sectionDataKey (e.g. prompt, kiosk)
+    if (sectionDataKey) {
+      if (activeTab && subTabs) {
+        const tab = subTabs.find((t) => t.key === activeTab);
+        // categoryFilter: filter within the same section DB
+        if (tab?.categoryFilter) {
+          return filterByCategory(singleSectionItems, tab.categoryFilter);
+        }
+      }
+      // "전체" tab or no subTabs → return all section items
+      return singleSectionItems;
+    }
+
+    // SubTab with its own sectionDataKey (e.g. mac-shortcuts, uxui-articles)
+    if (hasSubTabSections && activeTab) {
+      const tab = subTabs?.find((t) => t.key === activeTab);
+      if (tab?.sectionDataKey) {
+        return multiSectionData[tab.sectionDataKey] ?? [];
+      }
+    }
+
+    // SubTab with filter (e.g. figma-qa category filter on main DB)
+    const currentFilter = activeTab
+      ? subTabs?.find((t) => t.key === activeTab)?.filter
+      : defaultFilter;
+    return currentFilter ? filterItems(mainItems, currentFilter) : mainItems;
+  }, [
+    sectionDataKey,
+    singleSectionItems,
+    hasSubTabSections,
+    activeTab,
+    subTabs,
+    multiSectionData,
+    mainItems,
+    defaultFilter,
+  ]);
+
+  // Apply in-page search
+  const displayItems = useMemo(() => {
+    if (!searchQuery.trim()) return baseItems;
+    const q = searchQuery.toLowerCase();
+    return baseItems.filter(
+      (item) =>
+        item.title.toLowerCase().includes(q) ||
+        item.categories.some((c) => c.toLowerCase().includes(q)) ||
+        (item.author && item.author.toLowerCase().includes(q)) ||
+        (item.shortcut && item.shortcut.toLowerCase().includes(q))
+    );
+  }, [baseItems, searchQuery]);
+
+  const isLoading = useMemo(() => {
+    if (sectionDataKey) return singleLoading;
+    if (activeTab) {
+      const tab = subTabs?.find((t) => t.key === activeTab);
+      if (tab?.sectionDataKey) return multiLoading;
+      return mainLoading;
+    }
+    return hasSubTabSections ? multiLoading : mainLoading;
+  }, [
+    sectionDataKey,
+    singleLoading,
+    activeTab,
+    subTabs,
+    multiLoading,
+    mainLoading,
+    hasSubTabSections,
+  ]);
+
+  // Tab counts
+  const tabCounts = useMemo(() => {
+    if (!subTabs) return {};
+    const counts: Record<string, number> = {};
+    for (const tab of subTabs) {
+      if (tab.sectionDataKey) {
+        counts[tab.key] = (multiSectionData[tab.sectionDataKey] ?? []).length;
+      } else if (tab.categoryFilter) {
+        counts[tab.key] = filterByCategory(
+          singleSectionItems,
+          tab.categoryFilter
+        ).length;
+      } else if (tab.filter) {
+        counts[tab.key] = filterItems(mainItems, tab.filter).length;
+      } else {
+        // "전체" tab
+        counts[tab.key] = sectionDataKey
+          ? singleSectionItems.length
+          : mainItems.length;
+      }
+    }
+    return counts;
+  }, [subTabs, mainItems, multiSectionData, singleSectionItems, sectionDataKey]);
+
+  return (
+    <div className="min-h-screen bg-[#050510] pt-28 pb-16">
+      <div className="mx-auto max-w-4xl px-4">
+        {/* Title */}
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+          {title}
+        </h1>
+
+        {description && (
+          <p className="text-gray-400 mb-6 text-sm sm:text-base">
+            {description}
+          </p>
+        )}
+
+        {/* Sub-tabs + search (same row) */}
+        <div className="flex items-center gap-3 mb-8">
+          {subTabs && (
+            <div className="flex-1 min-w-0 overflow-x-auto scrollbar-none">
+              <div className="flex gap-2 pb-1">
+                {subTabs.map((tab) => (
+                  <button
+                    key={tab.key}
+                    onClick={() => setActiveTab(tab.key)}
+                    className={`px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition-all border ${
+                      activeTab === tab.key
+                        ? "bg-white/10 border-white/20 text-white"
+                        : "bg-white/[0.03] border-white/10 text-gray-400 hover:text-gray-200 hover:border-white/15"
+                    }`}
+                  >
+                    {tab.label}
+                    <span className="ml-1.5 text-[10px] opacity-50">
+                      {tabCounts[tab.key] ?? 0}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Search input — right end of tab row */}
+          <div className="relative shrink-0 w-[180px]">
+            <svg
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="페이지 내 검색"
+              className="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg bg-white/5 border border-white/10 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-white/25 focus:bg-white/[0.07] transition-colors"
+            />
+          </div>
+        </div>
+
+        {/* Results */}
+        {isLoading ? (
+          <Skeleton count={6} />
+        ) : displayItems.length === 0 ? (
+          <EmptyState query={searchQuery} />
+        ) : (
+          <div className="space-y-3">
+            <p className="text-sm text-gray-400 mb-4">
+              {displayItems.length}개의 항목
+              {searchQuery.trim() && (
+                <span className="ml-1 text-gray-500">
+                  &middot; &quot;{searchQuery}&quot; 검색 결과
+                </span>
+              )}
+            </p>
+            {displayItems.map((entry) => (
+              <EntryCard key={entry.id} entry={entry} />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

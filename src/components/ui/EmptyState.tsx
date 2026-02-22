@@ -1,0 +1,29 @@
+export function EmptyState({ query }: { query: string }) {
+  return (
+    <div className="text-center py-16">
+      <div className="text-4xl mb-4">
+        <svg
+          className="mx-auto h-12 w-12 text-gray-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={1.5}
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
+      </div>
+      <h3 className="text-lg font-medium text-gray-200 mb-1">
+        검색 결과가 없습니다
+      </h3>
+      <p className="text-gray-400">
+        {query
+          ? `"${query}"에 대한 결과를 찾을 수 없습니다. 다른 키워드로 시도해보세요.`
+          : "등록된 항목이 없습니다."}
+      </p>
+    </div>
+  );
+}

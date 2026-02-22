@@ -1,0 +1,75 @@
+"use client";
+
+import { useSearchContext } from "./SearchProvider";
+import { EntryCard } from "@/components/cards/EntryCard";
+import { Skeleton } from "@/components/ui/Skeleton";
+import { EmptyState } from "@/components/ui/EmptyState";
+
+export function SearchResults() {
+  const { results, isLoading, isAISearching, query, hasSearched, searchMode, aiError } = useSearchContext();
+
+  if (!hasSearched) {
+    return null;
+  }
+
+  if (isLoading) {
+    return <Skeleton count={6} />;
+  }
+
+  if (isAISearching) {
+    return (
+      <div className="space-y-3">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm text-blue-400">AI가 관련 콘텐츠를 찾고 있어요...</p>
+        </div>
+        <Skeleton count={4} />
+      </div>
+    );
+  }
+
+  if (aiError) {
+    return (
+      <div className="space-y-3">
+        <div className="rounded-lg border border-red-500/20 bg-red-500/5 px-4 py-3 mb-4">
+          <p className="text-sm text-red-400">{aiError}</p>
+          <p className="text-xs text-gray-500 mt-1">키워드 검색 결과를 대신 보여드립니다.</p>
+        </div>
+        {results.length > 0 ? (
+          <>
+            <p className="text-sm text-gray-400 mb-4">
+              {results.length}개의 결과
+            </p>
+            {results.map((entry) => (
+              <EntryCard key={entry.id} entry={entry} />
+            ))}
+          </>
+        ) : (
+          <EmptyState query={query} />
+        )}
+      </div>
+    );
+  }
+
+  if (results.length === 0) {
+    return <EmptyState query={query} />;
+  }
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-2 mb-4">
+        <p className="text-sm text-gray-400">
+          {results.length}개의 결과
+        </p>
+        {searchMode === "ai" && (
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs text-blue-400">
+            AI 검색
+          </span>
+        )}
+      </div>
+      {results.map((entry) => (
+        <EntryCard key={entry.id} entry={entry} />
+      ))}
+    </div>
+  );
+}

@@ -1,0 +1,39 @@
+import Link from "next/link";
+import type { SearchIndexItem } from "@/types";
+import { Badge } from "@/components/ui/Badge";
+
+export function EntryCard({ entry }: { entry: SearchIndexItem }) {
+  return (
+    <Link
+      href={`/entry/${entry.id}`}
+      className="group block rounded-xl border border-white/10 bg-white/5 p-5 hover:border-white/20 hover:bg-white/[0.08] transition-all"
+    >
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-2 flex-wrap">
+            {entry.categories.map((cat) => (
+              <Badge key={cat} category={cat} />
+            ))}
+          </div>
+          <h3 className="font-semibold text-gray-100 group-hover:text-blue-400 transition-colors">
+            {entry.title}
+          </h3>
+          <div className="flex items-center gap-3 mt-2 text-sm text-gray-500">
+            {entry.author && <span>{entry.author}</span>}
+            {entry.publishedDate && (
+              <span>
+                {new Date(entry.publishedDate).toLocaleDateString("ko-KR")}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {entry.shortcut && (
+          <span className="shrink-0 px-3 py-1.5 rounded-lg bg-white/[0.07] border border-white/10 text-sm text-gray-300 font-mono whitespace-nowrap">
+            {entry.shortcut}
+          </span>
+        )}
+      </div>
+    </Link>
+  );
+}
