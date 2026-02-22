@@ -215,7 +215,7 @@ export function SectionPageLayout({
         {/* Sub-tabs + search (same row) */}
         <div className="flex items-center gap-3 mb-8">
           {subTabs && (
-            <div className="flex-1 min-w-0 overflow-x-auto scrollbar-none">
+            <div className="hidden xl-nav:flex flex-1 min-w-0 overflow-x-auto scrollbar-none">
               <div className="flex gap-2 pb-1">
                 {subTabs.map((tab) => (
                   <button
@@ -237,8 +237,8 @@ export function SectionPageLayout({
             </div>
           )}
 
-          {/* Search input — right end of tab row */}
-          <div className="relative shrink-0 w-[180px]">
+          {/* Search input — full width on mobile, fixed on desktop */}
+          <div className="relative w-full xl-nav:shrink-0 xl-nav:w-[180px]">
             <svg
               className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500"
               fill="none"

@@ -1,6 +1,61 @@
+import Fuse, { type IFuseOptions } from "fuse.js";
 import { genAI, GEMINI_MODEL } from "@/lib/gemini";
 import { getCachedSearchIndex } from "@/lib/search-index-cache";
+import type { SearchIndexItem, AISearchResponse } from "@/types";
 
+/* ── Response cache: same query → cached result for 5 min ── */
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+const responseCache = new Map<
+  string,
+  { data: AISearchResponse; expiresAt: number }
+>();
+
+function getCachedResponse(query: string): AISearchResponse | null {
+  const entry = responseCache.get(query);
+  if (!entry) return null;
+  if (Date.now() > entry.expiresAt) {
+    responseCache.delete(query);
+    return null;
+  }
+  return entry.data;
+}
+
+function setCachedResponse(query: string, data: AISearchResponse) {
+  // Evict old entries if cache grows too large
+  if (responseCache.size > 200) {
+    const now = Date.now();
+    for (const [key, val] of responseCache) {
+      if (now > val.expiresAt) responseCache.delete(key);
+    }
+  }
+  responseCache.set(query, { data, expiresAt: Date.now() + CACHE_TTL });
+}
+
+/* ── Fuse.js pre-filter: narrow down candidates before sending to Gemini ── */
+const PRE_FILTER_LIMIT = 50;
+
+const FUSE_OPTIONS: IFuseOptions<SearchIndexItem> = {
+  keys: [
+    { name: "title", weight: 0.55 },
+    { name: "categories", weight: 0.35 },
+    { name: "author", weight: 0.1 },
+  ],
+  threshold: 0.45, // More lenient than client-side to avoid missing relevant items
+  distance: 300,
+  minMatchCharLength: 1,
+  includeScore: true,
+};
+
+function preFilterItems(
+  items: SearchIndexItem[],
+  query: string
+): SearchIndexItem[] {
+  const fuse = new Fuse(items, FUSE_OPTIONS);
+  const results = fuse.search(query, { limit: PRE_FILTER_LIMIT });
+  return results.map((r) => r.item);
+}
+
+/* ── API Route ── */
 export async function POST(request: Request) {
   try {
     const { query } = await request.json();
@@ -19,41 +74,57 @@ export async function POST(request: Request) {
       );
     }
 
+    const trimmedQuery = query.trim();
+
+    // Check response cache first
+    const cached = getCachedResponse(trimmedQuery);
+    if (cached) {
+      return Response.json(cached);
+    }
+
     const index = await getCachedSearchIndex();
 
-    const entrySummary = JSON.stringify(
-      index.items.map((item) => ({
-        id: item.id,
-        title: item.title,
-        categories: item.categories,
-        author: item.author,
-      }))
-    );
+    // Step 1: Pre-filter with Fuse.js to narrow candidates
+    const candidates = preFilterItems(index.items, trimmedQuery);
 
-    const prompt = `당신은 Figmapedia의 검색 어시스턴트입니다. Figmapedia는 피그마(Figma) 디자인 도구에 관한 한국어 지식 베이스입니다.
+    // If Fuse found very few results, include all items as fallback
+    const itemsForAI =
+      candidates.length >= 5 ? candidates : index.items.slice(0, PRE_FILTER_LIMIT);
 
-사용자의 자연어 검색 쿼리를 분석하고, 아래 항목 목록에서 의미적으로 관련된 항목을 찾아주세요.
+    // Step 2: Build compact summary for Gemini (no author, compact categories)
+    const entrySummary = itemsForAI
+      .map((item) => `${item.id}|${item.title}|${item.categories.join(",")}`)
+      .join("\n");
 
-검색 시 고려사항:
-1. 제목의 직접적인 키워드 매칭
-2. 카테고리 관련성 (예: "정렬하는 법" → "오토 레이아웃" 카테고리)
-3. 개념적 관련성 (예: "디자인 시스템" → "컴포넌트", "베리어블" 관련)
-4. 한국어 유의어와 줄임말 (예: "오토레이아웃" = "오토 레이아웃", "컴포" = "컴포넌트")
+    const prompt = `당신은 Figmapedia의 검색 어시스턴트입니다. 피그마(Figma) 디자인 도구에 관한 한국어 지식 베이스에서 관련 항목을 찾아주세요.
 
-결과를 관련성 순으로 정렬하여 JSON 배열로 반환하세요.
-최대 20개까지만 반환하세요.
-관련 항목이 없으면 빈 배열 []을 반환하세요.
+아래 항목 목록에서 검색어와 의미적으로 관련된 항목의 ID를 찾아주세요.
+각 항목은 "ID|제목|카테고리" 형식입니다.
 
-반드시 아래 형식으로만 응답하세요 (다른 텍스트 없이 JSON 배열만):
-["id1", "id2", "id3"]
+고려사항:
+1. 제목 키워드 매칭
+2. 카테고리 관련성 (예: "정렬" → "오토 레이아웃")
+3. 개념적 관련성 (예: "디자인 시스템" → "컴포넌트", "베리어블")
+4. 한국어 유의어/줄임말 (예: "컴포" = "컴포넌트")
+
+관련성 순 JSON 배열로 최대 20개 반환. 관련 없으면 [].
+다른 텍스트 없이 JSON 배열만 응답:
+["id1", "id2"]
 
 === 항목 목록 ===
 ${entrySummary}
 
-=== 사용자 검색어 ===
-${query.trim()}`;
+=== 검색어 ===
+${trimmedQuery}`;
 
-    const model = genAI.getGenerativeModel({ model: GEMINI_MODEL });
+    const model = genAI.getGenerativeModel({
+      model: GEMINI_MODEL,
+      generationConfig: {
+        // Disable thinking/reasoning to speed up response (this is a simple matching task)
+        // @ts-expect-error -- thinkingConfig is supported by Gemini 2.5 but not yet in SDK types
+        thinkingConfig: { thinkingBudget: 0 },
+      },
+    });
     const result = await model.generateContent(prompt);
     const responseText = result.response.text().trim();
 
@@ -69,15 +140,22 @@ ${query.trim()}`;
       matchedIds = [];
     }
 
+    // Map IDs back to full items (look up from full index, not just candidates)
+    const indexMap = new Map(index.items.map((item) => [item.id, item]));
     const results = matchedIds
-      .filter((id) => index.items.some((item) => item.id === id))
-      .map((id) => index.items.find((item) => item.id === id)!);
+      .filter((id) => indexMap.has(id))
+      .map((id) => indexMap.get(id)!);
 
-    return Response.json({
+    const responseData: AISearchResponse = {
       results,
-      query: query.trim(),
+      query: trimmedQuery,
       isAIResult: true,
-    });
+    };
+
+    // Cache the response
+    setCachedResponse(trimmedQuery, responseData);
+
+    return Response.json(responseData);
   } catch (error) {
     console.error("AI search failed:", error);
     return Response.json(

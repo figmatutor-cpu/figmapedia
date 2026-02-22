@@ -19,5 +19,5 @@ export const getCachedSearchIndex = unstable_cache(
     };
   },
   ["search-index"],
-  { revalidate: 60, tags: ["search-index"] }
+  { revalidate: 300, tags: ["search-index"] }
 );
