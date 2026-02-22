@@ -50,12 +50,14 @@ export function GlobalSearchOverlay() {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && query.trim() && !isAISearching) {
       e.preventDefault();
+      inputRef.current?.blur();
       triggerAISearch();
     }
   };
 
   const handleSearchClick = () => {
     if (query.trim() && !isAISearching) {
+      inputRef.current?.blur();
       triggerAISearch();
     }
   };
@@ -96,12 +98,13 @@ export function GlobalSearchOverlay() {
             </svg>
             <input
               ref={inputRef}
-              type="search"
+              type="text"
+              enterKeyHint="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="검색어를 입력하세요"
-              className="w-full rounded-2xl bg-[rgba(15,15,20,0.85)] border border-white/10 text-white placeholder:text-white/40 outline-none focus:ring-2 focus:ring-[#1f3dbc]/40 focus:border-[#1f3dbc]/40 backdrop-blur-md pl-12 pr-[100px] py-4 text-base"
+              className="w-full rounded-2xl bg-[rgba(15,15,20,0.85)] border border-white/10 text-white placeholder:text-white/40 outline-none focus:ring-2 focus:ring-[#1f3dbc]/40 focus:border-[#1f3dbc]/40 backdrop-blur-md pl-12 pr-[100px] h-12 sm:h-14 text-[16px]"
               autoComplete="off"
               lang="ko"
             />

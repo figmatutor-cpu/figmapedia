@@ -257,7 +257,7 @@ export function SectionPageLayout({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="페이지 내 검색"
-              className="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg bg-white/5 border border-white/10 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-white/25 focus:bg-white/[0.07] transition-colors"
+              className="w-full pl-8 pr-3 h-12 xl-nav:h-auto xl-nav:py-1.5 text-[16px] xl-nav:text-xs rounded-lg bg-white/5 border border-white/10 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-white/25 focus:bg-white/[0.07] transition-colors"
             />
           </div>
         </div>
