@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import Fuse, { type IFuseOptions } from "fuse.js";
 import type { SearchIndexItem } from "@/types";
 import { useDebounce } from "./useDebounce";
@@ -26,6 +26,7 @@ export function useSearch() {
   const [query, setQuery] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
   const [searchMode, setSearchMode] = useState<SearchMode>("instant");
+  const aiQueryRef = useRef<string>("");
 
   const {
     aiResults,
@@ -48,9 +49,10 @@ export function useSearch() {
     }
   }, [debouncedQuery]);
 
-  // When query changes (user types), revert to instant mode
+  // When query text changes AFTER an AI search, revert to instant mode
+  // Only revert if the user actually typed something different
   useEffect(() => {
-    if (searchMode === "ai") {
+    if (searchMode === "ai" && debouncedQuery !== aiQueryRef.current) {
       setSearchMode("instant");
       clearAIResults();
     }
@@ -71,6 +73,7 @@ export function useSearch() {
     if (!query.trim()) return;
     setHasSearched(true);
     setSearchMode("ai");
+    aiQueryRef.current = query;
     await triggerAI(query);
   }, [query, triggerAI]);
 
