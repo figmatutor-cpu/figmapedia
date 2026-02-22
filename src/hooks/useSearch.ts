@@ -30,6 +30,7 @@ export function useSearch() {
 
   const {
     aiResults,
+    aiSummary,
     isAISearching,
     aiError,
     triggerAISearch: triggerAI,
@@ -92,5 +93,6 @@ export function useSearch() {
     searchMode,
     triggerAISearch,
     aiError,
+    aiSummary,
   };
 }

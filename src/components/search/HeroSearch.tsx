@@ -16,6 +16,7 @@ const SUGGESTIONS = [
 
 export function HeroSearch() {
   const { query, setQuery, triggerAISearch, isAISearching } = useSearchContext();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState(BASE_PLACEHOLDER);
   const typingStateRef = useRef({
     suggestionIndex: 0,
@@ -95,12 +96,14 @@ export function HeroSearch() {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && query.trim() && !isAISearching) {
       e.preventDefault();
+      inputRef.current?.blur(); // dismiss keyboard on mobile
       triggerAISearch();
     }
   };
 
   const handleSearchClick = () => {
     if (query.trim() && !isAISearching) {
+      inputRef.current?.blur(); // dismiss keyboard on mobile
       triggerAISearch();
     }
   };
@@ -123,6 +126,7 @@ export function HeroSearch() {
             />
           </svg>
           <input
+            ref={inputRef}
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}

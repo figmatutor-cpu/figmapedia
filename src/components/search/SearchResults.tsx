@@ -5,8 +5,22 @@ import { EntryCard } from "@/components/cards/EntryCard";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
 
+function AISummaryCard({ summary }: { summary: string }) {
+  return (
+    <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-4 mb-5">
+      <div className="flex items-center gap-1.5 mb-2">
+        <span className="text-sm">✨</span>
+        <span className="text-xs font-medium text-blue-400">AI 요약</span>
+      </div>
+      <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-line">
+        {summary}
+      </p>
+    </div>
+  );
+}
+
 export function SearchResults() {
-  const { results, isLoading, isAISearching, query, hasSearched, searchMode, aiError } = useSearchContext();
+  const { results, isLoading, isAISearching, query, hasSearched, searchMode, aiError, aiSummary } = useSearchContext();
 
   if (!hasSearched) {
     return null;
@@ -57,16 +71,24 @@ export function SearchResults() {
 
   return (
     <div className="space-y-3">
+      {/* AI 요약 카드 */}
+      {searchMode === "ai" && aiSummary && (
+        <AISummaryCard summary={aiSummary} />
+      )}
+
+      {/* 관련 콘텐츠 헤더 */}
       <div className="flex items-center gap-2 mb-4">
-        <p className="text-sm text-gray-400">
-          {results.length}개의 결과
-        </p>
         {searchMode === "ai" && (
           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs text-blue-400">
             AI 검색
           </span>
         )}
+        <p className="text-sm text-gray-400">
+          {searchMode === "ai" ? "관련 콘텐츠" : ""} {results.length}개의 결과
+        </p>
       </div>
+
+      {/* 결과 목록 */}
       {results.map((entry) => (
         <EntryCard key={entry.id} entry={entry} />
       ))}

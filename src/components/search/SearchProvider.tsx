@@ -15,6 +15,8 @@ interface SearchContextValue {
   searchMode: SearchMode;
   triggerAISearch: () => Promise<void>;
   aiError: string | null;
+  /** AI 검색 결과 요약 텍스트 */
+  aiSummary: string | null;
   /** Whether the global floating search overlay is open */
   isSearchOpen: boolean;
   /** Open the global floating search overlay */

@@ -29,6 +29,8 @@ export interface AISearchResponse {
   results: SearchIndexItem[];
   query: string;
   isAIResult: boolean;
+  /** AI가 생성한 검색 결과 요약 (최대 3줄) */
+  summary?: string;
 }
 
 export interface NotionBlock {

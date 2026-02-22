@@ -98,7 +98,7 @@ export async function POST(request: Request) {
 
     const prompt = `당신은 Figmapedia의 검색 어시스턴트입니다. 피그마(Figma) 디자인 도구에 관한 한국어 지식 베이스에서 관련 항목을 찾아주세요.
 
-아래 항목 목록에서 검색어와 의미적으로 관련된 항목의 ID를 찾아주세요.
+아래 항목 목록에서 검색어와 의미적으로 관련된 항목의 ID를 찾고, 검색어에 대한 핵심 요약도 작성해주세요.
 각 항목은 "ID|제목|카테고리" 형식입니다.
 
 고려사항:
@@ -107,9 +107,11 @@ export async function POST(request: Request) {
 3. 개념적 관련성 (예: "디자인 시스템" → "컴포넌트", "베리어블")
 4. 한국어 유의어/줄임말 (예: "컴포" = "컴포넌트")
 
-관련성 순 JSON 배열로 최대 20개 반환. 관련 없으면 [].
-다른 텍스트 없이 JSON 배열만 응답:
-["id1", "id2"]
+아래 JSON 형식으로만 응답. 다른 텍스트 없이 JSON만:
+{"summary": "검색어에 대한 핵심 요약 (한국어, 1~3문장, 피그마 관련 지식 기반으로 간결하게)", "ids": ["id1", "id2"]}
+
+- summary: 검색어가 피그마에서 무엇인지, 어떤 맥락에서 사용되는지 핵심만 요약
+- ids: 관련성 순으로 최대 20개. 관련 없으면 빈 배열 []
 
 === 항목 목록 ===
 ${entrySummary}
@@ -129,11 +131,35 @@ ${trimmedQuery}`;
     const responseText = result.response.text().trim();
 
     let matchedIds: string[];
+    let summary: string | undefined;
     try {
-      matchedIds = JSON.parse(responseText);
+      const parsed = JSON.parse(responseText);
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+        // New format: { summary, ids }
+        summary = typeof parsed.summary === "string" ? parsed.summary : undefined;
+        matchedIds = Array.isArray(parsed.ids) ? parsed.ids : [];
+      } else if (Array.isArray(parsed)) {
+        // Legacy fallback: ["id1", "id2"]
+        matchedIds = parsed;
+      } else {
+        matchedIds = [];
+      }
     } catch {
-      const match = responseText.match(/\[[\s\S]*?\]/);
-      matchedIds = match ? JSON.parse(match[0]) : [];
+      // Try to extract JSON object or array from response
+      const objMatch = responseText.match(/\{[\s\S]*\}/);
+      if (objMatch) {
+        try {
+          const parsed = JSON.parse(objMatch[0]);
+          summary = typeof parsed.summary === "string" ? parsed.summary : undefined;
+          matchedIds = Array.isArray(parsed.ids) ? parsed.ids : [];
+        } catch {
+          const arrMatch = responseText.match(/\[[\s\S]*?\]/);
+          matchedIds = arrMatch ? JSON.parse(arrMatch[0]) : [];
+        }
+      } else {
+        const arrMatch = responseText.match(/\[[\s\S]*?\]/);
+        matchedIds = arrMatch ? JSON.parse(arrMatch[0]) : [];
+      }
     }
 
     if (!Array.isArray(matchedIds)) {
@@ -150,6 +176,7 @@ ${trimmedQuery}`;
       results,
       query: trimmedQuery,
       isAIResult: true,
+      summary,
     };
 
     // Cache the response

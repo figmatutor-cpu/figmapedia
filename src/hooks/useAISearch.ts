@@ -5,6 +5,7 @@ import type { SearchIndexItem, AISearchResponse } from "@/types";
 
 export function useAISearch() {
   const [aiResults, setAIResults] = useState<SearchIndexItem[]>([]);
+  const [aiSummary, setAISummary] = useState<string | null>(null);
   const [isAISearching, setIsAISearching] = useState(false);
   const [aiError, setAIError] = useState<string | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -37,6 +38,7 @@ export function useAISearch() {
 
       const data: AISearchResponse = await res.json();
       setAIResults(data.results);
+      setAISummary(data.summary ?? null);
     } catch (err) {
       if (err instanceof DOMException && err.name === "AbortError") return;
       setAIError(
@@ -51,11 +53,13 @@ export function useAISearch() {
 
   const clearAIResults = useCallback(() => {
     setAIResults([]);
+    setAISummary(null);
     setAIError(null);
   }, []);
 
   return {
     aiResults,
+    aiSummary,
     isAISearching,
     aiError,
     triggerAISearch,
