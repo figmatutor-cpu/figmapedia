@@ -5,7 +5,7 @@ export async function GET() {
     const index = await getCachedSearchIndex();
     return Response.json(index, {
       headers: {
-        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+        "Cache-Control": "no-store, max-age=0",
       },
     });
   } catch (error) {

@@ -70,8 +70,7 @@ export async function GET(request: Request) {
         { items: allData[section] },
         {
           headers: {
-            "Cache-Control":
-              "public, s-maxage=60, stale-while-revalidate=300",
+            "Cache-Control": "no-store, max-age=0",
           },
         }
       );
@@ -80,7 +79,7 @@ export async function GET(request: Request) {
     // Return all sections
     return Response.json(allData, {
       headers: {
-        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+        "Cache-Control": "no-store, max-age=0",
       },
     });
   } catch (error) {
