@@ -55,7 +55,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
       );
 
     case "code":
-      return <CodeBlock content={block.content} language={block.language} />;
+      return <CodeBlock content={block.content} />;
 
     case "divider":
       return <hr className="border-white/10 my-6" />;

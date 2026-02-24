@@ -4,10 +4,9 @@ import { useState, useCallback } from "react";
 
 interface CodeBlockProps {
   content: string;
-  language?: string;
 }
 
-export function CodeBlock({ content, language }: CodeBlockProps) {
+export function CodeBlock({ content }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(async () => {
@@ -30,15 +29,10 @@ export function CodeBlock({ content, language }: CodeBlockProps) {
     }
   }, [content]);
 
-  const displayLang = language && language !== "plain text" ? language : null;
-
   return (
     <div className="relative my-4 rounded-lg border border-white/10 bg-black/40 overflow-hidden">
-      {/* 헤더: 언어 라벨 + 복사 버튼 */}
-      <div className="flex items-center justify-between px-4 py-2 border-b border-white/10 bg-white/[0.03]">
-        <span className="text-xs text-gray-500">
-          {displayLang || "code"}
-        </span>
+      {/* 헤더: 복사 버튼 */}
+      <div className="flex items-center justify-end px-4 py-2 border-b border-white/10 bg-white/[0.03]">
         <button
           onClick={handleCopy}
           className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors"

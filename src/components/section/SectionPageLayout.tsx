@@ -241,8 +241,9 @@ export function SectionPageLayout({
         {/* Sub-tabs + search (same row) */}
         <div className="flex items-center gap-3 mb-8">
           {subTabs && (
-            <div className="hidden xl-nav:flex flex-1 min-w-0 overflow-x-auto scrollbar-none">
-              <div className="flex gap-2 pb-1">
+            <div className="hidden xl-nav:flex flex-1 min-w-0 overflow-hidden">
+              <div className="overflow-x-auto pb-5 -mb-5">
+                <div className="flex gap-2 pb-1">
                 {subTabs.map((tab) => (
                   <button
                     key={tab.key}
@@ -259,6 +260,7 @@ export function SectionPageLayout({
                     </span>
                   </button>
                 ))}
+                </div>
               </div>
             </div>
           )}
