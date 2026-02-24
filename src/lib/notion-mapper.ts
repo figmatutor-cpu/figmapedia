@@ -16,6 +16,7 @@ export function mapNotionPageToEntry(page: any): Entry {
     link: props["링크"]?.url ?? null,
     publishedDate: props["글 작성일"]?.date?.start ?? null,
     lastEditedTime: page.last_edited_time,
+    thumbnail: extractFileUrl(page.cover),
   };
 }
 
@@ -36,6 +37,7 @@ export function mapPromptPage(page: any): SearchIndexItem {
     author: "",
     link: null,
     publishedDate: null,
+    thumbnail: extractFileUrl(page.cover),
   };
 }
 
@@ -49,6 +51,7 @@ export function mapKioskPage(page: any): SearchIndexItem {
     author: extractPlainText(props["담당자"]?.rich_text),
     link: null,
     publishedDate: props["날짜"]?.date?.start ?? null,
+    thumbnail: extractFileUrl(page.cover),
   };
 }
 
@@ -62,6 +65,7 @@ export function mapArticlePage(page: any): SearchIndexItem {
     author: extractPlainText(props["지식 공유자"]?.rich_text),
     link: props["링크"]?.url ?? null,
     publishedDate: props["날짜"]?.date?.start ?? null,
+    thumbnail: extractFileUrl(page.cover),
   };
 }
 
@@ -75,6 +79,7 @@ export function mapUxuiTermPage(page: any): SearchIndexItem {
     author: "",
     link: null,
     publishedDate: props["날짜"]?.date?.start ?? null,
+    thumbnail: extractFileUrl(page.cover),
   };
 }
 
@@ -88,6 +93,7 @@ export function mapPluginPage(page: any): SearchIndexItem {
     author: extractPlainText(props["작성자"]?.rich_text),
     link: null,
     publishedDate: props["진행일자"]?.date?.start ?? null,
+    thumbnail: extractFileUrl(page.cover),
   };
 }
 

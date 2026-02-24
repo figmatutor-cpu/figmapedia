@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import { useSearchIndex } from "@/hooks/useSearchIndex";
 import { filterItems } from "@/hooks/useSectionFilter";
 import { EntryCard } from "@/components/cards/EntryCard";
+import { VerticalCard } from "@/components/cards/VerticalCard";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SearchIcon } from "@/components/ui/SearchIcon";
@@ -16,6 +17,10 @@ interface SectionPageLayoutProps {
   subTabs?: SubTab[];
   defaultFilter?: FilterConfig;
   sectionDataKey?: string;
+  /** 페이지 레벨 썸네일 표시 여부 (탭의 showThumbnail이 우선) */
+  showThumbnail?: boolean;
+  /** 카드 레이아웃: grid(세로형) 또는 list(가로형). 기본값 list */
+  cardLayout?: "list" | "grid";
 }
 
 function useSectionItems(sectionKey: string | undefined) {
@@ -86,6 +91,8 @@ export function SectionPageLayout({
   subTabs,
   defaultFilter,
   sectionDataKey,
+  showThumbnail = false,
+  cardLayout = "list",
 }: SectionPageLayoutProps) {
   const [activeTab, setActiveTab] = useState(subTabs?.[0]?.key ?? null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -175,6 +182,24 @@ export function SectionPageLayout({
     hasSubTabSections,
   ]);
 
+  // 탭의 showThumbnail이 정의되어 있으면 우선, 아니면 페이지 레벨 설정 사용
+  const resolvedShowThumbnail = useMemo(() => {
+    if (activeTab && subTabs) {
+      const tab = subTabs.find((t) => t.key === activeTab);
+      if (tab?.showThumbnail !== undefined) return tab.showThumbnail;
+    }
+    return showThumbnail;
+  }, [activeTab, subTabs, showThumbnail]);
+
+  // 탭의 cardLayout이 정의되어 있으면 우선, 아니면 페이지 레벨 설정 사용
+  const resolvedCardLayout = useMemo(() => {
+    if (activeTab && subTabs) {
+      const tab = subTabs.find((t) => t.key === activeTab);
+      if (tab?.cardLayout) return tab.cardLayout;
+    }
+    return cardLayout;
+  }, [activeTab, subTabs, cardLayout]);
+
   // Tab counts
   const tabCounts = useMemo(() => {
     if (!subTabs) return {};
@@ -257,7 +282,7 @@ export function SectionPageLayout({
         ) : displayItems.length === 0 ? (
           <EmptyState query={searchQuery} />
         ) : (
-          <div className="space-y-3">
+          <>
             <p className="text-sm text-gray-400 mb-4">
               {displayItems.length}개의 항목
               {searchQuery.trim() && (
@@ -266,10 +291,20 @@ export function SectionPageLayout({
                 </span>
               )}
             </p>
-            {displayItems.map((entry) => (
-              <EntryCard key={entry.id} entry={entry} />
-            ))}
-          </div>
+            {resolvedCardLayout === "grid" ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {displayItems.map((entry) => (
+                  <VerticalCard key={entry.id} entry={entry} />
+                ))}
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {displayItems.map((entry) => (
+                  <EntryCard key={entry.id} entry={entry} showThumbnail={resolvedShowThumbnail} />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

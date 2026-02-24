@@ -6,6 +6,7 @@ export interface Entry {
   link: string | null;
   publishedDate: string | null;
   lastEditedTime: string;
+  thumbnail?: string;
 }
 
 export interface SearchIndexItem {
@@ -17,6 +18,8 @@ export interface SearchIndexItem {
   publishedDate: string | null;
   /** 단축키 텍스트 (Mac/Win shortcuts only) */
   shortcut?: string;
+  /** Notion 페이지 커버 이미지 URL */
+  thumbnail?: string;
 }
 
 export interface SearchIndex {

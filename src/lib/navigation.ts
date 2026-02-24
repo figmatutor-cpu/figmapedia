@@ -13,6 +13,10 @@ export interface SubTab {
   sectionDataKey?: string;
   /** Filter items within the parent's sectionDataKey by category names (exact match) */
   categoryFilter?: string[];
+  /** 이 탭에서 썸네일 표시 여부 (페이지 레벨 설정보다 우선) */
+  showThumbnail?: boolean;
+  /** 카드 레이아웃: grid(세로형) 또는 list(가로형). 페이지 레벨 설정보다 우선 */
+  cardLayout?: "list" | "grid";
 }
 
 export interface NavItem {

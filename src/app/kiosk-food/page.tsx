@@ -13,6 +13,8 @@ export default function KioskFoodPage() {
       description={SECTION_DESCRIPTIONS["kiosk-food"]}
       sectionDataKey={navItem.sectionDataKey}
       subTabs={navItem.subTabs}
+      showThumbnail
+      cardLayout="grid"
     />
   );
 }

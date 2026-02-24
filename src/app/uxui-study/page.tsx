@@ -12,6 +12,8 @@ export default function UXUIStudyPage() {
       title={navItem.label}
       description={SECTION_DESCRIPTIONS["uxui-study"]}
       subTabs={navItem.subTabs}
+      showThumbnail
+      cardLayout="grid"
     />
   );
 }

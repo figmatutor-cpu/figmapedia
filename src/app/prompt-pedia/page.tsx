@@ -13,6 +13,8 @@ export default function PromptPediaPage() {
       description={SECTION_DESCRIPTIONS["prompt-pedia"]}
       sectionDataKey={navItem.sectionDataKey}
       subTabs={navItem.subTabs}
+      showThumbnail
+      cardLayout="grid"
     />
   );
 }
