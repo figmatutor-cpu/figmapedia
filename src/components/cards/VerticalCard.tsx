@@ -43,7 +43,7 @@ export function VerticalCard({
   return (
     <Link
       href={`/entry/${entry.id}`}
-      className="group block rounded-xl border border-white/10 bg-white/5 overflow-hidden hover:border-white/20 hover:bg-white/[0.08] transition-all"
+      className="group flex flex-col rounded-xl border border-white/10 bg-white/5 overflow-hidden hover:border-white/20 hover:bg-white/[0.08] transition-all"
     >
       {/* 썸네일 영역 */}
       <div className="aspect-[4/3] bg-white/6 flex items-center justify-center overflow-hidden">
@@ -74,7 +74,7 @@ export function VerticalCard({
       </div>
 
       {/* 콘텐츠 영역 */}
-      <div className="p-4">
+      <div className="p-4 flex-1 flex flex-col">
         {showTags && entry.categories.length > 0 && (
           <div className="flex items-center gap-1.5 mb-2 flex-wrap">
             {entry.categories.map((cat) => (
@@ -87,7 +87,7 @@ export function VerticalCard({
           {entry.title}
         </h3>
 
-        {showMeta && <EntryMeta author={entry.author} publishedDate={entry.publishedDate} className="mt-2" />}
+        {showMeta && <EntryMeta author={entry.author} publishedDate={entry.publishedDate} className="mt-auto pt-2" />}
       </div>
     </Link>
   );
