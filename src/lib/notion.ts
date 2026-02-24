@@ -119,40 +119,6 @@ export async function fetchFirstImageUrl(pageId: string): Promise<string | undef
   }
 }
 
-/**
- * 커버 없는 항목들에 첫 이미지 fallback 적용
- * Notion 속도 제한(3 req/sec) 준수를 위해 동시 요청 제한
- */
-export async function fillMissingThumbnails<T extends { id: string; thumbnail?: string }>(
-  items: T[],
-  concurrency = 3,
-): Promise<T[]> {
-  const needsFetch = items.filter((item) => !item.thumbnail);
-  if (needsFetch.length === 0) return items;
-
-  const thumbnailMap = new Map<string, string>();
-
-  // 동시 요청 제한하며 병렬 처리
-  for (let i = 0; i < needsFetch.length; i += concurrency) {
-    const batch = needsFetch.slice(i, i + concurrency);
-    const results = await Promise.all(
-      batch.map(async (item) => {
-        const url = await fetchFirstImageUrl(item.id);
-        return { id: item.id, url };
-      })
-    );
-    for (const r of results) {
-      if (r.url) thumbnailMap.set(r.id, r.url);
-    }
-  }
-
-  return items.map((item) =>
-    !item.thumbnail && thumbnailMap.has(item.id)
-      ? { ...item, thumbnail: thumbnailMap.get(item.id) }
-      : item
-  );
-}
-
 /** 외부 URL에서 og:image 메타태그 추출 */
 export async function fetchOgImage(url: string): Promise<string | undefined> {
   try {
@@ -174,35 +140,3 @@ export async function fetchOgImage(url: string): Promise<string | undefined> {
   }
 }
 
-/**
- * 커버 없는 항목 중 link가 있는 항목에 OG 이미지를 썸네일로 적용
- * 외부 사이트 요청이므로 동시 요청 제한으로 안정성 확보
- */
-export async function fillOgThumbnails<T extends { id: string; link?: string | null; thumbnail?: string }>(
-  items: T[],
-  concurrency = 3,
-): Promise<T[]> {
-  const needsFetch = items.filter((item) => !item.thumbnail && item.link);
-  if (needsFetch.length === 0) return items;
-
-  const thumbnailMap = new Map<string, string>();
-
-  for (let i = 0; i < needsFetch.length; i += concurrency) {
-    const batch = needsFetch.slice(i, i + concurrency);
-    const results = await Promise.all(
-      batch.map(async (item) => {
-        const url = await fetchOgImage(item.link!);
-        return { id: item.id, url };
-      })
-    );
-    for (const r of results) {
-      if (r.url) thumbnailMap.set(r.id, r.url);
-    }
-  }
-
-  return items.map((item) =>
-    !item.thumbnail && thumbnailMap.has(item.id)
-      ? { ...item, thumbnail: thumbnailMap.get(item.id) }
-      : item
-  );
-}

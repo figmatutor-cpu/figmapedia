@@ -1,5 +1,5 @@
 import { unstable_cache } from "next/cache";
-import { fetchAllFromDatabase, fillMissingThumbnails } from "@/lib/notion";
+import { fetchAllFromDatabase } from "@/lib/notion";
 import {
   mapPromptPage,
   mapKioskPage,
@@ -43,27 +43,15 @@ const getCachedSectionData = unstable_cache(
       fetchAllFromDatabase(SECTION_DB_IDS.plugins),
     ]);
 
-    // 매핑 후 커버 없는 항목에 첫 이미지 fallback 적용
-    // 단축키 DB는 썸네일 불필요 → fallback 제외
-    const [prompt, kiosk, uxuiArticles, uxuiBlogs, uxuiTerms, plugins] =
-      await Promise.all([
-        fillMissingThumbnails(promptPages.map(mapPromptPage)),
-        fillMissingThumbnails(kioskPages.map(mapKioskPage)),
-        fillMissingThumbnails(articlePages.map(mapArticlePage)),
-        fillMissingThumbnails(blogPages.map(mapArticlePage)),
-        fillMissingThumbnails(termPages.map(mapUxuiTermPage)),
-        fillMissingThumbnails(pluginPages.map(mapPluginPage)),
-      ]);
-
     return {
-      prompt,
-      kiosk,
-      "uxui-articles": uxuiArticles,
-      "uxui-blogs": uxuiBlogs,
-      "uxui-terms": uxuiTerms,
+      prompt: promptPages.map(mapPromptPage),
+      kiosk: kioskPages.map(mapKioskPage),
+      "uxui-articles": articlePages.map(mapArticlePage),
+      "uxui-blogs": blogPages.map(mapArticlePage),
+      "uxui-terms": termPages.map(mapUxuiTermPage),
       "mac-shortcuts": macPages.map(mapShortcutPage),
       "win-shortcuts": winPages.map(mapShortcutPage),
-      plugins,
+      plugins: pluginPages.map(mapPluginPage),
     };
   },
   ["section-data"],

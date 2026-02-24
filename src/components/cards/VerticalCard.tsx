@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { SearchIndexItem } from "@/types";
 import { Badge } from "@/components/ui/Badge";
 import { EntryMeta } from "@/components/ui/EntryMeta";
+import { useThumbnail } from "@/hooks/useThumbnail";
 
 interface VerticalCardProps {
   entry: SearchIndexItem;
@@ -15,30 +15,12 @@ interface VerticalCardProps {
   showMeta?: boolean;
 }
 
-function useOgImage(link: string | null | undefined, enabled: boolean) {
-  const [ogImage, setOgImage] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!enabled || !link) return;
-    fetch(`/api/og-image?url=${encodeURIComponent(link)}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.ogImage) setOgImage(data.ogImage);
-      })
-      .catch(() => {});
-  }, [link, enabled]);
-
-  return ogImage;
-}
-
 export function VerticalCard({
   entry,
   showTags = true,
   showMeta = true,
 }: VerticalCardProps) {
-  const needsOg = !entry.thumbnail && !!entry.link;
-  const ogImage = useOgImage(entry.link, needsOg);
-  const displayThumbnail = entry.thumbnail || ogImage;
+  const displayThumbnail = useThumbnail(entry, true);
 
   return (
     <Link

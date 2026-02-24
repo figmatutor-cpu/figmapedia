@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { APIResponseError } from "@notionhq/client";
 import { fetchEntryById, fetchPageBlocks } from "@/lib/notion";
 import { mapNotionPageToEntry, mapNotionBlock } from "@/lib/notion-mapper";
 import { Badge } from "@/components/ui/Badge";
@@ -18,8 +19,18 @@ export default async function EntryPage({
   let page;
   try {
     page = await fetchEntryById(id);
-  } catch {
-    notFound();
+  } catch (error) {
+    // Rate limited: 1초 대기 후 1회 재시도
+    if (error instanceof APIResponseError && error.code === "rate_limited") {
+      await new Promise((r) => setTimeout(r, 1000));
+      try {
+        page = await fetchEntryById(id);
+      } catch {
+        throw new Error("일시적으로 요청이 많습니다. 잠시 후 다시 시도해 주세요.");
+      }
+    } else {
+      notFound();
+    }
   }
 
   if (!page) {
