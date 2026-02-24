@@ -44,6 +44,8 @@ export interface NotionBlock {
   mediaUrl?: string;
   /** Caption text for media blocks */
   caption?: string;
+  /** 코드 블록 언어 (e.g. "javascript", "python") */
+  language?: string;
   children?: NotionBlock[];
 }
 

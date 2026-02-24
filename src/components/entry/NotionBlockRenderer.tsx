@@ -1,4 +1,5 @@
 import type { NotionBlock } from "@/types";
+import { CodeBlock } from "./CodeBlock";
 
 function RenderBlock({ block }: { block: NotionBlock }) {
   switch (block.type) {
@@ -54,11 +55,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
       );
 
     case "code":
-      return (
-        <pre className="bg-black/40 border border-white/10 text-gray-200 rounded-lg p-4 my-4 overflow-x-auto text-sm">
-          <code>{block.content}</code>
-        </pre>
-      );
+      return <CodeBlock content={block.content} language={block.language} />;
 
     case "divider":
       return <hr className="border-white/10 my-6" />;

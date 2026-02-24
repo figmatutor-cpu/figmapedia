@@ -173,6 +173,16 @@ export function mapNotionBlock(block: any): NotionBlock {
     };
   }
 
+  // Code block: preserve language info
+  if (type === "code") {
+    return {
+      id: block.id,
+      type,
+      content: extractBlockText(block),
+      language: data?.language || undefined,
+    };
+  }
+
   return {
     id: block.id,
     type,
