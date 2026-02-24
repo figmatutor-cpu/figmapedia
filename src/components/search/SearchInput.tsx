@@ -45,7 +45,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         : "shadow-[0_-4px_24px_0_rgba(0,0,0,0.3)]";
 
     return (
-      <div className={`relative ${className}`}>
+      <div className={className}>
         <div className={`relative rounded-2xl p-[2px] ${shadow} bg-linear-to-br from-white/10 via-white/5 to-black/20`}>
           <div className="relative">
             <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
