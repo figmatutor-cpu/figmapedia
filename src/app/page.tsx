@@ -17,7 +17,7 @@ export default function HomePage() {
   const { hasSearched } = useSearchContext();
 
   return (
-    <main className="bg-[#050510]">
+    <main className="bg-bg-base">
       {/* Hero background — hidden during search */}
       {!hasSearched && (
         <div className="fixed inset-0 overflow-hidden">
@@ -27,7 +27,7 @@ export default function HomePage() {
 
       {/* Search results */}
       {hasSearched && (
-        <section className="min-h-screen bg-[#050510] pt-28 pb-32">
+        <section className="min-h-screen bg-bg-base pt-28 pb-32">
           <div className="mx-auto max-w-4xl px-4">
             <SearchResults />
           </div>

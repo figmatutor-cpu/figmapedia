@@ -4,13 +4,19 @@ import { useSearchContext } from "./SearchProvider";
 import { EntryCard } from "@/components/cards/EntryCard";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
+import {
+  AI_SEARCH_LABEL,
+  AI_SEARCHING_MESSAGE,
+  AI_SUMMARY_LABEL,
+  FALLBACK_RESULTS_MESSAGE,
+} from "@/lib/constants";
 
 function AISummaryCard({ summary }: { summary: string }) {
   return (
     <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-4 mb-5">
       <div className="flex items-center gap-1.5 mb-2">
         <span className="text-sm">✨</span>
-        <span className="text-xs font-medium text-blue-400">AI 요약</span>
+        <span className="text-xs font-medium text-blue-400">{AI_SUMMARY_LABEL}</span>
       </div>
       <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-line">
         {summary}
@@ -35,7 +41,7 @@ export function SearchResults() {
       <div className="space-y-3">
         <div className="flex items-center gap-2 mb-4">
           <div className="w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-blue-400">AI가 관련 콘텐츠를 찾고 있어요...</p>
+          <p className="text-sm text-blue-400">{AI_SEARCHING_MESSAGE}</p>
         </div>
         <Skeleton count={4} />
       </div>
@@ -47,7 +53,7 @@ export function SearchResults() {
       <div className="space-y-3">
         <div className="rounded-lg border border-red-500/20 bg-red-500/5 px-4 py-3 mb-4">
           <p className="text-sm text-red-400">{aiError}</p>
-          <p className="text-xs text-gray-500 mt-1">키워드 검색 결과를 대신 보여드립니다.</p>
+          <p className="text-xs text-gray-500 mt-1">{FALLBACK_RESULTS_MESSAGE}</p>
         </div>
         {results.length > 0 ? (
           <>
@@ -80,7 +86,7 @@ export function SearchResults() {
       <div className="flex items-center gap-2 mb-4">
         {searchMode === "ai" && (
           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs text-blue-400">
-            AI 검색
+            {AI_SEARCH_LABEL}
           </span>
         )}
         <p className="text-sm text-gray-400">

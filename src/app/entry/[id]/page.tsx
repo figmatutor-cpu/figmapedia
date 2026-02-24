@@ -3,6 +3,7 @@ import Link from "next/link";
 import { fetchEntryById, fetchPageBlocks } from "@/lib/notion";
 import { mapNotionPageToEntry, mapNotionBlock } from "@/lib/notion-mapper";
 import { Badge } from "@/components/ui/Badge";
+import { EntryMeta } from "@/components/ui/EntryMeta";
 import { NotionBlockRenderer } from "@/components/entry/NotionBlockRenderer";
 
 export const revalidate = 120;
@@ -30,7 +31,7 @@ export default async function EntryPage({
   const blocks = rawBlocks.map(mapNotionBlock);
 
   return (
-    <article className="mx-auto max-w-3xl px-4 pt-[120px] pb-12 min-h-screen bg-[#050510]">
+    <article className="mx-auto max-w-3xl px-4 pt-[120px] pb-12 min-h-screen bg-bg-base">
       <Link
         href="/"
         className="inline-flex items-center text-sm text-gray-400 hover:text-white mb-8 transition-colors"
@@ -60,14 +61,7 @@ export default async function EntryPage({
         <h1 className="text-3xl font-bold text-white mb-3">
           {entry.title}
         </h1>
-        <div className="flex items-center gap-3 text-sm text-gray-500 mt-2">
-          {entry.author && <span>{entry.author}</span>}
-          {entry.publishedDate && (
-            <span>
-              {new Date(entry.publishedDate).toLocaleDateString("ko-KR")}
-            </span>
-          )}
-        </div>
+        <EntryMeta author={entry.author} publishedDate={entry.publishedDate} className="mt-2" />
       </header>
 
       <div className="border-t border-white/10 pt-8">

@@ -2,6 +2,7 @@
 
 import { SectionPageLayout } from "@/components/section/SectionPageLayout";
 import { NAV_ITEMS } from "@/lib/navigation";
+import { SECTION_DESCRIPTIONS } from "@/lib/constants";
 
 const navItem = NAV_ITEMS.find((n) => n.key === "uxui-study")!;
 
@@ -9,7 +10,7 @@ export default function UXUIStudyPage() {
   return (
     <SectionPageLayout
       title={navItem.label}
-      description="UXUI 디자인 학습 리소스를 모아봤어요"
+      description={SECTION_DESCRIPTIONS["uxui-study"]}
       subTabs={navItem.subTabs}
     />
   );

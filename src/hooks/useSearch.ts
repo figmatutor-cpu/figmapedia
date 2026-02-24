@@ -44,11 +44,6 @@ export function useSearch() {
     [index]
   );
 
-  useEffect(() => {
-    if (debouncedQuery.trim()) {
-      setHasSearched(true);
-    }
-  }, [debouncedQuery]);
 
   // When query text changes AFTER an AI search, revert to instant mode
   // Only revert if the user actually typed something different

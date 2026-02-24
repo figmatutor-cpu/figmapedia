@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { SearchIndexItem } from "@/types";
 import { Badge } from "@/components/ui/Badge";
+import { EntryMeta } from "@/components/ui/EntryMeta";
 
 export function EntryCard({ entry }: { entry: SearchIndexItem }) {
   return (
@@ -18,14 +19,7 @@ export function EntryCard({ entry }: { entry: SearchIndexItem }) {
           <h3 className="font-semibold text-gray-100 group-hover:text-blue-400 transition-colors">
             {entry.title}
           </h3>
-          <div className="flex items-center gap-3 mt-2 text-sm text-gray-500">
-            {entry.author && <span>{entry.author}</span>}
-            {entry.publishedDate && (
-              <span>
-                {new Date(entry.publishedDate).toLocaleDateString("ko-KR")}
-              </span>
-            )}
-          </div>
+          <EntryMeta author={entry.author} publishedDate={entry.publishedDate} className="mt-2" />
         </div>
 
         {entry.shortcut && (

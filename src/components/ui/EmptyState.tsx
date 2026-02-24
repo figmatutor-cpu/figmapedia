@@ -1,20 +1,10 @@
+import { SearchIcon } from "@/components/ui/SearchIcon";
+
 export function EmptyState({ query }: { query: string }) {
   return (
     <div className="text-center py-16">
       <div className="text-4xl mb-4">
-        <svg
-          className="mx-auto h-12 w-12 text-gray-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.5}
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          />
-        </svg>
+        <SearchIcon className="mx-auto h-12 w-12 text-gray-600" strokeWidth={1.5} />
       </div>
       <h3 className="text-lg font-medium text-gray-200 mb-1">
         검색 결과가 없습니다

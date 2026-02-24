@@ -6,6 +6,7 @@ import { filterItems } from "@/hooks/useSectionFilter";
 import { EntryCard } from "@/components/cards/EntryCard";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { SearchIcon } from "@/components/ui/SearchIcon";
 import type { SubTab, FilterConfig } from "@/lib/navigation";
 import type { SearchIndexItem } from "@/types";
 
@@ -199,7 +200,7 @@ export function SectionPageLayout({
   }, [subTabs, mainItems, multiSectionData, singleSectionItems, sectionDataKey]);
 
   return (
-    <div className="min-h-screen bg-[#050510] pt-28 pb-16">
+    <div className="min-h-screen bg-bg-base pt-28 pb-16">
       <div className="mx-auto max-w-4xl px-4">
         {/* Title */}
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
@@ -239,19 +240,7 @@ export function SectionPageLayout({
 
           {/* Search input — full width on mobile, fixed on desktop */}
           <div className="relative w-full xl-nav:shrink-0 xl-nav:w-[180px]">
-            <svg
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
+            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
             <input
               type="text"
               value={searchQuery}

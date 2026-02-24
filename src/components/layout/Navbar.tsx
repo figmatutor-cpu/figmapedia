@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV_ITEMS } from "@/lib/navigation";
 import { useSearchContext } from "@/components/search/SearchProvider";
+import { SearchIcon } from "@/components/ui/SearchIcon";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -41,7 +42,7 @@ export function Navbar() {
                    flex flex-col items-center
                    px-6 backdrop-blur-sm
                    ${headerShapeClass}
-                   border border-[#333] bg-[#1f1f1f57]
+                   border border-navbar-border bg-navbar-bg
                    w-[calc(100%-2rem)] xl-nav:w-auto
                    transition-[border-radius] duration-0 ease-in-out`}
     >
@@ -84,19 +85,7 @@ export function Navbar() {
               onClick={toggleSearch}
               aria-label={isSearchOpen ? "검색 닫기" : "검색 열기"}
             >
-              <svg
-                className="w-[18px] h-[18px]"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
+              <SearchIcon className="w-[18px] h-[18px]" />
             </button>
           )}
 
