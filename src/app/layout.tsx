@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { Navbar } from "@/components/layout/Navbar";
 import { ClientProviders } from "@/components/layout/ClientProviders";
 import { GlobalSearchOverlay } from "@/components/search/GlobalSearchOverlay";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const pretendard = localFont({
+  src: "../../public/fonts/PretendardVariable.woff2",
+  variable: "--font-pretendard",
+  display: "swap",
+  weight: "45 920",
 });
 
 const geistMono = Geist_Mono({
@@ -34,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-bg-base text-gray-100`}
+        className={`${pretendard.variable} ${geistMono.variable} antialiased min-h-screen bg-bg-base text-gray-100`}
       >
         <ClientProviders>
           <Navbar />

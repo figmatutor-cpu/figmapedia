@@ -59,7 +59,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
               onChange={(e) => onQueryChange(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
-              className={`w-full rounded-2xl ${bgClass} border border-white/10 text-white placeholder:text-white/40 outline-none focus:ring-2 focus:ring-brand-blue/40 focus:border-brand-blue/40 backdrop-blur-md ${inputPl} pr-[100px] h-12 sm:h-14 text-[16px]`}
+              className={`w-full rounded-2xl ${bgClass} border border-white/10 text-white placeholder:text-white/40 outline-none focus:ring-2 focus:ring-brand-blue/40 focus:border-brand-blue/40 backdrop-blur-md ${inputPl} pr-[100px] h-12 sm:h-14 text-base`}
               autoComplete="off"
               lang="ko"
             />
@@ -67,7 +67,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
               type="button"
               onClick={handleSearchClick}
               disabled={isSearching || !query.trim()}
-              className="absolute right-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center h-9 px-4 rounded-xl bg-brand-blue-light text-black text-sm font-medium hover:bg-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
+              className="absolute right-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center h-9 px-4 rounded-xl bg-brand-blue-light text-gray-900 text-sm font-medium hover:bg-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
             >
               {isSearching ? <LoadingSpinner /> : AI_SEARCH_LABEL}
             </button>

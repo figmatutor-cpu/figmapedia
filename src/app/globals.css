@@ -7,9 +7,11 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-pretendard);
   --font-mono: var(--font-geist-mono);
   --breakpoint-xl-nav: 1080px;
+  --text-xxs: 10px;
+  --text-xxs--line-height: 1.4;
   --color-bg-base: #050510;
   --color-brand-blue: #1f3dbc;
   --color-brand-blue-light: #f0f2ff;
@@ -56,8 +58,9 @@
 }
 
 body {
-  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, sans-serif;
+  font-family: var(--font-sans), "Pretendard Variable", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.01em;
 }
 
 :root {
