@@ -43,12 +43,14 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       variant === "hero"
         ? "shadow-[0_1px_2px_0_rgba(0,0,0,0.06)]"
         : "shadow-[0_-4px_24px_0_rgba(0,0,0,0.3)]";
+    const iconLeft = "left-[6px]";
+    const inputPl = "pl-[28px]";
 
     return (
       <div className={className}>
         <div className={`relative rounded-2xl p-[2px] ${shadow} bg-linear-to-br from-white/10 via-white/5 to-black/20`}>
           <div className="relative">
-            <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
+            <SearchIcon className={`absolute ${iconLeft} top-1/2 -translate-y-1/2 h-5 w-5 text-white/40`} />
             <input
               ref={internalRef}
               type="text"
@@ -57,7 +59,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
               onChange={(e) => onQueryChange(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
-              className={`w-full rounded-2xl ${bgClass} border border-white/10 text-white placeholder:text-white/40 outline-none focus:ring-2 focus:ring-brand-blue/40 focus:border-brand-blue/40 backdrop-blur-md pl-12 pr-[100px] h-12 sm:h-14 text-[16px]`}
+              className={`w-full rounded-2xl ${bgClass} border border-white/10 text-white placeholder:text-white/40 outline-none focus:ring-2 focus:ring-brand-blue/40 focus:border-brand-blue/40 backdrop-blur-md ${inputPl} pr-[100px] h-12 sm:h-14 text-[16px]`}
               autoComplete="off"
               lang="ko"
             />
