@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { useSearchIndex } from "@/hooks/useSearchIndex";
 import { filterItems } from "@/hooks/useSectionFilter";
 import { EntryCard } from "@/components/cards/EntryCard";
@@ -96,6 +96,8 @@ export function SectionPageLayout({
 }: SectionPageLayoutProps) {
   const [activeTab, setActiveTab] = useState(subTabs?.[0]?.key ?? null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+  const mobileSearchRef = useRef<HTMLInputElement>(null);
 
   const subTabSectionKeys = useMemo(
     () =>
@@ -240,8 +242,9 @@ export function SectionPageLayout({
 
         {/* Sub-tabs + search (same row) */}
         <div className="flex items-center gap-3 mb-8">
+          {/* Tabs — 모바일: 스와이프, 검색 펼침 시 숨김 / 데스크탑: 항상 표시 */}
           {subTabs && (
-            <div className="hidden xl-nav:flex flex-1 min-w-0 overflow-hidden">
+            <div className={`${isSearchExpanded ? "hidden xl-nav:flex" : "flex"} flex-1 min-w-0 overflow-hidden`}>
               <div className="overflow-x-auto pb-5 -mb-5">
                 <div className="flex gap-2 pb-1">
                 {subTabs.map((tab) => (
@@ -265,8 +268,53 @@ export function SectionPageLayout({
             </div>
           )}
 
-          {/* Search input — full width on mobile, fixed on desktop */}
-          <div className="relative w-full xl-nav:shrink-0 xl-nav:w-[180px]">
+          {/* 모바일 검색 — 아이콘 / 펼침 인풋 (subTabs 있는 페이지만) */}
+          {subTabs && (
+            <div className={`xl-nav:hidden ${isSearchExpanded ? "flex-1 min-w-0" : "shrink-0"}`}>
+              {isSearchExpanded ? (
+                <div className="flex items-center gap-2">
+                  <div className="relative flex-1 min-w-0">
+                    <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+                    <input
+                      ref={mobileSearchRef}
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="페이지 내 검색"
+                      className="w-full pl-8 pr-3 h-10 text-[16px] rounded-lg bg-white/5 border border-white/10 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-white/25 focus:bg-white/[0.07] transition-colors"
+                      autoComplete="off"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearchQuery("");
+                      setIsSearchExpanded(false);
+                    }}
+                    className="shrink-0 p-2 text-gray-400 hover:text-white transition-colors"
+                  >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsSearchExpanded(true);
+                    setTimeout(() => mobileSearchRef.current?.focus(), 100);
+                  }}
+                  className="p-2.5 rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-white/20 transition-colors"
+                >
+                  <SearchIcon className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* 데스크탑 검색 (≥ xl-nav) + subTabs 없는 페이지 모바일 검색 */}
+          <div className={`relative ${subTabs ? "hidden xl-nav:block" : "w-full"} xl-nav:shrink-0 xl-nav:w-[180px]`}>
             <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
             <input
               type="text"
