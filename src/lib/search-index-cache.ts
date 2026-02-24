@@ -41,18 +41,19 @@ export const getCachedSearchIndex = unstable_cache(
     // Map main entries
     const mainItems = mainPages
       .map(mapNotionPageToEntry)
-      .map(entryToSearchIndexItem);
+      .map(entryToSearchIndexItem)
+      .map((item) => ({ ...item, section: "피그마 Q&A" }));
 
-    // Map section entries (each mapper already returns SearchIndexItem)
+    // Map section entries with section tags (for AI search context)
     const sectionItems = [
-      ...promptPages.map(mapPromptPage),
-      ...kioskPages.map(mapKioskPage),
-      ...articlePages.map(mapArticlePage),
-      ...blogPages.map(mapArticlePage),
-      ...termPages.map(mapUxuiTermPage),
-      ...macPages.map(mapShortcutPage),
-      ...winPages.map(mapShortcutPage),
-      ...pluginPages.map(mapPluginPage),
+      ...promptPages.map(mapPromptPage).map((item) => ({ ...item, section: "프롬프트" })),
+      ...kioskPages.map(mapKioskPage).map((item) => ({ ...item, section: "키오스크" })),
+      ...articlePages.map(mapArticlePage).map((item) => ({ ...item, section: "UXUI 아티클" })),
+      ...blogPages.map(mapArticlePage).map((item) => ({ ...item, section: "기술 블로그" })),
+      ...termPages.map(mapUxuiTermPage).map((item) => ({ ...item, section: "UXUI 용어" })),
+      ...macPages.map(mapShortcutPage).map((item) => ({ ...item, section: "Mac 단축키" })),
+      ...winPages.map(mapShortcutPage).map((item) => ({ ...item, section: "Win 단축키" })),
+      ...pluginPages.map(mapPluginPage).map((item) => ({ ...item, section: "플러그인" })),
     ];
 
     // Merge all items, dedup by id

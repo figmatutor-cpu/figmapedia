@@ -20,6 +20,8 @@ export interface SearchIndexItem {
   shortcut?: string;
   /** Notion 페이지 커버 이미지 URL */
   thumbnail?: string;
+  /** 소속 섹션 라벨 (AI 검색용) */
+  section?: string;
 }
 
 export interface SearchIndex {

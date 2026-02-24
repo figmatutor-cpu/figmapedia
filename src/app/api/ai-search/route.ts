@@ -32,15 +32,16 @@ function setCachedResponse(query: string, data: AISearchResponse) {
 }
 
 /* ── Fuse.js pre-filter: narrow down candidates before sending to Gemini ── */
-const PRE_FILTER_LIMIT = 50;
+const PRE_FILTER_LIMIT = 80;
 
 const FUSE_OPTIONS: IFuseOptions<SearchIndexItem> = {
   keys: [
-    { name: "title", weight: 0.55 },
-    { name: "categories", weight: 0.35 },
+    { name: "title", weight: 0.5 },
+    { name: "categories", weight: 0.25 },
+    { name: "section", weight: 0.15 },
     { name: "author", weight: 0.1 },
   ],
-  threshold: 0.45, // More lenient than client-side to avoid missing relevant items
+  threshold: 0.5, // Lenient to capture cross-section results
   distance: 300,
   minMatchCharLength: 1,
   includeScore: true,
@@ -87,30 +88,53 @@ export async function POST(request: Request) {
     // Step 1: Pre-filter with Fuse.js to narrow candidates
     const candidates = preFilterItems(index.items, trimmedQuery);
 
-    // If Fuse found very few results, include all items as fallback
-    const itemsForAI =
-      candidates.length >= 5 ? candidates : index.items.slice(0, PRE_FILTER_LIMIT);
+    // If Fuse found very few results, proportional sampling from each section
+    let itemsForAI: SearchIndexItem[];
+    if (candidates.length >= 5) {
+      itemsForAI = candidates;
+    } else {
+      const sections = new Map<string, SearchIndexItem[]>();
+      for (const item of index.items) {
+        const sec = item.section ?? "기타";
+        if (!sections.has(sec)) sections.set(sec, []);
+        sections.get(sec)!.push(item);
+      }
+      const perSection = Math.max(5, Math.floor(PRE_FILTER_LIMIT / sections.size));
+      itemsForAI = [...sections.values()].flatMap((items) =>
+        items.slice(0, perSection)
+      );
+    }
 
-    // Step 2: Build compact summary for Gemini (no author, compact categories)
+    // Step 2: Build compact summary for Gemini (section|title|categories)
     const entrySummary = itemsForAI
-      .map((item) => `${item.id}|${item.title}|${item.categories.join(",")}`)
+      .map((item) => `${item.id}|${item.section ?? ""}|${item.title}|${item.categories.join(",")}`)
       .join("\n");
 
-    const prompt = `당신은 Figmapedia의 검색 어시스턴트입니다. 피그마(Figma) 디자인 도구에 관한 한국어 지식 베이스에서 관련 항목을 찾아주세요.
+    const prompt = `당신은 Figmapedia의 검색 어시스턴트입니다. 디자인, IT, UX/UI 관련 한국어 지식 베이스에서 관련 항목을 찾아주세요.
+
+이 지식 베이스는 다음 섹션으로 구성됩니다:
+- 피그마 Q&A: 피그마 디자인 도구 실무 질문/답변
+- 프롬프트: AI 이미지/텍스트 생성 프롬프트
+- 키오스크: 키오스크 UI/UX 스크린샷 및 분석
+- UXUI 아티클: UX/UI 디자인 학습 아티클
+- 기술 블로그: 기술 및 디자인 블로그 글
+- UXUI 용어: UX/UI 용어 정리
+- Mac/Win 단축키: 피그마 키보드 단축키
+- 플러그인: 유용한 피그마 플러그인
 
 아래 항목 목록에서 검색어와 의미적으로 관련된 항목의 ID를 찾고, 검색어에 대한 핵심 요약도 작성해주세요.
-각 항목은 "ID|제목|카테고리" 형식입니다.
+각 항목은 "ID|섹션|제목|카테고리" 형식입니다.
 
 고려사항:
 1. 제목 키워드 매칭
-2. 카테고리 관련성 (예: "정렬" → "오토 레이아웃")
+2. 섹션 및 카테고리 관련성
 3. 개념적 관련성 (예: "디자인 시스템" → "컴포넌트", "베리어블")
 4. 한국어 유의어/줄임말 (예: "컴포" = "컴포넌트")
 
 아래 JSON 형식으로만 응답. 다른 텍스트 없이 JSON만:
-{"summary": "검색어에 대한 핵심 요약 (한국어, 1~3문장, 피그마 관련 지식 기반으로 간결하게)", "ids": ["id1", "id2"]}
+{"summary": "검색어에 대한 핵심 요약 (한국어, 1~3문장, 간결하게)", "ids": ["id1", "id2"]}
 
-- summary: 검색어가 피그마에서 무엇인지, 어떤 맥락에서 사용되는지 핵심만 요약
+- summary: 검색어가 무엇인지, 어떤 맥락에서 사용되는지 핵심만 요약
 - ids: 관련성 순으로 최대 20개. 관련 없으면 빈 배열 []
 
 === 항목 목록 ===
