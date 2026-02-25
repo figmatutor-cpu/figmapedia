@@ -21,14 +21,23 @@ interface SectionPageLayoutProps {
   showThumbnail?: boolean;
   /** 카드 레이아웃: grid(세로형) 또는 list(가로형). 기본값 list */
   cardLayout?: "list" | "grid";
+  /** 서버에서 미리 fetch한 단일 섹션 데이터 (prompt, kiosk 등) */
+  initialSectionItems?: SearchIndexItem[];
+  /** 서버에서 미리 fetch한 멀티 섹션 데이터 (shortcuts, uxui-* 등) */
+  initialMultiSectionData?: Record<string, SearchIndexItem[]>;
+  /** 서버에서 미리 fetch한 메인 검색 인덱스 데이터 (figma-info 용) */
+  initialMainItems?: SearchIndexItem[];
 }
 
-function useSectionItems(sectionKey: string | undefined) {
-  const [items, setItems] = useState<SearchIndexItem[]>([]);
-  const [isLoading, setIsLoading] = useState(!!sectionKey);
+function useSectionItems(
+  sectionKey: string | undefined,
+  initialItems?: SearchIndexItem[]
+) {
+  const [items, setItems] = useState<SearchIndexItem[]>(initialItems ?? []);
+  const [isLoading, setIsLoading] = useState(!!sectionKey && !initialItems);
 
   useEffect(() => {
-    if (!sectionKey) return;
+    if (!sectionKey || initialItems) return;
     setIsLoading(true);
     fetch(`/api/section-data?section=${sectionKey}`)
       .then((res) => res.json())
@@ -40,18 +49,25 @@ function useSectionItems(sectionKey: string | undefined) {
         setItems([]);
         setIsLoading(false);
       });
-  }, [sectionKey]);
+  }, [sectionKey, initialItems]);
 
   return { items, isLoading };
 }
 
-function useMultiSectionItems(sectionKeys: string[]) {
-  const [data, setData] = useState<Record<string, SearchIndexItem[]>>({});
-  const [isLoading, setIsLoading] = useState(sectionKeys.length > 0);
+function useMultiSectionItems(
+  sectionKeys: string[],
+  initialData?: Record<string, SearchIndexItem[]>
+) {
+  const [data, setData] = useState<Record<string, SearchIndexItem[]>>(
+    initialData ?? {}
+  );
+  const [isLoading, setIsLoading] = useState(
+    sectionKeys.length > 0 && !initialData
+  );
   const keysStr = sectionKeys.join(",");
 
   useEffect(() => {
-    if (sectionKeys.length === 0) return;
+    if (sectionKeys.length === 0 || initialData) return;
     setIsLoading(true);
     Promise.all(
       sectionKeys.map((key) =>
@@ -69,7 +85,7 @@ function useMultiSectionItems(sectionKeys: string[]) {
       setData(combined);
       setIsLoading(false);
     });
-  }, [keysStr]);
+  }, [keysStr, initialData]);
 
   return { data, isLoading };
 }
@@ -93,6 +109,9 @@ export function SectionPageLayout({
   sectionDataKey,
   showThumbnail = false,
   cardLayout = "list",
+  initialSectionItems,
+  initialMultiSectionData,
+  initialMainItems,
 }: SectionPageLayoutProps) {
   const [activeTab, setActiveTab] = useState(subTabs?.[0]?.key ?? null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -108,11 +127,14 @@ export function SectionPageLayout({
   );
   const hasSubTabSections = subTabSectionKeys.length > 0;
 
-  const { items: mainItems, isLoading: mainLoading } = useSearchIndex();
+  const { items: fetchedMainItems, isLoading: fetchedMainLoading } = useSearchIndex();
+  const mainItems = initialMainItems ?? fetchedMainItems;
+  const mainLoading = initialMainItems ? false : fetchedMainLoading;
+
   const { items: singleSectionItems, isLoading: singleLoading } =
-    useSectionItems(sectionDataKey);
+    useSectionItems(sectionDataKey, initialSectionItems);
   const { data: multiSectionData, isLoading: multiLoading } =
-    useMultiSectionItems(hasSubTabSections ? subTabSectionKeys : []);
+    useMultiSectionItems(hasSubTabSections ? subTabSectionKeys : [], initialMultiSectionData);
 
   // Items before search filtering
   const baseItems = useMemo(() => {
