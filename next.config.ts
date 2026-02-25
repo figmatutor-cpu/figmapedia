@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "*.amazonaws.com" },
       { protocol: "https", hostname: "*.notion.so" },
     ],
+    minimumCacheTTL: 3600,
   },
 };
 

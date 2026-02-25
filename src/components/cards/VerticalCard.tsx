@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { SearchIndexItem } from "@/types";
@@ -15,12 +16,21 @@ interface VerticalCardProps {
   showMeta?: boolean;
 }
 
+function isOptimizableUrl(url: string): boolean {
+  return url.includes("amazonaws.com") || url.includes("notion.so");
+}
+
 export function VerticalCard({
   entry,
   showTags = true,
   showMeta = true,
 }: VerticalCardProps) {
   const displayThumbnail = useThumbnail(entry, true);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  useEffect(() => {
+    setImageLoaded(false);
+  }, [displayThumbnail]);
 
   return (
     <Link
@@ -28,16 +38,23 @@ export function VerticalCard({
       className="group flex flex-col rounded-xl border border-white/10 bg-white/5 overflow-hidden hover:border-white/20 hover:bg-white/[0.08] transition-all"
     >
       {/* 썸네일 영역 */}
-      <div className="aspect-[4/3] bg-white/6 flex items-center justify-center overflow-hidden">
+      <div className="aspect-[4/3] bg-white/6 flex items-center justify-center overflow-hidden relative">
         {displayThumbnail ? (
-          <Image
-            src={displayThumbnail}
-            alt=""
-            width={400}
-            height={300}
-            className="w-full h-full object-cover"
-            unoptimized
-          />
+          <>
+            {!imageLoaded && (
+              <div className="absolute inset-0 animate-pulse bg-white/10" />
+            )}
+            <Image
+              src={displayThumbnail}
+              alt=""
+              width={400}
+              height={300}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className={`w-full h-full object-cover transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+              onLoad={() => setImageLoaded(true)}
+              unoptimized={!isOptimizableUrl(displayThumbnail)}
+            />
+          </>
         ) : (
           <svg
             className="w-10 h-10 text-white/15"
