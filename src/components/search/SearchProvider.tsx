@@ -17,6 +17,8 @@ interface SearchContextValue {
   aiError: string | null;
   /** AI 검색 결과 요약 텍스트 */
   aiSummary: string | null;
+  /** AI 검색 취소 */
+  cancelAISearch: () => void;
   /** Whether the global floating search overlay is open */
   isSearchOpen: boolean;
   /** Open the global floating search overlay */

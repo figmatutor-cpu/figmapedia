@@ -57,6 +57,12 @@ export function useAISearch() {
     setAIError(null);
   }, []);
 
+  const cancelAISearch = useCallback(() => {
+    abortControllerRef.current?.abort();
+    abortControllerRef.current = null;
+    setIsAISearching(false);
+  }, []);
+
   return {
     aiResults,
     aiSummary,
@@ -64,5 +70,6 @@ export function useAISearch() {
     aiError,
     triggerAISearch,
     clearAIResults,
+    cancelAISearch,
   };
 }

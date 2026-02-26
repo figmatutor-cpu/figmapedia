@@ -2,13 +2,13 @@
 
 import { useRef, useImperativeHandle, forwardRef } from "react";
 import { SearchIcon } from "@/components/ui/SearchIcon";
-import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { AI_SEARCH_LABEL } from "@/lib/constants";
 
 interface SearchInputProps {
   query: string;
   onQueryChange: (value: string) => void;
   onSearch: () => void;
+  onCancel?: () => void;
   isSearching: boolean;
   placeholder?: string;
   variant: "hero" | "overlay";
@@ -17,13 +17,14 @@ interface SearchInputProps {
 
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   function SearchInput(
-    { query, onQueryChange, onSearch, isSearching, placeholder = "검색어를 입력하세요", variant, className = "" },
+    { query, onQueryChange, onSearch, onCancel, isSearching, placeholder = "검색어를 입력하세요", variant, className = "" },
     ref
   ) {
     const internalRef = useRef<HTMLInputElement>(null);
     useImperativeHandle(ref, () => internalRef.current!);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
+      if (e.nativeEvent.isComposing) return;
       if (e.key === "Enter" && query.trim() && !isSearching) {
         e.preventDefault();
         internalRef.current?.blur();
@@ -32,7 +33,11 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     };
 
     const handleSearchClick = () => {
-      if (query.trim() && !isSearching) {
+      if (isSearching) {
+        onCancel?.();
+        return;
+      }
+      if (query.trim()) {
         internalRef.current?.blur();
         onSearch();
       }
@@ -66,10 +71,19 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
             <button
               type="button"
               onClick={handleSearchClick}
-              disabled={isSearching || !query.trim()}
-              className="absolute right-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center h-9 px-4 rounded-xl bg-brand-blue-light text-gray-900 text-sm font-medium hover:bg-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
+              disabled={!isSearching && !query.trim()}
+              className={`absolute right-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center gap-1.5 h-9 px-4 rounded-xl text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap ${
+                isSearching
+                  ? "bg-white/15 text-white hover:bg-white/25"
+                  : "bg-brand-blue-light text-gray-900 hover:bg-white"
+              }`}
             >
-              {isSearching ? <LoadingSpinner /> : AI_SEARCH_LABEL}
+              {isSearching ? (
+                <>
+                  <span className="block w-2.5 h-2.5 rounded-sm bg-current shrink-0" />
+                  정지
+                </>
+              ) : AI_SEARCH_LABEL}
             </button>
           </div>
         </div>

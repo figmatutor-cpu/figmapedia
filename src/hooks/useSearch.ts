@@ -35,6 +35,7 @@ export function useSearch() {
     aiError,
     triggerAISearch: triggerAI,
     clearAIResults,
+    cancelAISearch,
   } = useAISearch();
 
   const debouncedQuery = useDebounce(query, 200);
@@ -87,6 +88,7 @@ export function useSearch() {
     totalCount: index.length,
     searchMode,
     triggerAISearch,
+    cancelAISearch,
     aiError,
     aiSummary,
   };

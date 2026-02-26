@@ -10,7 +10,7 @@ import {
 } from "@/lib/constants";
 
 export function HeroSearch() {
-  const { query, setQuery, triggerAISearch, isAISearching } = useSearchContext();
+  const { query, setQuery, triggerAISearch, isAISearching, cancelAISearch } = useSearchContext();
   const inputRef = useRef<HTMLInputElement>(null);
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState(SEARCH_PLACEHOLDER);
   const typingStateRef = useRef({
@@ -91,6 +91,7 @@ export function HeroSearch() {
       query={query}
       onQueryChange={setQuery}
       onSearch={triggerAISearch}
+      onCancel={cancelAISearch}
       isSearching={isAISearching}
       placeholder={animatedPlaceholder}
       variant="hero"

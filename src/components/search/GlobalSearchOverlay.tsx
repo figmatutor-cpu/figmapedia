@@ -15,6 +15,7 @@ export function GlobalSearchOverlay() {
     closeSearch,
     triggerAISearch,
     isAISearching,
+    cancelAISearch,
     hasSearched,
   } = useSearchContext();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -72,6 +73,7 @@ export function GlobalSearchOverlay() {
         query={query}
         onQueryChange={setQuery}
         onSearch={triggerAISearch}
+        onCancel={cancelAISearch}
         isSearching={isAISearching}
         placeholder={SEARCH_PLACEHOLDER}
         variant="overlay"
