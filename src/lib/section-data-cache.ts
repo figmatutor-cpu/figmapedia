@@ -41,7 +41,8 @@ async function runWithConcurrency<T>(
  * thumbnail 없는 아이템들을 서버에서 미리 resolve (클라이언트 fallback 요청 제거)
  * - item.link 있으면 OG 이미지 먼저 시도
  * - 없거나 실패하면 Notion 페이지 블록 첫 이미지 시도
- * - 각 단계 2초 타임아웃, concurrency로 Notion rate limit 보호
+ * - 각 단계 1.5초 타임아웃, concurrency로 Notion rate limit 보호
+ * - 전체 enrichment는 GLOBAL_TIMEOUT_MS 안에 완료되어야 함 (초과 시 그때까지 처리된 것만 사용)
  */
 async function enrichWithThumbnails(
   items: SearchIndexItem[],
@@ -51,33 +52,38 @@ async function enrichWithThumbnails(
   if (needsFetch.length === 0) return items;
 
   const resolved = new Map<string, string>();
-  const TIMEOUT_MS = 2000;
+  const PER_ITEM_TIMEOUT_MS = 1500;
+  const GLOBAL_TIMEOUT_MS = 5000;
 
   function withTimeout(p: Promise<string | undefined>): Promise<string | undefined> {
     return Promise.race([
       p,
-      new Promise<undefined>((r) => setTimeout(() => r(undefined), TIMEOUT_MS)),
+      new Promise<undefined>((r) => setTimeout(() => r(undefined), PER_ITEM_TIMEOUT_MS)),
     ]);
   }
 
-  await runWithConcurrency(
-    needsFetch,
-    async (item) => {
-      try {
-        let url: string | undefined;
-        if (item.link) {
-          url = await withTimeout(fetchOgImage(item.link));
+  // 전체 enrichment에 글로벌 타임아웃 적용 — 초과 시 그때까지 resolve된 것만 사용
+  await Promise.race([
+    runWithConcurrency(
+      needsFetch,
+      async (item) => {
+        try {
+          let url: string | undefined;
+          if (item.link) {
+            url = await withTimeout(fetchOgImage(item.link));
+          }
+          if (!url) {
+            url = await withTimeout(fetchFirstImageUrl(item.id));
+          }
+          if (url) resolved.set(item.id, url);
+        } catch {
+          /* 실패하면 thumbnail 없이 진행 */
         }
-        if (!url) {
-          url = await withTimeout(fetchFirstImageUrl(item.id));
-        }
-        if (url) resolved.set(item.id, url);
-      } catch {
-        /* 실패하면 thumbnail 없이 진행 */
-      }
-    },
-    concurrency,
-  );
+      },
+      concurrency,
+    ),
+    new Promise<void>((resolve) => setTimeout(resolve, GLOBAL_TIMEOUT_MS)),
+  ]);
 
   return items.map((item) => {
     if (item.thumbnail) return item;
