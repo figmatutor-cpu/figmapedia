@@ -69,6 +69,14 @@ export function Navbar() {
               {item.label}
             </Link>
           ))}
+          <a
+            href="https://www.figmapedia.co.kr/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm leading-none whitespace-nowrap transition-colors text-gray-400 hover:text-white"
+          >
+            피그마 리소스
+          </a>
         </nav>
 
         {/* Right-side actions: search icon + mobile hamburger */}
@@ -127,6 +135,14 @@ export function Navbar() {
               {item.label}
             </Link>
           ))}
+          <a
+            href="https://www.figmapedia.co.kr/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors w-full text-center text-gray-300 hover:text-white"
+          >
+            피그마 리소스
+          </a>
         </nav>
       </div>
     </header>
