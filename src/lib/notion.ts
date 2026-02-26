@@ -119,6 +119,26 @@ export async function fetchFirstImageUrl(pageId: string): Promise<string | undef
   }
 }
 
+/** 페이지 첫 5블록에서 텍스트 추출 (AI 검색 컨텍스트 스니펫용) */
+export async function fetchPageTextSnippet(pageId: string, maxChars = 500): Promise<string> {
+  try {
+    const response: any = await notion.blocks.children.list({
+      block_id: pageId,
+      page_size: 5,
+    });
+    const textTypes = ["paragraph", "heading_1", "heading_2", "heading_3",
+                       "bulleted_list_item", "numbered_list_item", "quote", "callout"];
+    return response.results
+      .filter((b: any) => textTypes.includes(b.type))
+      .map((b: any) => b[b.type]?.rich_text?.map((t: any) => t.plain_text).join("") ?? "")
+      .filter(Boolean)
+      .join(" ")
+      .slice(0, maxChars);
+  } catch {
+    return "";
+  }
+}
+
 /** 외부 URL에서 og:image 메타태그 추출 */
 export async function fetchOgImage(url: string): Promise<string | undefined> {
   try {
