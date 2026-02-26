@@ -37,7 +37,7 @@ export function FloatingButton() {
   }, [open]);
 
   return (
-    <div ref={containerRef} className="fixed bottom-5 right-5 sm:bottom-7 sm:right-7 lg:bottom-9 lg:right-9 z-50 flex flex-col items-end gap-3">
+    <div ref={containerRef} className="fixed bottom-7 right-7 z-50 flex flex-col items-end gap-3">
       {/* 모달 */}
       {open && (
         <div className="w-[305px] sm:w-[335px] rounded-3xl overflow-hidden shadow-2xl shadow-black/40 animate-in fade-in slide-in-from-bottom-4 duration-200">
@@ -106,9 +106,9 @@ export function FloatingButton() {
         )}
         <button
           onClick={() => setOpen((v) => !v)}
-          className="relative flex items-center justify-center rounded-full bg-white text-bg-base shadow-lg shadow-white/20 transition-transform hover:scale-110 active:scale-95 size-12 sm:size-14 lg:size-16"
+          className="relative flex items-center justify-center rounded-full bg-white text-bg-base shadow-lg shadow-white/20 transition-transform hover:scale-110 active:scale-95 size-16"
         >
-          <span className="text-center font-bold leading-tight text-[10px] sm:text-[11px] lg:text-[13px] select-none">
+          <span className="text-center font-bold leading-tight text-[13px] select-none">
             Figma
             <br />
             Pedia
