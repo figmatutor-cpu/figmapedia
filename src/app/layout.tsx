@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import { Navbar } from "@/components/layout/Navbar";
 import { ClientProviders } from "@/components/layout/ClientProviders";
 import { GlobalSearchOverlay } from "@/components/search/GlobalSearchOverlay";
+import { FloatingButton } from "@/components/ui/FloatingButton";
 import "./globals.css";
 
 const pretendard = localFont({
@@ -43,6 +44,7 @@ export default function RootLayout({
           <Navbar />
           <GlobalSearchOverlay />
           {children}
+          <FloatingButton />
         </ClientProviders>
       </body>
     </html>
