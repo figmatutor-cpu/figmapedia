@@ -10,8 +10,9 @@ import {
   AI_SUMMARY_LABEL,
   FALLBACK_RESULTS_MESSAGE,
 } from "@/lib/constants";
+import type { SearchIndexItem } from "@/types";
 
-function AISummaryCard({ summary }: { summary: string }) {
+function AISummaryCard({ summary, sources }: { summary: string; sources?: SearchIndexItem[] }) {
   return (
     <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-4 mb-5">
       <div className="flex items-center gap-1.5 mb-2">
@@ -21,6 +22,32 @@ function AISummaryCard({ summary }: { summary: string }) {
       <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-line">
         {summary}
       </p>
+      {sources && sources.length > 0 && (
+        <div className="mt-3 pt-3 border-t border-blue-500/15">
+          <p className="text-xs text-gray-500 mb-1.5">출처</p>
+          <ul className="space-y-1">
+            {sources.map((item) => {
+              const href = item.link ?? `/entry/${item.id}`;
+              const isExternal = !!item.link;
+              return (
+                <li key={item.id}>
+                  <a
+                    href={href}
+                    target={isExternal ? "_blank" : "_self"}
+                    rel={isExternal ? "noopener noreferrer" : undefined}
+                    className="inline-flex items-center gap-1.5 text-xs text-blue-400/80 hover:text-blue-300 transition-colors"
+                  >
+                    <span className="truncate">{item.title}</span>
+                    {item.section && (
+                      <span className="shrink-0 text-gray-500">· {item.section}</span>
+                    )}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
@@ -79,7 +106,7 @@ export function SearchResults() {
     <div className="space-y-3">
       {/* AI 요약 카드 */}
       {searchMode === "ai" && aiSummary && (
-        <AISummaryCard summary={aiSummary} />
+        <AISummaryCard summary={aiSummary} sources={results.slice(0, 3)} />
       )}
 
       {/* 관련 콘텐츠 헤더 */}
