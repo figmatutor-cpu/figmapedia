@@ -14,6 +14,8 @@ interface VerticalCardProps {
   showTags?: boolean;
   /** 작성자/날짜 표시 여부 */
   showMeta?: boolean;
+  /** true이면 entry.link를 새 탭에서 열기 */
+  externalLink?: boolean;
 }
 
 function isOptimizableUrl(url: string): boolean {
@@ -24,6 +26,7 @@ export function VerticalCard({
   entry,
   showTags = true,
   showMeta = true,
+  externalLink = false,
 }: VerticalCardProps) {
   const displayThumbnail = useThumbnail(entry, true);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -32,6 +35,9 @@ export function VerticalCard({
   useEffect(() => {
     setImageLoaded(false);
   }, [displayThumbnail]);
+
+  const cardClassName =
+    "group flex flex-col rounded-xl border border-white/10 bg-white/5 overflow-hidden hover:border-white/20 hover:bg-white/[0.08] transition-all";
 
   const cardInner = (
     <>
@@ -89,19 +95,32 @@ export function VerticalCard({
     </>
   );
 
+  // 외부 링크 처리
+  if (externalLink && entry.link) {
+    return (
+      <a
+        href={entry.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={cardClassName}
+      >
+        {cardInner}
+      </a>
+    );
+  }
+
+  // 단축키 카드
   if (isShortcut) {
     return (
-      <div className="group flex flex-col rounded-xl border border-white/10 bg-white/5 overflow-hidden cursor-default hover:border-white/20 hover:bg-white/[0.08] transition-all">
+      <div className={`${cardClassName} cursor-default`}>
         {cardInner}
       </div>
     );
   }
 
+  // 기본 내부 링크
   return (
-    <Link
-      href={`/entry/${entry.id}`}
-      className="group flex flex-col rounded-xl border border-white/10 bg-white/5 overflow-hidden hover:border-white/20 hover:bg-white/[0.08] transition-all"
-    >
+    <Link href={`/entry/${entry.id}`} className={cardClassName}>
       {cardInner}
     </Link>
   );
