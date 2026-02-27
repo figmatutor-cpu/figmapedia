@@ -224,6 +224,15 @@ export function SectionPageLayout({
     return cardLayout;
   }, [activeTab, subTabs, cardLayout]);
 
+  // 탭의 externalLink 설정 확인 (entry.link가 있으면 새 탭에서 열기)
+  const resolvedExternalLink = useMemo(() => {
+    if (activeTab && subTabs) {
+      const tab = subTabs.find((t) => t.key === activeTab);
+      return tab?.externalLink ?? false;
+    }
+    return false;
+  }, [activeTab, subTabs]);
+
   // Tab counts
   const tabCounts = useMemo(() => {
     if (!subTabs) return {};
@@ -366,7 +375,7 @@ export function SectionPageLayout({
             {resolvedCardLayout === "grid" ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {displayItems.map((entry) => (
-                  <VerticalCard key={entry.id} entry={entry} />
+                  <VerticalCard key={entry.id} entry={entry} externalLink={resolvedExternalLink} />
                 ))}
               </div>
             ) : (

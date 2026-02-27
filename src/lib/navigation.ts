@@ -17,6 +17,8 @@ export interface SubTab {
   showThumbnail?: boolean;
   /** 카드 레이아웃: grid(세로형) 또는 list(가로형). 페이지 레벨 설정보다 우선 */
   cardLayout?: "list" | "grid";
+  /** entry.link가 있으면 외부 링크로 새 탭에서 열기 */
+  externalLink?: boolean;
 }
 
 export interface NavItem {
@@ -114,11 +116,13 @@ export const NAV_ITEMS: NavItem[] = [
         key: "uxui-articles",
         label: "UXUI 아티클",
         sectionDataKey: "uxui-articles",
+        externalLink: true,
       },
       {
         key: "uxui-blogs",
         label: "기술 & 디자인 블로그",
         sectionDataKey: "uxui-blogs",
+        externalLink: true,
       },
       {
         key: "uxui-terms",
