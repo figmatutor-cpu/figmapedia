@@ -27,16 +27,14 @@ export function VerticalCard({
 }: VerticalCardProps) {
   const displayThumbnail = useThumbnail(entry, true);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const isShortcut = !!entry.shortcut;
 
   useEffect(() => {
     setImageLoaded(false);
   }, [displayThumbnail]);
 
-  return (
-    <Link
-      href={`/entry/${entry.id}`}
-      className="group flex flex-col rounded-xl border border-white/10 bg-white/5 overflow-hidden hover:border-white/20 hover:bg-white/[0.08] transition-all"
-    >
+  const cardInner = (
+    <>
       {/* 썸네일 영역 */}
       <div className="aspect-[4/3] bg-white/6 flex items-center justify-center overflow-hidden relative">
         {displayThumbnail ? (
@@ -82,12 +80,29 @@ export function VerticalCard({
           </div>
         )}
 
-        <h3 className="font-semibold text-gray-100 group-hover:text-blue-400 transition-colors line-clamp-2 text-sm sm:text-base">
+        <h3 className={`font-semibold text-gray-100 transition-colors line-clamp-2 text-sm sm:text-base ${!isShortcut ? "group-hover:text-blue-400" : ""}`}>
           {entry.title}
         </h3>
 
         {showMeta && <EntryMeta author={entry.author} publishedDate={entry.publishedDate} className="mt-auto pt-2" />}
       </div>
+    </>
+  );
+
+  if (isShortcut) {
+    return (
+      <div className="group flex flex-col rounded-xl border border-white/10 bg-white/5 overflow-hidden cursor-default hover:border-white/20 hover:bg-white/[0.08] transition-all">
+        {cardInner}
+      </div>
+    );
+  }
+
+  return (
+    <Link
+      href={`/entry/${entry.id}`}
+      className="group flex flex-col rounded-xl border border-white/10 bg-white/5 overflow-hidden hover:border-white/20 hover:bg-white/[0.08] transition-all"
+    >
+      {cardInner}
     </Link>
   );
 }
