@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { useSearchContext } from "@/components/search/SearchProvider";
 
 const KAKAO_LINK = "https://open.kakao.com/o/gPjVAOXf";
 const YOUTUBE_LINK = "https://www.youtube.com/playlist?list=PLPM-mNLGkfO_UJ2ThrNqnoEIE9j5Ac4bH";
@@ -24,6 +26,12 @@ function CloseIcon() {
 export function FloatingButton() {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { hasSearched, isSearchOpen } = useSearchContext();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
+  // 검색바가 하단에 있을 때 FloatingButton을 위로 이동
+  const isSearchAtBottom = (isHome && hasSearched) || (!isHome && isSearchOpen);
 
   useEffect(() => {
     if (!open) return;
@@ -37,7 +45,7 @@ export function FloatingButton() {
   }, [open]);
 
   return (
-    <div ref={containerRef} className="fixed bottom-7 right-7 z-50 flex flex-col items-end gap-3">
+    <div ref={containerRef} className={`fixed right-7 z-50 flex flex-col items-end gap-3 transition-[bottom] duration-200 ${isSearchAtBottom ? "bottom-[96px]" : "bottom-7"}`}>
       {/* 모달 */}
       {open && (
         <div className="w-[305px] sm:w-[335px] rounded-3xl overflow-hidden shadow-2xl shadow-black/40 animate-in fade-in slide-in-from-bottom-4 duration-200">
