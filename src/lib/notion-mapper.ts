@@ -1,7 +1,22 @@
-import type { Entry, SearchIndexItem, NotionBlock } from "@/types";
+import type { Entry, SearchIndexItem, NotionBlock, RichTextItem } from "@/types";
 
 function extractPlainText(richTextArray: any[]): string {
   return richTextArray?.map((t: any) => t.plain_text).join("") ?? "";
+}
+
+function extractRichText(richTextArray: any[]): RichTextItem[] {
+  if (!richTextArray) return [];
+  return richTextArray.map((t: any) => ({
+    plain_text: t.plain_text ?? "",
+    href: t.href ?? null,
+    annotations: {
+      bold: t.annotations?.bold ?? false,
+      italic: t.annotations?.italic ?? false,
+      strikethrough: t.annotations?.strikethrough ?? false,
+      underline: t.annotations?.underline ?? false,
+      code: t.annotations?.code ?? false,
+    },
+  }));
 }
 
 export function mapNotionPageToEntry(page: any): Entry {
@@ -187,5 +202,6 @@ export function mapNotionBlock(block: any): NotionBlock {
     id: block.id,
     type,
     content: extractBlockText(block),
+    richText: data?.rich_text ? extractRichText(data.rich_text) : undefined,
   };
 }

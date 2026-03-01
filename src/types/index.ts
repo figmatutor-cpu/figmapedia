@@ -38,10 +38,24 @@ export interface AISearchResponse {
   summary?: string;
 }
 
+export interface RichTextItem {
+  plain_text: string;
+  href: string | null;
+  annotations: {
+    bold: boolean;
+    italic: boolean;
+    strikethrough: boolean;
+    underline: boolean;
+    code: boolean;
+  };
+}
+
 export interface NotionBlock {
   id: string;
   type: string;
   content: string;
+  /** Notion rich text array — preserves inline hyperlinks and annotations */
+  richText?: RichTextItem[];
   /** URL for media blocks (image, video, file, pdf, embed, bookmark) */
   mediaUrl?: string;
   /** Caption text for media blocks */
