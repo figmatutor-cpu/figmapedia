@@ -1,6 +1,7 @@
 import { genAI, GEMINI_MODEL } from "@/lib/gemini";
 import { getCachedSearchIndex } from "@/lib/search-index-cache";
 import { embedQuery, searchSimilar } from "@/lib/embeddings";
+import { getGlossaryContext } from "@/lib/figma-glossary";
 import type { AISearchResponse } from "@/types";
 
 /* ── Response cache: same query → cached result for 5 min ── */
@@ -73,6 +74,20 @@ export async function POST(request: Request) {
       })
       .join("\n");
 
+    // 용어집 컨텍스트 로드 (한→영, 영→한 매핑)
+    let glossarySection = "";
+    try {
+      const glossary = getGlossaryContext();
+      glossarySection = `
+=== Figma 용어집 (영문 = 한글) ===
+아래 용어집을 참고하여 검색어의 한국어/영어 변환을 이해하세요.
+예: "오토 레이아웃" = "Auto layout", "컴포넌트" = "Components"
+${glossary}
+`;
+    } catch {
+      // 용어집 로드 실패 시 무시
+    }
+
     const prompt = `당신은 Figmapedia의 검색 어시스턴트입니다. 디자인, IT, UX/UI 관련 한국어 지식 베이스에서 관련 항목을 찾아주세요.
 
 이 지식 베이스는 다음 섹션으로 구성됩니다:
@@ -84,7 +99,9 @@ export async function POST(request: Request) {
 - UXUI 용어: UX/UI 용어 정리
 - Mac/Win 단축키: 피그마 키보드 단축키
 - 플러그인: 유용한 피그마 플러그인
-
+- 피그마 레시피북: 피그마 실무 튜토리얼 (아이콘, 오토 레이아웃, 컴포넌트 등)
+- Figma 용어집: 피그마 영문-한글 용어 매핑
+${glossarySection}
 아래 항목은 벡터 유사도 검색으로 선별된 후보입니다. 각 항목의 실제 내용을 바탕으로 검색어에 대한 정확한 요약과 관련 항목을 선별해주세요.
 각 항목은 "ID|섹션|제목|카테고리|유사도" 형식이며, 대부분 실제 페이지 내용이 포함되어 있습니다.
 
@@ -92,7 +109,7 @@ export async function POST(request: Request) {
 1. 내용 스니펫을 적극 활용하여 검색어와의 실질적 관련성 판단
 2. 제목과 카테고리의 키워드 매칭
 3. 개념적 관련성 (예: "디자인 시스템" → "컴포넌트", "베리어블")
-4. 한국어 유의어/줄임말 (예: "컴포" = "컴포넌트")
+4. 한국어↔영어 용어 매핑 적극 활용 (예: "오토 레이아웃" = "Auto layout", "자동 레이아웃")
 5. 유사도 점수가 높은 항목 우선, 단 내용 관련성이 더 중요
 
 아래 JSON 형식으로만 응답. 다른 텍스트 없이 JSON만:

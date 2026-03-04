@@ -59,7 +59,8 @@ export async function POST(request: NextRequest) {
     }
 
     for (const existing of existingEmbeddings) {
-      if (!notionMap.has(existing.id)) {
+      // "static-" prefix 항목은 정적 파일 임베딩이므로 삭제하지 않음
+      if (!notionMap.has(existing.id) && !existing.id.startsWith("static-")) {
         toDelete.push(existing.id);
       }
     }
