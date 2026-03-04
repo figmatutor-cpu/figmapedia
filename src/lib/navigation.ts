@@ -57,6 +57,7 @@ export const NAV_ITEMS: NavItem[] = [
             "피그잼",
             "피그마버즈",
             "소소한 꿀팁",
+            "AI사용팁",
           ],
         },
       },
