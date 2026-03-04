@@ -177,11 +177,31 @@ ${trimmedQuery}`;
     }
 
     // Map IDs back to full SearchIndexItem (thumbnail, link 등 포함)
-    const index = await getCachedSearchIndex();
-    const indexMap = new Map(index.items.map((item) => [item.id, item]));
-    const results = matchedIds
-      .filter((id) => indexMap.has(id))
-      .map((id) => indexMap.get(id)!);
+    // Notion 429 등으로 인덱스 로드 실패 시 벡터 검색 매치 데이터로 폴백
+    let results: import("@/types").SearchIndexItem[];
+    try {
+      const index = await getCachedSearchIndex();
+      const indexMap = new Map(index.items.map((item) => [item.id, item]));
+      results = matchedIds
+        .filter((id) => indexMap.has(id))
+        .map((id) => indexMap.get(id)!);
+    } catch {
+      const matchMap = new Map(matches.map((m) => [m.id, m]));
+      results = matchedIds
+        .filter((id) => matchMap.has(id))
+        .map((id) => {
+          const m = matchMap.get(id)!;
+          return {
+            id: m.id,
+            title: m.title,
+            categories: m.categories,
+            author: "",
+            link: null,
+            publishedDate: null,
+            section: m.section,
+          };
+        });
+    }
 
     const responseData: AISearchResponse = {
       results,
