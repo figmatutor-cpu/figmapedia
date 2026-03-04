@@ -44,6 +44,52 @@ export const TYPING_ANIMATION = {
   pauseBetween: 500,
 } as const;
 
+// AI 검색 추천 링크 (키워드 매칭 시 결과 하단에 표시)
+export interface RecommendedLink {
+  title: string;
+  url: string;
+}
+
+export interface KeywordRecommendation {
+  keywords: string[];
+  links: RecommendedLink[];
+}
+
+export const KEYWORD_RECOMMENDATIONS: KeywordRecommendation[] = [
+  {
+    keywords: [
+      "템플릿", "무료 템플릿", "피피티", "ppt", "파워포인트",
+      "사업계획서", "슬라이드", "피피티 디자인", "ppt디자인",
+    ],
+    links: [
+      { title: "피그마 슬라이드 템플릿 1", url: "https://www.figmapedia.co.kr/slide/?idx=5" },
+      { title: "피그마 슬라이드 템플릿 2", url: "https://www.figmapedia.co.kr/slide/?idx=2" },
+    ],
+  },
+  {
+    keywords: [
+      "이벤트페이지", "이벤트 페이지", "랜딩페이지", "랜딩 페이지",
+      "랜딩페이지 디자인", "랜딩", "이벤트",
+    ],
+    links: [
+      { title: "랜딩페이지 템플릿", url: "https://www.figmapedia.co.kr/landing/?idx=1" },
+      { title: "이벤트 페이지 템플릿 - 행운의 포춘쿠키", url: "https://www.figmapedia.co.kr/event/?idx=4" },
+      { title: "이벤트 페이지 템플릿 - 크리스마스 어드벤트 캘린더", url: "https://www.figmapedia.co.kr/all/?idx=3" },
+    ],
+  },
+];
+
+export function getRecommendedLinks(query: string): RecommendedLink[] {
+  const q = query.toLowerCase().replace(/\s+/g, "");
+  const matched: RecommendedLink[] = [];
+  for (const rec of KEYWORD_RECOMMENDATIONS) {
+    if (rec.keywords.some((kw) => q.includes(kw.toLowerCase().replace(/\s+/g, "")))) {
+      matched.push(...rec.links);
+    }
+  }
+  return matched;
+}
+
 // 히어로 검색 제안
 export const SEARCH_SUGGESTIONS = [
   "오토 레이아웃",

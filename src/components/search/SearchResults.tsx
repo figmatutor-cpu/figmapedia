@@ -9,24 +9,27 @@ import {
   AI_SEARCHING_MESSAGE,
   AI_SUMMARY_LABEL,
   FALLBACK_RESULTS_MESSAGE,
+  getRecommendedLinks,
 } from "@/lib/constants";
 import type { SearchIndexItem } from "@/types";
 
-function AISummaryCard({ summary, sources }: { summary: string; sources?: SearchIndexItem[] }) {
+function AISummaryCard({ summary, sources, query }: { summary: string; sources?: SearchIndexItem[]; query: string }) {
+  const recommendedLinks = getRecommendedLinks(query);
+
   return (
-    <div className="rounded-xl border border-brand-blue/20 bg-brand-blue/5 p-4 mb-5">
+    <div className="rounded-xl border border-brand-blue-accent/20 bg-brand-blue-accent/5 p-4 mb-5">
       <div className="flex items-center gap-1.5 mb-2">
         <span className="text-sm">✨</span>
-        <span className="text-xs font-medium text-brand-blue">{AI_SUMMARY_LABEL}</span>
+        <span className="text-xs font-medium text-brand-blue-accent">{AI_SUMMARY_LABEL}</span>
       </div>
       <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-line">
         {summary}
       </p>
-      {sources && sources.length > 0 && (
-        <div className="mt-3 pt-3 border-t border-brand-blue/15">
+      {(sources && sources.length > 0) || recommendedLinks.length > 0 ? (
+        <div className="mt-3 pt-3 border-t border-brand-blue-accent/15">
           <p className="text-xs text-gray-500 mb-1.5">출처</p>
           <ul className="space-y-1">
-            {sources.map((item) => {
+            {sources?.map((item) => {
               const href = item.link ?? `/entry/${item.id}`;
               const isExternal = !!item.link;
               return (
@@ -35,7 +38,7 @@ function AISummaryCard({ summary, sources }: { summary: string; sources?: Search
                     href={href}
                     target={isExternal ? "_blank" : "_self"}
                     rel={isExternal ? "noopener noreferrer" : undefined}
-                    className="inline-flex items-center gap-1.5 text-xs text-brand-blue/80 hover:text-brand-blue transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs text-brand-blue-accent/80 hover:text-brand-blue-accent transition-colors"
                   >
                     <span className="truncate">{item.title}</span>
                     {item.section && (
@@ -45,9 +48,22 @@ function AISummaryCard({ summary, sources }: { summary: string; sources?: Search
                 </li>
               );
             })}
+            {recommendedLinks.map((link) => (
+              <li key={link.url}>
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs text-brand-blue-accent/80 hover:text-brand-blue-accent transition-colors"
+                >
+                  <span className="truncate">{link.title}</span>
+                  <span className="shrink-0 text-gray-500">· 추천</span>
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
@@ -67,8 +83,8 @@ export function SearchResults() {
     return (
       <div className="space-y-3">
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-4 h-4 border-2 border-brand-blue border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-brand-blue">{AI_SEARCHING_MESSAGE}</p>
+          <div className="w-4 h-4 border-2 border-brand-blue-accent border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm text-brand-blue-accent">{AI_SEARCHING_MESSAGE}</p>
         </div>
         <Skeleton count={4} />
       </div>
@@ -106,13 +122,13 @@ export function SearchResults() {
     <div className="space-y-3">
       {/* AI 요약 카드 */}
       {searchMode === "ai" && aiSummary && (
-        <AISummaryCard summary={aiSummary} sources={results.slice(0, 3)} />
+        <AISummaryCard summary={aiSummary} sources={results.slice(0, 3)} query={query} />
       )}
 
       {/* 관련 콘텐츠 헤더 */}
       <div className="flex items-center gap-2 mb-4">
         {searchMode === "ai" && (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-xs text-brand-blue">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-brand-blue-accent/10 border border-brand-blue-accent/20 text-xs text-brand-blue-accent">
             {AI_SEARCH_LABEL}
           </span>
         )}
@@ -125,6 +141,7 @@ export function SearchResults() {
       {results.map((entry) => (
         <EntryCard key={entry.id} entry={entry} />
       ))}
+
     </div>
   );
 }
