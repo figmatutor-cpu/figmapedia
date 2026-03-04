@@ -8,6 +8,7 @@ import { VerticalCard } from "@/components/cards/VerticalCard";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SearchIcon } from "@/components/ui/SearchIcon";
+import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import type { SubTab, FilterConfig } from "@/lib/navigation";
 import type { SearchIndexItem } from "@/types";
 
@@ -276,26 +277,15 @@ export function SectionPageLayout({
           {/* Tabs — 모바일: 스와이프, 검색 펼침 시 숨김 / 데스크탑: 항상 표시 */}
           {subTabs && (
             <div className={`${isSearchExpanded ? "hidden xl-nav:flex" : "flex"} flex-1 min-w-0 overflow-hidden`}>
-              <div className="overflow-x-auto pb-5 -mb-5">
-                <div className="flex gap-2 pb-1">
-                {subTabs.map((tab) => (
-                  <button
-                    key={tab.key}
-                    onClick={() => setActiveTab(tab.key)}
-                    className={`px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition-all border ${
-                      activeTab === tab.key
-                        ? "bg-white/10 border-white/20 text-white"
-                        : "bg-white/[0.03] border-white/10 text-gray-400 hover:text-gray-200 hover:border-white/15"
-                    }`}
-                  >
-                    {tab.label}
-                    <span className="ml-1.5 text-xxs opacity-50">
-                      {tabCounts[tab.key] ?? 0}
-                    </span>
-                  </button>
-                ))}
-                </div>
-              </div>
+              <SegmentedControl
+                tabs={subTabs.map((tab) => ({
+                  key: tab.key,
+                  label: tab.label,
+                  count: tabCounts[tab.key] ?? 0,
+                }))}
+                activeTab={activeTab ?? ""}
+                onTabChange={setActiveTab}
+              />
             </div>
           )}
 
