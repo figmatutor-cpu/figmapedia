@@ -14,16 +14,16 @@ import type { SearchIndexItem } from "@/types";
 
 function AISummaryCard({ summary, sources }: { summary: string; sources?: SearchIndexItem[] }) {
   return (
-    <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-4 mb-5">
+    <div className="rounded-xl border border-brand-blue/20 bg-brand-blue/5 p-4 mb-5">
       <div className="flex items-center gap-1.5 mb-2">
         <span className="text-sm">✨</span>
-        <span className="text-xs font-medium text-blue-400">{AI_SUMMARY_LABEL}</span>
+        <span className="text-xs font-medium text-brand-blue">{AI_SUMMARY_LABEL}</span>
       </div>
       <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-line">
         {summary}
       </p>
       {sources && sources.length > 0 && (
-        <div className="mt-3 pt-3 border-t border-blue-500/15">
+        <div className="mt-3 pt-3 border-t border-brand-blue/15">
           <p className="text-xs text-gray-500 mb-1.5">출처</p>
           <ul className="space-y-1">
             {sources.map((item) => {
@@ -35,7 +35,7 @@ function AISummaryCard({ summary, sources }: { summary: string; sources?: Search
                     href={href}
                     target={isExternal ? "_blank" : "_self"}
                     rel={isExternal ? "noopener noreferrer" : undefined}
-                    className="inline-flex items-center gap-1.5 text-xs text-blue-400/80 hover:text-blue-300 transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs text-brand-blue/80 hover:text-brand-blue transition-colors"
                   >
                     <span className="truncate">{item.title}</span>
                     {item.section && (
@@ -67,8 +67,8 @@ export function SearchResults() {
     return (
       <div className="space-y-3">
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-blue-400">{AI_SEARCHING_MESSAGE}</p>
+          <div className="w-4 h-4 border-2 border-brand-blue border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm text-brand-blue">{AI_SEARCHING_MESSAGE}</p>
         </div>
         <Skeleton count={4} />
       </div>
@@ -112,7 +112,7 @@ export function SearchResults() {
       {/* 관련 콘텐츠 헤더 */}
       <div className="flex items-center gap-2 mb-4">
         {searchMode === "ai" && (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs text-blue-400">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-brand-blue/10 border border-brand-blue/20 text-xs text-brand-blue">
             {AI_SEARCH_LABEL}
           </span>
         )}

@@ -86,7 +86,7 @@ export function VerticalCard({
           </div>
         )}
 
-        <h3 className={`font-semibold text-gray-100 transition-colors line-clamp-2 text-sm sm:text-base ${!isShortcut ? "group-hover:text-blue-400" : ""}`}>
+        <h3 className={`font-semibold text-gray-100 transition-colors line-clamp-2 text-sm sm:text-base ${!isShortcut ? "group-hover:text-brand-blue" : ""}`}>
           {entry.title}
         </h3>
 

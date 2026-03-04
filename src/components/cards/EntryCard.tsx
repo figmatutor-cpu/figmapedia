@@ -69,7 +69,7 @@ export function EntryCard({ entry, showThumbnail = false }: EntryCardProps) {
             <Badge key={cat} category={cat} />
           ))}
         </div>
-        <h3 className={`font-semibold text-gray-100 transition-colors ${!isShortcut ? "group-hover:text-blue-400" : ""}`}>
+        <h3 className={`font-semibold text-gray-100 transition-colors ${!isShortcut ? "group-hover:text-brand-blue" : ""}`}>
           {entry.title}
         </h3>
         <EntryMeta author={entry.author} publishedDate={entry.publishedDate} className="mt-2" />
@@ -81,7 +81,7 @@ export function EntryCard({ entry, showThumbnail = false }: EntryCardProps) {
           className={`cursor-pointer shrink-0 px-3 py-1.5 rounded-lg bg-white/[0.07] border text-sm font-mono whitespace-normal break-words sm:whitespace-nowrap transition-colors ${
             copied
               ? "border-green-400/50 text-green-300"
-              : "border-white/10 text-gray-300 group-hover:border-blue-400/50 group-hover:text-blue-300"
+              : "border-white/10 text-gray-300 group-hover:border-brand-blue/50 group-hover:text-brand-blue"
           }`}
         >
           {copied ? "복사됨!" : entry.shortcut}
