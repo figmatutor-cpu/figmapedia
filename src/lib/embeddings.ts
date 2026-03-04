@@ -7,10 +7,14 @@ import type { SearchIndexItem, EmbeddingMatch } from "@/types";
 
 const embeddingModel = genAI.getGenerativeModel({ model: EMBEDDING_MODEL });
 
+const EMBEDDING_DIMENSIONS = 768;
+
 async function embedText(text: string, taskType: TaskType): Promise<number[]> {
   const result = await embeddingModel.embedContent({
     content: { parts: [{ text }], role: "user" },
     taskType,
+    // @ts-expect-error -- outputDimensionality is supported but not in SDK types
+    outputDimensionality: EMBEDDING_DIMENSIONS,
   });
   return result.embedding.values;
 }
