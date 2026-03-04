@@ -119,7 +119,7 @@ export function Navbar() {
       {/* Mobile dropdown — below 1200px */}
       <div
         className={`xl-nav:hidden flex flex-col items-center w-full transition-all ease-in-out duration-300 overflow-hidden
-                     ${isOpen ? "max-h-[1000px] opacity-100 pt-4" : "max-h-0 opacity-0 pt-0 pointer-events-none"}`}
+                     ${isOpen ? "max-h-[1000px] opacity-100 pt-4 pb-5" : "max-h-0 opacity-0 pt-0 pb-0 pointer-events-none"}`}
       >
         <nav className="flex flex-col items-center space-y-4 text-base w-full">
           {NAV_ITEMS.map((item) => (

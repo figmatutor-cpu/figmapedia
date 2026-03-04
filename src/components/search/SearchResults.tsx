@@ -28,17 +28,17 @@ function AISummaryCard({ summary, sources, query }: { summary: string; sources?:
       {(sources && sources.length > 0) || recommendedLinks.length > 0 ? (
         <div className="mt-3 pt-3 border-t border-brand-blue-accent/15">
           <p className="text-xs text-gray-500 mb-1.5">출처</p>
-          <ul className="space-y-1">
+          <ul className="space-y-1 min-w-0">
             {sources?.map((item) => {
               const href = item.link ?? `/entry/${item.id}`;
               const isExternal = !!item.link;
               return (
-                <li key={item.id}>
+                <li key={item.id} className="min-w-0">
                   <a
                     href={href}
                     target={isExternal ? "_blank" : "_self"}
                     rel={isExternal ? "noopener noreferrer" : undefined}
-                    className="inline-flex items-center gap-1.5 text-xs text-brand-blue-accent/80 hover:text-brand-blue-accent transition-colors"
+                    className="flex items-center gap-1.5 text-xs text-brand-blue-accent/80 hover:text-brand-blue-accent transition-colors min-w-0"
                   >
                     <span className="truncate">{item.title}</span>
                     {item.section && (
@@ -49,12 +49,12 @@ function AISummaryCard({ summary, sources, query }: { summary: string; sources?:
               );
             })}
             {recommendedLinks.map((link) => (
-              <li key={link.url}>
+              <li key={link.url} className="min-w-0">
                 <a
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs text-brand-blue-accent/80 hover:text-brand-blue-accent transition-colors"
+                  className="flex items-center gap-1.5 text-xs text-brand-blue-accent/80 hover:text-brand-blue-accent transition-colors min-w-0"
                 >
                   <span className="truncate">{link.title}</span>
                   <span className="shrink-0 text-gray-500">· 추천</span>
