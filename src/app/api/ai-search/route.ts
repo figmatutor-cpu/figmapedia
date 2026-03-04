@@ -131,8 +131,17 @@ ${trimmedQuery}`;
         thinkingConfig: { thinkingBudget: 0 },
       },
     });
-    const result = await model.generateContent(prompt);
-    const responseText = result.response.text().trim();
+
+    // Gemini 호출 (1회 재시도)
+    let responseText: string;
+    try {
+      const result = await model.generateContent(prompt);
+      responseText = result.response.text().trim();
+    } catch (firstErr) {
+      console.warn("Gemini first attempt failed, retrying:", firstErr);
+      const result = await model.generateContent(prompt);
+      responseText = result.response.text().trim();
+    }
 
     let matchedIds: string[];
     let summary: string | undefined;
@@ -186,8 +195,10 @@ ${trimmedQuery}`;
     return Response.json(responseData);
   } catch (error) {
     console.error("AI search failed:", error);
+    const message =
+      error instanceof Error ? error.message : "Unknown error";
     return Response.json(
-      { error: "AI 검색에 실패했습니다." },
+      { error: "AI 검색에 실패했습니다.", detail: message },
       { status: 500 }
     );
   }

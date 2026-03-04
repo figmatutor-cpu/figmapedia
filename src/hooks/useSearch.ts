@@ -78,7 +78,9 @@ export function useSearch() {
     await triggerAI(query);
   }, [query, triggerAI]);
 
-  const results = searchMode === "ai" ? aiResults : fuseResults;
+  // AI 실패 시 Fuse.js 키워드 결과로 폴백
+  const results =
+    searchMode === "ai" && !aiError ? aiResults : fuseResults;
 
   return {
     query,
