@@ -47,14 +47,18 @@ export function useSearch() {
 
 
   // When query text changes AFTER an AI search, revert to instant mode
-  // Only revert if the user actually typed something different
+  // Skip if AI search is still in progress (debounce timing race condition 방지)
   useEffect(() => {
-    if (searchMode === "ai" && debouncedQuery !== aiQueryRef.current) {
+    if (
+      searchMode === "ai" &&
+      !isAISearching &&
+      debouncedQuery !== aiQueryRef.current
+    ) {
       setSearchMode("instant");
       clearAIResults();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedQuery]);
+  }, [debouncedQuery, isAISearching]);
 
   const fuseResults = useMemo(() => {
     if (!debouncedQuery.trim()) return [];
@@ -70,13 +74,11 @@ export function useSearch() {
     if (!query.trim()) return;
     setHasSearched(true);
     setSearchMode("ai");
-    aiQueryRef.current = query;
+    aiQueryRef.current = query.trim();
     await triggerAI(query);
   }, [query, triggerAI]);
 
-  const results = searchMode === "ai" && aiResults.length > 0
-    ? aiResults
-    : fuseResults;
+  const results = searchMode === "ai" ? aiResults : fuseResults;
 
   return {
     query,
