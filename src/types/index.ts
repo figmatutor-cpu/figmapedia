@@ -22,6 +22,17 @@ export interface SearchIndexItem {
   thumbnail?: string;
   /** 소속 섹션 라벨 (AI 검색용) */
   section?: string;
+  /** Notion 페이지 마지막 수정 시각 (임베딩 동기화용) */
+  lastEditedTime?: string;
+}
+
+export interface EmbeddingMatch {
+  id: string;
+  section: string;
+  title: string;
+  categories: string[];
+  fullText: string;
+  similarity: number;
 }
 
 export interface SearchIndex {

@@ -21,8 +21,16 @@ export function mapNotionPageToEntry(page: any): Entry {
 }
 
 export function entryToSearchIndexItem(entry: Entry): SearchIndexItem {
-  const { lastEditedTime, ...indexItem } = entry;
-  return indexItem;
+  return {
+    id: entry.id,
+    title: entry.title,
+    categories: entry.categories,
+    author: entry.author,
+    link: entry.link,
+    publishedDate: entry.publishedDate,
+    thumbnail: entry.thumbnail,
+    lastEditedTime: entry.lastEditedTime,
+  };
 }
 
 /* ── Mappers for separate Notion databases ── */
@@ -38,6 +46,7 @@ export function mapPromptPage(page: any): SearchIndexItem {
     link: null,
     publishedDate: null,
     thumbnail: extractFileUrl(page.cover),
+    lastEditedTime: page.last_edited_time,
   };
 }
 
@@ -52,6 +61,7 @@ export function mapKioskPage(page: any): SearchIndexItem {
     link: null,
     publishedDate: props["날짜"]?.date?.start ?? null,
     thumbnail: extractFileUrl(page.cover),
+    lastEditedTime: page.last_edited_time,
   };
 }
 
@@ -66,6 +76,7 @@ export function mapArticlePage(page: any): SearchIndexItem {
     link: props["링크"]?.url ?? null,
     publishedDate: props["날짜"]?.date?.start ?? null,
     thumbnail: extractFileUrl(page.cover),
+    lastEditedTime: page.last_edited_time,
   };
 }
 
@@ -80,6 +91,7 @@ export function mapUxuiTermPage(page: any): SearchIndexItem {
     link: null,
     publishedDate: props["날짜"]?.date?.start ?? null,
     thumbnail: extractFileUrl(page.cover),
+    lastEditedTime: page.last_edited_time,
   };
 }
 
@@ -94,6 +106,7 @@ export function mapPluginPage(page: any): SearchIndexItem {
     link: null,
     publishedDate: props["진행일자"]?.date?.start ?? null,
     thumbnail: extractFileUrl(page.cover),
+    lastEditedTime: page.last_edited_time,
   };
 }
 
@@ -108,6 +121,7 @@ export function mapShortcutPage(page: any): SearchIndexItem {
     link: null,
     publishedDate: null,
     shortcut: extractPlainText(props["단축키"]?.rich_text) || undefined,
+    lastEditedTime: page.last_edited_time,
   };
 }
 

@@ -29,6 +29,16 @@ export async function POST(request: NextRequest) {
     revalidateTag("search-index", "max");
     revalidateTag("section-data", "max");
 
+    // 임베딩 동기화 트리거 (fire-and-forget)
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    fetch(`${baseUrl}/api/embeddings/sync`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.REVALIDATION_SECRET}`,
+        "Content-Type": "application/json",
+      },
+    }).catch(() => {});
+
     return Response.json({
       revalidated: true,
       tags: ["search-index", "section-data"],

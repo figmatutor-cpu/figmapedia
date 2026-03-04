@@ -1,11 +1,10 @@
-import Fuse, { type IFuseOptions } from "fuse.js";
 import { genAI, GEMINI_MODEL } from "@/lib/gemini";
 import { getCachedSearchIndex } from "@/lib/search-index-cache";
-import { fetchPageTextSnippet } from "@/lib/notion";
-import type { SearchIndexItem, AISearchResponse } from "@/types";
+import { embedQuery, searchSimilar } from "@/lib/embeddings";
+import type { AISearchResponse } from "@/types";
 
 /* ── Response cache: same query → cached result for 5 min ── */
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+const CACHE_TTL = 5 * 60 * 1000;
 const responseCache = new Map<
   string,
   { data: AISearchResponse; expiresAt: number }
@@ -22,7 +21,6 @@ function getCachedResponse(query: string): AISearchResponse | null {
 }
 
 function setCachedResponse(query: string, data: AISearchResponse) {
-  // Evict old entries if cache grows too large
   if (responseCache.size > 200) {
     const now = Date.now();
     for (const [key, val] of responseCache) {
@@ -30,31 +28,6 @@ function setCachedResponse(query: string, data: AISearchResponse) {
     }
   }
   responseCache.set(query, { data, expiresAt: Date.now() + CACHE_TTL });
-}
-
-/* ── Fuse.js pre-filter: narrow down candidates before sending to Gemini ── */
-const PRE_FILTER_LIMIT = 80;
-
-const FUSE_OPTIONS: IFuseOptions<SearchIndexItem> = {
-  keys: [
-    { name: "title", weight: 0.5 },
-    { name: "categories", weight: 0.25 },
-    { name: "section", weight: 0.15 },
-    { name: "author", weight: 0.1 },
-  ],
-  threshold: 0.5, // Lenient to capture cross-section results
-  distance: 300,
-  minMatchCharLength: 1,
-  includeScore: true,
-};
-
-function preFilterItems(
-  items: SearchIndexItem[],
-  query: string
-): SearchIndexItem[] {
-  const fuse = new Fuse(items, FUSE_OPTIONS);
-  const results = fuse.search(query, { limit: PRE_FILTER_LIMIT });
-  return results.map((r) => r.item);
 }
 
 /* ── API Route ── */
@@ -84,60 +57,21 @@ export async function POST(request: Request) {
       return Response.json(cached);
     }
 
-    const index = await getCachedSearchIndex();
+    // Step 1: 쿼리를 벡터 임베딩으로 변환
+    const queryEmbedding = await embedQuery(trimmedQuery);
 
-    // Step 1: Pre-filter with Fuse.js to narrow candidates
-    const candidates = preFilterItems(index.items, trimmedQuery);
+    // Step 2: Supabase에서 벡터 유사도 검색 (상위 20개)
+    const matches = await searchSimilar(queryEmbedding, 20);
 
-    // If Fuse found very few results, proportional sampling from each section
-    let itemsForAI: SearchIndexItem[];
-    if (candidates.length >= 5) {
-      itemsForAI = candidates;
-    } else {
-      const sections = new Map<string, SearchIndexItem[]>();
-      for (const item of index.items) {
-        const sec = item.section ?? "기타";
-        if (!sections.has(sec)) sections.set(sec, []);
-        sections.get(sec)!.push(item);
-      }
-      const perSection = Math.max(5, Math.floor(PRE_FILTER_LIMIT / sections.size));
-      itemsForAI = [...sections.values()].flatMap((items) =>
-        items.slice(0, perSection)
-      );
-    }
-
-    // Step 2: Fetch content snippets for top candidates (non-external-link items only)
-    const SNIPPET_FETCH_LIMIT = 10;
-    const snippetCandidates = itemsForAI
-      .filter((item) => !item.link) // 외부링크 항목은 블록에 실질 내용 없음
-      .slice(0, SNIPPET_FETCH_LIMIT);
-
-    const snippetResults = await Promise.allSettled(
-      snippetCandidates.map((item) =>
-        Promise.race([
-          fetchPageTextSnippet(item.id),
-          new Promise<string>((resolve) => setTimeout(() => resolve(""), 3000)),
-        ])
-      )
-    );
-
-    const contentMap = new Map<string, string>();
-    snippetResults.forEach((result, i) => {
-      if (result.status === "fulfilled" && result.value) {
-        contentMap.set(snippetCandidates[i].id, result.value);
-      }
-    });
-
-    // Step 3: Build compact summary for Gemini — include content snippet when available
-    const entrySummary = itemsForAI
-      .map((item) => {
-        const base = `${item.id}|${item.section ?? ""}|${item.title}|${item.categories.join(",")}`;
-        const snippet = contentMap.get(item.id);
-        return snippet ? `${base}\n  내용: ${snippet}` : base;
+    // Step 3: 검색된 문서의 전문 텍스트로 Gemini 프롬프트 구성
+    const entrySummary = matches
+      .map((m) => {
+        const base = `${m.id}|${m.section}|${m.title}|${m.categories.join(",")}|유사도:${m.similarity.toFixed(2)}`;
+        return m.fullText
+          ? `${base}\n  내용: ${m.fullText.slice(0, 2000)}`
+          : base;
       })
       .join("\n");
-
-    const hasSnippets = contentMap.size > 0;
 
     const prompt = `당신은 Figmapedia의 검색 어시스턴트입니다. 디자인, IT, UX/UI 관련 한국어 지식 베이스에서 관련 항목을 찾아주세요.
 
@@ -151,20 +85,20 @@ export async function POST(request: Request) {
 - Mac/Win 단축키: 피그마 키보드 단축키
 - 플러그인: 유용한 피그마 플러그인
 
-아래 항목 목록에서 검색어와 의미적으로 관련된 항목의 ID를 찾고, 검색어에 대한 요약도 작성해주세요.
-각 항목은 "ID|섹션|제목|카테고리" 형식이며, 일부 항목에는 실제 노션 페이지 내용 스니펫이 포함되어 있습니다.
+아래 항목은 벡터 유사도 검색으로 선별된 후보입니다. 각 항목의 실제 내용을 바탕으로 검색어에 대한 정확한 요약과 관련 항목을 선별해주세요.
+각 항목은 "ID|섹션|제목|카테고리|유사도" 형식이며, 대부분 실제 페이지 내용이 포함되어 있습니다.
 
 고려사항:
-1. 제목 키워드 매칭
-2. 섹션 및 카테고리 관련성
+1. 내용 스니펫을 적극 활용하여 검색어와의 실질적 관련성 판단
+2. 제목과 카테고리의 키워드 매칭
 3. 개념적 관련성 (예: "디자인 시스템" → "컴포넌트", "베리어블")
 4. 한국어 유의어/줄임말 (예: "컴포" = "컴포넌트")
-${hasSnippets ? "5. '내용:' 스니펫이 있는 항목의 실제 내용을 적극 활용하여 요약 작성" : ""}
+5. 유사도 점수가 높은 항목 우선, 단 내용 관련성이 더 중요
 
 아래 JSON 형식으로만 응답. 다른 텍스트 없이 JSON만:
 {"summary": "검색어에 대한 핵심 요약 (한국어, 2~4문장)", "ids": ["id1", "id2"]}
 
-- summary: ${hasSnippets ? "관련 항목들의 실제 내용을 취합하여 검색어에 대해 구체적으로 요약. 내용 스니펫이 있으면 그 내용을 바탕으로 작성" : "검색어가 무엇인지, 어떤 맥락에서 사용되는지 핵심만 요약"}
+- summary: 관련 항목들의 실제 내용을 취합하여 검색어에 대해 구체적으로 요약
 - ids: 관련성 순으로 최대 20개. 관련 없으면 빈 배열 []
 
 === 항목 목록 ===
@@ -176,7 +110,6 @@ ${trimmedQuery}`;
     const model = genAI.getGenerativeModel({
       model: GEMINI_MODEL,
       generationConfig: {
-        // Disable thinking/reasoning to speed up response (this is a simple matching task)
         // @ts-expect-error -- thinkingConfig is supported by Gemini 2.5 but not yet in SDK types
         thinkingConfig: { thinkingBudget: 0 },
       },
@@ -189,17 +122,14 @@ ${trimmedQuery}`;
     try {
       const parsed = JSON.parse(responseText);
       if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
-        // New format: { summary, ids }
         summary = typeof parsed.summary === "string" ? parsed.summary : undefined;
         matchedIds = Array.isArray(parsed.ids) ? parsed.ids : [];
       } else if (Array.isArray(parsed)) {
-        // Legacy fallback: ["id1", "id2"]
         matchedIds = parsed;
       } else {
         matchedIds = [];
       }
     } catch {
-      // Try to extract JSON object or array from response
       const objMatch = responseText.match(/\{[\s\S]*\}/);
       if (objMatch) {
         try {
@@ -220,7 +150,8 @@ ${trimmedQuery}`;
       matchedIds = [];
     }
 
-    // Map IDs back to full items (look up from full index, not just candidates)
+    // Map IDs back to full SearchIndexItem (thumbnail, link 등 포함)
+    const index = await getCachedSearchIndex();
     const indexMap = new Map(index.items.map((item) => [item.id, item]));
     const results = matchedIds
       .filter((id) => indexMap.has(id))
@@ -233,7 +164,6 @@ ${trimmedQuery}`;
       summary,
     };
 
-    // Cache the response
     setCachedResponse(trimmedQuery, responseData);
 
     return Response.json(responseData);
