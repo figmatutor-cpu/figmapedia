@@ -106,6 +106,7 @@ export async function fetchFirstImageUrl(pageId: string): Promise<string | undef
       page_size: 100,
     });
 
+    // 1단계: 최상위 블록에서 이미지 검색
     for (const block of response.results) {
       if (block.type === "image") {
         const data = block.image;
@@ -113,6 +114,40 @@ export async function fetchFirstImageUrl(pageId: string): Promise<string | undef
         if (data?.type === "external") return data.external?.url;
       }
     }
+
+    // 2단계: 중첩 블록(column_list, column, toggle 등) 안에서 이미지 검색
+    const NESTED_TYPES = ["column_list", "column", "synced_block", "toggle", "callout"];
+    for (const block of response.results) {
+      if (!NESTED_TYPES.includes(block.type) || !block.has_children) continue;
+      try {
+        const children: any = await notion.blocks.children.list({
+          block_id: block.id,
+          page_size: 50,
+        });
+        for (const child of children.results) {
+          if (child.type === "image") {
+            const data = child.image;
+            if (data?.type === "file") return data.file?.url;
+            if (data?.type === "external") return data.external?.url;
+          }
+          // column_list → column → image (3단계)
+          if (NESTED_TYPES.includes(child.type) && child.has_children) {
+            const grandchildren: any = await notion.blocks.children.list({
+              block_id: child.id,
+              page_size: 20,
+            });
+            for (const gc of grandchildren.results) {
+              if (gc.type === "image") {
+                const data = gc.image;
+                if (data?.type === "file") return data.file?.url;
+                if (data?.type === "external") return data.external?.url;
+              }
+            }
+          }
+        }
+      } catch { /* 중첩 블록 실패 시 다음으로 */ }
+    }
+
     return undefined;
   } catch {
     return undefined;
