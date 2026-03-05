@@ -1,56 +1,67 @@
 import type { NotionBlock } from "@/types";
 import { CodeBlock } from "./CodeBlock";
 
+/** \n을 <br>로 변환 — Notion Shift+Enter(소프트 줄바꿈) 대응 */
+function renderContent(text: string): React.ReactNode {
+  if (!text.includes("\n")) return text;
+  return text.split("\n").map((line, i, arr) => (
+    <span key={i}>
+      {line}
+      {i < arr.length - 1 && <br />}
+    </span>
+  ));
+}
+
 function RenderBlock({ block }: { block: NotionBlock }) {
   switch (block.type) {
     case "paragraph":
       if (!block.content) return <div className="h-4" />;
-      return <p className="text-gray-300 leading-relaxed mb-4">{block.content}</p>;
+      return <p className="text-gray-300 leading-relaxed mb-4">{renderContent(block.content)}</p>;
 
     case "heading_1":
       return (
         <h1 className="text-2xl font-bold text-white mt-8 mb-4">
-          {block.content}
+          {renderContent(block.content)}
         </h1>
       );
 
     case "heading_2":
       return (
         <h2 className="text-xl font-bold text-white mt-6 mb-3">
-          {block.content}
+          {renderContent(block.content)}
         </h2>
       );
 
     case "heading_3":
       return (
         <h3 className="text-lg font-semibold text-gray-100 mt-5 mb-2">
-          {block.content}
+          {renderContent(block.content)}
         </h3>
       );
 
     case "bulleted_list_item":
       return (
-        <li className="text-gray-300 ml-5 list-disc mb-1">{block.content}</li>
+        <li className="text-gray-300 ml-5 list-disc mb-1">{renderContent(block.content)}</li>
       );
 
     case "numbered_list_item":
       return (
         <li className="text-gray-300 ml-5 list-decimal mb-1">
-          {block.content}
+          {renderContent(block.content)}
         </li>
       );
 
     case "quote":
       return (
         <blockquote className="border-l-4 border-white/20 pl-4 py-1 my-4 text-gray-400 italic">
-          {block.content}
+          {renderContent(block.content)}
         </blockquote>
       );
 
     case "callout":
       return (
         <div className="bg-white/5 border border-white/10 rounded-lg p-4 my-4 text-gray-300">
-          {block.content}
+          {renderContent(block.content)}
         </div>
       );
 
@@ -178,7 +189,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
 
     default:
       if (block.content) {
-        return <p className="text-gray-300 mb-4">{block.content}</p>;
+        return <p className="text-gray-300 mb-4">{renderContent(block.content)}</p>;
       }
       return null;
   }
