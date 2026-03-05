@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import { Navbar } from "@/components/layout/Navbar";
 import { ClientProviders } from "@/components/layout/ClientProviders";
 import { GlobalSearchOverlay } from "@/components/search/GlobalSearchOverlay";
+import { FooterWrapper } from "@/components/layout/FooterWrapper";
 import { FloatingButton } from "@/components/ui/FloatingButton";
 import "./globals.css";
 
@@ -44,6 +45,7 @@ export default function RootLayout({
           <Navbar />
           <GlobalSearchOverlay />
           {children}
+          <FooterWrapper />
           <FloatingButton />
         </ClientProviders>
       </body>

@@ -25,6 +25,8 @@ function CloseIcon() {
 
 export function FloatingButton() {
   const [open, setOpen] = useState(false);
+  const [footerVisible, setFooterVisible] = useState(false);
+  const [footerOffset, setFooterOffset] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const { hasSearched, isSearchOpen } = useSearchContext();
   const pathname = usePathname();
@@ -32,6 +34,48 @@ export function FloatingButton() {
 
   // 검색바가 하단에 있을 때 FloatingButton을 위로 이동
   const isSearchAtBottom = (isHome && hasSearched) || (!isHome && isSearchOpen);
+
+  // 푸터 가시성 감지 → FAB 위치 조정
+  useEffect(() => {
+    const footer = document.getElementById("site-footer");
+    if (!footer) return;
+
+    let isFooterInView = false;
+
+    function updateOffset() {
+      const rect = footer!.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        setFooterVisible(true);
+        setFooterOffset(window.innerHeight - rect.top + 32);
+      } else {
+        setFooterVisible(false);
+      }
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isFooterInView = entry.isIntersecting;
+        if (isFooterInView) {
+          updateOffset();
+          window.addEventListener("scroll", handleScroll, { passive: true });
+        } else {
+          setFooterVisible(false);
+          window.removeEventListener("scroll", handleScroll);
+        }
+      },
+      { threshold: 0 }
+    );
+
+    function handleScroll() {
+      if (isFooterInView) updateOffset();
+    }
+
+    observer.observe(footer);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     if (!open) return;
@@ -44,8 +88,14 @@ export function FloatingButton() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, [open]);
 
+  const bottomValue = footerVisible
+    ? `${footerOffset}px`
+    : isSearchAtBottom
+      ? "96px"
+      : "28px";
+
   return (
-    <div ref={containerRef} className={`fixed right-7 z-50 flex flex-col items-end gap-3 transition-[bottom] duration-200 ${isSearchAtBottom ? "bottom-[96px]" : "bottom-7"}`}>
+    <div ref={containerRef} style={{ bottom: bottomValue }} className="fixed right-7 z-50 flex flex-col items-end gap-3 transition-[bottom] duration-200">
       {/* 모달 */}
       {open && (
         <div className="w-[305px] sm:w-[335px] rounded-3xl overflow-hidden shadow-2xl shadow-black/40 animate-in fade-in slide-in-from-bottom-4 duration-200">
