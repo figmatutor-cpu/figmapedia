@@ -6,6 +6,7 @@ import { useSearchContext } from "@/components/search/SearchProvider";
 
 const KAKAO_LINK = "https://open.kakao.com/o/gPjVAOXf";
 const YOUTUBE_LINK = "https://www.youtube.com/playlist?list=PLPM-mNLGkfO_UJ2ThrNqnoEIE9j5Ac4bH";
+const DONATE_LINK = "https://buymeacoffee.com/figmapedia";
 
 function ChevronRight() {
   return (
@@ -141,6 +142,20 @@ export function FloatingButton() {
                 className="flex items-center gap-3 bg-[#2a2a36] rounded-xl p-3 hover:bg-[#333340] transition-colors group"
               >
                 <span className="flex-1 text-[15px] text-white">라이브 보러가기</span>
+                <ChevronRight />
+              </a>
+            </div>
+
+            {/* 후원하기 */}
+            <div>
+              <p className="text-white text-[15px] font-bold mb-2 ml-1">후원하기</p>
+              <a
+                href={DONATE_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-[#2a2a36] rounded-xl p-3 hover:bg-[#333340] transition-colors group"
+              >
+                <span className="flex-1 text-[15px] text-white">피그마 피디아 팀에게 커피 사기</span>
                 <ChevronRight />
               </a>
             </div>
