@@ -93,7 +93,13 @@ export function Navbar() {
               onClick={toggleSearch}
               aria-label={isSearchOpen ? "검색 닫기" : "검색 열기"}
             >
-              <SearchIcon className="w-[18px] h-[18px]" />
+              {isSearchOpen ? (
+                <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <SearchIcon className="w-[18px] h-[18px]" />
+              )}
             </button>
           )}
 
