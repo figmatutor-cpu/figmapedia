@@ -161,7 +161,7 @@ export function mapNotionBlock(block: any): NotionBlock {
       type,
       content: "",
       mediaUrl: extractFileUrl(data),
-      caption: extractCaption(data),
+      caption: extractCaption(data) || data?.name || undefined,
     };
   }
 
