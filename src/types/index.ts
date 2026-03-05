@@ -59,6 +59,10 @@ export interface NotionBlock {
   caption?: string;
   /** 코드 블록 언어 (e.g. "javascript", "python") */
   language?: string;
+  /** to_do 블록 체크 상태 */
+  checked?: boolean;
+  /** callout 블록 아이콘 (이모지 또는 외부 이미지 URL) */
+  icon?: string;
   children?: NotionBlock[];
 }
 

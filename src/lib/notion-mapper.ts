@@ -150,9 +150,20 @@ function extractCaption(data: any): string | undefined {
   return extractPlainText(data.caption);
 }
 
+function extractIcon(data: any): string | undefined {
+  if (!data?.icon) return undefined;
+  if (data.icon.type === "emoji") return data.icon.emoji;
+  if (data.icon.type === "external") return data.icon.external?.url;
+  if (data.icon.type === "file") return data.icon.file?.url;
+  return undefined;
+}
+
 export function mapNotionBlock(block: any): NotionBlock {
   const type = block.type;
   const data = block[type];
+  const children = block.__children
+    ? (block.__children as any[]).map(mapNotionBlock)
+    : undefined;
 
   // Media blocks: image, video, file, pdf
   if (type === "image" || type === "video" || type === "file" || type === "pdf") {
@@ -161,7 +172,7 @@ export function mapNotionBlock(block: any): NotionBlock {
       type,
       content: "",
       mediaUrl: extractFileUrl(data),
-      caption: extractCaption(data),
+      caption: extractCaption(data) || data?.name || undefined,
     };
   }
 
@@ -197,9 +208,85 @@ export function mapNotionBlock(block: any): NotionBlock {
     };
   }
 
+  // To-do block: preserve checked state
+  if (type === "to_do") {
+    return {
+      id: block.id,
+      type,
+      content: extractBlockText(block),
+      checked: data?.checked ?? false,
+      children,
+    };
+  }
+
+  // Callout block: preserve icon
+  if (type === "callout") {
+    return {
+      id: block.id,
+      type,
+      content: extractBlockText(block),
+      icon: extractIcon(block),
+      children,
+    };
+  }
+
+  // Toggle block: header text + children
+  if (type === "toggle") {
+    return {
+      id: block.id,
+      type,
+      content: extractBlockText(block),
+      children,
+    };
+  }
+
+  // column_list / column: children only (no own text)
+  if (type === "column_list" || type === "column") {
+    return {
+      id: block.id,
+      type,
+      content: "",
+      children,
+    };
+  }
+
+  // Table: children are table_row blocks
+  if (type === "table") {
+    return {
+      id: block.id,
+      type,
+      content: "",
+      children,
+    };
+  }
+
+  // Table row: cells are rich_text arrays
+  if (type === "table_row") {
+    const cells: string[] = (data?.cells ?? []).map((cell: any[]) =>
+      extractPlainText(cell)
+    );
+    return {
+      id: block.id,
+      type,
+      content: cells.join("\t"),
+    };
+  }
+
+  // heading 블록 (children 포함 가능)
+  if (type === "heading_1" || type === "heading_2" || type === "heading_3") {
+    return {
+      id: block.id,
+      type,
+      content: extractBlockText(block),
+      children: children?.length ? children : undefined,
+    };
+  }
+
+  // 그 외 블록 (children 포함 가능)
   return {
     id: block.id,
     type,
     content: extractBlockText(block),
+    children: children?.length ? children : undefined,
   };
 }

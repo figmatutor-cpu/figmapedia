@@ -80,22 +80,50 @@ export async function fetchEntryById(pageId: string) {
   return response;
 }
 
-export async function fetchPageBlocks(pageId: string) {
+/** children을 재귀적으로 fetch해야 하는 블록 타입 */
+const NESTED_BLOCK_TYPES = new Set([
+  "toggle",
+  "callout",
+  "quote",
+  "column_list",
+  "column",
+  "bulleted_list_item",
+  "numbered_list_item",
+  "synced_block",
+  "table",
+  "heading_1",
+  "heading_2",
+  "heading_3",
+]);
+
+async function fetchBlockChildren(blockId: string): Promise<any[]> {
   const blocks: any[] = [];
   let cursor: string | undefined = undefined;
 
   do {
     const response: any = await notion.blocks.children.list({
-      block_id: pageId,
+      block_id: blockId,
       start_cursor: cursor,
       page_size: 100,
     });
-
     blocks.push(...response.results);
     cursor = response.has_more ? response.next_cursor ?? undefined : undefined;
   } while (cursor);
 
+  // has_children인 블록은 재귀적으로 children fetch
+  await Promise.all(
+    blocks.map(async (block) => {
+      if (block.has_children && NESTED_BLOCK_TYPES.has(block.type)) {
+        block.__children = await fetchBlockChildren(block.id);
+      }
+    })
+  );
+
   return blocks;
+}
+
+export async function fetchPageBlocks(pageId: string) {
+  return fetchBlockChildren(pageId);
 }
 
 /** 페이지 블록에서 첫 번째 이미지 URL을 추출 (커버 없는 페이지의 썸네일 fallback용) */
