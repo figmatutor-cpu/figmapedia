@@ -19,7 +19,7 @@ interface VerticalCardProps {
 }
 
 function isOptimizableUrl(url: string): boolean {
-  return url.includes("amazonaws.com") || url.includes("notion.so");
+  return url.includes("amazonaws.com") || url.includes("notion.so") || url.includes("supabase.co");
 }
 
 export function VerticalCard({

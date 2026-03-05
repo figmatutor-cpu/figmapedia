@@ -137,7 +137,7 @@ function extractBlockText(block: any): string {
  * Notion stores files as either `file` (uploaded, with expiring S3 URL)
  * or `external` (user-provided URL).
  */
-function extractFileUrl(fileObj: any): string | undefined {
+export function extractFileUrl(fileObj: any): string | undefined {
   if (!fileObj) return undefined;
   if (fileObj.type === "file") return fileObj.file?.url;
   if (fileObj.type === "external") return fileObj.external?.url;

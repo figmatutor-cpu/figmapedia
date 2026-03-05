@@ -31,17 +31,25 @@ export async function POST(request: NextRequest) {
 
     // 임베딩 동기화 트리거 (fire-and-forget)
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    const syncHeaders = {
+      Authorization: `Bearer ${process.env.REVALIDATION_SECRET}`,
+      "Content-Type": "application/json",
+    };
     fetch(`${baseUrl}/api/embeddings/sync`, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.REVALIDATION_SECRET}`,
-        "Content-Type": "application/json",
-      },
+      headers: syncHeaders,
+    }).catch(() => {});
+
+    // 썸네일 동기화 트리거 (fire-and-forget)
+    fetch(`${baseUrl}/api/thumbnails/sync`, {
+      method: "POST",
+      headers: syncHeaders,
     }).catch(() => {});
 
     return Response.json({
       revalidated: true,
       tags: ["search-index", "section-data"],
+      syncs: ["embeddings", "thumbnails"],
       timestamp: Date.now(),
     });
   } catch {
