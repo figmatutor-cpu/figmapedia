@@ -2,6 +2,7 @@ import { TaskType } from "@google/generative-ai";
 import { genAI, EMBEDDING_MODEL } from "@/lib/gemini";
 import { supabase } from "@/lib/supabase";
 import type { SearchIndexItem, EmbeddingMatch } from "@/types";
+import { getGlossaryExpansions } from "@/lib/figma-glossary";
 
 /* ── Embedding Generation ── */
 
@@ -38,10 +39,16 @@ export function buildEmbeddingText(
   item: SearchIndexItem,
   fullText: string
 ): string {
+  // 제목+카테고리에서 용어집 한↔영 확장어 추출
+  const glossaryTerms = getGlossaryExpansions(
+    `${item.title} ${item.categories.join(" ")}`
+  ).join(", ");
+
   const parts = [
     item.section ?? "",
     item.title,
     item.categories.join(", "),
+    glossaryTerms,
     item.shortcut ?? "",
     fullText,
   ].filter(Boolean);

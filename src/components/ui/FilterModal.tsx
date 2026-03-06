@@ -93,7 +93,7 @@ export function FilterModal({ categories, selected, onChange }: FilterModalProps
 
           {/* 검색 인풋 — 선택된 뱃지 가로 나열, 고정 높이, overflow clip */}
           <div className="px-3 pt-3 pb-2">
-            <div className="flex items-center gap-1.5 h-10 px-3 rounded-lg bg-white/5 border border-white/10 focus-within:border-white/25 focus-within:bg-white/[0.07] transition-colors overflow-hidden">
+            <div className="flex flex-wrap items-center gap-1.5 min-h-10 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 focus-within:border-white/25 focus-within:bg-white/[0.07] transition-colors">
               {selected.length === 0 && <Search className="w-3.5 h-3.5 text-gray-500 shrink-0" />}
               {selected.map((cat) => {
                 const badgeColor = CATEGORY_COLORS[cat] ?? DEFAULT_CATEGORY_COLOR;

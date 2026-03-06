@@ -1,7 +1,7 @@
 import { genAI, GEMINI_MODEL } from "@/lib/gemini";
 import { getCachedSearchIndex } from "@/lib/search-index-cache";
 import { embedQuery, searchSimilar } from "@/lib/embeddings";
-import { getGlossaryContext } from "@/lib/figma-glossary";
+import { getGlossaryContext, expandQueryWithGlossary } from "@/lib/figma-glossary";
 import type { AISearchResponse } from "@/types";
 
 /* ── Response cache: same query → cached result for 5 min ── */
@@ -58,8 +58,9 @@ export async function POST(request: Request) {
       return Response.json(cached);
     }
 
-    // Step 1: 쿼리를 벡터 임베딩으로 변환
-    const queryEmbedding = await embedQuery(trimmedQuery);
+    // Step 1: 용어집 기반 쿼리 확장 후 벡터 임베딩으로 변환
+    const expandedQuery = expandQueryWithGlossary(trimmedQuery);
+    const queryEmbedding = await embedQuery(expandedQuery);
 
     // Step 2: Supabase에서 벡터 유사도 검색 (상위 20개)
     const matches = await searchSimilar(queryEmbedding, 20);
@@ -69,7 +70,7 @@ export async function POST(request: Request) {
       .map((m) => {
         const base = `${m.id}|${m.section}|${m.title}|${m.categories.join(",")}|유사도:${m.similarity.toFixed(2)}`;
         return m.fullText
-          ? `${base}\n  내용: ${m.fullText.slice(0, 2000)}`
+          ? `${base}\n  내용: ${m.fullText.slice(0, 4000)}`
           : base;
       })
       .join("\n");

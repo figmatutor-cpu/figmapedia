@@ -27,6 +27,28 @@ function extractBlockText(block: any): string {
   return extractRichText(data.rich_text);
 }
 
+const HEADING_PREFIXES: Record<string, string> = {
+  heading_1: "# ",
+  heading_2: "## ",
+  heading_3: "### ",
+};
+
+/**
+ * 블록 타입에 따라 구조화된 텍스트를 반환.
+ * 헤딩은 마크다운 prefix 추가, 리스트는 "- " prefix.
+ */
+function extractStructuredBlockText(block: any): string {
+  const type = block.type;
+  const text = extractBlockText(block);
+  if (!text) return "";
+
+  const headingPrefix = HEADING_PREFIXES[type];
+  if (headingPrefix) return `\n${headingPrefix}${text}`;
+  if (type === "bulleted_list_item" || type === "to_do") return `- ${text}`;
+  if (type === "numbered_list_item") return `- ${text}`;
+  return text;
+}
+
 /**
  * Notion 페이지의 전체 텍스트를 추출 (임베딩용).
  * 기존 fetchPageTextSnippet의 확장 버전:
@@ -54,7 +76,7 @@ export async function fetchPageFullText(
         if (totalChars >= maxChars) break;
 
         if (TEXT_BLOCK_TYPES.includes(block.type)) {
-          const text = extractBlockText(block);
+          const text = extractStructuredBlockText(block);
           if (text) {
             parts.push(text);
             totalChars += text.length;
@@ -68,7 +90,7 @@ export async function fetchPageFullText(
         : undefined;
     } while (cursor);
 
-    return parts.join(" ").slice(0, maxChars);
+    return parts.join("\n").slice(0, maxChars);
   } catch {
     return "";
   }
