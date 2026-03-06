@@ -69,14 +69,14 @@ export function Navbar() {
               {item.label}
             </Link>
           ))}
-          <a
-            href="https://www.figmapedia.co.kr/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm leading-none whitespace-nowrap transition-colors text-gray-400 hover:text-white"
+          <Link
+            href="/figma-resource"
+            className={`text-sm leading-none whitespace-nowrap transition-colors hover:text-white ${
+              isActive("/figma-resource") ? "text-white" : "text-gray-400"
+            }`}
           >
             피그마 리소스
-          </a>
+          </Link>
         </nav>
 
         {/* Right-side actions: search icon + mobile hamburger */}
@@ -141,14 +141,16 @@ export function Navbar() {
               {item.label}
             </Link>
           ))}
-          <a
-            href="https://www.figmapedia.co.kr/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-colors w-full text-center text-gray-300 hover:text-white"
+          <Link
+            href="/figma-resource"
+            className={`transition-colors w-full text-center ${
+              isActive("/figma-resource")
+                ? "text-white"
+                : "text-gray-300 hover:text-white"
+            }`}
           >
             피그마 리소스
-          </a>
+          </Link>
         </nav>
       </div>
     </header>

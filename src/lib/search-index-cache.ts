@@ -11,7 +11,8 @@ import {
   mapPluginPage,
 } from "@/lib/notion-mapper";
 import { SECTION_DB_IDS } from "@/lib/section-databases";
-import type { SearchIndex } from "@/types";
+import { FIGMA_RESOURCES } from "@/lib/resource-data";
+import type { SearchIndex, SearchIndexItem } from "@/types";
 
 export const getCachedSearchIndex = unstable_cache(
   async (): Promise<SearchIndex> => {
@@ -56,9 +57,23 @@ export const getCachedSearchIndex = unstable_cache(
       ...pluginPages.map(mapPluginPage).map((item) => ({ ...item, section: "플러그인" })),
     ];
 
+    // Map figma resources to search index items
+    const resourceItems: SearchIndexItem[] = FIGMA_RESOURCES.map((r, i) => ({
+      id: `resource-${i}`,
+      title: r.title,
+      categories: r.category === "template" ? ["추천 리소스"]
+        : r.category === "live" ? ["주간 라이브"]
+        : r.category === "atoz" ? ["Figma A to Z"]
+        : ["피그마 리소스"],
+      author: "",
+      link: r.url,
+      publishedDate: null,
+      section: "피그마 리소스",
+    }));
+
     // Merge all items, dedup by id
     const idSet = new Set<string>();
-    const items = [...mainItems, ...sectionItems].filter((item) => {
+    const items = [...mainItems, ...sectionItems, ...resourceItems].filter((item) => {
       if (idSet.has(item.id)) return false;
       idSet.add(item.id);
       return true;
