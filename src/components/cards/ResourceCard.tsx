@@ -112,7 +112,13 @@ export function ResourceCard({ resource, variant = "default" }: ResourceCardProp
           <ExternalLink className="w-3.5 h-3.5 text-gray-600 shrink-0 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
         <p className="text-xs text-gray-500 mt-auto pt-2">
-          {resource.category === "template" ? "figmapedia.co.kr" : "Figma Community"}
+          {resource.category === "template"
+            ? "템플릿"
+            : resource.category === "class"
+              ? "수업자료"
+              : resource.category === "live"
+                ? "주간 라이브"
+                : "Figma A to Z"}
         </p>
       </div>
     </a>

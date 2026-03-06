@@ -3,6 +3,7 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import { embedDocument, upsertEmbedding } from "@/lib/embeddings";
 import { getGlossaryContext } from "@/lib/figma-glossary";
+import { FIGMA_RESOURCES } from "@/lib/resource-data";
 
 const STATIC_PREFIX = "static-";
 
@@ -115,6 +116,38 @@ export async function POST(request: NextRequest) {
     } catch (err) {
       errors++;
       console.error("Glossary embedding failed:", err);
+    }
+
+    // 3. 피그마 리소스 — 각 리소스를 개별 임베딩으로 저장
+    // search-index-cache.ts의 ID 형식(resource-{i})과 일치시켜 AI 검색 결과 매핑
+    const CATEGORY_LABELS: Record<string, string> = {
+      template: "템플릿",
+      class: "수업자료",
+      live: "주간 라이브",
+      atoz: "Figma A to Z",
+    };
+
+    for (let i = 0; i < FIGMA_RESOURCES.length; i++) {
+      try {
+        const r = FIGMA_RESOURCES[i];
+        const categoryLabel = CATEGORY_LABELS[r.category] ?? r.category;
+        const embeddingText = `피그마 리소스 | ${categoryLabel} | ${r.title} | 피그마 디자인 도구 학습 자료, Figma Community 리소스`;
+        const embedding = await embedDocument(embeddingText);
+
+        await upsertEmbedding({
+          id: `resource-${i}`,
+          section: "피그마 리소스",
+          title: r.title,
+          categories: [categoryLabel],
+          fullText: `${categoryLabel}: ${r.title}`,
+          embedding,
+          lastEditedTime: new Date().toISOString(),
+        });
+        processed++;
+      } catch (err) {
+        errors++;
+        console.error(`Resource ${i} embedding failed:`, err);
+      }
     }
 
     return Response.json({ processed, errors });
