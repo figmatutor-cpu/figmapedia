@@ -19,6 +19,8 @@ export interface SubTab {
   cardLayout?: "list" | "grid";
   /** entry.link가 있으면 외부 링크로 새 탭에서 열기 */
   externalLink?: boolean;
+  /** 이 탭에서 정렬/필터 UI 표시 여부 (enableSortFilter prop과 함께 사용) */
+  showSortFilter?: boolean;
 }
 
 export interface NavItem {
@@ -40,6 +42,7 @@ export const NAV_ITEMS: NavItem[] = [
       {
         key: "figma-qa",
         label: "피그마 실무 Q&A",
+        showSortFilter: true,
         filter: {
           categoryMatch: [
             "기초 인터페이스",
