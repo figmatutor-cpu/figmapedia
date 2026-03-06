@@ -1,7 +1,22 @@
-import type { Entry, SearchIndexItem, NotionBlock } from "@/types";
+import type { Entry, SearchIndexItem, NotionBlock, RichTextItem } from "@/types";
 
 function extractPlainText(richTextArray: any[]): string {
   return richTextArray?.map((t: any) => t.plain_text).join("") ?? "";
+}
+
+function extractRichText(richTextArray: any[]): RichTextItem[] {
+  if (!richTextArray) return [];
+  return richTextArray.map((t: any) => ({
+    plain_text: t.plain_text ?? "",
+    href: t.href ?? t.mention?.href ?? t.mention?.url?.url ?? null,
+    annotations: {
+      bold: t.annotations?.bold ?? false,
+      italic: t.annotations?.italic ?? false,
+      strikethrough: t.annotations?.strikethrough ?? false,
+      underline: t.annotations?.underline ?? false,
+      code: t.annotations?.code ?? false,
+    },
+  }));
 }
 
 export function mapNotionPageToEntry(page: any): Entry {
@@ -132,6 +147,12 @@ function extractBlockText(block: any): string {
   return extractPlainText(data.rich_text);
 }
 
+function extractBlockRichText(block: any): RichTextItem[] | undefined {
+  const data = block[block.type];
+  if (!data?.rich_text) return undefined;
+  return extractRichText(data.rich_text);
+}
+
 /**
  * Extract the media URL from a Notion file object.
  * Notion stores files as either `file` (uploaded, with expiring S3 URL)
@@ -214,6 +235,7 @@ export function mapNotionBlock(block: any): NotionBlock {
       id: block.id,
       type,
       content: extractBlockText(block),
+      richText: extractBlockRichText(block),
       checked: data?.checked ?? false,
       children,
     };
@@ -225,6 +247,7 @@ export function mapNotionBlock(block: any): NotionBlock {
       id: block.id,
       type,
       content: extractBlockText(block),
+      richText: extractBlockRichText(block),
       icon: extractIcon(block),
       children,
     };
@@ -236,6 +259,7 @@ export function mapNotionBlock(block: any): NotionBlock {
       id: block.id,
       type,
       content: extractBlockText(block),
+      richText: extractBlockRichText(block),
       children,
     };
   }
@@ -278,6 +302,7 @@ export function mapNotionBlock(block: any): NotionBlock {
       id: block.id,
       type,
       content: extractBlockText(block),
+      richText: extractBlockRichText(block),
       children: children?.length ? children : undefined,
     };
   }
@@ -287,6 +312,7 @@ export function mapNotionBlock(block: any): NotionBlock {
     id: block.id,
     type,
     content: extractBlockText(block),
+    richText: extractBlockRichText(block),
     children: children?.length ? children : undefined,
   };
 }
