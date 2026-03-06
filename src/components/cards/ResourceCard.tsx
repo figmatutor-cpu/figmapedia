@@ -10,13 +10,6 @@ interface ResourceCardProps {
   variant?: "default" | "wide";
 }
 
-function isOptimizableUrl(url: string): boolean {
-  return (
-    url.includes(".supabase.co") ||
-    url.includes("i.ytimg.com")
-  );
-}
-
 export function ResourceCard({ resource, variant = "default" }: ResourceCardProps) {
   const [ogImage, setOgImage] = useState<string | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -85,7 +78,7 @@ export function ResourceCard({ resource, variant = "default" }: ResourceCardProp
               }`}
               onLoad={() => setImageLoaded(true)}
               onError={() => setImageFailed(true)}
-              unoptimized={!isOptimizableUrl(ogImage)}
+              unoptimized
             />
           </>
         ) : (
