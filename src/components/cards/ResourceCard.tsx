@@ -10,8 +10,11 @@ interface ResourceCardProps {
   variant?: "default" | "wide";
 }
 
-function isFigmaCdnUrl(url: string): boolean {
-  return url.includes("s3-figma-hubfile-images-production.figma.com");
+function isOptimizableUrl(url: string): boolean {
+  return (
+    url.includes(".supabase.co") ||
+    url.includes("i.ytimg.com")
+  );
 }
 
 export function ResourceCard({ resource, variant = "default" }: ResourceCardProps) {
@@ -82,7 +85,7 @@ export function ResourceCard({ resource, variant = "default" }: ResourceCardProp
               }`}
               onLoad={() => setImageLoaded(true)}
               onError={() => setImageFailed(true)}
-              unoptimized={!isFigmaCdnUrl(ogImage)}
+              unoptimized={!isOptimizableUrl(ogImage)}
             />
           </>
         ) : (

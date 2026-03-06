@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "*.amazonaws.com" },
       { protocol: "https", hostname: "*.notion.so" },
       { protocol: "https", hostname: "*.supabase.co" },
-      { protocol: "https", hostname: "s3-figma-hubfile-images-production.figma.com" },
+      { protocol: "https", hostname: "i.ytimg.com" },
     ],
     minimumCacheTTL: 3600,
   },
