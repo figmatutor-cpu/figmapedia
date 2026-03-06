@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SearchIcon } from "@/components/ui/SearchIcon";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
+import { FilterModal } from "@/components/ui/FilterModal";
 import type { SubTab, FilterConfig } from "@/lib/navigation";
 import type { SearchIndexItem } from "@/types";
 
@@ -28,6 +29,13 @@ interface SectionPageLayoutProps {
   initialMultiSectionData?: Record<string, SearchIndexItem[]>;
   /** 서버에서 미리 fetch한 메인 검색 인덱스 데이터 (figma-info 용) */
   initialMainItems?: SearchIndexItem[];
+  /**
+   * true일 때 FilterModal UI를 활성화.
+   * 실제 표시는 activeTab.showSortFilter와 AND 조건으로 판단.
+   * 외부(page.tsx)에서만 제어 — SectionPageLayout 내부에서 조건 추론 없음.
+   * 페이지 이동 시 filter state는 컴포넌트 unmount로 자동 리셋.
+   */
+  enableSortFilter?: boolean;
 }
 
 function useSectionItems(
@@ -113,11 +121,15 @@ export function SectionPageLayout({
   initialSectionItems,
   initialMultiSectionData,
   initialMainItems,
+  enableSortFilter = false,
 }: SectionPageLayoutProps) {
   const [activeTab, setActiveTab] = useState(subTabs?.[0]?.key ?? null);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const mobileSearchRef = useRef<HTMLInputElement>(null);
+
+  // 필터 state — 페이지 이동(unmount) 시 자동 리셋
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const subTabSectionKeys = useMemo(
     () =>
@@ -137,7 +149,13 @@ export function SectionPageLayout({
   const { data: multiSectionData, isLoading: multiLoading } =
     useMultiSectionItems(hasSubTabSections ? subTabSectionKeys : [], initialMultiSectionData);
 
-  // Items before search filtering
+  // 현재 활성 탭 객체
+  const activeTabObj = subTabs?.find((t) => t.key === activeTab);
+
+  // 정렬/필터 UI 표시 여부 — 외부 prop + 탭의 showSortFilter 명시적 boolean으로 결정
+  const shouldShowSortFilter = enableSortFilter && activeTabObj?.showSortFilter === true;
+
+  // Items before sort/filter/search
   const baseItems = useMemo(() => {
     // Page-level sectionDataKey (e.g. prompt, kiosk)
     if (sectionDataKey) {
@@ -176,18 +194,34 @@ export function SectionPageLayout({
     defaultFilter,
   ]);
 
-  // Apply in-page search
+  // 카테고리 목록 — baseItems에서 동적 추출, shouldShowSortFilter 시에만 계산
+  const availableCategories = useMemo(() => {
+    if (!shouldShowSortFilter) return [];
+    return Array.from(
+      new Set(baseItems.flatMap((item) => item.categories))
+    ).sort();
+  }, [baseItems, shouldShowSortFilter]);
+
+  // 카테고리 필터 적용 (shouldShowSortFilter일 때만)
+  const categoryFilteredItems = useMemo(() => {
+    if (!shouldShowSortFilter || selectedCategories.length === 0) return baseItems;
+    return baseItems.filter((item) =>
+      item.categories.some((c) => selectedCategories.includes(c))
+    );
+  }, [baseItems, selectedCategories, shouldShowSortFilter]);
+
+  // 페이지 내 검색 적용
   const displayItems = useMemo(() => {
-    if (!searchQuery.trim()) return baseItems;
+    if (!searchQuery.trim()) return categoryFilteredItems;
     const q = searchQuery.toLowerCase();
-    return baseItems.filter(
+    return categoryFilteredItems.filter(
       (item) =>
         item.title.toLowerCase().includes(q) ||
         item.categories.some((c) => c.toLowerCase().includes(q)) ||
         (item.author && item.author.toLowerCase().includes(q)) ||
         (item.shortcut && item.shortcut.toLowerCase().includes(q))
     );
-  }, [baseItems, searchQuery]);
+  }, [categoryFilteredItems, searchQuery]);
 
   const isLoading = useMemo(() => {
     if (sectionDataKey) return singleLoading;
@@ -350,19 +384,29 @@ export function SectionPageLayout({
         {/* Results */}
         {isLoading ? (
           <Skeleton count={6} />
-        ) : displayItems.length === 0 ? (
-          <EmptyState query={searchQuery} />
         ) : (
           <>
-            <p className="text-sm text-gray-400 mb-4">
-              {displayItems.length}개의 항목
-              {searchQuery.trim() && (
-                <span className="ml-1 text-gray-500">
-                  &middot; &quot;{searchQuery}&quot; 검색 결과
-                </span>
+            {/* 항목 수 + 필터 컨트롤 — displayItems 조건과 무관하게 항상 렌더링하여 FilterModal unmount 방지 */}
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+              <p className="text-sm text-gray-400">
+                {displayItems.length}개의 항목
+                {searchQuery.trim() && (
+                  <span className="ml-1 text-gray-500">
+                    &middot; &quot;{searchQuery}&quot; 검색 결과
+                  </span>
+                )}
+              </p>
+              {shouldShowSortFilter && (
+                <FilterModal
+                  categories={availableCategories}
+                  selected={selectedCategories}
+                  onChange={setSelectedCategories}
+                />
               )}
-            </p>
-            {resolvedCardLayout === "grid" ? (
+            </div>
+            {displayItems.length === 0 ? (
+              <EmptyState query={searchQuery} />
+            ) : resolvedCardLayout === "grid" ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {displayItems.map((entry) => (
                   <VerticalCard key={entry.id} entry={entry} externalLink={resolvedExternalLink} />

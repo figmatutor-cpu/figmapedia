@@ -33,6 +33,7 @@ export default async function FigmaInfoPage() {
       defaultFilter={navItem.defaultFilter}
       initialMainItems={initialMainItems}
       initialMultiSectionData={initialMultiSectionData}
+      enableSortFilter
     />
   );
 }
