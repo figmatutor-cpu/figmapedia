@@ -1,8 +1,32 @@
 "use client";
 
 import { useState } from "react";
-import type { NotionBlock } from "@/types";
+import type { NotionBlock, RichTextItem } from "@/types";
 import { CodeBlock } from "./CodeBlock";
+
+function RenderRichText({ items, fallback }: { items?: RichTextItem[]; fallback: string }) {
+  if (!items || items.length === 0) return <>{fallback}</>;
+  return (
+    <>
+      {items.map((item, i) => {
+        let node: React.ReactNode = item.plain_text;
+        if (item.annotations.code) node = <code className="bg-white/10 rounded px-1 text-sm font-mono">{node}</code>;
+        if (item.annotations.bold) node = <strong>{node}</strong>;
+        if (item.annotations.italic) node = <em>{node}</em>;
+        if (item.annotations.strikethrough) node = <s>{node}</s>;
+        if (item.annotations.underline) node = <u>{node}</u>;
+        if (item.href) {
+          node = (
+            <a href={item.href} target="_blank" rel="noopener noreferrer" className="text-blue-400 underline hover:text-blue-300 transition-colors">
+              {node}
+            </a>
+          );
+        }
+        return <span key={i}>{node}</span>;
+      })}
+    </>
+  );
+}
 
 function RenderChildren({ blocks }: { blocks: NotionBlock[] }) {
   return (
@@ -16,11 +40,13 @@ function RenderChildren({ blocks }: { blocks: NotionBlock[] }) {
 
 function ToggleHeading({
   content,
+  richText,
   children,
   headingClass,
   wrapperClass,
 }: {
   content: string;
+  richText?: RichTextItem[];
   children: NotionBlock[];
   headingClass: string;
   wrapperClass: string;
@@ -40,7 +66,7 @@ function ToggleHeading({
         >
           <path d="M4.5 2 L10.5 7 L4.5 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
         </svg>
-        <span className={headingClass}>{content}</span>
+        <span className={headingClass}><RenderRichText items={richText} fallback={content} /></span>
         {!open && (
           <span className="ml-auto text-xs text-gray-600 group-hover:text-gray-500 shrink-0 transition-colors">
             {count}개 항목
@@ -61,52 +87,55 @@ function RenderBlock({ block }: { block: NotionBlock }) {
 
   switch (block.type) {
     case "paragraph":
-      if (!block.content) return <div className="h-4" />;
-      return <p className="text-gray-300 leading-relaxed mb-4">{block.content}</p>;
+      if (!block.content && (!block.richText || block.richText.length === 0)) return <div className="h-4" />;
+      return <p className="text-gray-300 leading-relaxed mb-4"><RenderRichText items={block.richText} fallback={block.content} /></p>;
 
     case "heading_1":
       if (block.children && block.children.length > 0) {
         return (
           <ToggleHeading
             content={block.content}
+            richText={block.richText}
             children={block.children}
             headingClass="text-2xl font-bold text-white group-hover:text-gray-200 transition-colors"
             wrapperClass="mt-8 mb-2"
           />
         );
       }
-      return <h1 className="text-2xl font-bold text-white mt-8 mb-4">{block.content}</h1>;
+      return <h1 className="text-2xl font-bold text-white mt-8 mb-4"><RenderRichText items={block.richText} fallback={block.content} /></h1>;
 
     case "heading_2":
       if (block.children && block.children.length > 0) {
         return (
           <ToggleHeading
             content={block.content}
+            richText={block.richText}
             children={block.children}
             headingClass="text-xl font-bold text-white group-hover:text-gray-200 transition-colors"
             wrapperClass="mt-6 mb-2"
           />
         );
       }
-      return <h2 className="text-xl font-bold text-white mt-6 mb-3">{block.content}</h2>;
+      return <h2 className="text-xl font-bold text-white mt-6 mb-3"><RenderRichText items={block.richText} fallback={block.content} /></h2>;
 
     case "heading_3":
       if (block.children && block.children.length > 0) {
         return (
           <ToggleHeading
             content={block.content}
+            richText={block.richText}
             children={block.children}
             headingClass="text-lg font-semibold text-gray-100 group-hover:text-white transition-colors"
             wrapperClass="mt-5 mb-2"
           />
         );
       }
-      return <h3 className="text-lg font-semibold text-gray-100 mt-5 mb-2">{block.content}</h3>;
+      return <h3 className="text-lg font-semibold text-gray-100 mt-5 mb-2"><RenderRichText items={block.richText} fallback={block.content} /></h3>;
 
     case "bulleted_list_item":
       return (
         <li className="text-gray-300 ml-5 list-disc mb-1">
-          {block.content}
+          <RenderRichText items={block.richText} fallback={block.content} />
           {block.children && block.children.length > 0 && (
             <ul className="mt-1">
               <RenderChildren blocks={block.children} />
@@ -118,7 +147,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
     case "numbered_list_item":
       return (
         <li className="text-gray-300 ml-5 list-decimal mb-1">
-          {block.content}
+          <RenderRichText items={block.richText} fallback={block.content} />
           {block.children && block.children.length > 0 && (
             <ol className="mt-1">
               <RenderChildren blocks={block.children} />
@@ -137,7 +166,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
             className="mt-1 h-4 w-4 shrink-0 accent-blue-400 cursor-default"
           />
           <span className={`text-gray-300 ${block.checked ? "line-through text-gray-500" : ""}`}>
-            {block.content}
+            <RenderRichText items={block.richText} fallback={block.content} />
           </span>
         </div>
       );
@@ -155,7 +184,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
             >
               ▶
             </span>
-            {block.content}
+            <RenderRichText items={block.richText} fallback={block.content} />
           </button>
           {toggleOpen && block.children && block.children.length > 0 && (
             <div className="ml-5 mt-2 border-l border-white/10 pl-4">
@@ -168,7 +197,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
     case "quote":
       return (
         <blockquote className="border-l-4 border-white/20 pl-4 py-1 my-4 text-gray-400 italic">
-          {block.content}
+          <RenderRichText items={block.richText} fallback={block.content} />
           {block.children && block.children.length > 0 && (
             <div className="mt-2 not-italic">
               <RenderChildren blocks={block.children} />
@@ -191,7 +220,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
             </span>
           )}
           <div className="text-gray-300 min-w-0">
-            {block.content}
+            <RenderRichText items={block.richText} fallback={block.content} />
             {block.children && block.children.length > 0 && (
               <div className="mt-2">
                 <RenderChildren blocks={block.children} />
@@ -379,8 +408,8 @@ function RenderBlock({ block }: { block: NotionBlock }) {
       );
 
     default:
-      if (block.content) {
-        return <p className="text-gray-300 mb-4">{block.content}</p>;
+      if (block.content || (block.richText && block.richText.length > 0)) {
+        return <p className="text-gray-300 mb-4"><RenderRichText items={block.richText} fallback={block.content} /></p>;
       }
       return null;
   }
