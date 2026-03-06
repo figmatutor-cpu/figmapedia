@@ -10,9 +10,14 @@ interface ResourceCardProps {
   variant?: "default" | "wide";
 }
 
+function isFigmaCdnUrl(url: string): boolean {
+  return url.includes("s3-figma-hubfile-images-production.figma.com");
+}
+
 export function ResourceCard({ resource, variant = "default" }: ResourceCardProps) {
   const [ogImage, setOgImage] = useState<string | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageFailed, setImageFailed] = useState(false);
   const [fetched, setFetched] = useState(false);
   const cardRef = useRef<HTMLAnchorElement>(null);
 
@@ -61,14 +66,14 @@ export function ResourceCard({ resource, variant = "default" }: ResourceCardProp
       }`}
     >
       <div className={`${variant === "wide" ? "aspect-video" : "aspect-[4/3]"} bg-white/6 flex items-center justify-center overflow-hidden relative`}>
-        {ogImage ? (
+        {ogImage && !imageFailed ? (
           <>
             {!imageLoaded && (
               <div className="absolute inset-0 animate-pulse bg-white/10" />
             )}
             <Image
               src={ogImage}
-              alt=""
+              alt={`${resource.title} 썸네일`}
               width={variant === "wide" ? 640 : 400}
               height={variant === "wide" ? 360 : 300}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -76,7 +81,8 @@ export function ResourceCard({ resource, variant = "default" }: ResourceCardProp
                 imageLoaded ? "opacity-100" : "opacity-0"
               }`}
               onLoad={() => setImageLoaded(true)}
-              unoptimized
+              onError={() => setImageFailed(true)}
+              unoptimized={!isFigmaCdnUrl(ogImage)}
             />
           </>
         ) : (

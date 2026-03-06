@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Copy, Check } from "lucide-react";
 import type { SearchIndexItem } from "@/types";
 import { Badge } from "@/components/ui/Badge";
 import { EntryMeta } from "@/components/ui/EntryMeta";
@@ -46,7 +47,7 @@ export function EntryCard({ entry, showThumbnail = false }: EntryCardProps) {
               )}
               <Image
                 src={displayThumbnail}
-                alt=""
+                alt={entry.title}
                 width={80}
                 height={80}
                 sizes="80px"
@@ -64,37 +65,64 @@ export function EntryCard({ entry, showThumbnail = false }: EntryCardProps) {
       )}
 
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 mb-2 flex-wrap">
-          {entry.categories.map((cat) => (
-            <Badge key={cat} category={cat} />
-          ))}
-        </div>
+        {!isShortcut && (
+          <div className="flex items-center gap-2 mb-2 flex-wrap">
+            {entry.categories.map((cat) => (
+              <Badge key={cat} category={cat} />
+            ))}
+          </div>
+        )}
         <h3 className={`font-semibold text-gray-100 transition-colors ${!isShortcut ? "group-hover:text-brand-blue" : ""}`}>
           {entry.title}
         </h3>
-        <EntryMeta author={entry.author} publishedDate={entry.publishedDate} className="mt-2" />
+        {!isShortcut && (
+          <EntryMeta author={entry.author} publishedDate={entry.publishedDate} className="mt-2" />
+        )}
       </div>
 
       {entry.shortcut && (
-        <span
-          onClick={handleCopy}
-          className={`cursor-pointer shrink-0 px-3 py-1.5 rounded-lg bg-white/[0.07] border text-sm font-mono whitespace-normal break-words sm:whitespace-nowrap transition-colors ${
-            copied
-              ? "border-green-400/50 text-green-300"
-              : "border-white/10 text-gray-300 group-hover:border-brand-blue/50 group-hover:text-brand-blue"
-          }`}
-        >
-          {copied ? "복사됨!" : entry.shortcut}
-        </span>
+        <div className="flex items-center gap-2 shrink-0">
+          <span
+            className={`px-3 py-1.5 rounded-lg bg-white/[0.07] border text-sm font-mono whitespace-normal break-words sm:whitespace-nowrap transition-colors ${
+              copied
+                ? "border-green-400/50 text-green-300"
+                : "border-white/10 text-gray-300 group-hover:border-brand-blue/50 group-hover:text-brand-blue"
+            }`}
+          >
+            {copied ? "복사됨!" : entry.shortcut}
+          </span>
+          <span className={`transition-opacity ${copied ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
+            {copied
+              ? <Check className="w-4 h-4 text-green-400" />
+              : <Copy className="w-4 h-4 text-gray-400" />
+            }
+          </span>
+        </div>
       )}
     </div>
   );
 
   if (isShortcut) {
     return (
-      <div className="group block rounded-xl border border-white/10 bg-white/5 p-5 cursor-default hover:border-white/20 hover:bg-white/[0.08] transition-all">
+      <div
+        onClick={handleCopy}
+        className="group block rounded-xl border border-white/10 bg-white/5 p-5 cursor-pointer hover:border-white/20 hover:bg-white/[0.08] transition-all"
+      >
         {cardInner}
       </div>
+    );
+  }
+
+  if (entry.id.startsWith("resource-") && entry.link) {
+    return (
+      <a
+        href={entry.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group block rounded-xl border border-white/10 bg-white/5 p-5 hover:border-white/20 hover:bg-white/[0.08] transition-all"
+      >
+        {cardInner}
+      </a>
     );
   }
 

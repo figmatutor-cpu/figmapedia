@@ -50,7 +50,7 @@ export function VerticalCard({
             )}
             <Image
               src={displayThumbnail}
-              alt=""
+              alt={entry.title}
               width={400}
               height={300}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { APIResponseError } from "@notionhq/client";
@@ -7,7 +8,51 @@ import { Badge } from "@/components/ui/Badge";
 import { EntryMeta } from "@/components/ui/EntryMeta";
 import { NotionBlockRenderer } from "@/components/entry/NotionBlockRenderer";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://figmapediarenewal.vercel.app";
+
 export const revalidate = 120;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+
+  try {
+    const page = await fetchEntryById(id);
+    if (!page) return {};
+
+    const entry = mapNotionPageToEntry(page);
+    const title = `${entry.title} | Figmapedia`;
+    const description = `${entry.categories.join(", ")} — Figmapedia 디자인 용어사전`;
+    const url = `${SITE_URL}/entry/${id}`;
+
+    return {
+      title,
+      description,
+      alternates: { canonical: url },
+      openGraph: {
+        title,
+        description,
+        url,
+        type: "article",
+        ...(entry.publishedDate && { publishedTime: entry.publishedDate }),
+        ...(entry.thumbnail && {
+          images: [{ url: entry.thumbnail, width: 1200, height: 630 }],
+        }),
+      },
+      twitter: {
+        card: entry.thumbnail ? "summary_large_image" : "summary",
+        title,
+        description,
+        ...(entry.thumbnail && { images: [entry.thumbnail] }),
+      },
+    };
+  } catch {
+    return {};
+  }
+}
 
 export default async function EntryPage({
   params,

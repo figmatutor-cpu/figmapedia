@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { SectionPageLayout } from "@/components/section/SectionPageLayout";
 import { NAV_ITEMS } from "@/lib/navigation";
 import { SECTION_DESCRIPTIONS } from "@/lib/constants";
@@ -5,6 +6,17 @@ import { getCachedSearchIndex } from "@/lib/search-index-cache";
 import { getCachedSectionData } from "@/lib/section-data-cache";
 
 const navItem = NAV_ITEMS.find((n) => n.key === "figma-info")!;
+
+export const metadata: Metadata = {
+  title: "피그마 용어 & 정보 | Figmapedia",
+  description: SECTION_DESCRIPTIONS["figma-info"],
+  alternates: { canonical: "/figma-info" },
+  openGraph: {
+    title: "피그마 용어 & 정보 | Figmapedia",
+    description: SECTION_DESCRIPTIONS["figma-info"],
+    type: "website",
+  },
+};
 
 export default async function FigmaInfoPage() {
   let initialMainItems;

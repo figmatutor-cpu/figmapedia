@@ -1,9 +1,21 @@
+import type { Metadata } from "next";
 import { SectionPageLayout } from "@/components/section/SectionPageLayout";
 import { NAV_ITEMS } from "@/lib/navigation";
 import { SECTION_DESCRIPTIONS } from "@/lib/constants";
 import { getCachedSectionData } from "@/lib/section-data-cache";
 
 const navItem = NAV_ITEMS.find((n) => n.key === "uxui-study")!;
+
+export const metadata: Metadata = {
+  title: "UX/UI 스터디 | Figmapedia",
+  description: SECTION_DESCRIPTIONS["uxui-study"],
+  alternates: { canonical: "/uxui-study" },
+  openGraph: {
+    title: "UX/UI 스터디 | Figmapedia",
+    description: SECTION_DESCRIPTIONS["uxui-study"],
+    type: "website",
+  },
+};
 
 export default async function UXUIStudyPage() {
   let initialMultiSectionData;
