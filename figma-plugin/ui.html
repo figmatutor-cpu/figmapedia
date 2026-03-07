@@ -7,7 +7,7 @@
 
     body {
       font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0a0a14;
+      background: #050510;
       color: #e5e5e5;
       height: 100vh;
       display: flex;
@@ -15,80 +15,189 @@
       overflow: hidden;
     }
 
-    /* Header */
-    .header {
-      padding: 16px 16px 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .header h1 {
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 2px;
-    }
-
-    .header p {
-      font-size: 11px;
-      color: #888;
-    }
-
-    /* Search */
-    .search-box {
-      padding: 12px 16px;
-    }
-
-    .search-input-wrap {
+    /* ── Hero (initial screen) ── */
+    .hero {
+      flex: 1;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px;
-      padding: 0 12px;
-      transition: border-color 0.2s;
+      padding: 0 24px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .search-input-wrap:focus-within {
-      border-color: rgba(255,255,255,0.25);
+    .hero.hidden { display: none; }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 120%, rgba(31,61,188,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 30% 80%, rgba(99,102,241,0.1) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 70% 90%, rgba(31,61,188,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      text-align: center;
+      z-index: 1;
+      width: 100%;
+    }
+
+    .hero-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.55;
+      letter-spacing: -0.02em;
+      filter: drop-shadow(0 1px 8px rgba(31,61,188,0.25));
+    }
+
+    .hero-subtitle {
+      margin-top: 10px;
+      font-size: 12px;
+      color: rgba(209,213,219,0.9);
+    }
+
+    .hero-search {
+      margin-top: 24px;
+      width: 100%;
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── Search input (mirrors SearchInput hero variant) ── */
+    .search-wrap {
+      position: relative;
+      border-radius: 16px;
+      padding: 2px;
+      background: linear-gradient(to bottom right, rgba(255,255,255,0.1), rgba(255,255,255,0.05), rgba(0,0,0,0.2));
+      box-shadow: 0 1px 2px 0 rgba(0,0,0,0.06);
+    }
+
+    .search-inner {
+      position: relative;
     }
 
     .search-icon {
-      width: 16px;
-      height: 16px;
-      opacity: 0.4;
-      flex-shrink: 0;
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: rgba(255,255,255,0.4);
+      pointer-events: none;
     }
 
     .search-input {
-      flex: 1;
-      background: none;
-      border: none;
-      outline: none;
+      width: 100%;
+      border-radius: 16px;
+      background: rgba(15,15,20,0.55);
+      border: 1px solid rgba(255,255,255,0.1);
       color: #fff;
+      outline: none;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 0 90px 0 30px;
+      height: 44px;
       font-size: 13px;
-      padding: 10px 8px;
       font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
-    .search-input::placeholder {
-      color: #666;
+    .search-input:focus {
+      border-color: rgba(31,61,188,0.4);
+      box-shadow: 0 0 0 2px rgba(31,61,188,0.4);
     }
+
+    .search-input::placeholder { color: rgba(255,255,255,0.4); }
+
+    .search-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      height: 32px;
+      padding: 0 14px;
+      border-radius: 10px;
+      border: none;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s, opacity 0.15s;
+      white-space: nowrap;
+    }
+
+    .search-btn.idle {
+      background: #f0f2ff;
+      color: #111;
+    }
+
+    .search-btn.idle:hover { background: #fff; }
+
+    .search-btn.idle:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .search-btn.searching {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+
+    .search-btn.searching:hover { background: rgba(255,255,255,0.25); }
+
+    .stop-icon {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 2px;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* ── Results layout ── */
+    .results-layout {
+      display: none;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .results-layout.active { display: flex; }
+
+    .top-bar {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .top-bar .search-wrap { box-shadow: none; }
+    .top-bar .search-input { height: 40px; font-size: 13px; }
+    .top-bar .search-btn { height: 28px; font-size: 11px; padding: 0 10px; }
 
     /* Results area */
     .results {
       flex: 1;
       overflow-y: auto;
-      padding: 0 16px 16px;
+      padding: 12px 16px 16px;
     }
 
     .results::-webkit-scrollbar { width: 4px; }
     .results::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
 
-    /* Status messages */
+    /* Status */
     .status {
       text-align: center;
       padding: 40px 16px;
-      color: #666;
+      color: #555;
       font-size: 12px;
       line-height: 1.6;
     }
@@ -178,16 +287,168 @@
       color: #aaa;
     }
 
+    .shortcut-text {
+      margin-top: 6px;
+      font-size: 12px;
+      font-family: 'Geist Mono', monospace;
+      color: #a5b4fc;
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 6px;
+      padding: 4px 8px;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+
     .badge.section {
       background: rgba(99,102,241,0.15);
       color: #a5b4fc;
     }
 
-    /* Result count */
     .result-count {
       font-size: 11px;
       color: #666;
       margin-bottom: 10px;
+    }
+
+    /* ── Detail view ── */
+    .detail-view {
+      display: none;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .detail-view.active { display: flex; }
+
+    .detail-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 12px;
+      font-family: inherit;
+      cursor: pointer;
+      padding: 4px 0;
+      transition: color 0.15s;
+    }
+
+    .back-btn:hover { color: #fff; }
+
+    .back-btn svg { width: 14px; height: 14px; }
+
+    .detail-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+    }
+
+    .detail-body::-webkit-scrollbar { width: 4px; }
+    .detail-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+
+    .detail-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+
+    .detail-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 16px;
+    }
+
+    .detail-content { font-size: 13px; line-height: 1.75; color: #ccc; }
+    .detail-content p { margin-bottom: 8px; }
+    .detail-content h2 { font-size: 15px; font-weight: 700; color: #fff; margin: 16px 0 6px; }
+    .detail-content h3 { font-size: 14px; font-weight: 600; color: #fff; margin: 12px 0 4px; }
+    .detail-content ul, .detail-content ol { padding-left: 18px; margin-bottom: 8px; }
+    .detail-content li { margin-bottom: 4px; }
+    .detail-content code {
+      background: rgba(255,255,255,0.08);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: 'Geist Mono', monospace;
+    }
+    .detail-content pre {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      overflow-x: auto;
+      font-size: 11px;
+      font-family: 'Geist Mono', monospace;
+      line-height: 1.6;
+      color: #aaa;
+    }
+    .detail-content pre code { background: none; padding: 0; }
+    .detail-content blockquote {
+      border-left: 3px solid rgba(99,102,241,0.4);
+      padding-left: 12px;
+      color: #999;
+      margin-bottom: 8px;
+    }
+    .detail-content img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 8px 0;
+    }
+    .detail-content .callout {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      display: flex;
+      gap: 8px;
+    }
+    .detail-content .callout-icon { flex-shrink: 0; }
+    .detail-content a { color: #818cf8; text-decoration: underline; }
+
+    .detail-footer {
+      padding: 12px 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .web-link-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: #a5b4fc;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .web-link-btn:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.2);
     }
 
     /* Footer */
@@ -199,7 +460,7 @@
 
     .footer a {
       font-size: 10px;
-      color: #666;
+      color: #555;
       text-decoration: none;
       cursor: pointer;
     }
@@ -209,71 +470,221 @@
 </head>
 <body>
 
-  <div class="header">
-    <h1>Figmapedia</h1>
-    <p>AI 검색으로 피그마 지식을 찾아보세요</p>
-  </div>
-
-  <div class="search-box">
-    <div class="search-input-wrap">
-      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
-      <input class="search-input" id="searchInput" type="text" placeholder="예: 오토 레이아웃 사용법" autocomplete="off" />
+  <!-- Hero (initial screen) -->
+  <div class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">
+        AI로 검색해도 잘 나오지 않는<br/>실무 디자인 정보를 확인하세요.
+      </h1>
+      <p class="hero-subtitle">키워드로 가볍게 검색 하실 수 있어요.</p>
+      <div class="hero-search">
+        <div class="search-wrap">
+          <div class="search-inner">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input class="search-input" id="heroInput" type="text" autocomplete="off" />
+            <button class="search-btn idle" id="heroBtn" disabled>AI 검색</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="results" id="results">
-    <div class="status">
-      Enter 키를 눌러 AI 검색을 시작하세요
+  <!-- Results layout -->
+  <div class="results-layout" id="resultsLayout">
+    <div class="top-bar">
+      <div class="search-wrap">
+        <div class="search-inner">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+          <input class="search-input" id="topInput" type="text" placeholder="검색어를 입력하세요" autocomplete="off" />
+          <button class="search-btn idle" id="topBtn" disabled>AI 검색</button>
+        </div>
+      </div>
+    </div>
+    <div class="results" id="results"></div>
+  </div>
+
+  <!-- Detail view -->
+  <div class="detail-view" id="detailView">
+    <div class="detail-header">
+      <button class="back-btn" id="backBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+        검색 결과
+      </button>
+    </div>
+    <div class="detail-body" id="detailBody"></div>
+    <div class="detail-footer">
+      <button class="web-link-btn" id="webLinkBtn">웹에서 상세 내용 확인하기</button>
     </div>
   </div>
 
-  <div class="footer">
-    <a id="openSite">figmapediarenewal.vercel.app</a>
+  <div class="footer" id="mainFooter">
+    <a id="openSite">figmapedia.com</a>
   </div>
 
   <script>
     const API_URL = "https://figmapedia.com/api/ai-search";
+    const ENTRY_API_URL = "https://figmapedia.com/api/entry/";
     const SITE_URL = "https://figmapedia.com";
 
-    const searchInput = document.getElementById("searchInput");
+    const PLACEHOLDER = "검색어를 입력하세요 ";
+    const SUGGESTIONS = [
+      "오토 레이아웃", "컴포넌트 만들기", "베리어블 사용법",
+      "프로토타이핑 팁", "플러그인 추천", "피그마에서 정렬하는 방법은?",
+    ];
+    const TYPE_SPEED = 70, DELETE_SPEED = 40, PAUSE_END = 1200, PAUSE_BETWEEN = 500;
+
+    const hero = document.getElementById("hero");
+    const resultsLayout = document.getElementById("resultsLayout");
+    const heroInput = document.getElementById("heroInput");
+    const heroBtn = document.getElementById("heroBtn");
+    const topInput = document.getElementById("topInput");
+    const topBtn = document.getElementById("topBtn");
     const resultsEl = document.getElementById("results");
+    const detailView = document.getElementById("detailView");
+    const detailBody = document.getElementById("detailBody");
+    const backBtn = document.getElementById("backBtn");
+    const webLinkBtn = document.getElementById("webLinkBtn");
+    const mainFooter = document.getElementById("mainFooter");
     const openSiteLink = document.getElementById("openSite");
+    let currentDetailUrl = "";
+
+    let isSearching = false;
+    let abortController = null;
+
+    /* ── Typing animation ── */
+    let suggIdx = 0, charIdx = 0, deleting = false, animRunning = true;
+    function animStep() {
+      if (!animRunning) return;
+      if (heroInput.value !== "") {
+        heroInput.placeholder = PLACEHOLDER;
+        setTimeout(animStep, 300);
+        return;
+      }
+      const word = SUGGESTIONS[suggIdx % SUGGESTIONS.length];
+      if (!deleting) {
+        charIdx++;
+        heroInput.placeholder = PLACEHOLDER + word.slice(0, charIdx);
+        if (charIdx >= word.length) {
+          setTimeout(() => { deleting = true; animStep(); }, PAUSE_END);
+        } else {
+          setTimeout(animStep, TYPE_SPEED);
+        }
+      } else {
+        charIdx = Math.max(0, charIdx - 1);
+        heroInput.placeholder = PLACEHOLDER + word.slice(0, charIdx);
+        if (charIdx <= 0) {
+          deleting = false;
+          suggIdx = (suggIdx + 1) % SUGGESTIONS.length;
+          setTimeout(animStep, PAUSE_BETWEEN);
+        } else {
+          setTimeout(animStep, DELETE_SPEED);
+        }
+      }
+    }
+    setTimeout(animStep, 400);
 
     openSiteLink.addEventListener("click", () => {
       parent.postMessage({ pluginMessage: { type: "open-link", url: SITE_URL } }, "*");
     });
 
-    searchInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && searchInput.value.trim()) {
-        doSearch(searchInput.value.trim());
+    /* ── Button state sync ── */
+    function syncBtn(input, btn) {
+      if (isSearching) {
+        btn.className = "search-btn searching";
+        btn.disabled = false;
+        btn.innerHTML = '<span class="stop-icon"></span>정지';
+      } else {
+        btn.className = "search-btn idle";
+        btn.disabled = !input.value.trim();
+        btn.textContent = "AI 검색";
+      }
+    }
+
+    heroInput.addEventListener("input", () => syncBtn(heroInput, heroBtn));
+    topInput.addEventListener("input", () => syncBtn(topInput, topBtn));
+
+    /* ── Search trigger ── */
+    function switchToResults(query) {
+      animRunning = false;
+      hero.classList.add("hidden");
+      resultsLayout.classList.add("active");
+      topInput.value = query;
+      topInput.focus();
+      syncBtn(topInput, topBtn);
+    }
+
+    heroInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && heroInput.value.trim() && !isSearching) {
+        switchToResults(heroInput.value.trim());
+        doSearch(heroInput.value.trim());
       }
     });
 
+    heroBtn.addEventListener("click", () => {
+      if (isSearching) { cancelSearch(); return; }
+      if (heroInput.value.trim()) {
+        switchToResults(heroInput.value.trim());
+        doSearch(heroInput.value.trim());
+      }
+    });
+
+    topInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && topInput.value.trim() && !isSearching) {
+        doSearch(topInput.value.trim());
+      }
+    });
+
+    topBtn.addEventListener("click", () => {
+      if (isSearching) { cancelSearch(); return; }
+      if (topInput.value.trim()) doSearch(topInput.value.trim());
+    });
+
+    /* ── Cancel ── */
+    function cancelSearch() {
+      if (abortController) abortController.abort();
+      isSearching = false;
+      syncBtn(topInput, topBtn);
+      syncBtn(heroInput, heroBtn);
+      resultsEl.innerHTML = '<div class="status">검색이 중지되었습니다.</div>';
+    }
+
+    /* ── Search ── */
     async function doSearch(query) {
-      resultsEl.innerHTML = `
-        <div class="status">
-          AI가 검색 중입니다...
-          <div class="loading-dots"><span></span><span></span><span></span></div>
-        </div>`;
+      isSearching = true;
+      abortController = new AbortController();
+      syncBtn(topInput, topBtn);
+
+      resultsEl.innerHTML =
+        '<div class="status">AI가 관련 콘텐츠를 찾고 있어요...' +
+        '<div class="loading-dots"><span></span><span></span><span></span></div></div>';
 
       try {
         const res = await fetch(API_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ query }),
+          signal: abortController.signal,
         });
 
         if (!res.ok) {
           const err = await res.json().catch(() => ({}));
-          throw new Error(err.error || `HTTP ${res.status}`);
+          throw new Error(err.error || "HTTP " + res.status);
         }
 
         const data = await res.json();
+        isSearching = false;
+        syncBtn(topInput, topBtn);
         renderResults(data);
       } catch (err) {
-        resultsEl.innerHTML = `<div class="status error">${err.message}</div>`;
+        isSearching = false;
+        syncBtn(topInput, topBtn);
+        if (err.name === "AbortError") return;
+        resultsEl.innerHTML = '<div class="status error">' + escapeHtml(err.message) + '</div>';
       }
     }
 
@@ -281,58 +692,166 @@
       let html = "";
 
       if (data.summary) {
-        html += `
-          <div class="summary">
-            <div class="summary-label">AI Summary</div>
-            ${escapeHtml(data.summary)}
-          </div>`;
+        html += '<div class="summary"><div class="summary-label">AI Summary</div>' +
+          escapeHtml(data.summary) + '</div>';
       }
 
       if (data.results && data.results.length > 0) {
-        html += `<div class="result-count">${data.results.length}개 결과</div>`;
-
-        data.results.forEach((item) => {
-          const link = item.link || `${SITE_URL}/entry/${item.id}`;
-          const categories = (item.categories || [])
-            .map((c) => `<span class="badge">${escapeHtml(c)}</span>`)
+        html += '<div class="result-count">' + data.results.length + '개 결과</div>';
+        data.results.forEach(function(item) {
+          var isExternal = !!item.link;
+          var link = item.link || (SITE_URL + "/entry/" + item.id);
+          var cats = (item.categories || [])
+            .map(function(c) { return '<span class="badge">' + escapeHtml(c) + '</span>'; })
             .join("");
-          const section = item.section
-            ? `<span class="badge section">${escapeHtml(item.section)}</span>`
+          var sec = item.section
+            ? '<span class="badge section">' + escapeHtml(item.section) + '</span>'
             : "";
-
-          html += `
-            <div class="result-card" data-link="${escapeAttr(link)}">
-              <div class="result-title">${escapeHtml(item.title)}</div>
-              <div class="result-meta">${section}${categories}</div>
-            </div>`;
+          var shortcut = item.shortcut
+            ? '<div class="shortcut-text">' + escapeHtml(item.shortcut) + '</div>'
+            : "";
+          html += '<div class="result-card" data-id="' + escapeAttr(item.id) + '" data-link="' + escapeAttr(link) + '" data-external="' + isExternal + '">' +
+            '<div class="result-title">' + escapeHtml(item.title) + '</div>' +
+            '<div class="result-meta">' + sec + cats + '</div>' + shortcut + '</div>';
         });
       } else {
-        html += `<div class="status">관련 결과를 찾지 못했습니다.</div>`;
+        html += '<div class="status">관련 결과를 찾지 못했습니다.</div>';
       }
 
       resultsEl.innerHTML = html;
-
-      resultsEl.querySelectorAll(".result-card").forEach((card) => {
-        card.addEventListener("click", () => {
-          const url = card.getAttribute("data-link");
-          if (url) {
-            parent.postMessage({ pluginMessage: { type: "open-link", url } }, "*");
+      resultsEl.querySelectorAll(".result-card").forEach(function(card) {
+        card.addEventListener("click", function() {
+          var id = card.getAttribute("data-id");
+          var link = card.getAttribute("data-link");
+          var isExternal = card.getAttribute("data-external") === "true";
+          if (isExternal && link) {
+            parent.postMessage({ pluginMessage: { type: "open-link", url: link } }, "*");
+          } else if (id) {
+            openDetail(id, link);
           }
         });
       });
     }
 
+    /* ── Detail view ── */
+    backBtn.addEventListener("click", closeDetail);
+    webLinkBtn.addEventListener("click", function() {
+      if (currentDetailUrl) {
+        parent.postMessage({ pluginMessage: { type: "open-link", url: currentDetailUrl } }, "*");
+      }
+    });
+
+    function openDetail(id, webUrl) {
+      currentDetailUrl = webUrl || (SITE_URL + "/entry/" + id);
+      resultsLayout.classList.remove("active");
+      detailView.classList.add("active");
+      mainFooter.style.display = "none";
+
+      detailBody.innerHTML =
+        '<div class="status">로딩 중...' +
+        '<div class="loading-dots"><span></span><span></span><span></span></div></div>';
+
+      fetch(ENTRY_API_URL + id)
+        .then(function(res) {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        })
+        .then(function(data) { renderDetail(data); })
+        .catch(function(err) {
+          detailBody.innerHTML = '<div class="status error">' + escapeHtml(err.message) + '</div>';
+        });
+    }
+
+    function closeDetail() {
+      detailView.classList.remove("active");
+      resultsLayout.classList.add("active");
+      mainFooter.style.display = "";
+    }
+
+    function renderDetail(data) {
+      var entry = data.entry;
+      var blocks = data.blocks || [];
+
+      var cats = (entry.categories || [])
+        .map(function(c) { return '<span class="badge">' + escapeHtml(c) + '</span>'; })
+        .join("");
+
+      var html = '<div class="detail-title">' + escapeHtml(entry.title) + '</div>';
+      if (cats) html += '<div class="detail-meta">' + cats + '</div>';
+      html += '<hr class="detail-divider">';
+      html += '<div class="detail-content">' + renderBlocks(blocks) + '</div>';
+
+      detailBody.innerHTML = html;
+      detailBody.scrollTop = 0;
+    }
+
+    function renderBlocks(blocks) {
+      var html = "";
+      for (var i = 0; i < blocks.length; i++) {
+        html += renderBlock(blocks[i]);
+      }
+      return html;
+    }
+
+    function renderBlock(b) {
+      var t = b.type;
+      var c = b.content || "";
+      var children = b.children ? renderBlocks(b.children) : "";
+
+      if (t === "paragraph") return '<p>' + formatRich(b) + '</p>';
+      if (t === "heading_1") return '<h2>' + escapeHtml(c) + '</h2>';
+      if (t === "heading_2") return '<h3>' + escapeHtml(c) + '</h3>';
+      if (t === "heading_3") return '<h3>' + escapeHtml(c) + '</h3>';
+      if (t === "bulleted_list_item") return '<ul><li>' + formatRich(b) + children + '</li></ul>';
+      if (t === "numbered_list_item") return '<ol><li>' + formatRich(b) + children + '</li></ol>';
+      if (t === "to_do") {
+        var checked = b.checked ? " [x]" : " [ ]";
+        return '<p>' + checked + ' ' + formatRich(b) + '</p>';
+      }
+      if (t === "quote") return '<blockquote>' + formatRich(b) + children + '</blockquote>';
+      if (t === "callout") {
+        var icon = b.icon ? '<span class="callout-icon">' + escapeHtml(b.icon) + '</span>' : '';
+        return '<div class="callout">' + icon + '<div>' + formatRich(b) + children + '</div></div>';
+      }
+      if (t === "code") return '<pre><code>' + escapeHtml(c) + '</code></pre>';
+      if (t === "image" && b.mediaUrl) return '<img src="' + escapeAttr(b.mediaUrl) + '" alt="" />';
+      if (t === "divider") return '<hr class="detail-divider">';
+      if (t === "toggle") return '<details><summary>' + escapeHtml(c) + '</summary>' + children + '</details>';
+      if (t === "column_list" || t === "column") return children;
+      if (c) return '<p>' + formatRich(b) + '</p>';
+      return children;
+    }
+
+    function formatRich(b) {
+      if (!b.richText || !b.richText.length) return escapeHtml(b.content || "");
+      var html = "";
+      for (var i = 0; i < b.richText.length; i++) {
+        var r = b.richText[i];
+        var text = escapeHtml(r.plain_text);
+        if (r.annotations) {
+          if (r.annotations.bold) text = '<strong>' + text + '</strong>';
+          if (r.annotations.italic) text = '<em>' + text + '</em>';
+          if (r.annotations.code) text = '<code>' + text + '</code>';
+          if (r.annotations.strikethrough) text = '<s>' + text + '</s>';
+          if (r.annotations.underline) text = '<u>' + text + '</u>';
+        }
+        if (r.href) text = '<a href="javascript:void(0)" onclick="parent.postMessage({pluginMessage:{type:\'open-link\',url:\'' + escapeAttr(r.href) + '\'}},\'*\')">' + text + '</a>';
+        html += text;
+      }
+      return html;
+    }
+
     function escapeHtml(str) {
-      const div = document.createElement("div");
-      div.textContent = str;
-      return div.innerHTML;
+      var d = document.createElement("div");
+      d.textContent = str;
+      return d.innerHTML;
     }
 
     function escapeAttr(str) {
       return str.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
     }
 
-    searchInput.focus();
+    heroInput.focus();
   </script>
 </body>
 </html>
