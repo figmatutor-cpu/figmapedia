@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getCachedSearchIndex } from "@/lib/search-index-cache";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://figmapediarenewal.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://figmapedia.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [

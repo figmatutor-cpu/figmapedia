@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/Badge";
 import { EntryMeta } from "@/components/ui/EntryMeta";
 import { NotionBlockRenderer } from "@/components/entry/NotionBlockRenderer";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://figmapediarenewal.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://figmapedia.com";
 
 export const revalidate = 120;
 

@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://figmapediarenewal.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://figmapedia.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -45,6 +45,9 @@ export const metadata: Metadata = {
     title: "Figmapedia - 디자인 용어사전 & 리소스",
     description: "디자인 용어, 리소스, 아티클을 검색하세요.",
     images: ["/og-image.png"],
+  },
+  verification: {
+    google: "itQSqt8mb56aUgnHLQozl7K0Sydr2-p0zozUqZE3hiw",
   },
   robots: {
     index: true,
