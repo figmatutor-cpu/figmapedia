@@ -29,11 +29,25 @@ export const metadata: Metadata = {
     template: "%s | Figmapedia",
   },
   description:
-    "디자인 용어, 리소스, 아티클을 검색하세요. Figma와 디자인 시스템에 대한 한국어 지식 베이스.",
+    "피그마(Figma) 디자인 용어사전, UI/UX 리소스, 아티클을 검색하세요. 한국어로 정리된 피그마 사용법, 디자인 시스템, 프로토타입 가이드.",
+  keywords: [
+    "피그마",
+    "Figma",
+    "디자인 용어",
+    "디자인 사전",
+    "UI 디자인",
+    "UX 디자인",
+    "피그마 사용법",
+    "디자인 리소스",
+    "피그마 단축키",
+    "디자인 시스템",
+    "프로토타입",
+  ],
   alternates: { canonical: "/" },
   openGraph: {
     title: "Figmapedia - 디자인 용어사전 & 리소스",
-    description: "디자인 용어, 리소스, 아티클을 검색하세요.",
+    description:
+      "피그마(Figma) 디자인 용어사전, UI/UX 리소스, 아티클을 검색하세요.",
     url: SITE_URL,
     siteName: "Figmapedia",
     type: "website",
@@ -43,11 +57,18 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Figmapedia - 디자인 용어사전 & 리소스",
-    description: "디자인 용어, 리소스, 아티클을 검색하세요.",
+    description:
+      "피그마(Figma) 디자인 용어사전, UI/UX 리소스, 아티클을 검색하세요.",
     images: ["/og-image.png"],
   },
   verification: {
     google: "itQSqt8mb56aUgnHLQozl7K0Sydr2-p0zozUqZE3hiw",
+    other: { "naver-site-verification": ["5adc5bf695427d2a16297952f77cc02d3ab5ad21"] },
+  },
+  other: {
+    "geo.region": "KR",
+    "geo.placename": "Seoul",
+    "content-language": "ko",
   },
   robots: {
     index: true,
