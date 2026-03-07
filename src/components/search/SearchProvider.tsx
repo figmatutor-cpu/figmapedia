@@ -27,6 +27,8 @@ interface SearchContextValue {
   closeSearch: () => void;
   /** Toggle the global floating search overlay */
   toggleSearch: () => void;
+  /** Clear all search state (query, results, mode) */
+  clearSearch: () => void;
 }
 
 const SearchContext = createContext<SearchContextValue | null>(null);

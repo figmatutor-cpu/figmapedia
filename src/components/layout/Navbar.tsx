@@ -2,14 +2,15 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { NAV_ITEMS } from "@/lib/navigation";
 import { useSearchContext } from "@/components/search/SearchProvider";
 import { SearchIcon } from "@/components/ui/SearchIcon";
 
 export function Navbar() {
   const pathname = usePathname();
-  const { toggleSearch, isSearchOpen } = useSearchContext();
+  const router = useRouter();
+  const { toggleSearch, isSearchOpen, hasSearched, clearSearch } = useSearchContext();
   const isHome = pathname === "/";
   const [isOpen, setIsOpen] = useState(false);
   const [headerShapeClass, setHeaderShapeClass] = useState("rounded-full");
@@ -52,6 +53,14 @@ export function Navbar() {
         <Link
           href="/"
           className="text-white font-semibold text-base leading-none whitespace-nowrap"
+          onClick={(e) => {
+            if (isHome && hasSearched) {
+              e.preventDefault();
+              clearSearch();
+            } else if (isSearchOpen) {
+              clearSearch();
+            }
+          }}
         >
           Figmapedia
         </Link>
@@ -81,19 +90,25 @@ export function Navbar() {
 
         {/* Right-side actions: search icon + mobile hamburger */}
         {/* On home desktop: no search icon + hamburger hidden = empty div → hide entirely */}
-        <div className={`flex items-center gap-2 ${isHome ? "xl-nav:hidden" : ""}`}>
-          {/* Search icon — visible on non-home pages */}
-          {!isHome && (
+        <div className={`flex items-center gap-2 ${isHome && !hasSearched ? "xl-nav:hidden" : ""}`}>
+          {/* Search icon — visible on non-home pages, or home when AI search results are shown */}
+          {(!isHome || hasSearched) && (
             <button
               className={`flex items-center justify-center w-8 h-8 rounded-full transition-colors focus:outline-none ${
-                isSearchOpen
+                isSearchOpen || (isHome && hasSearched)
                   ? "text-white bg-white/10"
                   : "text-gray-400 hover:text-white hover:bg-white/5"
               }`}
-              onClick={toggleSearch}
-              aria-label={isSearchOpen ? "검색 닫기" : "검색 열기"}
+              onClick={() => {
+                if (isHome && hasSearched) {
+                  router.push("/figma-info");
+                } else {
+                  toggleSearch();
+                }
+              }}
+              aria-label={isSearchOpen || (isHome && hasSearched) ? "검색 닫기" : "검색 열기"}
             >
-              {isSearchOpen ? (
+              {isSearchOpen || (isHome && hasSearched) ? (
                 <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>

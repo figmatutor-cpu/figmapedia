@@ -82,6 +82,14 @@ export function useSearch() {
   const results =
     searchMode === "ai" && !aiError ? aiResults : fuseResults;
 
+  const clearSearch = useCallback(() => {
+    setQuery("");
+    setHasSearched(false);
+    setSearchMode("instant");
+    aiQueryRef.current = "";
+    clearAIResults();
+  }, [clearAIResults]);
+
   return {
     query,
     setQuery,
@@ -93,6 +101,7 @@ export function useSearch() {
     searchMode,
     triggerAISearch,
     cancelAISearch,
+    clearSearch,
     aiError,
     aiSummary,
   };
