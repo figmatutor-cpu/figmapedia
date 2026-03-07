@@ -31,6 +31,17 @@ function setCachedResponse(query: string, data: AISearchResponse) {
   responseCache.set(query, { data, expiresAt: Date.now() + CACHE_TTL });
 }
 
+/* ── CORS for Figma plugin ── */
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
+export async function OPTIONS() {
+  return new Response(null, { status: 204, headers: CORS_HEADERS });
+}
+
 /* ── API Route ── */
 export async function POST(request: Request) {
   try {
@@ -39,14 +50,14 @@ export async function POST(request: Request) {
     if (!query || typeof query !== "string" || query.trim().length === 0) {
       return Response.json(
         { error: "검색어를 입력해주세요." },
-        { status: 400 }
+        { status: 400, headers: CORS_HEADERS }
       );
     }
 
     if (query.length > 200) {
       return Response.json(
         { error: "검색어가 너무 깁니다." },
-        { status: 400 }
+        { status: 400, headers: CORS_HEADERS }
       );
     }
 
@@ -55,7 +66,7 @@ export async function POST(request: Request) {
     // Check response cache first
     const cached = getCachedResponse(trimmedQuery);
     if (cached) {
-      return Response.json(cached);
+      return Response.json(cached, { headers: CORS_HEADERS });
     }
 
     // Step 1: 용어집 기반 쿼리 확장 후 벡터 임베딩으로 변환
@@ -221,14 +232,14 @@ ${trimmedQuery}`;
 
     setCachedResponse(trimmedQuery, responseData);
 
-    return Response.json(responseData);
+    return Response.json(responseData, { headers: CORS_HEADERS });
   } catch (error) {
     console.error("AI search failed:", error);
     const message =
       error instanceof Error ? error.message : "Unknown error";
     return Response.json(
       { error: "AI 검색에 실패했습니다.", detail: message },
-      { status: 500 }
+      { status: 500, headers: CORS_HEADERS }
     );
   }
 }

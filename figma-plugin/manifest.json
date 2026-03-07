@@ -1,0 +1,13 @@
+{
+  "name": "Figmapedia AI Search",
+  "id": "figmapedia-ai-search",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "editorType": ["figma"],
+  "networkAccess": {
+    "allowedDomains": ["https://figmapediarenewal.vercel.app"]
+  }
+}
