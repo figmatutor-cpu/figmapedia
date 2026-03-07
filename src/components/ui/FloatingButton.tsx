@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useSearchContext } from "@/components/search/SearchProvider";
 
+const INQUIRY_LINK = "https://open.kakao.com/o/gtzKe0lf";
 const KAKAO_LINK = "https://open.kakao.com/o/gPjVAOXf";
 const YOUTUBE_LINK = "https://www.youtube.com/playlist?list=PLPM-mNLGkfO_UJ2ThrNqnoEIE9j5Ac4bH";
 const DONATE_LINK = "https://buymeacoffee.com/figmapedia";
@@ -118,6 +119,20 @@ export function FloatingButton() {
 
           {/* 콘텐츠 */}
           <div className="bg-[#202128] px-4 pt-4 pb-6 flex flex-col gap-4">
+            {/* 운영진 문의 */}
+            <div>
+              <p className="text-white text-[15px] font-bold mb-2 ml-1">피그마 피디아 운영진 문의 채널</p>
+              <a
+                href={INQUIRY_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-[#2a2a36] rounded-xl p-3 hover:bg-[#333340] transition-colors group"
+              >
+                <span className="flex-1 text-[15px] text-white">홍보 및 제휴 문의하기</span>
+                <ChevronRight />
+              </a>
+            </div>
+
             {/* 오픈카톡방 */}
             <div>
               <p className="text-white text-[15px] font-bold mb-2 ml-1">피그마 피디아 오픈 카톡방</p>
