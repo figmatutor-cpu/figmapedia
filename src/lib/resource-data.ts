@@ -186,8 +186,9 @@ export const FIGMA_RESOURCES: FigmaResource[] = [
   { title: "[피그마 피디아] 막막한 개발 핸드오프 Dev Mode로 완전정복!", url: "https://www.youtube.com/watch?v=tMmedKh9i0c", category: "live", thumbnail: "https://i.ytimg.com/vi/tMmedKh9i0c/mqdefault.jpg" },
   { title: "[피그마 피디아] 주간 라이브 2회차 - Figma make 2시간 만에 정복하기", url: "https://www.youtube.com/watch?v=Ndr4wZaHpUE", category: "live", thumbnail: "https://i.ytimg.com/vi/Ndr4wZaHpUE/mqdefault.jpg" },
   { title: "[피그마 피디아] 주간 라이브 1회차 - 나노바나나로 아웃풋 만들기", url: "https://www.youtube.com/watch?v=1mMgPawtSaE", category: "live", thumbnail: "https://i.ytimg.com/vi/1mMgPawtSaE/mqdefault.jpg" },
-  { title: "[피그마 피디아] 피그마 버즈로 콘텐츠자동화 & 효율화 하기", url: "https://www.youtube.com/watch?v=YPFpKmvBDpw", category: "live", thumbnail: "https://i.ytimg.com/vi/YPFpKmvBDpw/mqdefault.jpg" },
-  { title: "[피그마 피디아] 2026년 트렌드 피그마로 따라잡기 가능?", url: "https://www.youtube.com/watch?v=qsxDk49_Soo", category: "live", thumbnail: "https://i.ytimg.com/vi/qsxDk49_Soo/mqdefault.jpg" },
+  // YouTube 삭제/비공개 (썸네일 404)
+  //   { title: "[피그마 피디아] 피그마 버즈로 콘텐츠자동화 & 효율화 하기", url: "https://www.youtube.com/watch?v=YPFpKmvBDpw", category: "live", thumbnail: "https://i.ytimg.com/vi/YPFpKmvBDpw/mqdefault.jpg" },
+  // { title: "[피그마 피디아] 2026년 트렌드 피그마로 따라잡기 가능?", url: "https://www.youtube.com/watch?v=qsxDk49_Soo", category: "live", thumbnail: "https://i.ytimg.com/vi/qsxDk49_Soo/mqdefault.jpg" },
   { title: "[FIGMA A TO Z]이제 Chat GPT에서 피그마 슬라이드 지원된다면서요? 미리 배워두세요.", url: "https://www.youtube.com/watch?v=tOQ6qR51YNA", category: "atoz", thumbnail: "https://i.ytimg.com/vi/tOQ6qR51YNA/mqdefault.jpg" },
   { title: "[Figma to Z] 피그마로 쇼핑몰 계산기를? 심화 프로토타이핑은 이것만 기억하세요.", url: "https://www.youtube.com/watch?v=gvseq_CdBdI", category: "atoz", thumbnail: "https://i.ytimg.com/vi/gvseq_CdBdI/mqdefault.jpg" },
   { title: "[Figma A to Z]프로토타이핑 기초 이 3가지만 알면 끝나요!", url: "https://www.youtube.com/watch?v=06kSIt8-w9s", category: "atoz", thumbnail: "https://i.ytimg.com/vi/06kSIt8-w9s/mqdefault.jpg" },

@@ -2,6 +2,9 @@ import { FIGMA_RESOURCES, getResourcePageId } from "@/lib/resource-data";
 import { getPageThumbnails } from "@/lib/thumbnail-cache";
 import { FigmaResourceClient } from "./FigmaResourceClient";
 
+/** 5분마다 Supabase 썸네일 재조회 (ISR) */
+export const revalidate = 300;
+
 export default async function FigmaResourcePage() {
   // 서버에서 Supabase 일괄 조회 → 클라이언트에 전달
   const pageIdToUrl = new Map<string, string>();
