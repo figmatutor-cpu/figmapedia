@@ -305,6 +305,69 @@
       color: #a5b4fc;
     }
 
+    /* Copy button (hover on glossary/shortcut cards) */
+    .result-card.no-detail { cursor: default; }
+    .result-card .copy-btn {
+      display: none;
+      margin-top: 8px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: #a5b4fc;
+      font-size: 11px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .result-card:hover .copy-btn { display: inline-flex; align-items: center; gap: 4px; }
+    .result-card .copy-btn:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.25); }
+    .result-card .copy-btn svg { width: 12px; height: 12px; }
+
+    /* Toast */
+    .copy-toast {
+      position: fixed;
+      bottom: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(99,102,241,0.9);
+      color: #fff;
+      font-size: 11px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 100;
+    }
+    .copy-toast.show { opacity: 1; }
+
+    /* Code block copy button */
+    .code-block-wrap {
+      position: relative;
+    }
+    .code-copy-btn {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding: 3px 8px;
+      border-radius: 5px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.06);
+      color: #888;
+      font-size: 10px;
+      font-family: inherit;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.15s, background 0.15s;
+    }
+    .code-block-wrap:hover .code-copy-btn { opacity: 1; }
+    .code-copy-btn:hover { background: rgba(255,255,255,0.12); color: #ccc; }
+    .code-copy-btn svg { width: 11px; height: 11px; }
+
     .result-count {
       font-size: 11px;
       color: #666;
@@ -522,6 +585,8 @@
     </div>
   </div>
 
+  <div class="copy-toast" id="copyToast">복사됨</div>
+
   <div class="footer" id="mainFooter">
     <a id="openSite">figmapedia.com</a>
   </div>
@@ -701,26 +766,42 @@
         data.results.forEach(function(item) {
           var isExternal = !!item.link;
           var link = item.link || (SITE_URL + "/entry/" + item.id);
+          var sec = item.section || "";
+          var isNoDetail = sec.indexOf("단축키") !== -1 || sec === "피그마 용어";
           var cats = (item.categories || [])
             .map(function(c) { return '<span class="badge">' + escapeHtml(c) + '</span>'; })
             .join("");
-          var sec = item.section
-            ? '<span class="badge section">' + escapeHtml(item.section) + '</span>'
+          var secBadge = sec
+            ? '<span class="badge section">' + escapeHtml(sec) + '</span>'
             : "";
           var shortcut = item.shortcut
             ? '<div class="shortcut-text">' + escapeHtml(item.shortcut) + '</div>'
             : "";
-          html += '<div class="result-card" data-id="' + escapeAttr(item.id) + '" data-link="' + escapeAttr(link) + '" data-external="' + isExternal + '">' +
+          var copyTarget = item.shortcut || item.title;
+          var copyBtn = isNoDetail
+            ? '<button class="copy-btn" data-copy="' + escapeAttr(copyTarget) + '">' + COPY_ICON_SVG + '복사</button>'
+            : "";
+          html += '<div class="result-card' + (isNoDetail ? ' no-detail' : '') + '" data-id="' + escapeAttr(item.id) + '" data-link="' + escapeAttr(link) + '" data-external="' + isExternal + '" data-no-detail="' + isNoDetail + '">' +
             '<div class="result-title">' + escapeHtml(item.title) + '</div>' +
-            '<div class="result-meta">' + sec + cats + '</div>' + shortcut + '</div>';
+            '<div class="result-meta">' + secBadge + cats + '</div>' + shortcut + copyBtn + '</div>';
         });
       } else {
         html += '<div class="status">관련 결과를 찾지 못했습니다.</div>';
       }
 
       resultsEl.innerHTML = html;
+      /* Copy buttons on no-detail cards */
+      resultsEl.querySelectorAll(".copy-btn").forEach(function(btn) {
+        btn.addEventListener("click", function(e) {
+          e.stopPropagation();
+          copyText(btn.getAttribute("data-copy"));
+        });
+      });
+
       resultsEl.querySelectorAll(".result-card").forEach(function(card) {
         card.addEventListener("click", function() {
+          var noDetail = card.getAttribute("data-no-detail") === "true";
+          if (noDetail) return;
           var id = card.getAttribute("data-id");
           var link = card.getAttribute("data-link");
           var isExternal = card.getAttribute("data-external") === "true";
@@ -813,7 +894,7 @@
         var icon = b.icon ? '<span class="callout-icon">' + escapeHtml(b.icon) + '</span>' : '';
         return '<div class="callout">' + icon + '<div>' + formatRich(b) + children + '</div></div>';
       }
-      if (t === "code") return '<pre><code>' + escapeHtml(c) + '</code></pre>';
+      if (t === "code") return '<div class="code-block-wrap"><button class="code-copy-btn" onclick="copyText(this.parentElement.querySelector(\'code\').textContent)">' + COPY_ICON_SVG + '복사</button><pre><code>' + escapeHtml(c) + '</code></pre></div>';
       if (t === "image" && b.mediaUrl) return '<img src="' + escapeAttr(b.mediaUrl) + '" alt="" />';
       if (t === "divider") return '<hr class="detail-divider">';
       if (t === "toggle") return '<details><summary>' + escapeHtml(c) + '</summary>' + children + '</details>';
@@ -850,6 +931,31 @@
     function escapeAttr(str) {
       return str.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
     }
+
+    /* ── Copy helpers ── */
+    const copyToast = document.getElementById("copyToast");
+    let toastTimer = null;
+
+    function showToast(msg) {
+      copyToast.textContent = msg || "복사됨";
+      copyToast.classList.add("show");
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => copyToast.classList.remove("show"), 1500);
+    }
+
+    function copyText(text) {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      showToast("복사됨");
+    }
+
+    const COPY_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
 
     heroInput.focus();
   </script>
