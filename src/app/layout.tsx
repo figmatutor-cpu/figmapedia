@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { Navbar } from "@/components/layout/Navbar";
@@ -84,6 +85,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <head>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-BN35R5EHNE" strategy="afterInteractive" />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-BN35R5EHNE');`}
+        </Script>
+      </head>
       <body
         className={`${pretendard.variable} ${geistMono.variable} antialiased min-h-screen bg-bg-base text-gray-100`}
       >
