@@ -17,6 +17,10 @@ export const CATEGORY_COLORS: Record<string, string> = {
   "피그마메이크": "bg-gray-500/15 text-gray-400",
   "피그마버즈": "bg-pink-500/15 text-pink-400",
   "리소스": "bg-emerald-500/15 text-emerald-400",
+  "템플릿": "bg-yellow-500/15 text-yellow-400",
+  "수업자료": "bg-cyan-500/15 text-cyan-400",
+  "주간 라이브": "bg-rose-500/15 text-rose-400",
+  "Figma A to Z": "bg-indigo-500/15 text-indigo-400",
 };
 
 export const DEFAULT_CATEGORY_COLOR = "bg-gray-500/15 text-gray-400";

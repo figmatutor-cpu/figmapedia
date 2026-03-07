@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ExternalLink } from "lucide-react";
 import type { FigmaResource } from "@/lib/resource-data";
+import { Badge } from "@/components/ui/Badge";
 
 interface ResourceCardProps {
   resource: FigmaResource;
@@ -115,15 +116,19 @@ export function ResourceCard({ resource, variant = "default", cachedThumbnail }:
           </h3>
           <ExternalLink className="w-3.5 h-3.5 text-gray-600 shrink-0 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
-        <p className="text-xs text-gray-500 mt-auto pt-2">
-          {resource.category === "template"
-            ? "템플릿"
-            : resource.category === "class"
-              ? "수업자료"
-              : resource.category === "live"
-                ? "주간 라이브"
-                : "Figma A to Z"}
-        </p>
+        <div className="mt-auto pt-2">
+          <Badge
+            category={
+              resource.category === "template"
+                ? "템플릿"
+                : resource.category === "class"
+                  ? "수업자료"
+                  : resource.category === "live"
+                    ? "주간 라이브"
+                    : "Figma A to Z"
+            }
+          />
+        </div>
       </div>
     </a>
   );
