@@ -7,6 +7,24 @@ export interface FigmaResource {
   thumbnail?: string;
 }
 
+/** 리소스 URL에서 Supabase page_id를 생성 (seed + page 조회에서 공유) */
+export function getResourcePageId(resource: FigmaResource): string {
+  // YouTube
+  const videoId = resource.url.match(/watch\?v=([^&]+)/)?.[1];
+  if (videoId) return `yt-${videoId}`;
+
+  // Figma Community
+  const fileId = resource.url.match(/community\/file\/(\d+)/)?.[1];
+  if (fileId) return `fc-${fileId}`;
+
+  // figmapedia.co.kr (template)
+  const idx = resource.url.match(/idx=(\d+)/)?.[1];
+  if (idx) return `fp-${idx}`;
+
+  // Fallback
+  return `res-${Buffer.from(resource.url).toString("base64url").slice(0, 16)}`;
+}
+
 export const FIGMA_RESOURCES: FigmaResource[] = [
   { title: "포춘쿠키페이지", url: "https://www.figmapedia.co.kr/all/?idx=4", category: "template" },
   { title: "포토그래퍼 포트폴리오 템플릿", url: "https://www.figmapedia.co.kr/landing/?idx=1", category: "template" },

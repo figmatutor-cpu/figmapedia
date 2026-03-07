@@ -8,25 +8,27 @@ import type { FigmaResource } from "@/lib/resource-data";
 interface ResourceCardProps {
   resource: FigmaResource;
   variant?: "default" | "wide";
+  /** 서버에서 Supabase 조회된 썸네일 URL */
+  cachedThumbnail?: string;
 }
 
-export function ResourceCard({ resource, variant = "default" }: ResourceCardProps) {
-  const [ogImage, setOgImage] = useState<string | null>(null);
+export function ResourceCard({ resource, variant = "default", cachedThumbnail }: ResourceCardProps) {
+  const [ogImage, setOgImage] = useState<string | null>(
+    cachedThumbnail ?? resource.thumbnail ?? null,
+  );
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageFailed, setImageFailed] = useState(false);
-  const [fetched, setFetched] = useState(false);
+  const [fetched, setFetched] = useState(
+    !!(cachedThumbnail || resource.thumbnail),
+  );
   const cardRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
-    // If thumbnail is provided directly, use it (e.g. YouTube)
-    if (resource.thumbnail) {
-      setOgImage(resource.thumbnail);
-      setFetched(true);
-      return;
-    }
+    // 이미 썸네일이 있으면 스킵
+    if (fetched) return;
 
     const el = cardRef.current;
-    if (!el || fetched) return;
+    if (!el) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -47,7 +49,7 @@ export function ResourceCard({ resource, variant = "default" }: ResourceCardProp
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [resource.url, resource.thumbnail, fetched]);
+  }, [resource.url, fetched]);
 
   return (
     <a
