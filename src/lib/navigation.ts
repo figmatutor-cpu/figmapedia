@@ -21,6 +21,8 @@ export interface SubTab {
   externalLink?: boolean;
   /** 이 탭에서 정렬/필터 UI 표시 여부 (enableSortFilter prop과 함께 사용) */
   showSortFilter?: boolean;
+  /** 카드 클릭 비활성화 + 호버 시 복사 버튼 표시 (용어집 등) */
+  nonClickable?: boolean;
 }
 
 export interface NavItem {
@@ -63,6 +65,12 @@ export const NAV_ITEMS: NavItem[] = [
             "AI사용팁",
           ],
         },
+      },
+      {
+        key: "figma-glossary",
+        label: "피그마 용어",
+        sectionDataKey: "figma-glossary",
+        nonClickable: true,
       },
       {
         key: "mac-shortcuts",

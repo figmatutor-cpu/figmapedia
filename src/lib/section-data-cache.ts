@@ -7,6 +7,7 @@ import {
   mapUxuiTermPage,
   mapShortcutPage,
   mapPluginPage,
+  mapFigmaGlossaryPage,
 } from "@/lib/notion-mapper";
 import { SECTION_DB_IDS } from "@/lib/section-databases";
 import { getPageThumbnails, isNotionS3Url } from "@/lib/thumbnail-cache";
@@ -20,7 +21,8 @@ export type SectionKey =
   | "uxui-terms"
   | "mac-shortcuts"
   | "win-shortcuts"
-  | "plugins";
+  | "plugins"
+  | "figma-glossary";
 
 export const getCachedSectionData = unstable_cache(
   async (): Promise<Record<SectionKey, SearchIndexItem[]>> => {
@@ -33,6 +35,7 @@ export const getCachedSectionData = unstable_cache(
       macPages,
       winPages,
       pluginPages,
+      glossaryPages,
     ] = await Promise.all([
       fetchAllFromDatabase(SECTION_DB_IDS.prompt),
       fetchAllFromDatabase(SECTION_DB_IDS.kiosk),
@@ -42,6 +45,7 @@ export const getCachedSectionData = unstable_cache(
       fetchAllFromDatabase(SECTION_DB_IDS.macShortcuts),
       fetchAllFromDatabase(SECTION_DB_IDS.winShortcuts),
       fetchAllFromDatabase(SECTION_DB_IDS.plugins),
+      fetchAllFromDatabase(SECTION_DB_IDS.figmaGlossary),
     ]);
 
     // 모든 섹션 map
@@ -51,6 +55,7 @@ export const getCachedSectionData = unstable_cache(
     const mappedBlogs = blogPages.map(mapArticlePage);
     const mappedTerms = termPages.map(mapUxuiTermPage);
     const mappedPlugins = pluginPages.map(mapPluginPage);
+    const mappedGlossary = glossaryPages.map(mapFigmaGlossaryPage);
 
     // 썸네일이 필요한 전체 아이템 ID 수집
     const thumbnailSections = [
@@ -90,6 +95,7 @@ export const getCachedSectionData = unstable_cache(
       "mac-shortcuts": macPages.map(mapShortcutPage),
       "win-shortcuts": winPages.map(mapShortcutPage),
       plugins: applyThumbnails(mappedPlugins),
+      "figma-glossary": mappedGlossary,
     };
   },
   ["section-data"],

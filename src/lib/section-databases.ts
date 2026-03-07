@@ -27,4 +27,7 @@ export const SECTION_DB_IDS = {
 
   /** 유용한 피그마 플러그인 */
   plugins: "ddc8b180-7f6c-439a-ac53-3f51868d34db",
+
+  /** 피그마 용어사용 */
+  figmaGlossary: "3fe4b917-e6fb-4f0d-8e25-32fcf30c56c1",
 } as const;

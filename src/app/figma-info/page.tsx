@@ -29,6 +29,7 @@ export default async function FigmaInfoPage() {
     ]);
     initialMainItems = searchIndex.items;
     initialMultiSectionData = {
+      "figma-glossary": allSectionData["figma-glossary"] ?? [],
       "mac-shortcuts": allSectionData["mac-shortcuts"] ?? [],
       "win-shortcuts": allSectionData["win-shortcuts"] ?? [],
       plugins: allSectionData.plugins ?? [],

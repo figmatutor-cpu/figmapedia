@@ -9,6 +9,7 @@ import {
   mapUxuiTermPage,
   mapShortcutPage,
   mapPluginPage,
+  mapFigmaGlossaryPage,
 } from "@/lib/notion-mapper";
 import { SECTION_DB_IDS } from "@/lib/section-databases";
 import { FIGMA_RESOURCES } from "@/lib/resource-data";
@@ -27,6 +28,7 @@ export const getCachedSearchIndex = unstable_cache(
       macPages,
       winPages,
       pluginPages,
+      glossaryPages,
     ] = await Promise.all([
       fetchAllEntries(),
       fetchAllFromDatabase(SECTION_DB_IDS.prompt),
@@ -37,6 +39,7 @@ export const getCachedSearchIndex = unstable_cache(
       fetchAllFromDatabase(SECTION_DB_IDS.macShortcuts),
       fetchAllFromDatabase(SECTION_DB_IDS.winShortcuts),
       fetchAllFromDatabase(SECTION_DB_IDS.plugins),
+      fetchAllFromDatabase(SECTION_DB_IDS.figmaGlossary),
     ]);
 
     // Map main entries
@@ -55,6 +58,7 @@ export const getCachedSearchIndex = unstable_cache(
       ...macPages.map(mapShortcutPage).map((item) => ({ ...item, section: "Mac 단축키" })),
       ...winPages.map(mapShortcutPage).map((item) => ({ ...item, section: "Win 단축키" })),
       ...pluginPages.map(mapPluginPage).map((item) => ({ ...item, section: "플러그인" })),
+      ...glossaryPages.map(mapFigmaGlossaryPage).map((item) => ({ ...item, section: "피그마 용어" })),
     ];
 
     // Map figma resources to search index items

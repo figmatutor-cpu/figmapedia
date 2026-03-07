@@ -12,13 +12,15 @@ import { useThumbnail } from "@/hooks/useThumbnail";
 interface EntryCardProps {
   entry: SearchIndexItem;
   showThumbnail?: boolean;
+  /** 클릭 비활성화 + 호버 시 복사 버튼 (용어집 등) */
+  nonClickable?: boolean;
 }
 
 function isOptimizableUrl(url: string): boolean {
   return url.includes("amazonaws.com") || url.includes("notion.so") || url.includes("supabase.co");
 }
 
-export function EntryCard({ entry, showThumbnail = false }: EntryCardProps) {
+export function EntryCard({ entry, showThumbnail = false, nonClickable = false }: EntryCardProps) {
   const displayThumbnail = useThumbnail(entry, showThumbnail);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -29,15 +31,26 @@ export function EntryCard({ entry, showThumbnail = false }: EntryCardProps) {
   }, [displayThumbnail]);
 
   const handleCopy = () => {
-    if (!entry.shortcut) return;
-    navigator.clipboard.writeText(entry.shortcut).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    });
+    if (isShortcut) {
+      navigator.clipboard.writeText(entry.shortcut!).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+      });
+      return;
+    }
+    if (nonClickable) {
+      const text = entry.author
+        ? `${entry.title}: ${entry.author}`
+        : entry.title;
+      navigator.clipboard.writeText(text).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+      });
+    }
   };
 
   const cardInner = (
-    <div className={`flex gap-3 sm:gap-4 ${entry.shortcut ? "flex-col sm:flex-row sm:items-center sm:justify-between" : showThumbnail ? "flex-row items-start" : "items-center justify-between"}`}>
+    <div className={`flex gap-3 sm:gap-4 ${entry.shortcut ? "flex-col sm:flex-row sm:items-center sm:justify-between" : nonClickable ? "items-start justify-between" : showThumbnail ? "flex-row items-start" : "items-center justify-between"}`}>
       {showThumbnail && (
         <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-white/6 flex items-center justify-center relative">
           {displayThumbnail ? (
@@ -72,10 +85,13 @@ export function EntryCard({ entry, showThumbnail = false }: EntryCardProps) {
             ))}
           </div>
         )}
-        <h3 className={`font-semibold text-gray-100 transition-colors ${!isShortcut ? "group-hover:text-brand-blue" : ""}`}>
+        <h3 className={`font-semibold text-gray-100 transition-colors ${!isShortcut && !nonClickable ? "group-hover:text-brand-blue" : ""}`}>
           {entry.title}
         </h3>
-        {!isShortcut && (
+        {nonClickable && entry.author && (
+          <p className="text-sm text-gray-400 mt-1.5 line-clamp-2">{entry.author}</p>
+        )}
+        {!isShortcut && !nonClickable && (
           <EntryMeta author={entry.author} publishedDate={entry.publishedDate} className="mt-2" />
         )}
       </div>
@@ -83,7 +99,7 @@ export function EntryCard({ entry, showThumbnail = false }: EntryCardProps) {
       {entry.shortcut && (
         <div className="flex items-center gap-2 shrink-0">
           <span
-            className={`px-3 py-1.5 rounded-lg bg-white/[0.07] border text-sm font-mono whitespace-normal break-words sm:whitespace-nowrap transition-colors ${
+            className={`px-3 py-1.5 rounded-lg bg-white/[0.07] border text-sm font-mono whitespace-normal wrap-break-word sm:whitespace-nowrap transition-colors ${
               copied
                 ? "border-green-400/50 text-green-300"
                 : "border-white/10 text-gray-300 group-hover:border-brand-blue/50 group-hover:text-brand-blue"
@@ -99,6 +115,26 @@ export function EntryCard({ entry, showThumbnail = false }: EntryCardProps) {
           </span>
         </div>
       )}
+
+      {nonClickable && !isShortcut && (
+        <div className="shrink-0">
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); handleCopy(); }}
+            className={`p-2 rounded-lg border transition-all ${
+              copied
+                ? "border-green-400/50 bg-green-400/10"
+                : "border-transparent opacity-0 group-hover:opacity-100 hover:border-white/20 hover:bg-white/10"
+            }`}
+            title="복사"
+          >
+            {copied
+              ? <Check className="w-4 h-4 text-green-400" />
+              : <Copy className="w-4 h-4 text-gray-400" />
+            }
+          </button>
+        </div>
+      )}
     </div>
   );
 
@@ -106,8 +142,16 @@ export function EntryCard({ entry, showThumbnail = false }: EntryCardProps) {
     return (
       <div
         onClick={handleCopy}
-        className="group block rounded-xl border border-white/10 bg-white/5 p-5 cursor-pointer hover:border-white/20 hover:bg-white/[0.08] transition-all"
+        className="group block rounded-xl border border-white/10 bg-white/5 p-5 cursor-pointer hover:border-white/20 hover:bg-white/8 transition-all"
       >
+        {cardInner}
+      </div>
+    );
+  }
+
+  if (nonClickable) {
+    return (
+      <div className="group block rounded-xl border border-white/10 bg-white/5 p-5 hover:border-white/20 hover:bg-white/8 transition-all">
         {cardInner}
       </div>
     );

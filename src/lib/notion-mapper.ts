@@ -125,6 +125,20 @@ export function mapPluginPage(page: any): SearchIndexItem {
   };
 }
 
+/** 피그마 용어사용 DB — properties: 이름(title), 텍스트(설명), 태그(카테고리) */
+export function mapFigmaGlossaryPage(page: any): SearchIndexItem {
+  const props = page.properties;
+  return {
+    id: page.id,
+    title: extractPlainText(props["이름"]?.title),
+    categories: props["태그"]?.select ? [props["태그"].select.name] : [],
+    author: extractPlainText(props["텍스트"]?.rich_text),
+    link: null,
+    publishedDate: null,
+    lastEditedTime: page.last_edited_time,
+  };
+}
+
 /** Mac/Win 단축키 DB — properties: 항목(title), 단축키, 카테고리, 설명(Mac only) */
 export function mapShortcutPage(page: any): SearchIndexItem {
   const props = page.properties;

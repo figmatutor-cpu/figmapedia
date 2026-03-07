@@ -268,6 +268,15 @@ export function SectionPageLayout({
     return false;
   }, [activeTab, subTabs]);
 
+  // 탭의 nonClickable 설정 확인 (카드 클릭 비활성화 + 복사 버튼)
+  const resolvedNonClickable = useMemo(() => {
+    if (activeTab && subTabs) {
+      const tab = subTabs.find((t) => t.key === activeTab);
+      return tab?.nonClickable ?? false;
+    }
+    return false;
+  }, [activeTab, subTabs]);
+
   // Tab counts
   const tabCounts = useMemo(() => {
     if (!subTabs) return {};
@@ -415,7 +424,7 @@ export function SectionPageLayout({
             ) : (
               <div className="space-y-3">
                 {displayItems.map((entry) => (
-                  <EntryCard key={entry.id} entry={entry} showThumbnail={resolvedShowThumbnail} />
+                  <EntryCard key={entry.id} entry={entry} showThumbnail={resolvedShowThumbnail} nonClickable={resolvedNonClickable} />
                 ))}
               </div>
             )}
