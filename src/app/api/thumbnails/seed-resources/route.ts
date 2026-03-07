@@ -21,6 +21,8 @@ export async function POST(request: NextRequest) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const force = request.nextUrl.searchParams.get("force") === "true";
+
     // 1. Generate pageIds for all resources
     const resources = FIGMA_RESOURCES.map((r) => ({
       ...r,
@@ -31,18 +33,20 @@ export async function POST(request: NextRequest) {
     const allIds = resources.map((r) => r.pageId);
     const existingIds = new Set<string>();
 
-    for (let i = 0; i < allIds.length; i += 200) {
-      const chunk = allIds.slice(i, i + 200);
-      const { data } = await supabase
-        .from("page_thumbnails")
-        .select("page_id")
-        .in("page_id", chunk);
-      for (const row of data ?? []) {
-        existingIds.add(row.page_id);
+    if (!force) {
+      for (let i = 0; i < allIds.length; i += 200) {
+        const chunk = allIds.slice(i, i + 200);
+        const { data } = await supabase
+          .from("page_thumbnails")
+          .select("page_id")
+          .in("page_id", chunk);
+        for (const row of data ?? []) {
+          existingIds.add(row.page_id);
+        }
       }
     }
 
-    // 3. Filter to only missing ones
+    // 3. Filter to only missing ones (or all if force)
     const missing = resources.filter((r) => !existingIds.has(r.pageId));
 
     let processed = 0;
@@ -131,6 +135,7 @@ export async function POST(request: NextRequest) {
       missing: missing.length,
       processed,
       errors,
+      force,
       ...(errorDetails.length > 0 && { errorDetails: errorDetails.slice(0, 10) }),
     });
   } catch (error) {
