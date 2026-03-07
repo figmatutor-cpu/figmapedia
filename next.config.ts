@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/:id([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})",
-        destination: "/entry/:id",
+        destination: "/figma-info",
         permanent: true,
       },
     ];
