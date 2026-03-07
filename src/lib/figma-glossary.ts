@@ -19,10 +19,7 @@ let cachedEntries: GlossaryEntry[] | null = null;
 function parseGlossaryCSV(): GlossaryEntry[] {
   if (cachedEntries) return cachedEntries;
 
-  const csvPath = join(
-    process.cwd(),
-    "[Figma 레시피북]용어 정리 - Figma Glossary_20241218 2.csv"
-  );
+  const csvPath = join(process.cwd(), "src/data/figma-glossary.csv");
   const raw = readFileSync(csvPath, "utf-8");
   const lines = raw.split("\n").slice(1); // skip header
 

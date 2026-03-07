@@ -8,6 +8,6 @@
   "enableProposedApi": false,
   "editorType": ["figma"],
   "networkAccess": {
-    "allowedDomains": ["https://figmapediarenewal.vercel.app"]
+    "allowedDomains": ["https://figmapedia.com"]
   }
 }
