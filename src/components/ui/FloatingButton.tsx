@@ -35,6 +35,7 @@ export function FloatingButton() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const isCommunity = pathname.startsWith("/community");
+  const isCommunityWrite = pathname === "/community/write";
 
   // 검색바가 하단에 있을 때 FloatingButton을 위로 이동
   const isSearchAtBottom = (isHome && hasSearched) || (!isHome && isSearchOpen);
@@ -97,6 +98,9 @@ export function FloatingButton() {
     : isSearchAtBottom
       ? "96px"
       : "28px";
+
+  /* ── 커뮤니티 글쓰기 페이지: 플로팅 버튼 숨김 ── */
+  if (isCommunityWrite) return null;
 
   /* ── 커뮤니티: 글쓰기 플로팅 버튼 ── */
   if (isCommunity) {
