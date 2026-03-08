@@ -85,7 +85,7 @@ export function EntryCard({ entry, showThumbnail = false, nonClickable = false }
             ))}
           </div>
         )}
-        <h3 className={`font-semibold text-gray-100 transition-colors ${!isShortcut && !nonClickable ? "group-hover:text-brand-blue" : ""}`}>
+        <h3 className={`font-semibold text-gray-100 transition-colors wrap-break-word ${!isShortcut && !nonClickable ? "group-hover:text-brand-blue" : ""}`}>
           {entry.title}
         </h3>
         {nonClickable && entry.author && (
@@ -99,7 +99,7 @@ export function EntryCard({ entry, showThumbnail = false, nonClickable = false }
       {entry.shortcut && (
         <div className="flex items-center gap-2 shrink-0">
           <span
-            className={`px-3 py-1.5 rounded-lg bg-white/[0.07] border text-sm font-mono whitespace-normal wrap-break-word sm:whitespace-nowrap transition-colors ${
+            className={`px-3 py-1.5 rounded-lg bg-white/[0.07] border text-sm font-mono whitespace-normal break-all sm:whitespace-nowrap sm:break-normal transition-colors ${
               copied
                 ? "border-green-400/50 text-green-300"
                 : "border-white/10 text-gray-300 group-hover:border-brand-blue/50 group-hover:text-brand-blue"

@@ -26,8 +26,6 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://figmapedia.com";
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 };
 
 export const metadata: Metadata = {
