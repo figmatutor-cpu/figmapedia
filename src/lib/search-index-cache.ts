@@ -13,6 +13,7 @@ import {
 } from "@/lib/notion-mapper";
 import { SECTION_DB_IDS } from "@/lib/section-databases";
 import { FIGMA_RESOURCES } from "@/lib/resource-data";
+import { getGlossaryExpansions } from "@/lib/figma-glossary";
 import type { SearchIndex, SearchIndexItem } from "@/types";
 
 export const getCachedSearchIndex = unstable_cache(
@@ -77,10 +78,20 @@ export const getCachedSearchIndex = unstable_cache(
 
     // Merge all items, dedup by id
     const idSet = new Set<string>();
-    const items = [...mainItems, ...sectionItems, ...resourceItems].filter((item) => {
+    const merged = [...mainItems, ...sectionItems, ...resourceItems].filter((item) => {
       if (idSet.has(item.id)) return false;
       idSet.add(item.id);
       return true;
+    });
+
+    // Enrich with glossary keywords for bilingual Fuse.js search
+    const items = merged.map((item) => {
+      const text = `${item.title} ${item.categories.join(" ")}`;
+      const expansions = getGlossaryExpansions(text);
+      if (expansions.length > 0) {
+        return { ...item, glossaryKeywords: expansions.join(" ") };
+      }
+      return item;
     });
 
     return {

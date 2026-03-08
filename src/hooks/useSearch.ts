@@ -9,9 +9,10 @@ import { useAISearch } from "./useAISearch";
 
 const FUSE_OPTIONS: IFuseOptions<SearchIndexItem> = {
   keys: [
-    { name: "title", weight: 0.5 },
-    { name: "categories", weight: 0.25 },
-    { name: "author", weight: 0.25 },
+    { name: "title", weight: 0.45 },
+    { name: "categories", weight: 0.2 },
+    { name: "author", weight: 0.15 },
+    { name: "glossaryKeywords", weight: 0.2 },
   ],
   threshold: 0.3,
   distance: 200,

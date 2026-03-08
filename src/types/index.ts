@@ -24,6 +24,8 @@ export interface SearchIndexItem {
   section?: string;
   /** Notion 페이지 마지막 수정 시각 (임베딩 동기화용) */
   lastEditedTime?: string;
+  /** 용어집 기반 한↔영 키워드 (Fuse.js 검색용) */
+  glossaryKeywords?: string;
 }
 
 export interface EmbeddingMatch {
@@ -82,4 +84,25 @@ export interface NotionBlock {
 
 export interface EntryDetail extends Entry {
   blocks: NotionBlock[];
+}
+
+/* ── Community ── */
+
+export interface CommunityPost {
+  id: string;
+  nickname: string;
+  title: string;
+  content: string;
+  category: string;
+  created_at: string;
+  updated_at: string;
+  comment_count?: number;
+}
+
+export interface CommunityComment {
+  id: string;
+  post_id: string;
+  nickname: string;
+  content: string;
+  created_at: string;
 }

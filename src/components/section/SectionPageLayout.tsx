@@ -316,7 +316,7 @@ export function SectionPageLayout({
         )}
 
         {/* Sub-tabs + search (same row) */}
-        <div className="flex items-center gap-3 mb-8">
+        <div className="flex items-center gap-3 mb-8 overflow-hidden">
           {/* Tabs — 모바일: 스와이프, 검색 펼침 시 숨김 / 데스크탑: 항상 표시 */}
           {subTabs && (
             <div className={`${isSearchExpanded ? "hidden xl-nav:flex" : "flex"} flex-1 min-w-0 overflow-hidden`}>
