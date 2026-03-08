@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Link from "next/link";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
+import { SearchIcon } from "@/components/ui/SearchIcon";
 import type { CommunityPost } from "@/types";
 
 const CATEGORIES = ["전체", "일반", "질문", "정보공유", "피드백"];
@@ -27,6 +28,9 @@ export default function CommunityPage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [category, setCategory] = useState("전체");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+  const mobileSearchRef = useRef<HTMLInputElement>(null);
 
   const fetchPosts = useCallback(async () => {
     setIsLoading(true);
@@ -53,6 +57,18 @@ export default function CommunityPage() {
     setPage(1);
   };
 
+  // 클라이언트 검색 필터
+  const filteredPosts = useMemo(() => {
+    if (!searchQuery.trim()) return posts;
+    const q = searchQuery.toLowerCase();
+    return posts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(q) ||
+        post.nickname.toLowerCase().includes(q) ||
+        post.category.toLowerCase().includes(q)
+    );
+  }, [posts, searchQuery]);
+
   return (
     <div className="min-h-screen bg-bg-base pt-28 pb-16">
       <div className="mx-auto max-w-4xl px-4">
@@ -64,13 +80,71 @@ export default function CommunityPage() {
           자유롭게 질문하고 정보를 공유하세요
         </p>
 
-        {/* Category Tabs */}
-        <div className="mb-8">
-          <SegmentedControl
-            tabs={CATEGORIES.map((cat) => ({ key: cat, label: cat }))}
-            activeTab={category}
-            onTabChange={handleCategoryChange}
-          />
+        {/* Category Tabs + Search */}
+        <div className="flex items-center gap-3 mb-8 overflow-hidden">
+          {/* 탭 — 모바일: 검색 펼침 시 숨김 */}
+          <div className={`${isSearchExpanded ? "hidden xl-nav:flex" : "flex"} flex-1 min-w-0 overflow-hidden`}>
+            <SegmentedControl
+              tabs={CATEGORIES.map((cat) => ({ key: cat, label: cat }))}
+              activeTab={category}
+              onTabChange={handleCategoryChange}
+            />
+          </div>
+
+          {/* 모바일 검색 — 아이콘 / 펼침 인풋 */}
+          <div className={`xl-nav:hidden ${isSearchExpanded ? "flex-1 min-w-0" : "shrink-0"}`}>
+            {isSearchExpanded ? (
+              <div className="flex items-center gap-2">
+                <div className="relative flex-1 min-w-0">
+                  <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+                  <input
+                    ref={mobileSearchRef}
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="페이지 내 검색"
+                    className="w-full pl-8 pr-3 h-10 text-base rounded-lg bg-white/5 border border-white/10 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-white/25 focus:bg-white/[0.07] transition-colors"
+                    autoComplete="off"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setIsSearchExpanded(false);
+                  }}
+                  className="shrink-0 p-2 text-gray-400 hover:text-white transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  setIsSearchExpanded(true);
+                  setTimeout(() => mobileSearchRef.current?.focus(), 100);
+                }}
+                className="w-11 h-11 inline-flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-white/20 transition-colors"
+              >
+                <SearchIcon className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+
+          {/* 데스크탑 검색 (≥ xl-nav) */}
+          <div className="relative hidden xl-nav:block xl-nav:shrink-0 xl-nav:w-[180px]">
+            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="페이지 내 검색"
+              className="w-full pl-8 pr-3 h-12 text-base xl-nav:text-sm rounded-lg bg-white/5 border border-white/10 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-white/25 focus:bg-white/[0.07] transition-colors"
+            />
+          </div>
         </div>
 
         {/* Post List */}
@@ -85,13 +159,13 @@ export default function CommunityPage() {
                 <div className="h-3 bg-white/10 rounded w-1/3" />
               </div>
             ))
-          ) : posts.length === 0 ? (
+          ) : filteredPosts.length === 0 ? (
             <div className="text-center py-16 text-gray-500">
               <p className="text-lg mb-2">아직 게시글이 없습니다</p>
               <p className="text-sm">첫 번째 글을 작성해보세요!</p>
             </div>
           ) : (
-            posts.map((post) => (
+            filteredPosts.map((post) => (
               <Link
                 key={post.id}
                 href={`/community/${post.id}`}

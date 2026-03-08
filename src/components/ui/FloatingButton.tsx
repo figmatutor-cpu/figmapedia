@@ -116,7 +116,7 @@ export function FloatingButton() {
         {/* 모바일: 56px 원형 연필 아이콘 */}
         <Link
           href="/community/write"
-          className="sm:hidden flex items-center justify-center size-11 rounded-full bg-white text-bg-base shadow-lg shadow-white/20 hover:bg-gray-100 transition-all active:scale-95"
+          className="sm:hidden flex items-center justify-center size-14 rounded-full bg-white text-bg-base shadow-lg shadow-white/20 hover:bg-gray-100 transition-all active:scale-95"
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 20h9" />
