@@ -1,5 +1,12 @@
 import { supabase } from "@/lib/supabase";
+import { revalidateTag } from "next/cache";
+import {
+  embedDocument,
+  buildEmbeddingText,
+  upsertEmbedding,
+} from "@/lib/embeddings";
 import { NextRequest } from "next/server";
+import type { SearchIndexItem } from "@/types";
 
 async function hashPassword(password: string): Promise<string> {
   const encoder = new TextEncoder();
@@ -115,6 +122,35 @@ export async function POST(request: NextRequest) {
     }
 
     const { password_hash: _ph, ...safePost } = data;
+
+    // 검색 인덱스 캐시 즉시 갱신
+    revalidateTag("search-index", "max");
+
+    // fire-and-forget: 벡터 임베딩 생성 (AI 검색용)
+    const item: SearchIndexItem = {
+      id: `community-${data.id}`,
+      title: data.title,
+      categories: [data.category],
+      author: data.nickname,
+      link: null,
+      publishedDate: data.created_at,
+      section: "커뮤니티",
+    };
+    const embeddingText = buildEmbeddingText(item, data.content ?? "");
+    embedDocument(embeddingText)
+      .then((embedding) =>
+        upsertEmbedding({
+          id: item.id,
+          section: "커뮤니티",
+          title: data.title,
+          categories: [data.category],
+          fullText: data.content ?? "",
+          embedding,
+          lastEditedTime: data.created_at,
+        })
+      )
+      .catch(() => {});
+
     return Response.json({ post: safePost }, { status: 201 });
   } catch {
     return Response.json({ error: "잘못된 요청입니다." }, { status: 400 });

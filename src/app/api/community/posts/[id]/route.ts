@@ -1,4 +1,6 @@
 import { supabase } from "@/lib/supabase";
+import { revalidateTag } from "next/cache";
+import { deleteEmbedding } from "@/lib/embeddings";
 import { NextRequest } from "next/server";
 
 async function hashPassword(password: string): Promise<string> {
@@ -80,6 +82,10 @@ export async function DELETE(
     if (error) {
       return Response.json({ error: error.message }, { status: 500 });
     }
+
+    // 검색 인덱스 캐시 갱신 + 임베딩 제거
+    revalidateTag("search-index", "max");
+    deleteEmbedding(`community-${id}`).catch(() => {});
 
     return Response.json({ success: true });
   } catch {

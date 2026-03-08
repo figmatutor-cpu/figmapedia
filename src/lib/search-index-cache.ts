@@ -14,6 +14,7 @@ import {
 import { SECTION_DB_IDS } from "@/lib/section-databases";
 import { FIGMA_RESOURCES } from "@/lib/resource-data";
 import { getGlossaryExpansions } from "@/lib/figma-glossary";
+import { supabase } from "@/lib/supabase";
 import type { SearchIndex, SearchIndexItem } from "@/types";
 
 export const getCachedSearchIndex = unstable_cache(
@@ -62,6 +63,30 @@ export const getCachedSearchIndex = unstable_cache(
       ...glossaryPages.map(mapFigmaGlossaryPage).map((item) => ({ ...item, section: "피그마 용어" })),
     ];
 
+    // Fetch community posts from Supabase
+    let communityItems: SearchIndexItem[] = [];
+    try {
+      const { data: communityPosts } = await supabase
+        .from("community_posts")
+        .select("id, nickname, title, category, created_at, updated_at")
+        .order("created_at", { ascending: false });
+
+      if (communityPosts) {
+        communityItems = communityPosts.map((p) => ({
+          id: `community-${p.id}`,
+          title: p.title,
+          categories: [p.category],
+          author: p.nickname,
+          link: null,
+          publishedDate: p.created_at,
+          section: "커뮤니티",
+          lastEditedTime: p.updated_at,
+        }));
+      }
+    } catch {
+      // Supabase 실패 시 커뮤니티 없이 진행
+    }
+
     // Map figma resources to search index items
     const resourceItems: SearchIndexItem[] = FIGMA_RESOURCES.map((r, i) => ({
       id: `resource-${i}`,
@@ -78,7 +103,7 @@ export const getCachedSearchIndex = unstable_cache(
 
     // Merge all items, dedup by id
     const idSet = new Set<string>();
-    const merged = [...mainItems, ...sectionItems, ...resourceItems].filter((item) => {
+    const merged = [...mainItems, ...sectionItems, ...resourceItems, ...communityItems].filter((item) => {
       if (idSet.has(item.id)) return false;
       idSet.add(item.id);
       return true;

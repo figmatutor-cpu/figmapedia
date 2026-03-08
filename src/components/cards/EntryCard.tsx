@@ -170,9 +170,14 @@ export function EntryCard({ entry, showThumbnail = false, nonClickable = false }
     );
   }
 
+  // 커뮤니티 게시글 → /community/{id}
+  const entryHref = entry.id.startsWith("community-")
+    ? `/community/${entry.id.replace("community-", "")}`
+    : `/entry/${entry.id}`;
+
   return (
     <Link
-      href={`/entry/${entry.id}`}
+      href={entryHref}
       className="group block rounded-xl border border-white/10 bg-white/5 p-5 hover:border-white/20 hover:bg-white/[0.08] transition-all"
     >
       {cardInner}

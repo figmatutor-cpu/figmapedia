@@ -77,8 +77,8 @@ function AISummaryCard({ summary, sources, query }: { summary: string; sources?:
           <p className="text-xs text-gray-500 mb-1.5">출처</p>
           <ul className="space-y-1 min-w-0">
             {sources?.map((item) => {
-              const href = item.link ?? `/entry/${item.id}`;
-              const isExternal = !!item.link;
+              const href = item.id.startsWith("community-") ? `/community/${item.id.replace("community-", "")}` : item.link ?? `/entry/${item.id}`;
+              const isExternal = !!item.link && item.link.startsWith("http");
               return (
                 <li key={item.id} className="min-w-0">
                   <a
