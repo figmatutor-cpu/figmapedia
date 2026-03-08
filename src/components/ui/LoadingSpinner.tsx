@@ -1,8 +1,25 @@
-export function LoadingSpinner({ className = "w-4 h-4" }: { className?: string }) {
+"use client";
+
+import { useEffect, useRef } from "react";
+import Lottie, { type LottieRefCurrentProps } from "lottie-react";
+import animationData from "../../../public/loading-spinner.json";
+
+export function LoadingSpinner({ className = "w-6 h-6" }: { className?: string }) {
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
+
+  useEffect(() => {
+    lottieRef.current?.setSpeed(1.2);
+  }, []);
+
   return (
-    <svg className={`${className} animate-spin`} viewBox="0 0 24 24" fill="none">
-      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-    </svg>
+    <div className={className}>
+      <Lottie
+        lottieRef={lottieRef}
+        animationData={animationData}
+        loop
+        autoplay
+        style={{ width: "100%", height: "100%" }}
+      />
+    </div>
   );
 }

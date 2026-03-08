@@ -1,17 +1,64 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useSearchContext } from "./SearchProvider";
 import { EntryCard } from "@/components/cards/EntryCard";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import {
   AI_SEARCH_LABEL,
-  AI_SEARCHING_MESSAGE,
   AI_SUMMARY_LABEL,
   FALLBACK_RESULTS_MESSAGE,
   getRecommendedLinks,
 } from "@/lib/constants";
 import type { SearchIndexItem } from "@/types";
+
+const TYPING_MESSAGES = ["AI 검색 중", "Figmapedia DB와 결합 중"];
+
+function TypingText() {
+  const [displayed, setDisplayed] = useState("");
+
+  useEffect(() => {
+    let msgIdx = 0;
+    let charIdx = 0;
+    let deleting = false;
+    let timer: ReturnType<typeof setTimeout>;
+
+    function step() {
+      const text = TYPING_MESSAGES[msgIdx];
+      if (!deleting) {
+        charIdx++;
+        setDisplayed(text.slice(0, charIdx));
+        if (charIdx >= text.length) {
+          timer = setTimeout(() => { deleting = true; step(); }, 1200);
+        } else {
+          timer = setTimeout(step, 60);
+        }
+      } else {
+        charIdx--;
+        setDisplayed(text.slice(0, charIdx));
+        if (charIdx <= 0) {
+          deleting = false;
+          msgIdx = (msgIdx + 1) % TYPING_MESSAGES.length;
+          timer = setTimeout(step, 300);
+        } else {
+          timer = setTimeout(step, 35);
+        }
+      }
+    }
+
+    step();
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <p className="-mt-[72px] text-sm text-white">
+      {displayed}
+      <span className="inline-block w-[2px] h-[14px] bg-white ml-0.5 align-middle animate-pulse" />
+    </p>
+  );
+}
 
 function AISummaryCard({ summary, sources, query }: { summary: string; sources?: SearchIndexItem[]; query: string }) {
   const recommendedLinks = getRecommendedLinks(query);
@@ -81,12 +128,9 @@ export function SearchResults() {
 
   if (isAISearching) {
     return (
-      <div className="space-y-3">
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-4 h-4 border-2 border-brand-blue-accent border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-brand-blue-accent">{AI_SEARCHING_MESSAGE}</p>
-        </div>
-        <Skeleton count={4} />
+      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center">
+        <LoadingSpinner className="w-60 h-60" />
+        <TypingText />
       </div>
     );
   }
