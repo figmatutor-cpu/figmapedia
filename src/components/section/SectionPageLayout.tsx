@@ -305,7 +305,7 @@ export function SectionPageLayout({
     <div className="min-h-screen bg-bg-base pt-28 pb-16">
       <div className="mx-auto max-w-4xl px-4">
         {/* Title */}
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+        <h1 className="text-xl font-bold text-white mb-2">
           {title}
         </h1>
 

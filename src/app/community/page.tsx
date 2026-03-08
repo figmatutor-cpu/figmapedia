@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import type { CommunityPost } from "@/types";
 
 const CATEGORIES = ["전체", "일반", "질문", "정보공유", "피드백"];
@@ -53,39 +54,23 @@ export default function CommunityPage() {
   };
 
   return (
-    <div className="min-h-screen pt-24 pb-16 px-4">
-      <div className="max-w-3xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-white">커뮤니티</h1>
-            <p className="text-sm text-gray-400 mt-1">
-              자유롭게 질문하고 정보를 공유하세요
-            </p>
-          </div>
-          <Link
-            href="/community/write"
-            className="px-5 py-2.5 rounded-lg bg-brand-blue text-white text-sm font-bold shadow-[0_0_12px_rgba(31,61,188,0.4)] hover:bg-brand-blue-accent hover:shadow-[0_0_20px_rgba(31,61,188,0.6)] transition-all"
-          >
-            글쓰기
-          </Link>
-        </div>
+    <div className="min-h-screen bg-bg-base pt-28 pb-16">
+      <div className="mx-auto max-w-4xl px-4">
+        {/* Title */}
+        <h1 className="text-xl font-bold text-white mb-2">
+          커뮤니티
+        </h1>
+        <p className="text-gray-400 mb-6 text-sm sm:text-base">
+          자유롭게 질문하고 정보를 공유하세요
+        </p>
 
         {/* Category Tabs */}
-        <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => handleCategoryChange(cat)}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium border whitespace-nowrap transition-colors ${
-                category === cat
-                  ? "bg-white/10 border-white/20 text-white"
-                  : "bg-white/[0.03] border-white/10 text-gray-400 hover:border-white/20"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+        <div className="mb-8">
+          <SegmentedControl
+            tabs={CATEGORIES.map((cat) => ({ key: cat, label: cat }))}
+            activeTab={category}
+            onTabChange={handleCategoryChange}
+          />
         </div>
 
         {/* Post List */}

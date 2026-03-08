@@ -112,8 +112,8 @@ export default function CommunityWritePage() {
                   onClick={() => setCategory(cat)}
                   className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
                     category === cat
-                      ? "bg-white/10 border-white/20 text-white"
-                      : "bg-white/[0.03] border-white/10 text-gray-400 hover:border-white/20"
+                      ? "bg-brand-blue-accent border-brand-blue-accent text-white"
+                      : "bg-white/[0.03] border-white/10 text-gray-400 hover:text-gray-200 hover:border-white/15"
                   }`}
                 >
                   {cat}
@@ -182,7 +182,7 @@ export default function CommunityWritePage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 rounded-lg bg-brand-blue text-white text-sm font-bold shadow-[0_0_12px_rgba(31,61,188,0.4)] hover:bg-brand-blue-accent hover:shadow-[0_0_20px_rgba(31,61,188,0.6)] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+            className="w-full py-3 rounded-lg bg-white text-bg-base text-sm font-bold shadow-lg shadow-white/20 hover:bg-gray-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
           >
             {isSubmitting ? "작성 중..." : "작성하기"}
           </button>

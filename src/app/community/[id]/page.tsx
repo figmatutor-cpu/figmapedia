@@ -374,7 +374,7 @@ export default function CommunityPostPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-5 py-2.5 rounded-lg bg-brand-blue text-white text-sm font-bold shadow-[0_0_12px_rgba(31,61,188,0.4)] hover:bg-brand-blue-accent hover:shadow-[0_0_20px_rgba(31,61,188,0.6)] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+                className="px-5 py-2.5 rounded-lg bg-white text-bg-base text-sm font-bold shadow-lg shadow-white/20 hover:bg-gray-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
               >
                 {isSubmitting ? "작성 중..." : "댓글 작성"}
               </button>
