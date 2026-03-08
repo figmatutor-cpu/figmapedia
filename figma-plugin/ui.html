@@ -607,21 +607,35 @@
     <a id="openSite">figmapedia.com</a>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
   <script>
-    const SPINNER_URL = "https://figmapedia.com/loading-spinner.json";
-    let spinnerData = null;
-    fetch(SPINNER_URL).then(r => r.json()).then(d => { spinnerData = d; }).catch(() => {});
+    /* ── Lottie loader (same domain) ── */
+    var SITE = "https://figmapedia.com";
+    var lottieReady = new Promise(function(resolve) {
+      var s = document.createElement("script");
+      s.src = SITE + "/lottie.min.js";
+      s.onload = function() { resolve(true); };
+      s.onerror = function() { resolve(false); };
+      document.head.appendChild(s);
+    });
+
+    var spinnerData = null;
+    var dataReady = fetch(SITE + "/loading-spinner.json")
+      .then(function(r) { return r.json(); })
+      .then(function(d) { spinnerData = d; return true; })
+      .catch(function() { return false; });
 
     function renderLottieSpinner(container) {
-      if (!spinnerData || !window.lottie) return;
-      lottie.loadAnimation({
-        container: container,
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        animationData: spinnerData,
-      }).setSpeed(1.2);
+      Promise.all([lottieReady, dataReady]).then(function(results) {
+        if (results[0] && results[1] && window.lottie && container.isConnected) {
+          lottie.loadAnimation({
+            container: container,
+            renderer: "svg",
+            loop: true,
+            autoplay: true,
+            animationData: spinnerData,
+          }).setSpeed(1.2);
+        }
+      });
     }
 
     var TYPING_MSGS = ["AI 검색 중", "Figmapedia DB와 결합 중"];
