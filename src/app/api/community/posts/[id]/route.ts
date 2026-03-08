@@ -33,9 +33,12 @@ export async function GET(
     .eq("post_id", id)
     .order("created_at", { ascending: true });
 
+  const { password_hash: _ph, ...safePost } = post;
+  const safeComments = (comments ?? []).map(({ password_hash: _cph, ...c }) => c);
+
   return Response.json({
-    post: { ...post, comment_count: comments?.length ?? 0 },
-    comments: comments ?? [],
+    post: { ...safePost, comment_count: safeComments.length },
+    comments: safeComments,
   });
 }
 

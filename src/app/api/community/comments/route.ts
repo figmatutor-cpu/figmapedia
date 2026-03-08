@@ -63,7 +63,8 @@ export async function POST(request: NextRequest) {
       return Response.json({ error: error.message }, { status: 500 });
     }
 
-    return Response.json({ comment: data }, { status: 201 });
+    const { password_hash: _ph, ...safeComment } = data;
+    return Response.json({ comment: safeComment }, { status: 201 });
   } catch {
     return Response.json({ error: "잘못된 요청입니다." }, { status: 400 });
   }

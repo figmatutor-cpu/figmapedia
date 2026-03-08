@@ -336,23 +336,23 @@ export default function CommunityPostPage() {
             onSubmit={handleCommentSubmit}
             className="rounded-xl border border-white/10 bg-white/5 p-4"
           >
-            <div className="flex gap-2 mb-3">
+            <div className="grid grid-cols-2 gap-2 mb-3">
               <input
                 type="text"
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 placeholder="닉네임"
                 maxLength={20}
-                className="flex-1 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-gray-600 focus:border-white/25 focus:outline-none"
+                className="w-full min-w-0 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-gray-600 focus:border-white/25 focus:outline-none"
                 style={{ fontSize: "16px" }}
               />
               <input
                 type="password"
                 value={commentPassword}
                 onChange={(e) => setCommentPassword(e.target.value)}
-                placeholder="비밀번호"
+                placeholder="비밀번호 (4자 이상)"
                 maxLength={30}
-                className="flex-1 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-gray-600 focus:border-white/25 focus:outline-none"
+                className="w-full min-w-0 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-gray-600 focus:border-white/25 focus:outline-none"
                 style={{ fontSize: "16px" }}
               />
             </div>

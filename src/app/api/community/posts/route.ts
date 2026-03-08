@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  const postsWithCounts = (posts ?? []).map((p) => ({
+  const postsWithCounts = (posts ?? []).map(({ password_hash: _ph, ...p }) => ({
     ...p,
     comment_count: commentCounts[p.id] || 0,
   }));
@@ -114,7 +114,8 @@ export async function POST(request: NextRequest) {
       return Response.json({ error: error.message }, { status: 500 });
     }
 
-    return Response.json({ post: data }, { status: 201 });
+    const { password_hash: _ph, ...safePost } = data;
+    return Response.json({ post: safePost }, { status: 201 });
   } catch {
     return Response.json({ error: "잘못된 요청입니다." }, { status: 400 });
   }
