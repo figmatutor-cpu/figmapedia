@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import { revalidateTag } from "next/cache";
 import { NextRequest } from "next/server";
 
 async function hashPassword(password: string): Promise<string> {
@@ -49,6 +50,9 @@ export async function DELETE(
     if (error) {
       return Response.json({ error: error.message }, { status: 500 });
     }
+
+    // 댓글 수 변경 → 게시글 캐시 갱신
+    revalidateTag("community-posts", "max");
 
     return Response.json({ success: true });
   } catch {

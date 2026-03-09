@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase";
-import { revalidateTag } from "next/cache";
+import { revalidateTag, unstable_cache } from "next/cache";
 import {
   embedDocument,
   buildEmbeddingText,
@@ -17,59 +17,75 @@ async function hashPassword(password: string): Promise<string> {
     .join("");
 }
 
+/* ── 캐시된 게시글 목록 조회 ── */
+const getCachedPosts = unstable_cache(
+  async (page: number, limit: number, category: string | null) => {
+    const offset = (page - 1) * limit;
+
+    let query = supabase
+      .from("community_posts")
+      .select("*", { count: "exact" })
+      .order("created_at", { ascending: false })
+      .range(offset, offset + limit - 1);
+
+    if (category && category !== "전체") {
+      query = query.eq("category", category);
+    }
+
+    const { data: posts, count, error } = await query;
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    // 댓글 수 조회: post_id만 SELECT 후 집계 (단일 쿼리)
+    const postIds = (posts ?? []).map((p) => p.id);
+    const commentCounts: Record<string, number> = {};
+
+    if (postIds.length > 0) {
+      const { data: comments } = await supabase
+        .from("community_comments")
+        .select("post_id, id", { count: "exact", head: false })
+        .in("post_id", postIds);
+
+      if (comments) {
+        for (const c of comments) {
+          commentCounts[c.post_id] = (commentCounts[c.post_id] || 0) + 1;
+        }
+      }
+    }
+
+    const postsWithCounts = (posts ?? []).map(({ password_hash: _ph, ...p }) => ({
+      ...p,
+      comment_count: commentCounts[p.id] || 0,
+    }));
+
+    return {
+      posts: postsWithCounts,
+      total: count ?? 0,
+      page,
+      limit,
+      totalPages: Math.ceil((count ?? 0) / limit),
+    };
+  },
+  ["community-posts"],
+  { revalidate: 60, tags: ["community-posts"] },
+);
+
 /* ── GET: 게시글 목록 (페이지네이션) ── */
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const page = Math.max(1, Number(searchParams.get("page")) || 1);
   const limit = Math.min(50, Math.max(1, Number(searchParams.get("limit")) || 20));
   const category = searchParams.get("category");
-  const offset = (page - 1) * limit;
 
-  let query = supabase
-    .from("community_posts")
-    .select("*", { count: "exact" })
-    .order("created_at", { ascending: false })
-    .range(offset, offset + limit - 1);
-
-  if (category && category !== "전체") {
-    query = query.eq("category", category);
+  try {
+    const data = await getCachedPosts(page, limit, category);
+    return Response.json(data);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "서버 오류가 발생했습니다.";
+    return Response.json({ error: message }, { status: 500 });
   }
-
-  const { data: posts, count, error } = await query;
-
-  if (error) {
-    return Response.json({ error: error.message }, { status: 500 });
-  }
-
-  // 각 게시글의 댓글 수 조회
-  const postIds = (posts ?? []).map((p) => p.id);
-  let commentCounts: Record<string, number> = {};
-
-  if (postIds.length > 0) {
-    const { data: counts } = await supabase
-      .from("community_comments")
-      .select("post_id")
-      .in("post_id", postIds);
-
-    if (counts) {
-      for (const c of counts) {
-        commentCounts[c.post_id] = (commentCounts[c.post_id] || 0) + 1;
-      }
-    }
-  }
-
-  const postsWithCounts = (posts ?? []).map(({ password_hash: _ph, ...p }) => ({
-    ...p,
-    comment_count: commentCounts[p.id] || 0,
-  }));
-
-  return Response.json({
-    posts: postsWithCounts,
-    total: count ?? 0,
-    page,
-    limit,
-    totalPages: Math.ceil((count ?? 0) / limit),
-  });
 }
 
 /* ── POST: 게시글 작성 ── */
@@ -123,7 +139,8 @@ export async function POST(request: NextRequest) {
 
     const { password_hash: _ph, ...safePost } = data;
 
-    // 검색 인덱스 캐시 즉시 갱신
+    // 캐시 즉시 갱신
+    revalidateTag("community-posts", "max");
     revalidateTag("search-index", "max");
 
     // fire-and-forget: 벡터 임베딩 생성 (AI 검색용)

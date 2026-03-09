@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase";
-import { revalidateTag } from "next/cache";
+import { revalidateTag, unstable_cache } from "next/cache";
 import { deleteEmbedding } from "@/lib/embeddings";
 import { NextRequest } from "next/server";
 
@@ -12,36 +12,54 @@ async function hashPassword(password: string): Promise<string> {
     .join("");
 }
 
+/* ── 캐시된 게시글 상세 + 댓글 조회 ── */
+const getCachedPostDetail = unstable_cache(
+  async (id: string) => {
+    const [{ data: post, error: postError }, { data: comments }] =
+      await Promise.all([
+        supabase
+          .from("community_posts")
+          .select("*")
+          .eq("id", id)
+          .single(),
+        supabase
+          .from("community_comments")
+          .select("*")
+          .eq("post_id", id)
+          .order("created_at", { ascending: true }),
+      ]);
+
+    if (postError || !post) {
+      return null;
+    }
+
+    const { password_hash: _ph, ...safePost } = post;
+    const safeComments = (comments ?? []).map(
+      ({ password_hash: _cph, ...c }) => c
+    );
+
+    return {
+      post: { ...safePost, comment_count: safeComments.length },
+      comments: safeComments,
+    };
+  },
+  ["community-post-detail"],
+  { revalidate: 60, tags: ["community-posts"] },
+);
+
 /* ── GET: 게시글 상세 + 댓글 ── */
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+  const data = await getCachedPostDetail(id);
 
-  const { data: post, error: postError } = await supabase
-    .from("community_posts")
-    .select("*")
-    .eq("id", id)
-    .single();
-
-  if (postError || !post) {
+  if (!data) {
     return Response.json({ error: "게시글을 찾을 수 없습니다." }, { status: 404 });
   }
 
-  const { data: comments } = await supabase
-    .from("community_comments")
-    .select("*")
-    .eq("post_id", id)
-    .order("created_at", { ascending: true });
-
-  const { password_hash: _ph, ...safePost } = post;
-  const safeComments = (comments ?? []).map(({ password_hash: _cph, ...c }) => c);
-
-  return Response.json({
-    post: { ...safePost, comment_count: safeComments.length },
-    comments: safeComments,
-  });
+  return Response.json(data);
 }
 
 /* ── DELETE: 게시글 삭제 (비밀번호 확인) ── */
@@ -83,7 +101,8 @@ export async function DELETE(
       return Response.json({ error: error.message }, { status: 500 });
     }
 
-    // 검색 인덱스 캐시 갱신 + 임베딩 제거
+    // 캐시 갱신 + 임베딩 제거
+    revalidateTag("community-posts", "max");
     revalidateTag("search-index", "max");
     deleteEmbedding(`community-${id}`).catch(() => {});
 

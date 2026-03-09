@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import { revalidateTag } from "next/cache";
 import { NextRequest } from "next/server";
 
 async function hashPassword(password: string): Promise<string> {
@@ -64,6 +65,10 @@ export async function POST(request: NextRequest) {
     }
 
     const { password_hash: _ph, ...safeComment } = data;
+
+    // 댓글 수 변경 → 게시글 캐시 갱신
+    revalidateTag("community-posts", "max");
+
     return Response.json({ comment: safeComment }, { status: 201 });
   } catch {
     return Response.json({ error: "잘못된 요청입니다." }, { status: 400 });
