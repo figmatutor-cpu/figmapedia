@@ -59,14 +59,18 @@ export default function CommunityPage() {
 
   // 클라이언트 검색 필터
   const filteredPosts = useMemo(() => {
-    if (!searchQuery.trim()) return posts;
-    const q = searchQuery.toLowerCase();
-    return posts.filter(
-      (post) =>
-        post.title.toLowerCase().includes(q) ||
-        post.nickname.toLowerCase().includes(q) ||
-        post.category.toLowerCase().includes(q)
-    );
+    let list = posts;
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      list = list.filter(
+        (post) =>
+          post.title.toLowerCase().includes(q) ||
+          post.nickname.toLowerCase().includes(q) ||
+          post.category.toLowerCase().includes(q)
+      );
+    }
+    // 고정글 항상 상단
+    return [...list].sort((a, b) => (b.is_pinned ? 1 : 0) - (a.is_pinned ? 1 : 0));
   }, [posts, searchQuery]);
 
   return (
@@ -169,16 +173,30 @@ export default function CommunityPage() {
               <Link
                 key={post.id}
                 href={`/community/${post.id}`}
-                className="block rounded-xl border border-white/10 bg-white/5 p-4 hover:border-white/20 hover:bg-white/[0.08] transition-colors"
+                className={`block rounded-xl border p-4 transition-colors ${
+                  post.is_pinned
+                    ? "border-brand-blue/30 bg-brand-blue/5 hover:border-brand-blue/50 hover:bg-brand-blue/10"
+                    : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/[0.08]"
+                }`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 mb-1">
+                      {post.is_pinned && post.pin_label && (
+                        <span className="text-xxs px-2 py-0.5 rounded-full bg-brand-blue/20 text-blue-300 font-medium">
+                          {post.pin_label}
+                        </span>
+                      )}
                       <span className="text-xxs px-2 py-0.5 rounded-full border border-white/10 text-gray-400">
                         {post.category}
                       </span>
                     </div>
                     <h3 className="text-sm font-medium text-white truncate">
+                      {post.is_pinned && (
+                        <svg className="inline-block w-3.5 h-3.5 mr-1 -mt-0.5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                        </svg>
+                      )}
                       {post.title}
                     </h3>
                     <div className="flex items-center gap-2 mt-1.5 text-xxs text-gray-500">

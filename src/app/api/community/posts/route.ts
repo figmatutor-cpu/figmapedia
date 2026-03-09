@@ -25,6 +25,7 @@ const getCachedPosts = unstable_cache(
     let query = supabase
       .from("community_posts")
       .select("*", { count: "exact" })
+      .order("is_pinned", { ascending: false, nullsFirst: false })
       .order("created_at", { ascending: false })
       .range(offset, offset + limit - 1);
 

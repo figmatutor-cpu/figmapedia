@@ -97,6 +97,8 @@ export interface CommunityPost {
   created_at: string;
   updated_at: string;
   comment_count?: number;
+  is_pinned?: boolean;
+  pin_label?: string;
 }
 
 export interface CommunityComment {
