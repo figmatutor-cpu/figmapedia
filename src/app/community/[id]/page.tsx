@@ -269,13 +269,13 @@ export default function CommunityPostPage() {
         {/* Post */}
         <article className="rounded-xl border border-white/10 bg-white/5 p-5 mb-6">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xxs px-2 py-0.5 rounded-full border border-white/10 text-gray-400">
+            <span className="text-xs px-2 py-0.5 rounded-full border border-white/10 text-gray-400">
               {post.category}
             </span>
             <button
               type="button"
               onClick={() => setDeleteTarget({ type: "post", id: post.id })}
-              className="text-xxs text-gray-600 hover:text-red-400 transition-colors"
+              className="text-xs text-gray-600 hover:text-red-400 transition-colors"
             >
               삭제
             </button>
