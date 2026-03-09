@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { cache } from "react";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { APIResponseError } from "@notionhq/client";
 import { fetchEntryById, fetchPageBlocks } from "@/lib/notion";
@@ -54,7 +54,7 @@ export async function generateMetadata({
 
   try {
     const page = await getEntry(id);
-    if (!page) return {};
+    if (!page || (page as any).archived || (page as any).in_trash) return {};
 
     const entry = mapNotionPageToEntry(page);
     const rawBlocks = await getBlocks(page.id);
@@ -112,16 +112,22 @@ export default async function EntryPage({
         throw new Error("일시적으로 요청이 많습니다. 잠시 후 다시 시도해 주세요.");
       }
     } else {
-      notFound();
+      redirect("/figma-info");
     }
   }
 
-  if (!page) {
-    notFound();
+  if (!page || (page as any).archived || (page as any).in_trash) {
+    redirect("/figma-info");
   }
 
   const entry = mapNotionPageToEntry(page);
-  const rawBlocks = await getBlocks(page.id);
+
+  let rawBlocks;
+  try {
+    rawBlocks = await getBlocks(page.id);
+  } catch {
+    redirect("/figma-info");
+  }
   const blocks = rawBlocks.map(mapNotionBlock);
 
   return (

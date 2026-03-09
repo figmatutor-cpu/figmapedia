@@ -765,6 +765,7 @@
     }
 
     heroInput.addEventListener("keydown", (e) => {
+      if (e.isComposing) return;
       if (e.key === "Enter" && heroInput.value.trim() && !isSearching) {
         switchToResults(heroInput.value.trim());
         doSearch(heroInput.value.trim());
@@ -780,6 +781,7 @@
     });
 
     topInput.addEventListener("keydown", (e) => {
+      if (e.isComposing) return;
       if (e.key === "Enter" && topInput.value.trim() && !isSearching) {
         doSearch(topInput.value.trim());
       }
