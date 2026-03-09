@@ -53,7 +53,7 @@ export function FigmaResourceClient({ cachedThumbnails }: Props) {
   return (
     <main className="min-h-screen bg-base pt-28 pb-20 px-4">
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+        <h1 className="text-xl font-bold text-white mb-2">
           피그마 리소스
         </h1>
         <p className="text-gray-400 text-sm sm:text-base mb-6">
