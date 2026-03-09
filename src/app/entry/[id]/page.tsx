@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cache } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { APIResponseError } from "@notionhq/client";
@@ -10,7 +11,39 @@ import { NotionBlockRenderer } from "@/components/entry/NotionBlockRenderer";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://figmapedia.com";
 
-export const revalidate = 120;
+export const revalidate = 3600;
+
+/* ── React cache()로 같은 요청 내 중복 fetch 제거 ── */
+const getEntry = cache(async (id: string) => fetchEntryById(id));
+const getBlocks = cache(async (id: string) => fetchPageBlocks(id));
+
+/** Notion 블록 배열에서 텍스트만 추출 (SEO description용) */
+function extractTextFromBlocks(blocks: any[], maxLength: number = 155): string {
+  const texts: string[] = [];
+  let totalLen = 0;
+
+  for (const block of blocks) {
+    const type = block.type;
+    const data = block[type];
+    if (!data?.rich_text) continue;
+
+    const text = (data.rich_text as any[])
+      .map((rt: any) => rt.plain_text ?? "")
+      .join("")
+      .replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}\u200d\uFE0F\u20E3]/gu, "").replace(/[0-9]\uFE0F\u20E3/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    if (!text) continue;
+    texts.push(text);
+    totalLen += text.length;
+    if (totalLen >= maxLength) break;
+  }
+
+  const joined = texts.join(" ");
+  if (joined.length <= maxLength) return joined;
+  return joined.slice(0, maxLength).replace(/\s+\S*$/, "") + "…";
+}
 
 export async function generateMetadata({
   params,
@@ -20,12 +53,17 @@ export async function generateMetadata({
   const { id } = await params;
 
   try {
-    const page = await fetchEntryById(id);
+    const page = await getEntry(id);
     if (!page) return {};
 
     const entry = mapNotionPageToEntry(page);
+    const rawBlocks = await getBlocks(page.id);
+    const excerpt = extractTextFromBlocks(rawBlocks);
+
     const title = `${entry.title} | Figmapedia`;
-    const description = `${entry.categories.join(", ")} — Figmapedia 디자인 용어사전`;
+    const description = excerpt
+      ? `${entry.title} — ${excerpt}`
+      : `${entry.title} — ${entry.categories.join(", ")} | Figmapedia 디자인 용어사전`;
     const url = `${SITE_URL}/entry/${id}`;
 
     return {
@@ -63,13 +101,13 @@ export default async function EntryPage({
 
   let page;
   try {
-    page = await fetchEntryById(id);
+    page = await getEntry(id);
   } catch (error) {
     // Rate limited: 1초 대기 후 1회 재시도
     if (error instanceof APIResponseError && error.code === "rate_limited") {
       await new Promise((r) => setTimeout(r, 1000));
       try {
-        page = await fetchEntryById(id);
+        page = await getEntry(id);
       } catch {
         throw new Error("일시적으로 요청이 많습니다. 잠시 후 다시 시도해 주세요.");
       }
@@ -83,7 +121,7 @@ export default async function EntryPage({
   }
 
   const entry = mapNotionPageToEntry(page);
-  const rawBlocks = await fetchPageBlocks(page.id);
+  const rawBlocks = await getBlocks(page.id);
   const blocks = rawBlocks.map(mapNotionBlock);
 
   return (
