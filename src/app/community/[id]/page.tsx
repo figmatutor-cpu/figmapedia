@@ -281,7 +281,7 @@ export default function CommunityPostPage() {
             </button>
           </div>
           <h1 className="text-lg font-bold text-white mb-2">{post.title}</h1>
-          <div className="flex items-center gap-2 text-xxs text-gray-500 mb-4">
+          <div className="flex items-center gap-2 text-xs text-gray-500 mb-4">
             <span className="text-gray-300">{post.nickname}</span>
             <span>·</span>
             <span>{formatDate(post.created_at)}</span>
@@ -295,7 +295,7 @@ export default function CommunityPostPage() {
 
         {/* Comments */}
         <div className="mb-6">
-          <h2 className="text-sm font-medium text-white mb-3">
+          <h2 className="text-base font-medium text-white mb-3">
             댓글 {comments.length}개
           </h2>
 
