@@ -69,7 +69,7 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "itQSqt8mb56aUgnHLQozl7K0Sydr2-p0zozUqZE3hiw",
-    other: { "naver-site-verification": ["bbc67d14b3e08e9d9a51f55c61421b02f6b8fd8f"] },
+    other: { "naver-site-verification": ["67e11a1d64f436a367a098073032fe4433dc5ce7"] },
   },
   other: {
     "geo.region": "KR",
