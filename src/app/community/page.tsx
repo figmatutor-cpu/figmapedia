@@ -127,6 +127,7 @@ export default function CommunityPage() {
             ) : (
               <button
                 type="button"
+                aria-label="페이지 내 검색"
                 onClick={() => {
                   setIsSearchExpanded(true);
                   setTimeout(() => mobileSearchRef.current?.focus(), 100);

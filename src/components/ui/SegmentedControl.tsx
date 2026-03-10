@@ -32,7 +32,7 @@ export function SegmentedControl({
           >
             {tab.label}
             {tab.count !== undefined && (
-              <span className="ml-1.5 text-xs opacity-60">{tab.count}</span>
+              <span className="ml-1.5 text-xs opacity-75">{tab.count}</span>
             )}
           </button>
         ))}
