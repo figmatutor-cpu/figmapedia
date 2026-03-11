@@ -52,7 +52,7 @@ function PasswordModal({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-sm rounded-xl border border-white/10 bg-[#111118] p-5"
+        className="w-full max-w-sm rounded-xl border border-white/10 bg-modal-bg p-5"
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="text-sm font-bold text-white mb-3">{title}</h3>
@@ -221,7 +221,7 @@ export default function CommunityPostPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen pt-24 pb-16 px-4">
+      <div className="min-h-screen bg-bg-base pt-28 pb-16 px-4">
         <div className="max-w-3xl mx-auto">
           <div className="animate-pulse space-y-4">
             <div className="h-6 bg-white/10 rounded w-1/3" />
@@ -236,7 +236,7 @@ export default function CommunityPostPage() {
 
   if (notFound || !post) {
     return (
-      <div className="min-h-screen pt-24 pb-16 px-4">
+      <div className="min-h-screen bg-bg-base pt-28 pb-16 px-4">
         <div className="max-w-3xl mx-auto text-center py-16">
           <p className="text-lg text-gray-400 mb-4">
             게시글을 찾을 수 없습니다
@@ -253,7 +253,7 @@ export default function CommunityPostPage() {
   }
 
   return (
-    <div className="min-h-screen pt-24 pb-16 px-4">
+    <div className="min-h-screen bg-bg-base pt-28 pb-16 px-4">
       <div className="max-w-3xl mx-auto">
         {/* Back link */}
         <Link

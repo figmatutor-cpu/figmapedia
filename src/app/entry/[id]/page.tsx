@@ -131,7 +131,7 @@ export default async function EntryPage({
   const blocks = rawBlocks.map(mapNotionBlock);
 
   return (
-    <article className="mx-auto max-w-3xl px-4 pt-[120px] pb-12 min-h-screen bg-bg-base">
+    <article className="mx-auto max-w-3xl px-4 pt-28 pb-16 min-h-screen bg-bg-base">
       <Link
         href="/"
         className="inline-flex items-center text-sm text-gray-400 hover:text-white mb-8 transition-colors"

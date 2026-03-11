@@ -51,8 +51,8 @@ export function FigmaResourceClient({ cachedThumbnails }: Props) {
   }, [activeTab, searchQuery]);
 
   return (
-    <main className="min-h-screen bg-base pt-28 pb-20 px-4">
-      <div className="max-w-4xl mx-auto">
+    <main className="min-h-screen bg-bg-base pt-28 pb-16">
+      <div className="mx-auto max-w-4xl px-4">
         <h1 className="text-xl font-bold text-white mb-2">
           피그마 리소스
         </h1>

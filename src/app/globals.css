@@ -20,6 +20,13 @@
   --color-navbar-border: #333;
   --color-glass-hero: rgba(15, 15, 20, 0.55);
   --color-glass-overlay: rgba(15, 15, 20, 0.85);
+  --color-floating-bg: #202128;
+  --color-floating-item: #2a2a36;
+  --color-floating-item-hover: #333340;
+  --color-footer-link: #6C79FF;
+  --color-footer-sub: #858699;
+  --color-footer-meta: #6B6F76;
+  --color-modal-bg: #111118;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
