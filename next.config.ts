@@ -20,10 +20,13 @@ const nextConfig: NextConfig = {
       { source: "/bc95f6b0-0075-48bb-bbaa-311b6750098d", destination: "/community/312baef6-290e-4457-bdad-00ed832aebbe", permanent: true },
       { source: "/460d8222-37f2-47b5-b147-c0987cc79a4b", destination: "/figma-info", permanent: true },
       { source: "/2cafdea8-0034-803a-a1b6-f3a6a1f178bf", destination: "/", permanent: true },
-      // 범용 UUID → entry 페이지
+      // 비정상 URL → 실무 Q&A
+      { source: "/&", destination: "/figma-info", permanent: true },
+      { source: "/$", destination: "/figma-info", permanent: true },
+      // 범용 UUID (구 Oopy 페이지) → 실무 Q&A
       {
         source: "/:id([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})",
-        destination: "/entry/:id",
+        destination: "/figma-info",
         permanent: true,
       },
     ];
