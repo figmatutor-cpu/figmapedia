@@ -165,7 +165,31 @@ export default async function EntryPage({
       </header>
 
       <div className="border-t border-white/10 pt-8">
-        <NotionBlockRenderer blocks={blocks} />
+        {blocks.length === 0 && entry.link ? (
+          <a
+            href={entry.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 p-4 bg-white/5 border border-white/10 rounded-xl hover:border-white/20 hover:bg-white/[0.08] transition-all"
+          >
+            <svg
+              className="w-5 h-5 text-gray-400 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              />
+            </svg>
+            <span className="text-sm text-gray-300 truncate">{entry.link}</span>
+          </a>
+        ) : (
+          <NotionBlockRenderer blocks={blocks} />
+        )}
       </div>
     </article>
   );

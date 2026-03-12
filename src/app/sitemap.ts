@@ -16,12 +16,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/copyright`, changeFrequency: "yearly", priority: 0.2 },
   ];
 
-  // 동적 엔트리 페이지
+  // 동적 엔트리 페이지 — 본문이 풍부한 Q&A만 포함 (크롤 버짓 최적화)
   let entryPages: MetadataRoute.Sitemap = [];
   try {
     const { items } = await getCachedSearchIndex();
     entryPages = items
-      .filter((item) => !item.link) // 외부 링크가 아닌 내부 엔트리만
+      .filter((item) => item.section === "피그마 Q&A" && !item.link)
       .map((item) => ({
         url: `${SITE_URL}/entry/${item.id}`,
         lastModified: item.lastEditedTime ? new Date(item.lastEditedTime) : new Date(),
