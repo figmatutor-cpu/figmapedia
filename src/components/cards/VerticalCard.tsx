@@ -30,10 +30,12 @@ export function VerticalCard({
 }: VerticalCardProps) {
   const displayThumbnail = useThumbnail(entry, true);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const isShortcut = !!entry.shortcut;
 
   useEffect(() => {
     setImageLoaded(false);
+    setImageError(false);
   }, [displayThumbnail]);
 
   const cardClassName =
@@ -42,8 +44,8 @@ export function VerticalCard({
   const cardInner = (
     <>
       {/* 썸네일 영역 */}
-      <div className="aspect-[4/3] bg-white/6 flex items-center justify-center overflow-hidden relative">
-        {displayThumbnail ? (
+      <div className="aspect-4/3 bg-white/6 flex items-center justify-center overflow-hidden relative">
+        {displayThumbnail && !imageError ? (
           <>
             {!imageLoaded && (
               <div className="absolute inset-0 animate-pulse bg-white/10" />
@@ -56,6 +58,7 @@ export function VerticalCard({
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className={`w-full h-full object-cover transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
               onLoad={() => setImageLoaded(true)}
+              onError={() => setImageError(true)}
               unoptimized={!isOptimizableUrl(displayThumbnail)}
             />
           </>
