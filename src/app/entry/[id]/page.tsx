@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/Badge";
 import { EntryMeta } from "@/components/ui/EntryMeta";
 import { NotionBlockRenderer } from "@/components/entry/NotionBlockRenderer";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://figmapedia.com";
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://figmapedia.com").trim();
 
 export const revalidate = 3600;
 
