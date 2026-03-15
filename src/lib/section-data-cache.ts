@@ -27,7 +27,7 @@ try {
     // "노랑강정 1.jpg" → "노랑강정", "미토요.jpg" → "미토요"
     const baseName = norm(file.replace(/(\s+\d+)?\.jpg$/i, ""));
     if (!kioskImageMap.has(baseName)) {
-      kioskImageMap.set(baseName, `/kiosk/${encodeURIComponent(norm(file))}`);
+      kioskImageMap.set(baseName, `/kiosk/${norm(file)}`);
     }
   }
 } catch {
@@ -58,6 +58,19 @@ function findKioskImage(title: string): string | undefined {
     if (tStrip.includes(nStrip) || nStrip.includes(tStrip)) {
       if (name.length > bestLen) { bestLen = name.length; bestMatch = imgPath; }
     }
+  }
+  if (bestMatch) return bestMatch;
+  // 4) 첫 핵심 키워드 매치 (제목의 앞부분이 파일명에 포함되는지)
+  //    "신한은행 시니어 고객 맞춤형 ATM" → "신한은행" 으로 매칭
+  const words = t.split(/[\s\-()]+/).filter(Boolean);
+  for (let len = Math.min(words.length, 3); len >= 1; len--) {
+    const prefix = words.slice(0, len).join(" ");
+    for (const [name, imgPath] of kioskImageMap) {
+      if (name.startsWith(prefix)) {
+        if (name.length > bestLen) { bestLen = name.length; bestMatch = imgPath; }
+      }
+    }
+    if (bestMatch) return bestMatch;
   }
   return bestMatch;
 }
@@ -145,7 +158,7 @@ export const getCachedSectionData = unstable_cache(
 
     return {
       prompt: applyThumbnails(mappedPrompt),
-      kiosk: applyThumbnails(kioskWithLocalImages),
+      kiosk: kioskWithLocalImages,
       "uxui-articles": applyThumbnails(mappedArticles),
       "uxui-blogs": applyThumbnails(mappedBlogs),
       "uxui-terms": applyThumbnails(mappedTerms),
