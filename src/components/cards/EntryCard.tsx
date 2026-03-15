@@ -21,7 +21,7 @@ function isOptimizableUrl(url: string): boolean {
 }
 
 export function EntryCard({ entry, showThumbnail = false, nonClickable = false }: EntryCardProps) {
-  const displayThumbnail = useThumbnail(entry, showThumbnail);
+  const { url: displayThumbnail, onError: onThumbnailError } = useThumbnail(entry, showThumbnail);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [copied, setCopied] = useState(false);
   const isShortcut = !!entry.shortcut;
@@ -66,6 +66,7 @@ export function EntryCard({ entry, showThumbnail = false, nonClickable = false }
                 sizes="80px"
                 className={`w-full h-full object-cover transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
                 onLoad={() => setImageLoaded(true)}
+                onError={() => onThumbnailError()}
                 unoptimized={!isOptimizableUrl(displayThumbnail)}
               />
             </>

@@ -83,8 +83,7 @@ export const getCachedSectionData = unstable_cache(
         if (item.thumbnail && !isNotionS3Url(item.thumbnail)) return item;
         const cached = thumbnailMap.get(item.id);
         if (cached) return { ...item, thumbnail: cached };
-        // S3 URL인데 Supabase 캐시 없으면 제거 → 클라이언트 fallback 유도
-        if (item.thumbnail && isNotionS3Url(item.thumbnail)) return { ...item, thumbnail: undefined };
+        // S3 URL은 만료 가능하지만, 제거하면 fallback도 불가한 항목이 있으므로 유지
         return item;
       });
     }

@@ -28,7 +28,7 @@ export function VerticalCard({
   showMeta = true,
   externalLink = false,
 }: VerticalCardProps) {
-  const displayThumbnail = useThumbnail(entry, true);
+  const { url: displayThumbnail, onError: onThumbnailError } = useThumbnail(entry, true);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const isShortcut = !!entry.shortcut;
@@ -58,7 +58,7 @@ export function VerticalCard({
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className={`w-full h-full object-cover transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
               onLoad={() => setImageLoaded(true)}
-              onError={() => setImageError(true)}
+              onError={() => { onThumbnailError(); setImageError(true); }}
               unoptimized={!isOptimizableUrl(displayThumbnail)}
             />
           </>

@@ -1,19 +1,35 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 /**
  * 엔트리의 썸네일을 단계적으로 resolve하는 통합 훅
  * 우선순위: cover(즉시) → OG 이미지(link 있을 때) → Notion 블록 첫 이미지
+ *
+ * S3 URL은 만료될 수 있으므로, 이미지 로드 실패 시 onError()를 호출하면
+ * fallback 체인을 시도합니다.
  */
 export function useThumbnail(
   entry: { id: string; thumbnail?: string; link?: string | null },
   enabled: boolean,
-): string | null {
+): { url: string | null; onError: () => void } {
   const [fallback, setFallback] = useState<string | null>(null);
+  const [primaryFailed, setPrimaryFailed] = useState(false);
+
+  // 이미지 로드 실패 시 호출 → fallback 체인 시작
+  const onError = useCallback(() => setPrimaryFailed(true), []);
+
+  // primary thumbnail이 바뀌면 실패 상태 리셋
+  useEffect(() => {
+    setPrimaryFailed(false);
+    setFallback(null);
+  }, [entry.thumbnail]);
+
+  // thumbnail이 없거나, S3 URL 로드 실패 시 fallback resolve
+  const needsFallback = !entry.thumbnail || primaryFailed;
 
   useEffect(() => {
-    if (!enabled || entry.thumbnail) return;
+    if (!enabled || !needsFallback) return;
 
     let cancelled = false;
 
@@ -42,7 +58,9 @@ export function useThumbnail(
 
     resolve();
     return () => { cancelled = true; };
-  }, [entry.id, entry.link, entry.thumbnail, enabled]);
+  }, [entry.id, entry.link, enabled, needsFallback]);
 
-  return entry.thumbnail || fallback;
+  // primary가 실패했거나 없으면 fallback 사용
+  const url = (!primaryFailed && entry.thumbnail) ? entry.thumbnail : fallback;
+  return { url, onError };
 }
