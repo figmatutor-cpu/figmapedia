@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import { unstable_cache } from "next/cache";
 import { fetchAllFromDatabase } from "@/lib/notion";
 import {
@@ -12,6 +14,34 @@ import {
 import { SECTION_DB_IDS } from "@/lib/section-databases";
 import { getPageThumbnails, isNotionS3Url } from "@/lib/thumbnail-cache";
 import type { SearchIndexItem } from "@/types";
+
+/* ── 키오스크 로컬 이미지 매핑 (빌드타임) ── */
+const kioskImageMap = new Map<string, string>();
+try {
+  const dir = path.join(process.cwd(), "public", "kiosk");
+  for (const file of fs.readdirSync(dir)) {
+    if (!file.endsWith(".jpg")) continue;
+    // "노랑강정 1.jpg" → baseName "노랑강정"
+    const baseName = file.replace(/\s+\d+\.jpg$/, "");
+    // 첫 번째 매치만 저장 (중복 시 첫 파일 우선)
+    if (!kioskImageMap.has(baseName)) {
+      kioskImageMap.set(baseName, `/kiosk/${encodeURIComponent(file)}`);
+    }
+  }
+} catch {
+  /* public/kiosk 폴더 없으면 무시 */
+}
+
+/** 키오스크 제목 → 로컬 이미지 경로 매칭 */
+function findKioskImage(title: string): string | undefined {
+  // 1) 정확 매치
+  if (kioskImageMap.has(title)) return kioskImageMap.get(title);
+  // 2) 제목이 파일명을 포함하거나, 파일명이 제목을 포함
+  for (const [name, imgPath] of kioskImageMap) {
+    if (title.includes(name) || name.includes(title)) return imgPath;
+  }
+  return undefined;
+}
 
 export type SectionKey =
   | "prompt"
@@ -88,9 +118,15 @@ export const getCachedSectionData = unstable_cache(
       });
     }
 
+    // 키오스크: 로컬 이미지 우선 적용 → Supabase fallback
+    const kioskWithLocalImages = mappedKiosk.map((item) => {
+      const localImg = findKioskImage(item.title);
+      return localImg ? { ...item, thumbnail: localImg } : item;
+    });
+
     return {
       prompt: applyThumbnails(mappedPrompt),
-      kiosk: applyThumbnails(mappedKiosk),
+      kiosk: applyThumbnails(kioskWithLocalImages),
       "uxui-articles": applyThumbnails(mappedArticles),
       "uxui-blogs": applyThumbnails(mappedBlogs),
       "uxui-terms": applyThumbnails(mappedTerms),
