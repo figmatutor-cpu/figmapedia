@@ -16,31 +16,50 @@ import { getPageThumbnails, isNotionS3Url } from "@/lib/thumbnail-cache";
 import type { SearchIndexItem } from "@/types";
 
 /* ── 키오스크 로컬 이미지 매핑 (빌드타임) ── */
+/** NFC 정규화 + trim (macOS NFD ↔ Notion NFC 차이 해소) */
+const norm = (s: string) => s.normalize("NFC").trim();
+
 const kioskImageMap = new Map<string, string>();
 try {
   const dir = path.join(process.cwd(), "public", "kiosk");
   for (const file of fs.readdirSync(dir)) {
-    if (!file.endsWith(".jpg")) continue;
-    // "노랑강정 1.jpg" → baseName "노랑강정"
-    const baseName = file.replace(/\s+\d+\.jpg$/, "");
-    // 첫 번째 매치만 저장 (중복 시 첫 파일 우선)
+    if (!file.toLowerCase().endsWith(".jpg")) continue;
+    // "노랑강정 1.jpg" → "노랑강정", "미토요.jpg" → "미토요"
+    const baseName = norm(file.replace(/(\s+\d+)?\.jpg$/i, ""));
     if (!kioskImageMap.has(baseName)) {
-      kioskImageMap.set(baseName, `/kiosk/${encodeURIComponent(file)}`);
+      kioskImageMap.set(baseName, `/kiosk/${encodeURIComponent(norm(file))}`);
     }
   }
 } catch {
   /* public/kiosk 폴더 없으면 무시 */
 }
 
+/** 공백·특수문자·스마트따옴표 제거 후 소문자 정규화 */
+const strip = (s: string) => norm(s).replace(/[\s\-()·''\u2018\u2019\u201C\u201D"""/.]/g, "").toLowerCase();
+
 /** 키오스크 제목 → 로컬 이미지 경로 매칭 */
 function findKioskImage(title: string): string | undefined {
+  const t = norm(title);
   // 1) 정확 매치
-  if (kioskImageMap.has(title)) return kioskImageMap.get(title);
-  // 2) 제목이 파일명을 포함하거나, 파일명이 제목을 포함
+  if (kioskImageMap.has(t)) return kioskImageMap.get(t);
+  // 2) 상호 포함 매치 (긴 쪽 우선)
+  let bestMatch: string | undefined;
+  let bestLen = 0;
   for (const [name, imgPath] of kioskImageMap) {
-    if (title.includes(name) || name.includes(title)) return imgPath;
+    if (t.includes(name) || name.includes(t)) {
+      if (name.length > bestLen) { bestLen = name.length; bestMatch = imgPath; }
+    }
   }
-  return undefined;
+  if (bestMatch) return bestMatch;
+  // 3) 특수문자/공백 제거 후 포함 매치
+  const tStrip = strip(title);
+  for (const [name, imgPath] of kioskImageMap) {
+    const nStrip = strip(name);
+    if (tStrip.includes(nStrip) || nStrip.includes(tStrip)) {
+      if (name.length > bestLen) { bestLen = name.length; bestMatch = imgPath; }
+    }
+  }
+  return bestMatch;
 }
 
 export type SectionKey =
