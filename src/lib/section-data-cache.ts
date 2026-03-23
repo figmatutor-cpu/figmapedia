@@ -37,7 +37,9 @@ export const getCachedSectionData = unstable_cache(
       pluginPages,
       glossaryPages,
     ] = await Promise.all([
-      fetchAllFromDatabase(SECTION_DB_IDS.prompt),
+      fetchAllFromDatabase(SECTION_DB_IDS.prompt, [
+        { timestamp: "created_time", direction: "descending" },
+      ]),
       fetchAllFromDatabase(SECTION_DB_IDS.kiosk),
       fetchAllFromDatabase(SECTION_DB_IDS.uxuiArticles),
       fetchAllFromDatabase(SECTION_DB_IDS.techBlogs),

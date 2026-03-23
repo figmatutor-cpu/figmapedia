@@ -59,12 +59,16 @@ export async function fetchAllEntries() {
 }
 
 /** Fetch all pages from any Notion database by ID */
-export async function fetchAllFromDatabase(dbId: string) {
+export async function fetchAllFromDatabase(
+  dbId: string,
+  sorts?: Array<{ timestamp: string; direction: string }>,
+) {
   const results: any[] = [];
   let cursor: string | undefined = undefined;
 
   do {
     const body: Record<string, unknown> = { page_size: 100 };
+    if (sorts) body.sorts = sorts;
     if (cursor) body.start_cursor = cursor;
 
     const response = await queryNotionDB(dbId, body);
