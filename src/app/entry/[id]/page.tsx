@@ -60,7 +60,9 @@ export async function generateMetadata({
     const rawBlocks = await getBlocks(page.id);
     const excerpt = extractTextFromBlocks(rawBlocks);
 
-    const title = `${entry.title} | Figmapedia`;
+    const hasFigmaKeyword = /피그마|figma/i.test(entry.title);
+    const seoTitle = hasFigmaKeyword ? entry.title : `피그마 ${entry.title}`;
+    const title = `${seoTitle} | Figmapedia`;
     const description = excerpt
       ? `${entry.title} — ${excerpt}`
       : `${entry.title} — ${entry.categories.join(", ")} | Figmapedia 디자인 용어사전`;

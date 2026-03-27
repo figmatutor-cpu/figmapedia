@@ -16,17 +16,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/copyright`, changeFrequency: "yearly", priority: 0.2 },
   ];
 
-  // 동적 엔트리 페이지 — 본문이 풍부한 Q&A만 포함 (크롤 버짓 최적화)
+  // 동적 엔트리 페이지 — 피그마 관련 섹션 포함 (SEO 키워드 커버리지)
+  const SITEMAP_SECTIONS = new Set([
+    "피그마 Q&A",
+    "플러그인",
+    "Mac 단축키",
+    "Win 단축키",
+    "피그마 용어",
+  ]);
+
   let entryPages: MetadataRoute.Sitemap = [];
   try {
     const { items } = await getCachedSearchIndex();
     entryPages = items
-      .filter((item) => item.section === "피그마 Q&A" && !item.link)
+      .filter((item) => item.section && SITEMAP_SECTIONS.has(item.section) && !item.link)
       .map((item) => ({
         url: `${SITE_URL}/entry/${item.id}`,
         lastModified: item.lastEditedTime ? new Date(item.lastEditedTime) : new Date(),
         changeFrequency: "weekly" as const,
-        priority: 0.6,
+        priority: item.section === "피그마 Q&A" ? 0.6 : 0.5,
       }));
   } catch (error) {
     console.error("Sitemap: failed to fetch entries", error);

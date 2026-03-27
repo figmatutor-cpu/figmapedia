@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: "Figmapedia - 디자인 용어사전 & 리소스",
-    template: "%s | Figmapedia",
+    template: "%s | 피그마 가이드 - Figmapedia",
   },
   description:
     "피그마(Figma) 디자인 용어사전, UI/UX 리소스, 아티클을 검색하세요. 한국어로 정리된 피그마 사용법, 디자인 시스템, 프로토타입 가이드.",
