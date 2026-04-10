@@ -125,6 +125,17 @@ export function SectionPageLayout({
   enableSortFilter = false,
 }: SectionPageLayoutProps) {
   const [activeTab, setActiveTab] = useState(subTabs?.[0]?.key ?? null);
+
+  // URL ?tab= 파라미터 딥링크 — 마운트 시 1회 확인
+  useEffect(() => {
+    if (!subTabs) return;
+    const params = new URLSearchParams(window.location.search);
+    const tabParam = params.get("tab");
+    if (tabParam && subTabs.some((t) => t.key === tabParam)) {
+      setActiveTab(tabParam);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const mobileSearchRef = useRef<HTMLInputElement>(null);

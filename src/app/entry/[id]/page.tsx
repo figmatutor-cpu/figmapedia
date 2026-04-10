@@ -68,10 +68,14 @@ export async function generateMetadata({
       : `${entry.title} — ${entry.categories.join(", ")} | Figmapedia 디자인 용어사전`;
     const url = `${SITE_URL}/entry/${id}`;
 
+    // 본문 없이 외부 링크만 있는 엔트리 → thin content이므로 noindex
+    const isThinContent = rawBlocks.length === 0 && !!entry.link;
+
     return {
       title,
       description,
       alternates: { canonical: url },
+      ...(isThinContent && { robots: { index: false, follow: true } }),
       openGraph: {
         title,
         description,

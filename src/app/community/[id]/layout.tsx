@@ -25,10 +25,17 @@ export async function generateMetadata({
   return {
     title: post.title,
     description,
+    alternates: { canonical: `/community/${id}` },
     openGraph: {
       title: `${post.title} | Figmapedia 커뮤니티`,
       description,
       url: `/community/${id}`,
+      type: "article",
+    },
+    twitter: {
+      card: "summary",
+      title: `${post.title} | Figmapedia 커뮤니티`,
+      description,
     },
   };
 }
