@@ -49,9 +49,9 @@ export function SponsorBanner({ className }: SponsorBannerProps) {
         href={SPONSOR_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center gap-3 px-4 py-3 pr-14 text-sm text-gray-200"
+        className="flex items-center gap-3 px-4 py-3 pr-12 text-sm text-gray-200 sm:pr-14"
       >
-        <span className="flex-1 text-center">
+        <span className="flex-1 text-left sm:text-center">
           <span className="font-medium text-white">
             월간 조회수 9만회, 활성 유저 2.5만명!
           </span>{" "}
@@ -59,7 +59,7 @@ export function SponsorBanner({ className }: SponsorBannerProps) {
             피그마 피디아의 첫 광고주가 되어보세요.
           </span>
         </span>
-        <span className="shrink-0 inline-flex items-center justify-center rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-black transition-colors hover:bg-gray-100">
+        <span className="hidden shrink-0 items-center justify-center rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-black transition-colors hover:bg-gray-100 sm:inline-flex">
           신청하기
         </span>
       </a>
