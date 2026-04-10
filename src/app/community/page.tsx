@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Link from "next/link";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { SearchIcon } from "@/components/ui/SearchIcon";
+import { SponsorBanner } from "@/components/ui/SponsorBanner";
 import type { CommunityPost } from "@/types";
 
 const CATEGORIES = ["전체", "일반", "질문", "정보공유", "피드백"];
@@ -76,6 +77,7 @@ export default function CommunityPage() {
   return (
     <div className="min-h-screen bg-bg-base pt-28 pb-16">
       <div className="mx-auto max-w-4xl px-4">
+        <SponsorBanner />
         {/* Title */}
         <h1 className="text-xl font-bold text-white mb-2">
           커뮤니티

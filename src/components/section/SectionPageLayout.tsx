@@ -10,6 +10,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { SearchIcon } from "@/components/ui/SearchIcon";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { FilterModal } from "@/components/ui/FilterModal";
+import { SponsorBanner } from "@/components/ui/SponsorBanner";
 import type { SubTab, FilterConfig } from "@/lib/navigation";
 import type { SearchIndexItem } from "@/types";
 
@@ -304,6 +305,7 @@ export function SectionPageLayout({
   return (
     <div className="min-h-screen bg-bg-base pt-28 pb-16">
       <div className="mx-auto max-w-4xl px-4">
+        <SponsorBanner />
         {/* Title */}
         <h1 className="text-xl font-bold text-white mb-2">
           {title}

@@ -6,6 +6,7 @@ import type { ResourceCategory } from "@/lib/resource-data";
 import { ResourceCard } from "@/components/cards/ResourceCard";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { SearchIcon } from "@/components/ui/SearchIcon";
+import { SponsorBanner } from "@/components/ui/SponsorBanner";
 
 type TabKey = "all" | ResourceCategory;
 
@@ -53,6 +54,7 @@ export function FigmaResourceClient({ cachedThumbnails }: Props) {
   return (
     <main className="min-h-screen bg-bg-base pt-28 pb-16">
       <div className="mx-auto max-w-4xl px-4">
+        <SponsorBanner />
         <h1 className="text-xl font-bold text-white mb-2">
           피그마 리소스
         </h1>

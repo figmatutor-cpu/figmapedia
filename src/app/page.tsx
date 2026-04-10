@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { HeroSearch } from "@/components/search/HeroSearch";
 import { SearchResults } from "@/components/search/SearchResults";
 import { useSearchContext } from "@/components/search/SearchProvider";
+import { SponsorBanner } from "@/components/ui/SponsorBanner";
 
 const HeroWave = dynamic(
   () =>
@@ -29,6 +30,7 @@ export default function HomePage() {
       {hasSearched && (
         <section className="min-h-screen bg-bg-base pt-28 pb-32">
           <div className="mx-auto max-w-4xl px-4">
+            <SponsorBanner />
             <SearchResults />
           </div>
         </section>
