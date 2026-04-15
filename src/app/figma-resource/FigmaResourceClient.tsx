@@ -48,7 +48,7 @@ export function FigmaResourceClient({ cachedThumbnails }: Props) {
       items = items.filter((r) => r.title.toLowerCase().includes(q));
     }
 
-    return items;
+    return [...items].sort((a, b) => Number(Boolean(b.pinned)) - Number(Boolean(a.pinned)));
   }, [activeTab, searchQuery]);
 
   return (

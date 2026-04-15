@@ -5,6 +5,7 @@ export interface FigmaResource {
   url: string;
   category: ResourceCategory;
   thumbnail?: string;
+  pinned?: boolean;
 }
 
 /** 리소스 URL에서 Supabase page_id를 생성 (seed + page 조회에서 공유) */
@@ -29,7 +30,7 @@ export const FIGMA_RESOURCES: FigmaResource[] = [
   { title: "IR Deck 한국어 템플릿 Series A Ver", url: "https://www.figmapedia.co.kr/25/?idx=8", category: "template", thumbnail: "/images/resources/ir-deck-series-a.png" },
   { title: "IR Deck 한국어 템플릿 Pre-seed Ver", url: "https://www.figmapedia.co.kr/25/?idx=9", category: "template", thumbnail: "/images/resources/ir-deck-pre-seed.png" },
   { title: "IR Deck 한국어 템플릿 Seed Ver", url: "https://www.figmapedia.co.kr/25/?idx=10", category: "template", thumbnail: "/images/resources/ir-deck-seed.png" },
-  { title: "PPT 자동화 템플릿 with Claude", url: "https://www.figmapedia.co.kr/25/?idx=11", category: "template", thumbnail: "/images/resources/ir-deck-auto.png" },
+  { title: "PPT 자동화 템플릿 with Claude", url: "https://www.figmapedia.co.kr/25/?idx=11", category: "template", thumbnail: "/images/resources/ir-deck-auto.png", pinned: true },
   { title: "포춘쿠키페이지", url: "https://www.figmapedia.co.kr/all/?idx=4", category: "template" },
   { title: "포토그래퍼 포트폴리오 템플릿", url: "https://www.figmapedia.co.kr/landing/?idx=1", category: "template" },
   { title: "기본 슬라이드 2", url: "https://www.figmapedia.co.kr/all/?idx=5", category: "template" },
