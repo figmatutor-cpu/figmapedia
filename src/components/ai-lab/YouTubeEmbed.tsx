@@ -5,7 +5,7 @@ interface YouTubeEmbedProps {
 
 export function YouTubeEmbed({ videoId, title }: YouTubeEmbedProps) {
   return (
-    <div className="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-black">
+    <div className="aspect-video w-full overflow-hidden rounded-xl border border-border-1 bg-black">
       <iframe
         src={`https://www.youtube.com/embed/${encodeURIComponent(videoId)}`}
         title={title}

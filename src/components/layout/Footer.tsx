@@ -28,12 +28,12 @@ const TEAM_MEMBERS = [
 ];
 
 function Divider() {
-  return <span className="w-px h-2.5 bg-white/15 shrink-0" />;
+  return <span className="w-px h-2.5 bg-glass-4 shrink-0" />;
 }
 
 export function Footer() {
   return (
-    <footer id="site-footer" className="bg-bg-base border-t border-white/5">
+    <footer id="site-footer" className="bg-bg-base border-t border-border-1">
       <div className="mx-auto max-w-7xl px-8 md:px-12 py-10 md:py-12">
         <div className="flex flex-col gap-8 md:gap-10">
           {/* 로고 */}
@@ -83,7 +83,7 @@ export function Footer() {
                   href={member.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="shrink-0 size-12 rounded-full bg-white/20 overflow-hidden transition-transform hover:scale-110 relative"
+                  className="shrink-0 size-12 rounded-full bg-glass-4 overflow-hidden transition-transform hover:scale-110 relative"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img

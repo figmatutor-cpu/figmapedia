@@ -371,7 +371,7 @@ export function SectionPageLayout({
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="페이지 내 검색"
-                      className="w-full pl-8 pr-3 h-10 text-base rounded-lg bg-white/5 border border-white/10 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-white/25 focus:bg-white/[0.07] transition-colors"
+                      className="w-full pl-8 pr-3 h-10 text-base rounded-lg bg-glass-1 border border-border-1 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-border-3 focus:bg-glass-2 transition-colors"
                       autoComplete="off"
                     />
                   </div>
@@ -405,7 +405,7 @@ export function SectionPageLayout({
                     setIsSearchExpanded(true);
                     setTimeout(() => mobileSearchRef.current?.focus(), 100);
                   }}
-                  className="w-11 h-11 inline-flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-white/20 transition-colors"
+                  className="w-11 h-11 inline-flex items-center justify-center rounded-lg bg-glass-1 border border-border-1 text-gray-400 hover:text-white hover:border-border-2 transition-colors"
                 >
                   <SearchIcon className="w-4 h-4" />
                 </button>
@@ -423,7 +423,7 @@ export function SectionPageLayout({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="페이지 내 검색"
-              className="w-full pl-8 pr-3 h-12 text-base xl-nav:text-sm rounded-lg bg-white/5 border border-white/10 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-white/25 focus:bg-white/[0.07] transition-colors"
+              className="w-full pl-8 pr-3 h-12 text-base xl-nav:text-sm rounded-lg bg-glass-1 border border-border-1 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-border-3 focus:bg-glass-2 transition-colors"
             />
           </div>
         </div>

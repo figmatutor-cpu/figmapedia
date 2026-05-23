@@ -11,10 +11,10 @@ export function ReportCard({ experiment }: ReportCardProps) {
   return (
     <Link
       href={`/ai-lab/${slug}`}
-      className="group block rounded-xl border border-white/10 bg-white/5 p-5 transition hover:border-white/20 hover:bg-white/[0.08]"
+      className="group block rounded-xl border border-border-1 bg-glass-1 p-5 transition hover:border-border-2 hover:bg-glass-2"
     >
       <div className="flex items-center justify-between text-xxs text-gray-500">
-        <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 font-medium text-gray-300">
+        <span className="rounded-full border border-border-1 bg-glass-1 px-2.5 py-1 font-medium text-gray-300">
           {tool}
         </span>
         <time dateTime={publishedAt}>{publishedAt}</time>
@@ -31,7 +31,7 @@ export function ReportCard({ experiment }: ReportCardProps) {
           {tags.slice(0, 3).map((tag) => (
             <span
               key={tag}
-              className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-0.5 text-xxs text-gray-400"
+              className="rounded-full border border-border-1 bg-glass-1 px-2.5 py-0.5 text-xxs text-gray-400"
             >
               #{tag}
             </span>

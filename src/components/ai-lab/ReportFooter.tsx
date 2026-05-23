@@ -8,7 +8,7 @@ interface ReportFooterProps {
 
 export function ReportFooter({ prev, next }: ReportFooterProps) {
   return (
-    <section className="mt-12 rounded-xl border border-white/10 bg-white/5 p-6">
+    <section className="mt-12 rounded-xl border border-border-1 bg-glass-1 p-6">
       <p className="text-sm font-semibold text-white">
         이 리포트가 도움이 되셨나요?
       </p>
@@ -19,7 +19,7 @@ export function ReportFooter({ prev, next }: ReportFooterProps) {
         {next && (
           <Link
             href={`/ai-lab/${next.slug}`}
-            className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-medium text-gray-200 transition hover:border-white/20 hover:bg-white/[0.08]"
+            className="rounded-full border border-border-1 bg-glass-1 px-4 py-2 text-sm font-medium text-gray-200 transition hover:border-border-2 hover:bg-glass-2"
           >
             다음 리포트 →
           </Link>
@@ -27,14 +27,14 @@ export function ReportFooter({ prev, next }: ReportFooterProps) {
         {prev && (
           <Link
             href={`/ai-lab/${prev.slug}`}
-            className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-medium text-gray-200 transition hover:border-white/20 hover:bg-white/[0.08]"
+            className="rounded-full border border-border-1 bg-glass-1 px-4 py-2 text-sm font-medium text-gray-200 transition hover:border-border-2 hover:bg-glass-2"
           >
             ← 이전 리포트
           </Link>
         )}
         <Link
           href="/ai-lab"
-          className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-medium text-gray-200 transition hover:border-white/20 hover:bg-white/[0.08]"
+          className="rounded-full border border-border-1 bg-glass-1 px-4 py-2 text-sm font-medium text-gray-200 transition hover:border-border-2 hover:bg-glass-2"
         >
           AI 실험실로
         </Link>

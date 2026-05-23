@@ -65,16 +65,16 @@ export function ResourceCard({
       className={`group flex flex-col rounded-xl border overflow-hidden transition-all ${
         resource.category === "template"
           ? "border-yellow-400/20 bg-yellow-400/[0.03] hover:border-yellow-400/40 hover:bg-yellow-400/[0.06]"
-          : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/[0.08]"
+          : "border-border-1 bg-glass-1 hover:border-border-2 hover:bg-glass-2"
       }`}
     >
       <div
-        className={`${variant === "wide" ? "aspect-video" : "aspect-[4/3]"} bg-white/6 flex items-center justify-center overflow-hidden relative`}
+        className={`${variant === "wide" ? "aspect-video" : "aspect-[4/3]"} bg-glass-1 flex items-center justify-center overflow-hidden relative`}
       >
         {ogImage && !imageFailed ? (
           <>
             {!imageLoaded && (
-              <div className="absolute inset-0 animate-pulse bg-white/10" />
+              <div className="absolute inset-0 animate-pulse bg-glass-3" />
             )}
             <Image
               src={ogImage}
@@ -92,7 +92,7 @@ export function ResourceCard({
           </>
         ) : (
           <div
-            className={`w-full h-full flex items-center justify-center ${fetched ? "" : "animate-pulse bg-white/5"}`}
+            className={`w-full h-full flex items-center justify-center ${fetched ? "" : "animate-pulse bg-glass-1"}`}
           >
             <svg
               className="w-10 h-10 text-white/15"

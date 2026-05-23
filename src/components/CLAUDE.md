@@ -56,8 +56,11 @@ SearchProvider (Context)
 
 ## 공통 스타일 패턴
 
+> 토큰 상세는 `src/CLAUDE.md` 의 "글래스/보더 토큰" 섹션 참조.
+> `bg-white/X`, `border-white/X` 같은 임의 알파값 사용 **금지**.
+
 ```
-카드:   rounded-xl border border-white/10 bg-white/5 hover:border-white/20
-탭:     rounded-full px-3 py-1.5 text-xs border
-인풋:   rounded-lg bg-white/5 border border-white/10 focus:border-white/25
+카드:   rounded-xl border border-border-1 bg-glass-2 hover:border-border-2 hover:bg-glass-3
+탭:     rounded-full px-3 py-1.5 text-xs border border-border-1
+인풋:   rounded-lg bg-glass-1 border border-border-1 focus:border-border-3
 ```

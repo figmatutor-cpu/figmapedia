@@ -1,6 +1,6 @@
 export function NextLiveCard() {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-6 md:p-8">
+    <div className="rounded-xl border border-border-1 bg-glass-1 p-6 md:p-8">
       <span className="inline-block rounded-full border border-brand-blue/40 bg-brand-blue/15 px-3 py-1 text-xxs font-medium text-brand-blue-light">
         다음 라이브
       </span>

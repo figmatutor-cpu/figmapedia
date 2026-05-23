@@ -286,9 +286,9 @@ export function FloatingButton() {
       <div className="relative">
         {!open && (
           <>
-            <span className="absolute inset-0 rounded-full bg-white/20 animate-[floating-ripple_2s_ease-out_infinite]" />
-            <span className="absolute inset-0 rounded-full bg-white/15 animate-[floating-ripple_2s_ease-out_0.6s_infinite]" />
-            <span className="absolute inset-0 rounded-full bg-white/10 animate-[floating-ripple_2s_ease-out_1.2s_infinite]" />
+            <span className="absolute inset-0 rounded-full bg-glass-4 animate-[floating-ripple_2s_ease-out_infinite]" />
+            <span className="absolute inset-0 rounded-full bg-glass-4 animate-[floating-ripple_2s_ease-out_0.6s_infinite]" />
+            <span className="absolute inset-0 rounded-full bg-glass-3 animate-[floating-ripple_2s_ease-out_1.2s_infinite]" />
           </>
         )}
         <button

@@ -65,11 +65,11 @@ export function EntryCard({
       className={`flex gap-3 sm:gap-4 ${entry.shortcut ? "flex-col sm:flex-row sm:items-center sm:justify-between" : nonClickable ? "items-start justify-between" : showThumbnail ? "flex-row items-start" : "items-center justify-between"}`}
     >
       {showThumbnail && (
-        <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-white/6 flex items-center justify-center relative">
+        <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-glass-1 flex items-center justify-center relative">
           {displayThumbnail ? (
             <>
               {!imageLoaded && (
-                <div className="absolute inset-0 animate-pulse bg-white/10" />
+                <div className="absolute inset-0 animate-pulse bg-glass-3" />
               )}
               <Image
                 src={displayThumbnail}
@@ -131,10 +131,10 @@ export function EntryCard({
       {entry.shortcut && (
         <div className="flex items-center gap-2 shrink-0">
           <span
-            className={`px-3 py-1.5 rounded-lg bg-white/[0.07] border text-sm font-mono whitespace-normal break-all sm:whitespace-nowrap sm:break-normal transition-colors ${
+            className={`px-3 py-1.5 rounded-lg bg-glass-2 border text-sm font-mono whitespace-normal break-all sm:whitespace-nowrap sm:break-normal transition-colors ${
               copied
                 ? "border-green-400/50 text-green-300"
-                : "border-white/10 text-gray-300 group-hover:border-brand-blue/50 group-hover:text-brand-blue"
+                : "border-border-1 text-gray-300 group-hover:border-brand-blue/50 group-hover:text-brand-blue"
             }`}
           >
             {copied ? "복사됨!" : entry.shortcut}
@@ -162,7 +162,7 @@ export function EntryCard({
             className={`p-2 rounded-lg border transition-all ${
               copied
                 ? "border-green-400/50 bg-green-400/10"
-                : "border-transparent opacity-0 group-hover:opacity-100 hover:border-white/20 hover:bg-white/10"
+                : "border-transparent opacity-0 group-hover:opacity-100 hover:border-border-2 hover:bg-glass-3"
             }`}
             title="복사"
           >
@@ -181,7 +181,7 @@ export function EntryCard({
     return (
       <div
         onClick={handleCopy}
-        className="group block rounded-xl border border-white/10 bg-white/5 p-5 cursor-pointer hover:border-white/20 hover:bg-white/8 transition-all"
+        className="group block rounded-xl border border-border-1 bg-glass-1 p-5 cursor-pointer hover:border-border-2 hover:bg-glass-2 transition-all"
       >
         {cardInner}
       </div>
@@ -190,7 +190,7 @@ export function EntryCard({
 
   if (nonClickable) {
     return (
-      <div className="group block rounded-xl border border-white/10 bg-white/5 p-5 hover:border-white/20 hover:bg-white/8 transition-all">
+      <div className="group block rounded-xl border border-border-1 bg-glass-1 p-5 hover:border-border-2 hover:bg-glass-2 transition-all">
         {cardInner}
       </div>
     );
@@ -202,7 +202,7 @@ export function EntryCard({
         href={entry.link}
         target="_blank"
         rel="noopener noreferrer"
-        className="group block rounded-xl border border-white/10 bg-white/5 p-5 hover:border-white/20 hover:bg-white/[0.08] transition-all"
+        className="group block rounded-xl border border-border-1 bg-glass-1 p-5 hover:border-border-2 hover:bg-glass-2 transition-all"
       >
         {cardInner}
       </a>
@@ -217,7 +217,7 @@ export function EntryCard({
   return (
     <Link
       href={entryHref}
-      className="group block rounded-xl border border-white/10 bg-white/5 p-5 hover:border-white/20 hover:bg-white/[0.08] transition-all"
+      className="group block rounded-xl border border-border-1 bg-glass-1 p-5 hover:border-border-2 hover:bg-glass-2 transition-all"
     >
       {cardInner}
     </Link>

@@ -72,7 +72,7 @@ export default async function MembershipPage({
             {BENEFITS.map((b) => (
               <div
                 key={b.title}
-                className="rounded-xl border border-white/10 bg-white/5 p-5"
+                className="rounded-xl border border-border-1 bg-glass-1 p-5"
               >
                 <h3 className="text-base font-semibold text-white">
                   {b.title}
@@ -90,7 +90,7 @@ export default async function MembershipPage({
             요금
           </h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div className="rounded-xl border border-white/10 bg-white/5 p-6">
+            <div className="rounded-xl border border-border-1 bg-glass-1 p-6">
               <h3 className="text-sm text-gray-400">월간</h3>
               <p className="mt-2 text-3xl font-semibold text-white">
                 5,900
@@ -122,7 +122,7 @@ export default async function MembershipPage({
           </div>
         </section>
 
-        <section className="mt-12 rounded-xl border border-white/10 bg-white/5 p-6 md:p-8">
+        <section className="mt-12 rounded-xl border border-border-1 bg-glass-1 p-6 md:p-8">
           <h2 className="text-base font-semibold text-white">오픈 알림 받기</h2>
           <p className="mt-2 text-sm leading-6 text-gray-400">
             정식 오픈은 Discord 커뮤니티에서 가장 먼저 안내드립니다. 지금
@@ -139,7 +139,7 @@ export default async function MembershipPage({
             </a>
             <Link
               href="/ai-lab"
-              className="rounded-full border border-white/10 bg-white/[0.03] px-5 py-2.5 text-sm font-medium text-gray-200 transition hover:border-white/20 hover:bg-white/[0.08]"
+              className="rounded-full border border-border-1 bg-glass-1 px-5 py-2.5 text-sm font-medium text-gray-200 transition hover:border-border-2 hover:bg-glass-2"
             >
               AI 실험실로 돌아가기
             </Link>

@@ -18,7 +18,7 @@ function RenderRichText({
         let node: React.ReactNode = item.plain_text;
         if (item.annotations.code)
           node = (
-            <code className="bg-white/10 rounded px-1 text-sm font-mono">
+            <code className="bg-glass-3 rounded px-1 text-sm font-mono">
               {node}
             </code>
           );
@@ -74,7 +74,7 @@ function ToggleHeading({
     <div className={wrapperClass}>
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-2 w-full text-left rounded-lg px-2 py-1 -mx-2 cursor-pointer hover:bg-white/5 transition-colors group"
+        className="flex items-center gap-2 w-full text-left rounded-lg px-2 py-1 -mx-2 cursor-pointer hover:bg-glass-1 transition-colors group"
       >
         <svg
           className={`shrink-0 transition-transform duration-200 ${open ? "rotate-90 text-white" : "text-gray-500 group-hover:text-gray-300"}`}
@@ -102,7 +102,7 @@ function ToggleHeading({
         )}
       </button>
       {open && (
-        <div className="ml-5 mt-2 border-l border-white/10 pl-4">
+        <div className="ml-5 mt-2 border-l border-border-1 pl-4">
           <RenderChildren blocks={children} />
         </div>
       )}
@@ -236,7 +236,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
             <RenderRichText items={block.richText} fallback={block.content} />
           </button>
           {toggleOpen && block.children && block.children.length > 0 && (
-            <div className="ml-5 mt-2 border-l border-white/10 pl-4">
+            <div className="ml-5 mt-2 border-l border-border-1 pl-4">
               <RenderChildren blocks={block.children} />
             </div>
           )}
@@ -245,7 +245,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
 
     case "quote":
       return (
-        <blockquote className="border-l-4 border-white/20 pl-4 py-1 my-4 text-gray-400 italic">
+        <blockquote className="border-l-4 border-border-2 pl-4 py-1 my-4 text-gray-400 italic">
           <RenderRichText items={block.richText} fallback={block.content} />
           {block.children && block.children.length > 0 && (
             <div className="mt-2 not-italic">
@@ -257,7 +257,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
 
     case "callout":
       return (
-        <div className="flex items-start gap-3 bg-white/5 border border-white/10 rounded-lg p-4 my-4">
+        <div className="flex items-start gap-3 bg-glass-1 border border-border-1 rounded-lg p-4 my-4">
           {block.icon && (
             <span className="text-xl shrink-0 leading-none mt-0.5">
               {block.icon.startsWith("http") ? (
@@ -287,7 +287,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
       return <CodeBlock content={block.content} language={block.language} />;
 
     case "divider":
-      return <hr className="border-white/10 my-6" />;
+      return <hr className="border-border-1 my-6" />;
 
     case "column_list":
       if (!block.children || block.children.length === 0) return null;
@@ -317,14 +317,14 @@ function RenderBlock({ block }: { block: NotionBlock }) {
       const headerCells = headerRow?.content?.split("\t") ?? [];
       return (
         <div className="overflow-x-auto my-6">
-          <table className="w-full text-sm text-gray-300 border border-white/10 rounded-lg overflow-hidden">
+          <table className="w-full text-sm text-gray-300 border border-border-1 rounded-lg overflow-hidden">
             {headerCells.length > 0 && (
               <thead>
-                <tr className="bg-white/10">
+                <tr className="bg-glass-3">
                   {headerCells.map((cell, i) => (
                     <th
                       key={i}
-                      className="px-4 py-2 text-left text-white font-semibold border-b border-white/10"
+                      className="px-4 py-2 text-left text-white font-semibold border-b border-border-1"
                     >
                       {cell}
                     </th>
@@ -338,7 +338,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
                 return (
                   <tr
                     key={row.id}
-                    className="border-b border-white/5 hover:bg-white/[0.03]"
+                    className="border-b border-border-1 hover:bg-glass-1"
                   >
                     {cells.map((cell, i) => (
                       <td key={i} className="px-4 py-2">
@@ -420,7 +420,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
       if (!block.mediaUrl) return null;
       return (
         <figure className="my-6">
-          <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-white/10">
+          <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-border-1">
             <iframe
               src={block.mediaUrl}
               className="absolute inset-0 w-full h-full"
@@ -443,7 +443,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
           href={block.mediaUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="block my-4 rounded-lg border border-white/10 bg-white/5 p-4 hover:bg-white/[0.08] transition-colors"
+          className="block my-4 rounded-lg border border-border-1 bg-glass-1 p-4 hover:bg-glass-2 transition-colors"
         >
           <span className="text-sm text-blue-400 underline break-all">
             {block.caption || block.mediaUrl}
@@ -459,7 +459,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
           href={block.mediaUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 my-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-blue-400 hover:bg-white/[0.08] transition-colors"
+          className="inline-flex items-center gap-2 my-4 rounded-lg border border-border-1 bg-glass-1 px-4 py-3 text-sm text-blue-400 hover:bg-glass-2 transition-colors"
         >
           <svg
             className="w-4 h-4 shrink-0"

@@ -23,7 +23,7 @@ export default function NotFound() {
           </Link>
           <Link
             href="/figma-info"
-            className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-gray-300 text-sm font-medium hover:border-white/20 hover:bg-white/[0.08] transition-colors"
+            className="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-glass-1 border border-border-1 text-gray-300 text-sm font-medium hover:border-border-2 hover:bg-glass-2 transition-colors"
           >
             용어사전 보기
           </Link>

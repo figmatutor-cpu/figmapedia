@@ -55,7 +55,7 @@ export function HomeSections() {
           <Link
             key={section.href}
             href={section.href}
-            className="group block rounded-xl border border-white/10 bg-white/5 p-5 transition-colors hover:border-white/20 hover:bg-white/[0.08]"
+            className="group block rounded-xl border border-border-1 bg-glass-1 p-5 transition-colors hover:border-border-2 hover:bg-glass-2"
           >
             <h3 className="text-base font-semibold text-white mb-2">
               {section.title}

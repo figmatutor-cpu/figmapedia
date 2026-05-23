@@ -19,7 +19,7 @@ export function ReportPaywall() {
         </Link>
         <Link
           href="/auth/login"
-          className="rounded-full border border-white/10 bg-white/[0.03] px-6 py-3 text-sm font-medium text-gray-200 transition hover:border-white/20 hover:bg-white/[0.08]"
+          className="rounded-full border border-border-1 bg-glass-1 px-6 py-3 text-sm font-medium text-gray-200 transition hover:border-border-2 hover:bg-glass-2"
         >
           로그인
         </Link>

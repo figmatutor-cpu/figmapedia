@@ -52,7 +52,7 @@ function PasswordModal({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-sm rounded-xl border border-white/10 bg-modal-bg p-5"
+        className="w-full max-w-sm rounded-xl border border-border-1 bg-modal-bg p-5"
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="text-sm font-bold text-white mb-3">{title}</h3>
@@ -61,7 +61,7 @@ function PasswordModal({
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="비밀번호 입력"
-          className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-gray-600 focus:border-white/25 focus:outline-none mb-3"
+          className="w-full px-3 py-2.5 rounded-lg bg-glass-1 border border-border-1 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none mb-3"
           style={{ fontSize: "16px" }}
           autoFocus
           onKeyDown={(e) => {
@@ -74,7 +74,7 @@ function PasswordModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-lg text-sm text-gray-400 border border-white/10 hover:border-white/20 transition-colors"
+            className="px-4 py-2 rounded-lg text-sm text-gray-400 border border-border-1 hover:border-border-2 transition-colors"
           >
             취소
           </button>
@@ -225,10 +225,10 @@ export default function CommunityPostPage() {
       <div className="min-h-screen bg-bg-base pt-28 pb-16 px-4">
         <div className="max-w-3xl mx-auto">
           <div className="animate-pulse space-y-4">
-            <div className="h-6 bg-white/10 rounded w-1/3" />
-            <div className="h-8 bg-white/10 rounded w-3/4" />
-            <div className="h-4 bg-white/10 rounded w-1/2" />
-            <div className="h-40 bg-white/10 rounded" />
+            <div className="h-6 bg-glass-3 rounded w-1/3" />
+            <div className="h-8 bg-glass-3 rounded w-3/4" />
+            <div className="h-4 bg-glass-3 rounded w-1/2" />
+            <div className="h-40 bg-glass-3 rounded" />
           </div>
         </div>
       </div>
@@ -275,9 +275,9 @@ export default function CommunityPostPage() {
         </Link>
 
         {/* Post */}
-        <article className="rounded-xl border border-white/10 bg-white/5 p-5 mb-6">
+        <article className="rounded-xl border border-border-1 bg-glass-1 p-5 mb-6">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs px-2 py-0.5 rounded-full border border-white/10 text-gray-400">
+            <span className="text-xs px-2 py-0.5 rounded-full border border-border-1 text-gray-400">
               {post.category}
             </span>
             <button
@@ -295,7 +295,7 @@ export default function CommunityPostPage() {
             <span>{formatDate(post.created_at)}</span>
           </div>
           {post.content && (
-            <div className="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap border-t border-white/10 pt-4">
+            <div className="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap border-t border-border-1 pt-4">
               {post.content}
             </div>
           )}
@@ -312,7 +312,7 @@ export default function CommunityPostPage() {
               {comments.map((comment) => (
                 <div
                   key={comment.id}
-                  className="rounded-lg border border-white/10 bg-white/[0.03] p-3"
+                  className="rounded-lg border border-border-1 bg-glass-1 p-3"
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-2">
@@ -344,7 +344,7 @@ export default function CommunityPostPage() {
           {/* Comment Form */}
           <form
             onSubmit={handleCommentSubmit}
-            className="rounded-xl border border-white/10 bg-white/5 p-4"
+            className="rounded-xl border border-border-1 bg-glass-1 p-4"
           >
             <div className="grid grid-cols-2 gap-2 mb-3">
               <input
@@ -353,7 +353,7 @@ export default function CommunityPostPage() {
                 onChange={(e) => setNickname(e.target.value)}
                 placeholder="닉네임"
                 maxLength={20}
-                className="w-full min-w-0 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-gray-600 focus:border-white/25 focus:outline-none"
+                className="w-full min-w-0 px-3 py-2 rounded-lg bg-glass-1 border border-border-1 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
                 style={{ fontSize: "16px" }}
               />
               <input
@@ -362,7 +362,7 @@ export default function CommunityPostPage() {
                 onChange={(e) => setCommentPassword(e.target.value)}
                 placeholder="비밀번호 (4자 이상)"
                 maxLength={30}
-                className="w-full min-w-0 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-gray-600 focus:border-white/25 focus:outline-none"
+                className="w-full min-w-0 px-3 py-2 rounded-lg bg-glass-1 border border-border-1 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
                 style={{ fontSize: "16px" }}
               />
             </div>
@@ -373,7 +373,7 @@ export default function CommunityPostPage() {
                 placeholder="댓글을 작성하세요"
                 rows={3}
                 maxLength={2000}
-                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-gray-600 focus:border-white/25 focus:outline-none resize-y min-h-[60px]"
+                className="w-full px-3 py-2 rounded-lg bg-glass-1 border border-border-1 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none resize-y min-h-[60px]"
                 style={{ fontSize: "16px" }}
               />
             </div>

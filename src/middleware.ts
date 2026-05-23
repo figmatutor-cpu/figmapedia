@@ -10,6 +10,10 @@ function isAuthOnly(pathname: string) {
   );
 }
 
+function isAdminPath(pathname: string) {
+  return pathname === "/admin" || pathname.startsWith("/admin/");
+}
+
 export async function middleware(request: NextRequest) {
   const { user, response } = await updateSession(request);
   const { pathname, search } = request.nextUrl;
@@ -22,11 +26,22 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
+  const role = readRoleFromJwt(user.app_metadata);
+
+  if (isAdminPath(pathname)) {
+    if (role !== "admin") {
+      const homeUrl = request.nextUrl.clone();
+      homeUrl.pathname = "/";
+      homeUrl.search = "";
+      return NextResponse.redirect(homeUrl);
+    }
+    return response;
+  }
+
   if (isAuthOnly(pathname)) {
     return response;
   }
 
-  const role = readRoleFromJwt(user.app_metadata);
   if (!isPaidRole(role)) {
     const membershipUrl = request.nextUrl.clone();
     membershipUrl.pathname = "/membership";
@@ -43,5 +58,6 @@ export const config = {
     "/ai-lab/vod/:path*",
     "/membership/success",
     "/mypage/:path*",
+    "/admin/:path*",
   ],
 };

@@ -99,8 +99,8 @@ export function Navbar() {
             <button
               className={`flex items-center justify-center w-8 h-8 rounded-full transition-colors focus:outline-none ${
                 isSearchOpen || (isHome && hasSearched)
-                  ? "text-white bg-white/10"
-                  : "text-gray-400 hover:text-white hover:bg-white/5"
+                  ? "text-white bg-glass-3"
+                  : "text-gray-400 hover:text-white hover:bg-glass-1"
               }`}
               onClick={() => {
                 if (isHome && hasSearched) {

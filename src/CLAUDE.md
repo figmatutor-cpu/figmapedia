@@ -14,15 +14,38 @@
 | `glass-hero`       | `rgba(15,15,20,0.55)` | 히어로 글래스 배경     |
 | `glass-overlay`    | `rgba(15,15,20,0.85)` | 오버레이 글래스 배경   |
 
-### 글래스모피즘 패턴 (프로젝트 전반에서 반복 사용)
+### 글래스/보더 토큰 (Renewal · Phase 1)
+
+> 새 코드는 반드시 아래 토큰만 사용. `bg-white/X`, `border-white/X` 같은 임의 알파값 **금지**.
+
+**글래스 4단계** (`--fp-glass-*` → Tailwind `bg-glass-N`)
+
+| 클래스       | 알파 (dark) | 용도                               |
+| ------------ | ----------- | ---------------------------------- |
+| `bg-glass-1` | `0.03`      | 가장 은은한 면 · 비활성탭 · subtle |
+| `bg-glass-2` | `0.07`      | 카드/패널 기본                     |
+| `bg-glass-3` | `0.10`      | hover · 활성탭                     |
+| `bg-glass-4` | `0.18`      | 강조 (selected, focus, modal head) |
+
+**보더 3단계** (`--fp-border-*` → Tailwind `border-border-N`)
+
+| 클래스            | 알파 (dark) | 용도                       |
+| ----------------- | ----------- | -------------------------- |
+| `border-border-1` | `0.10`      | 기본 카드/구분선           |
+| `border-border-2` | `0.18`      | hover · 활성               |
+| `border-border-3` | `0.28`      | 강조 (focus, modal, error) |
+
+**표준 패턴**
 
 ```
-기본:     bg-white/5 border border-white/10
-호버:     hover:border-white/20 hover:bg-white/[0.08]
-카드:     rounded-xl overflow-hidden
-활성탭:   bg-white/10 border-white/20 text-white
-비활성탭: bg-white/[0.03] border-white/10 text-gray-400
+카드(기본):   rounded-xl border border-border-1 bg-glass-2
+카드(hover):  hover:border-border-2 hover:bg-glass-3
+활성탭:       bg-glass-3 border-border-2 text-white
+비활성탭:     bg-glass-1 border-border-1 text-gray-400
+인풋:         rounded-lg bg-glass-1 border border-border-1 focus:border-border-3
 ```
+
+> Light 모드는 `[data-theme="light"]` 가 globals.css 에서 자동으로 `--fp-glass-*`, `--fp-border-*` 알파를 swap 합니다. 컴포넌트는 동일 클래스만 쓰면 됨.
 
 ### 타이포그래피
 

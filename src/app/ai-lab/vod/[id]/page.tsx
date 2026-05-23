@@ -74,7 +74,7 @@ export default async function VodPage({
 
         <YouTubeEmbed videoId={vod.youtube_id} title={vod.title} />
 
-        <section className="mt-10 rounded-xl border border-white/10 bg-white/5 p-6">
+        <section className="mt-10 rounded-xl border border-border-1 bg-glass-1 p-6">
           <h2 className="text-sm font-semibold text-white">
             시청해 주셔서 감사합니다
           </h2>
@@ -85,13 +85,13 @@ export default async function VodPage({
           <div className="mt-4 flex flex-wrap gap-2">
             <Link
               href="/ai-lab/live"
-              className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-medium text-gray-200 transition hover:border-white/20 hover:bg-white/[0.08]"
+              className="rounded-full border border-border-1 bg-glass-1 px-4 py-2 text-sm font-medium text-gray-200 transition hover:border-border-2 hover:bg-glass-2"
             >
               라이브 세션 보기
             </Link>
             <Link
               href="/ai-lab"
-              className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-medium text-gray-200 transition hover:border-white/20 hover:bg-white/[0.08]"
+              className="rounded-full border border-border-1 bg-glass-1 px-4 py-2 text-sm font-medium text-gray-200 transition hover:border-border-2 hover:bg-glass-2"
             >
               AI 실험실
             </Link>

@@ -113,7 +113,7 @@ export default function CommunityPage() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="페이지 내 검색"
-                    className="w-full pl-8 pr-3 h-10 text-base rounded-lg bg-white/5 border border-white/10 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-white/25 focus:bg-white/[0.07] transition-colors"
+                    className="w-full pl-8 pr-3 h-10 text-base rounded-lg bg-glass-1 border border-border-1 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-border-3 focus:bg-glass-2 transition-colors"
                     autoComplete="off"
                   />
                 </div>
@@ -148,7 +148,7 @@ export default function CommunityPage() {
                   setIsSearchExpanded(true);
                   setTimeout(() => mobileSearchRef.current?.focus(), 100);
                 }}
-                className="w-11 h-11 inline-flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-white/20 transition-colors"
+                className="w-11 h-11 inline-flex items-center justify-center rounded-lg bg-glass-1 border border-border-1 text-gray-400 hover:text-white hover:border-border-2 transition-colors"
               >
                 <SearchIcon className="w-4 h-4" />
               </button>
@@ -163,7 +163,7 @@ export default function CommunityPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="페이지 내 검색"
-              className="w-full pl-8 pr-3 h-12 text-base xl-nav:text-sm rounded-lg bg-white/5 border border-white/10 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-white/25 focus:bg-white/[0.07] transition-colors"
+              className="w-full pl-8 pr-3 h-12 text-base xl-nav:text-sm rounded-lg bg-glass-1 border border-border-1 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-border-3 focus:bg-glass-2 transition-colors"
             />
           </div>
         </div>
@@ -174,10 +174,10 @@ export default function CommunityPage() {
             Array.from({ length: 5 }).map((_, i) => (
               <div
                 key={i}
-                className="rounded-xl border border-white/10 bg-white/5 p-4 animate-pulse"
+                className="rounded-xl border border-border-1 bg-glass-1 p-4 animate-pulse"
               >
-                <div className="h-4 bg-white/10 rounded w-3/4 mb-2" />
-                <div className="h-3 bg-white/10 rounded w-1/3" />
+                <div className="h-4 bg-glass-3 rounded w-3/4 mb-2" />
+                <div className="h-3 bg-glass-3 rounded w-1/3" />
               </div>
             ))
           ) : filteredPosts.length === 0 ? (
@@ -193,7 +193,7 @@ export default function CommunityPage() {
                 className={`block rounded-xl border p-4 transition-colors ${
                   post.is_pinned
                     ? "border-brand-blue/30 bg-brand-blue/5 hover:border-brand-blue/50 hover:bg-brand-blue/10"
-                    : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/[0.08]"
+                    : "border-border-1 bg-glass-1 hover:border-border-2 hover:bg-glass-2"
                 }`}
               >
                 <div className="flex items-start justify-between gap-3">
@@ -204,7 +204,7 @@ export default function CommunityPage() {
                           {post.pin_label}
                         </span>
                       )}
-                      <span className="text-xxs px-2 py-0.5 rounded-full border border-white/10 text-gray-400">
+                      <span className="text-xxs px-2 py-0.5 rounded-full border border-border-1 text-gray-400">
                         {post.category}
                       </span>
                     </div>
@@ -246,7 +246,7 @@ export default function CommunityPage() {
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="px-3 py-1.5 rounded-lg text-xs border border-white/10 text-gray-400 hover:border-white/20 disabled:opacity-30 disabled:cursor-not-allowed"
+              className="px-3 py-1.5 rounded-lg text-xs border border-border-1 text-gray-400 hover:border-border-2 disabled:opacity-30 disabled:cursor-not-allowed"
             >
               이전
             </button>
@@ -256,7 +256,7 @@ export default function CommunityPage() {
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="px-3 py-1.5 rounded-lg text-xs border border-white/10 text-gray-400 hover:border-white/20 disabled:opacity-30 disabled:cursor-not-allowed"
+              className="px-3 py-1.5 rounded-lg text-xs border border-border-1 text-gray-400 hover:border-border-2 disabled:opacity-30 disabled:cursor-not-allowed"
             >
               다음
             </button>

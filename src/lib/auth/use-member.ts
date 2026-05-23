@@ -10,6 +10,7 @@ type UseMemberResult = {
   session: Session | null;
   role: MemberRole;
   isMember: boolean;
+  isAdmin: boolean;
   isLoading: boolean;
   signOut: () => Promise<void>;
 };
@@ -47,6 +48,7 @@ export function useMember(): UseMemberResult {
     session,
     role,
     isMember: isPaidRole(role),
+    isAdmin: role === "admin",
     isLoading,
     signOut: async () => {
       await supabase.auth.signOut();

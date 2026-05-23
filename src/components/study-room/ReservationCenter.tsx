@@ -93,7 +93,7 @@ export function ReservationCenter() {
     <div className="space-y-6">
       <form
         onSubmit={handleSubmit}
-        className="space-y-5 rounded-xl border border-white/10 bg-white/5 p-6 md:p-8"
+        className="space-y-5 rounded-xl border border-border-1 bg-glass-1 p-6 md:p-8"
       >
         <h2 className="text-base font-semibold text-white">새 예약 신청</h2>
 
@@ -105,7 +105,7 @@ export function ReservationCenter() {
             min={todayString()}
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="mt-1 w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-white/25 focus:outline-none"
+            className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-3 text-sm text-white focus:border-border-3 focus:outline-none"
           />
         </label>
 
@@ -120,7 +120,7 @@ export function ReservationCenter() {
                 className={`rounded-lg border px-3 py-2.5 text-xs transition ${
                   slot === s
                     ? "border-brand-blue/50 bg-brand-blue/20 text-white"
-                    : "border-white/10 bg-white/[0.03] text-gray-300 hover:border-white/20 hover:bg-white/[0.08]"
+                    : "border-border-1 bg-glass-1 text-gray-300 hover:border-border-2 hover:bg-glass-2"
                 }`}
               >
                 {slotShortLabel(s)}
@@ -137,7 +137,7 @@ export function ReservationCenter() {
             placeholder="예: 4명 디자인 스터디"
             rows={3}
             maxLength={500}
-            className="mt-1 w-full resize-none rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-gray-600 focus:border-white/25 focus:outline-none"
+            className="mt-1 w-full resize-none rounded-lg border border-border-1 bg-glass-1 px-4 py-3 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
           />
         </label>
 
@@ -160,7 +160,7 @@ export function ReservationCenter() {
         </p>
       </form>
 
-      <div className="rounded-xl border border-white/10 bg-white/5 p-6 md:p-8">
+      <div className="rounded-xl border border-border-1 bg-glass-1 p-6 md:p-8">
         <h2 className="text-base font-semibold text-white">내 예약 현황</h2>
 
         {loadError && (
@@ -184,7 +184,7 @@ export function ReservationCenter() {
             {reservations.map((r) => (
               <li
                 key={r.id}
-                className="rounded-lg border border-white/10 bg-white/[0.03] p-4"
+                className="rounded-lg border border-border-1 bg-glass-1 p-4"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
@@ -205,7 +205,7 @@ export function ReservationCenter() {
                       r.status === "confirmed"
                         ? "border border-emerald-500/30 bg-emerald-500/15 text-emerald-300"
                         : r.status === "cancelled"
-                          ? "border border-white/10 bg-white/[0.03] text-gray-500"
+                          ? "border border-border-1 bg-glass-1 text-gray-500"
                           : "border border-yellow-500/30 bg-yellow-500/15 text-yellow-300"
                     }`}
                   >

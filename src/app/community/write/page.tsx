@@ -94,7 +94,7 @@ export default function CommunityWritePage() {
               onChange={(e) => setNickname(e.target.value)}
               placeholder="닉네임을 입력하세요"
               maxLength={20}
-              className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-gray-600 focus:border-white/25 focus:outline-none"
+              className="w-full px-3 py-2.5 rounded-lg bg-glass-1 border border-border-1 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
               style={{ fontSize: "16px" }}
             />
           </div>
@@ -113,7 +113,7 @@ export default function CommunityWritePage() {
                   className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
                     category === cat
                       ? "bg-brand-blue-accent border-brand-blue-accent text-white"
-                      : "bg-white/[0.03] border-white/10 text-gray-400 hover:text-gray-200 hover:border-white/15"
+                      : "bg-glass-1 border-border-1 text-gray-400 hover:text-gray-200 hover:border-border-2"
                   }`}
                 >
                   {cat}
@@ -131,7 +131,7 @@ export default function CommunityWritePage() {
               onChange={(e) => setTitle(e.target.value)}
               placeholder="제목을 입력하세요"
               maxLength={200}
-              className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-gray-600 focus:border-white/25 focus:outline-none"
+              className="w-full px-3 py-2.5 rounded-lg bg-glass-1 border border-border-1 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
               style={{ fontSize: "16px" }}
             />
           </div>
@@ -147,7 +147,7 @@ export default function CommunityWritePage() {
               placeholder="내용을 입력하세요 (최소 30자)"
               rows={10}
               maxLength={10000}
-              className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-gray-600 focus:border-white/25 focus:outline-none resize-y min-h-[120px]"
+              className="w-full px-3 py-2.5 rounded-lg bg-glass-1 border border-border-1 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none resize-y min-h-[120px]"
               style={{ fontSize: "16px" }}
             />
             <p
@@ -168,7 +168,7 @@ export default function CommunityWritePage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="비밀번호 (4자 이상)"
               maxLength={30}
-              className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-gray-600 focus:border-white/25 focus:outline-none"
+              className="w-full px-3 py-2.5 rounded-lg bg-glass-1 border border-border-1 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
               style={{ fontSize: "16px" }}
             />
           </div>

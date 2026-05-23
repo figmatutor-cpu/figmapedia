@@ -6,7 +6,7 @@ export function SpaceInfo() {
     process.env.NEXT_PUBLIC_STUDY_ROOM_HOURS ?? "평일 10:00 ~ 22:00";
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-6 md:p-8">
+    <div className="rounded-xl border border-border-1 bg-glass-1 p-6 md:p-8">
       <h2 className="text-base font-semibold text-white md:text-lg">
         오프라인 스터디 공간
       </h2>
@@ -33,7 +33,7 @@ export function SpaceInfo() {
         </div>
       </dl>
 
-      <div className="mt-8 rounded-lg border border-white/10 bg-white/[0.03] p-4">
+      <div className="mt-8 rounded-lg border border-border-1 bg-glass-1 p-4">
         <h3 className="text-xs font-semibold text-white">이용 안내</h3>
         <ul className="mt-3 space-y-1.5 text-xs leading-6 text-gray-400">
           <li>· 예약 후 운영자 확인이 완료되면 위치/출입 정보를 안내합니다</li>

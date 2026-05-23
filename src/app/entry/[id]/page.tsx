@@ -180,13 +180,13 @@ export default async function EntryPage({
         />
       </header>
 
-      <div className="border-t border-white/10 pt-8">
+      <div className="border-t border-border-1 pt-8">
         {blocks.length === 0 && entry.link ? (
           <a
             href={entry.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 p-4 bg-white/5 border border-white/10 rounded-xl hover:border-white/20 hover:bg-white/[0.08] transition-all"
+            className="flex items-center gap-3 p-4 bg-glass-1 border border-border-1 rounded-xl hover:border-border-2 hover:bg-glass-2 transition-all"
           >
             <svg
               className="w-5 h-5 text-gray-400 shrink-0"

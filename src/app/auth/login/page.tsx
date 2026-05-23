@@ -60,7 +60,7 @@ function LoginForm() {
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-base px-6 py-16">
-      <div className="w-full max-w-md rounded-xl border border-white/10 bg-white/5 p-8 backdrop-blur-md">
+      <div className="w-full max-w-md rounded-xl border border-border-1 bg-glass-1 p-8 backdrop-blur-md">
         <h1 className="text-2xl font-semibold text-white">
           디자이너의 AI 실험실
         </h1>
@@ -78,9 +78,9 @@ function LoginForm() {
         </button>
 
         <div className="my-6 flex items-center gap-3 text-xs text-gray-500">
-          <div className="h-px flex-1 bg-white/10" />
+          <div className="h-px flex-1 bg-glass-3" />
           또는
-          <div className="h-px flex-1 bg-white/10" />
+          <div className="h-px flex-1 bg-glass-3" />
         </div>
 
         <form onSubmit={sendMagicLink} className="space-y-3">
@@ -92,7 +92,7 @@ function LoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="mt-1 block w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-gray-600 focus:border-white/20 focus:bg-white/[0.06] focus:outline-none"
+              className="mt-1 block w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-3 text-sm text-white placeholder:text-gray-600 focus:border-border-2 focus:bg-glass-1 focus:outline-none"
               disabled={status === "sending" || status === "sent"}
             />
           </label>
@@ -100,7 +100,7 @@ function LoginForm() {
           <button
             type="submit"
             disabled={status === "sending" || status === "sent"}
-            className="w-full rounded-lg border border-white/10 bg-white/10 px-4 py-3 text-sm font-medium text-white transition hover:border-white/20 hover:bg-white/[0.15] disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-lg border border-border-1 bg-glass-3 px-4 py-3 text-sm font-medium text-white transition hover:border-border-2 hover:bg-glass-4 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {status === "sending"
               ? "전송 중..."
@@ -111,7 +111,7 @@ function LoginForm() {
         </form>
 
         {status === "sent" && (
-          <p className="mt-4 rounded-lg border border-white/10 bg-white/[0.03] p-3 text-xs text-gray-300">
+          <p className="mt-4 rounded-lg border border-border-1 bg-glass-1 p-3 text-xs text-gray-300">
             {email}로 로그인 링크를 보냈습니다. 메일함을 확인해주세요.
           </p>
         )}

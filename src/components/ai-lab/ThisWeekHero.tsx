@@ -9,7 +9,7 @@ export function ThisWeekHero({ experiment }: ThisWeekHeroProps) {
   const { slug, title, summary, coverImage } = experiment;
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-6 md:p-8">
+    <div className="rounded-xl border border-border-1 bg-glass-1 p-6 md:p-8">
       <div className="grid gap-6 md:grid-cols-[1fr_320px] md:gap-8">
         <div>
           <span className="inline-block rounded-full border border-brand-blue/40 bg-brand-blue/15 px-3 py-1 text-xxs font-medium text-brand-blue-light">
@@ -30,14 +30,14 @@ export function ThisWeekHero({ experiment }: ThisWeekHeroProps) {
             </Link>
             <Link
               href="#past-experiments"
-              className="rounded-full border border-white/10 bg-white/[0.03] px-5 py-2.5 text-sm font-medium text-gray-200 transition hover:border-white/20 hover:bg-white/[0.08]"
+              className="rounded-full border border-border-1 bg-glass-1 px-5 py-2.5 text-sm font-medium text-gray-200 transition hover:border-border-2 hover:bg-glass-2"
             >
               지난 주제 보기
             </Link>
           </div>
         </div>
 
-        <div className="flex h-40 items-center justify-center overflow-hidden rounded-lg border border-white/10 bg-white/[0.03] md:h-auto md:min-h-40">
+        <div className="flex h-40 items-center justify-center overflow-hidden rounded-lg border border-border-1 bg-glass-1 md:h-auto md:min-h-40">
           {coverImage ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img

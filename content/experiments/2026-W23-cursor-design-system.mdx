@@ -1,0 +1,117 @@
+---
+slug: 2026-W23-cursor-design-system
+title: "Cursor로 디자인 시스템 자동화 — 토큰 동기화 실험"
+week: "2026-06-01"
+tool: "Cursor"
+tags: ["AI 코드", "디자인 시스템", "Cursor", "토큰"]
+summary: |
+  Figma Variables를 Tailwind 토큰으로 동기화하는 작업을 Cursor 에이전트가
+  얼마나 자동화할 수 있는지 실험했습니다. 결과만 말하면 단순 색/스페이싱은
+  95% 자동화 가능, 시맨틱 토큰(예: primary/danger)은 사람이 매핑을 한 번
+  지정해주면 그 다음부터는 일관성 있게 따라옵니다. 실험 셋업과 함께 풀어봅니다.
+publishedAt: "2026-06-02"
+author: "이서"
+keyMetrics:
+  - label: "적용 가능성"
+    value: "⭐⭐⭐⭐⭐"
+  - label: "시간 단축"
+    value: "3h → 25분"
+  - label: "추천 단계"
+    value: "프로덕션"
+---
+
+## 실험 배경
+
+디자인 시스템을 운영하는 팀이라면 누구나 한 번쯤 겪는 일 — Figma Variables에서
+토큰을 추가/변경했는데 코드 쪽 `tailwind.config.js`나 `globals.css`에 같은
+이름으로 반영되지 않아 디자이너와 개발자가 한 번씩 손으로 옮기는 그 작업.
+Cursor의 Composer 모드와 에이전트 기능이 이 워크플로우를 어디까지 대체할 수
+있는지 직접 실험했습니다.
+
+## 시나리오
+
+- **대상 프로젝트**: Tailwind CSS 4 기반 Next.js 16
+- **Figma 변수**: 24개 (색상 12, 스페이싱 8, 라운드 4)
+- **목표**: Figma → `tailwind.config.ts` + `globals.css` 자동 반영
+- **체크 항목**: 시맨틱 토큰 매핑, 다크/라이트 모드 분리, 누락 변수 감지
+
+## 프롬프트 셋업
+
+```text
+역할: 시니어 프론트엔드 개발자
+입력: Figma Variables JSON export
+출력: tailwind.config.ts의 theme.extend 영역 + globals.css의 :root/.dark
+제약:
+- 카멜케이스 → 케밥케이스 자동 변환
+- light/dark 토큰 분리
+- 누락 시맨틱 매핑은 주석으로 표시
+```
+
+## 단계별 결과
+
+### 1단계: 색상 토큰 동기화
+
+가장 깔끔하게 동작한 부분. Figma의 `Primary/500`, `Neutral/100` 같은 변수가
+`--color-primary-500`, `--color-neutral-100`로 자동 변환됐고 `@theme inline {}`
+블록에 정확히 들어갔습니다. 한국 디자이너 흔히 쓰는 한글 변수명("브랜드/메인")
+도 슬러그화해서 안전한 클래스명(`brand-main`)으로 처리.
+
+### 2단계: 스페이싱 토큰
+
+여기서 작은 실수가 있었습니다. Figma의 4pt 그리드 (4, 8, 12, 16, 24, 32, 48)를
+`spacing.1`, `spacing.2`, ... 형태로 매핑할 때 Cursor가 Tailwind 기본값
+(0.25rem 단위)을 그대로 두고 신규 키만 추가했습니다. 다행히 충돌은 없었지만
+의도와 다른 결과.
+
+→ 프롬프트에 "기본 spacing을 그대로 두지 말고 Figma 값으로 override"라고
+추가하니 2회차에 정확히 처리.
+
+### 3단계: 시맨틱 토큰 매핑
+
+가장 흥미로운 부분. Figma에 `Brand/Primary/500`이 있을 때 코드에서는 보통
+`--color-primary` (단일 alias)를 쓰는 경우가 많습니다. 이 매핑은 처음엔 추정이
+필요해 Cursor가 주석으로 표시:
+
+```css
+/* TODO: confirm semantic alias */
+--color-primary: var(--color-brand-primary-500);
+```
+
+이걸 사람이 한 번 확인하고 승인하면, 이후 같은 패턴의 토큰(success/warning/danger)
+은 일관되게 처리됩니다.
+
+### 4단계: 다크/라이트 모드 분리
+
+Figma Variables의 mode별 값이 코드에서는 `:root[data-theme="light"]`와
+`:root[data-theme="dark"]`로 분리되어야 합니다. Cursor가 mode 정보를 정확히
+읽어서 자동 분리했지만, 일부 토큰의 light 값이 누락된 경우 dark 값을 fallback
+으로 복제해 넣는 실수가 있었습니다. 이건 명시적으로 "light 누락 시 에러 던지기"
+라고 프롬프트에 추가하니 해결.
+
+## 종합 평가
+
+| 항목                      | 평가       | 비고                                                     |
+| :------------------------ | :--------- | :------------------------------------------------------- |
+| 단순 토큰 (color/spacing) | ⭐⭐⭐⭐⭐ | 95% 자동, 5% 확인                                        |
+| 시맨틱 매핑               | ⭐⭐⭐⭐   | 1회 사람 승인 후 일관                                    |
+| 모드 분리                 | ⭐⭐⭐⭐   | 누락 감지 프롬프트 추가 필요                             |
+| 충돌/회귀 위험            | ⭐⭐⭐     | 기존 토큰과 같은 이름이면 덮어쓰기 위험 — diff 리뷰 필수 |
+
+3시간짜리 수작업이 25분으로 줄었고, 그중 15분은 사람이 1회차 결과를 검토하고
+프롬프트를 조정하는 시간이었습니다.
+
+## 멤버 실습 과제
+
+본인 팀의 Figma Variables를 export해서 Cursor에게 동일 작업을 시켜보세요.
+**중요**: 백업 브랜치에서 실행 + git diff로 변경 사항 1회 검토 후 머지.
+결과(특히 실패 케이스)를 일요일 라이브에서 공유합니다.
+
+## 자주 묻는 질문
+
+- **Q**: Figma plugin으로 export하나 MCP 서버 쓰나?
+- **A**: 이번 실험은 plugin export(JSON). Figma MCP를 쓰면 export 단계도
+  자동화 가능하지만 Cursor가 MCP 호출 시 권한 처리가 한 번 더 필요합니다.
+
+- **Q**: Tailwind 3에서도 동일하게 동작하는지?
+- **A**: 네, 다만 `@theme inline {}` 대신 `tailwind.config.ts`의
+  `theme.extend.colors`로 들어갑니다. 결과물 위치만 다름.

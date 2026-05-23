@@ -20,11 +20,11 @@ export function VodListItem({ vod }: VodListItemProps) {
   return (
     <Link
       href={`/ai-lab/vod/${id}`}
-      className="group block rounded-xl border border-white/10 bg-white/5 p-5 transition hover:border-white/20 hover:bg-white/[0.08]"
+      className="group block rounded-xl border border-border-1 bg-glass-1 p-5 transition hover:border-border-2 hover:bg-glass-2"
     >
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0 flex-1">
-          <span className="inline-block rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xxs font-medium text-gray-300">
+          <span className="inline-block rounded-full border border-border-1 bg-glass-1 px-2.5 py-1 text-xxs font-medium text-gray-300">
             VOD · 멤버 전용
           </span>
           <h3 className="mt-3 line-clamp-2 text-base font-semibold text-white">

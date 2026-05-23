@@ -18,7 +18,7 @@ export function ReportMeta({ experiment }: ReportMetaProps) {
           {tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-gray-300"
+              className="rounded-full border border-border-1 bg-glass-1 px-3 py-1 text-xs text-gray-300"
             >
               {tag}
             </span>

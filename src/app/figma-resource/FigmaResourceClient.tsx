@@ -80,7 +80,7 @@ export function FigmaResourceClient({ cachedThumbnails }: Props) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="페이지 내 검색"
-              className="w-full pl-8 pr-3 h-11 text-sm rounded-lg bg-white/5 border border-white/10 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-white/25 focus:bg-white/[0.07] transition-colors"
+              className="w-full pl-8 pr-3 h-11 text-sm rounded-lg bg-glass-1 border border-border-1 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-border-3 focus:bg-glass-2 transition-colors"
               autoComplete="off"
             />
           </div>
@@ -95,7 +95,7 @@ export function FigmaResourceClient({ cachedThumbnails }: Props) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="페이지 내 검색"
-              className="w-full pl-8 pr-3 h-12 text-base rounded-lg bg-white/5 border border-white/10 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-white/25 focus:bg-white/[0.07] transition-colors"
+              className="w-full pl-8 pr-3 h-12 text-base rounded-lg bg-glass-1 border border-border-1 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-border-3 focus:bg-glass-2 transition-colors"
               autoComplete="off"
             />
           </div>

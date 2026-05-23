@@ -31,9 +31,9 @@ export function CodeBlock({ content, language }: CodeBlockProps) {
   }, [content]);
 
   return (
-    <div className="relative my-4 rounded-lg border border-white/10 bg-black/40 overflow-hidden">
+    <div className="relative my-4 rounded-lg border border-border-1 bg-black/40 overflow-hidden">
       {/* 헤더: 복사 버튼 */}
-      <div className="flex items-center justify-between px-4 py-2 border-b border-white/10 bg-white/[0.03]">
+      <div className="flex items-center justify-between px-4 py-2 border-b border-border-1 bg-glass-1">
         {language && (
           <span className="text-xs text-gray-500 font-mono">{language}</span>
         )}

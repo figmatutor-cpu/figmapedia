@@ -50,7 +50,7 @@ export function ReportMemberContent({ slug }: ReportMemberContentProps) {
 
   if (isAuthLoading) {
     return (
-      <section className="mt-8 rounded-xl border border-white/10 bg-white/[0.02] p-8 text-center">
+      <section className="mt-8 rounded-xl border border-border-1 bg-glass-1 p-8 text-center">
         <p className="text-xs text-gray-500">불러오는 중...</p>
       </section>
     );
@@ -60,7 +60,7 @@ export function ReportMemberContent({ slug }: ReportMemberContentProps) {
 
   if (state.status === "loading" || state.status === "idle") {
     return (
-      <section className="mt-8 rounded-xl border border-white/10 bg-white/[0.02] p-8 text-center">
+      <section className="mt-8 rounded-xl border border-border-1 bg-glass-1 p-8 text-center">
         <p className="text-xs text-gray-500">본문을 불러오는 중...</p>
       </section>
     );

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getAllExperiments } from "@/lib/mdx/experiments";
 import { getCachedSearchIndex } from "@/lib/search-index-cache";
 
 const SITE_URL = (
@@ -49,10 +50,52 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily",
       priority: 0.7,
     },
+    {
+      url: `${SITE_URL}/ai-lab`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
+    {
+      url: `${SITE_URL}/ai-lab/vote`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.7,
+    },
+    {
+      url: `${SITE_URL}/ai-lab/live`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
+      url: `${SITE_URL}/membership`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.6,
+    },
     { url: `${SITE_URL}/privacy`, changeFrequency: "yearly", priority: 0.2 },
     { url: `${SITE_URL}/terms`, changeFrequency: "yearly", priority: 0.2 },
+    {
+      url: `${SITE_URL}/refund-policy`,
+      changeFrequency: "yearly",
+      priority: 0.2,
+    },
     { url: `${SITE_URL}/copyright`, changeFrequency: "yearly", priority: 0.2 },
   ];
+
+  let experimentPages: MetadataRoute.Sitemap = [];
+  try {
+    const experiments = await getAllExperiments();
+    experimentPages = experiments.map((e) => ({
+      url: `${SITE_URL}/ai-lab/${e.slug}`,
+      lastModified: e.publishedAt ? new Date(e.publishedAt) : new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }));
+  } catch (error) {
+    console.error("Sitemap: failed to load experiments", error);
+  }
 
   // 동적 엔트리 페이지 — 내부 렌더링되는 모든 섹션 포함
   // (UXUI 아티클/기술 블로그/피그마 리소스는 외부 링크라 아래 !item.link 필터로 자동 제외됨)
@@ -100,5 +143,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error("Sitemap: failed to fetch entries", error);
   }
 
-  return [...staticPages, ...entryPages, ...communityPages];
+  return [...staticPages, ...experimentPages, ...entryPages, ...communityPages];
 }

@@ -47,16 +47,16 @@ export function VerticalCard({
   }, [displayThumbnail]);
 
   const cardClassName =
-    "group flex flex-col rounded-xl border border-white/10 bg-white/5 overflow-hidden hover:border-white/20 hover:bg-white/[0.08] transition-all";
+    "group flex flex-col rounded-xl border border-border-1 bg-glass-1 overflow-hidden hover:border-border-2 hover:bg-glass-2 transition-all";
 
   const cardInner = (
     <>
       {/* 썸네일 영역 */}
-      <div className="aspect-4/3 bg-white/6 flex items-center justify-center overflow-hidden relative">
+      <div className="aspect-4/3 bg-glass-1 flex items-center justify-center overflow-hidden relative">
         {displayThumbnail && !imageError ? (
           <>
             {!imageLoaded && (
-              <div className="absolute inset-0 animate-pulse bg-white/10" />
+              <div className="absolute inset-0 animate-pulse bg-glass-3" />
             )}
             <Image
               src={displayThumbnail}

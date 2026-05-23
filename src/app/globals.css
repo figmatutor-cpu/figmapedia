@@ -30,6 +30,25 @@
   --color-footer-sub: #858699;
   --color-footer-meta: #6b6f76;
   --color-modal-bg: #111118;
+
+  /* ── Renewal Design System · Tailwind-exposed Tokens ──────────────
+     글래스 4단계 / 보더 3단계. 컴포넌트는 bg-glass-N, border-border-N 사용.
+     세부 정의는 :root 의 --fp-glass-*, --fp-border-* 참조.
+     ──────────────────────────────────────────────────────────────── */
+  --color-glass-1: var(--fp-glass-1);
+  --color-glass-2: var(--fp-glass-2);
+  --color-glass-3: var(--fp-glass-3);
+  --color-glass-4: var(--fp-glass-4);
+  --color-border-1: var(--fp-border-1);
+  --color-border-2: var(--fp-border-2);
+  --color-border-3: var(--fp-border-3);
+
+  --color-fg-1: var(--fp-fg-1);
+  --color-fg-2: var(--fp-fg-2);
+  --color-fg-3: var(--fp-fg-3);
+  --color-fg-4: var(--fp-fg-4);
+  --color-fg-5: var(--fp-fg-5);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -189,17 +208,16 @@ body {
   --fp-fg-4: var(--neutral-500);
   --fp-fg-5: #858699;
 
+  /* 글래스 4단계: subtle / card-base / hover-active / strong-focus */
   --fp-glass-1: rgba(255, 255, 255, 0.03);
-  --fp-glass-2: rgba(255, 255, 255, 0.05);
-  --fp-glass-3: rgba(255, 255, 255, 0.06);
-  --fp-glass-4: rgba(255, 255, 255, 0.08);
-  --fp-glass-5: rgba(255, 255, 255, 0.1);
-  --fp-glass-6: rgba(255, 255, 255, 0.15);
+  --fp-glass-2: rgba(255, 255, 255, 0.07);
+  --fp-glass-3: rgba(255, 255, 255, 0.1);
+  --fp-glass-4: rgba(255, 255, 255, 0.18);
 
+  /* 보더 3단계: default / hover / strong-focus */
   --fp-border-1: rgba(255, 255, 255, 0.1);
-  --fp-border-2: rgba(255, 255, 255, 0.15);
-  --fp-border-3: rgba(255, 255, 255, 0.2);
-  --fp-border-4: rgba(255, 255, 255, 0.25);
+  --fp-border-2: rgba(255, 255, 255, 0.18);
+  --fp-border-3: rgba(255, 255, 255, 0.28);
 
   --fp-brand-blue: var(--blue-500);
   --fp-brand-blue-accent: var(--blue-400);
@@ -233,16 +251,13 @@ body {
   --fp-fg-5: #8a8a96;
 
   --fp-glass-1: rgba(15, 15, 30, 0.02);
-  --fp-glass-2: rgba(15, 15, 30, 0.04);
-  --fp-glass-3: rgba(15, 15, 30, 0.05);
-  --fp-glass-4: rgba(15, 15, 30, 0.07);
-  --fp-glass-5: rgba(15, 15, 30, 0.1);
-  --fp-glass-6: rgba(15, 15, 30, 0.14);
+  --fp-glass-2: rgba(15, 15, 30, 0.05);
+  --fp-glass-3: rgba(15, 15, 30, 0.08);
+  --fp-glass-4: rgba(15, 15, 30, 0.14);
 
   --fp-border-1: rgba(15, 15, 30, 0.08);
-  --fp-border-2: rgba(15, 15, 30, 0.12);
-  --fp-border-3: rgba(15, 15, 30, 0.18);
-  --fp-border-4: rgba(15, 15, 30, 0.24);
+  --fp-border-2: rgba(15, 15, 30, 0.16);
+  --fp-border-3: rgba(15, 15, 30, 0.24);
 }
 
 /* Density compact override */

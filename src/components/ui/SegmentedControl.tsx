@@ -27,7 +27,7 @@ export function SegmentedControl({
             className={`h-11 inline-flex items-center px-4 rounded-full text-sm whitespace-nowrap transition-all border ${
               activeTab === tab.key
                 ? "bg-brand-blue-accent border-brand-blue-accent text-white font-medium"
-                : "bg-white/[0.03] border-white/10 text-gray-400 hover:text-gray-200 hover:border-white/15"
+                : "bg-glass-1 border-border-1 text-gray-400 hover:text-gray-200 hover:border-border-2"
             }`}
           >
             {tab.label}

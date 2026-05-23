@@ -41,7 +41,7 @@ export function SponsorBanner({ className }: SponsorBannerProps) {
   return (
     <div
       className={cn(
-        "relative rounded-xl border border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/[0.08] transition-colors mb-6",
+        "relative rounded-xl border border-border-1 bg-glass-1 hover:border-border-2 hover:bg-glass-2 transition-colors mb-6",
         className,
       )}
     >
@@ -67,7 +67,7 @@ export function SponsorBanner({ className }: SponsorBannerProps) {
         type="button"
         onClick={handleClose}
         aria-label="배너 닫기"
-        className="absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center justify-center w-9 h-9 rounded-full text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+        className="absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center justify-center w-9 h-9 rounded-full text-gray-400 hover:text-white hover:bg-glass-3 transition-colors"
       >
         <X className="w-4 h-4" strokeWidth={2} />
       </button>

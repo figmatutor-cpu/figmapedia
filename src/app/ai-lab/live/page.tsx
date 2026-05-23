@@ -46,7 +46,7 @@ export default async function LivePage() {
               ))}
             </div>
           ) : (
-            <div className="rounded-xl border border-dashed border-white/10 bg-white/[0.02] p-8 text-center">
+            <div className="rounded-xl border border-dashed border-border-1 bg-glass-1 p-8 text-center">
               <p className="text-sm text-gray-400">다시보기가 곧 추가됩니다</p>
               <p className="mt-2 text-xs text-gray-500">
                 첫 라이브 종료 후 멤버 전용 VOD로 공개됩니다

@@ -69,8 +69,8 @@ export function FilterModal({
         onClick={() => setIsOpen((prev) => !prev)}
         className={`w-9 h-9 inline-flex items-center justify-center rounded-lg border transition-colors ${
           selected.length > 0 || isOpen
-            ? "bg-white/10 border-white/20 text-[rgba(153,161,175,1)]"
-            : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-white/20"
+            ? "bg-glass-3 border-border-2 text-[rgba(153,161,175,1)]"
+            : "bg-glass-1 border-border-1 text-gray-400 hover:text-white hover:border-border-2"
         }`}
       >
         <SlidersHorizontal className="w-4 h-4" />
@@ -80,10 +80,10 @@ export function FilterModal({
       {isOpen && (
         <div
           ref={modalRef}
-          className="absolute right-0 top-full mt-2 w-72 rounded-xl border border-white/10 bg-glass-overlay backdrop-blur-md z-50 overflow-hidden"
+          className="absolute right-0 top-full mt-2 w-72 rounded-xl border border-border-1 bg-glass-overlay backdrop-blur-md z-50 overflow-hidden"
         >
           {/* 헤더 */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border-1">
             <span className="text-sm font-medium text-white">
               카테고리 필터
             </span>
@@ -98,7 +98,7 @@ export function FilterModal({
 
           {/* 검색 인풋 — 선택된 뱃지 가로 나열, 고정 높이, overflow clip */}
           <div className="px-3 pt-3 pb-2">
-            <div className="flex flex-wrap items-center gap-1.5 min-h-10 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 focus-within:border-white/25 focus-within:bg-white/[0.07] transition-colors">
+            <div className="flex flex-wrap items-center gap-1.5 min-h-10 px-3 py-1.5 rounded-lg bg-glass-1 border border-border-1 focus-within:border-border-3 focus-within:bg-glass-2 transition-colors">
               {selected.length === 0 && (
                 <Search className="w-3.5 h-3.5 text-gray-500 shrink-0" />
               )}
@@ -151,14 +151,14 @@ export function FilterModal({
                       role="checkbox"
                       aria-checked={isChecked}
                       onClick={() => toggleCategory(cat)}
-                      className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-white/5 cursor-pointer group"
+                      className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-glass-1 cursor-pointer group"
                     >
                       {/* 커스텀 체크박스 */}
                       <div
                         className={`w-4 h-4 rounded flex items-center justify-center border shrink-0 transition-colors ${
                           isChecked
                             ? "bg-brand-blue-accent border-brand-blue-accent"
-                            : "border-white/20 bg-transparent group-hover:border-white/40"
+                            : "border-border-2 bg-transparent group-hover:border-border-3"
                         }`}
                       >
                         {isChecked && (

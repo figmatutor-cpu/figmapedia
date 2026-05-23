@@ -2,7 +2,7 @@ export function DiscordPanel() {
   const discordUrl = process.env.NEXT_PUBLIC_DISCORD_INVITE_URL ?? "#";
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-6">
+    <div className="rounded-xl border border-border-1 bg-glass-1 p-6">
       <h3 className="text-sm font-semibold text-white">Discord 커뮤니티</h3>
       <p className="mt-3 text-sm text-gray-400">
         실험 결과를 공유하고 피드백을 주고받는 Discord 채널입니다.
