@@ -34,7 +34,7 @@ export function FigmaResourceClient({ cachedThumbnails }: Props) {
       { key: "live", label: "주간 라이브", count: counts.live ?? 0 },
       { key: "atoz", label: "Figma A to Z", count: counts.atoz ?? 0 },
     ],
-    [counts]
+    [counts],
   );
 
   const displayItems = useMemo(() => {
@@ -48,16 +48,16 @@ export function FigmaResourceClient({ cachedThumbnails }: Props) {
       items = items.filter((r) => r.title.toLowerCase().includes(q));
     }
 
-    return [...items].sort((a, b) => Number(Boolean(b.pinned)) - Number(Boolean(a.pinned)));
+    return [...items].sort(
+      (a, b) => Number(Boolean(b.pinned)) - Number(Boolean(a.pinned)),
+    );
   }, [activeTab, searchQuery]);
 
   return (
     <main className="min-h-screen bg-bg-base pt-28 pb-16">
       <div className="mx-auto max-w-4xl px-4">
         <SponsorBanner />
-        <h1 className="text-xl font-bold text-white mb-2">
-          피그마 리소스
-        </h1>
+        <h1 className="text-xl font-bold text-white mb-2">피그마 리소스</h1>
         <p className="text-gray-400 text-sm sm:text-base mb-6">
           피그마 디자인 템플릿, 튜토리얼, 프로토타이핑 예제 모음
         </p>

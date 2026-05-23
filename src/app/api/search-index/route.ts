@@ -12,7 +12,7 @@ export async function GET() {
     console.error("Failed to fetch search index:", error);
     return Response.json(
       { error: "Failed to fetch search index" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

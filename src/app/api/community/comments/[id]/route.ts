@@ -14,14 +14,17 @@ async function hashPassword(password: string): Promise<string> {
 /* ── DELETE: 댓글 삭제 (비밀번호 확인) ── */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
     const { password } = await request.json();
 
     if (!password || typeof password !== "string") {
-      return Response.json({ error: "비밀번호를 입력해주세요." }, { status: 400 });
+      return Response.json(
+        { error: "비밀번호를 입력해주세요." },
+        { status: 400 },
+      );
     }
 
     const { data: comment } = await supabase
@@ -31,15 +34,24 @@ export async function DELETE(
       .single();
 
     if (!comment) {
-      return Response.json({ error: "댓글을 찾을 수 없습니다." }, { status: 404 });
+      return Response.json(
+        { error: "댓글을 찾을 수 없습니다." },
+        { status: 404 },
+      );
     }
     if (!comment.password_hash) {
-      return Response.json({ error: "이 댓글은 삭제할 수 없습니다." }, { status: 403 });
+      return Response.json(
+        { error: "이 댓글은 삭제할 수 없습니다." },
+        { status: 403 },
+      );
     }
 
     const inputHash = await hashPassword(password.trim());
     if (inputHash !== comment.password_hash) {
-      return Response.json({ error: "비밀번호가 일치하지 않습니다." }, { status: 403 });
+      return Response.json(
+        { error: "비밀번호가 일치하지 않습니다." },
+        { status: 403 },
+      );
     }
 
     const { error } = await supabase

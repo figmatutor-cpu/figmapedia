@@ -4,7 +4,10 @@ export function EmptyState({ query }: { query: string }) {
   return (
     <div className="text-center py-16">
       <div className="text-4xl mb-4">
-        <SearchIcon className="mx-auto h-12 w-12 text-gray-600" strokeWidth={1.5} />
+        <SearchIcon
+          className="mx-auto h-12 w-12 text-gray-600"
+          strokeWidth={1.5}
+        />
       </div>
       <h3 className="text-lg font-medium text-gray-200 mb-1">
         검색 결과가 없습니다

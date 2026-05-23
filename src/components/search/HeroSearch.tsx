@@ -10,9 +10,11 @@ import {
 } from "@/lib/constants";
 
 export function HeroSearch() {
-  const { query, setQuery, triggerAISearch, isAISearching, cancelAISearch } = useSearchContext();
+  const { query, setQuery, triggerAISearch, isAISearching, cancelAISearch } =
+    useSearchContext();
   const inputRef = useRef<HTMLInputElement>(null);
-  const [animatedPlaceholder, setAnimatedPlaceholder] = useState(SEARCH_PLACEHOLDER);
+  const [animatedPlaceholder, setAnimatedPlaceholder] =
+    useState(SEARCH_PLACEHOLDER);
   const typingStateRef = useRef({
     suggestionIndex: 0,
     charIndex: 0,
@@ -23,7 +25,8 @@ export function HeroSearch() {
 
   useEffect(() => {
     typingStateRef.current.running = true;
-    const { typeSpeed, deleteSpeed, pauseAtEnd, pauseBetween } = TYPING_ANIMATION;
+    const { typeSpeed, deleteSpeed, pauseAtEnd, pauseBetween } =
+      TYPING_ANIMATION;
 
     function schedule(fn: () => void, delay: number) {
       const id = window.setTimeout(fn, delay);
@@ -45,7 +48,9 @@ export function HeroSearch() {
       }
 
       const state = typingStateRef.current;
-      const current = SEARCH_SUGGESTIONS[state.suggestionIndex % SEARCH_SUGGESTIONS.length] || "";
+      const current =
+        SEARCH_SUGGESTIONS[state.suggestionIndex % SEARCH_SUGGESTIONS.length] ||
+        "";
 
       if (!state.deleting) {
         const nextIndex = state.charIndex + 1;
@@ -67,7 +72,8 @@ export function HeroSearch() {
         state.charIndex = nextIndex;
         if (nextIndex <= 0) {
           state.deleting = false;
-          state.suggestionIndex = (state.suggestionIndex + 1) % SEARCH_SUGGESTIONS.length;
+          state.suggestionIndex =
+            (state.suggestionIndex + 1) % SEARCH_SUGGESTIONS.length;
           schedule(step, pauseBetween);
         } else {
           schedule(step, deleteSpeed);

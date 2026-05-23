@@ -13,7 +13,11 @@ interface ResourceCardProps {
   cachedThumbnail?: string;
 }
 
-export function ResourceCard({ resource, variant = "default", cachedThumbnail }: ResourceCardProps) {
+export function ResourceCard({
+  resource,
+  variant = "default",
+  cachedThumbnail,
+}: ResourceCardProps) {
   const [ogImage, setOgImage] = useState<string | null>(
     cachedThumbnail ?? resource.thumbnail ?? null,
   );
@@ -45,7 +49,7 @@ export function ResourceCard({ resource, variant = "default", cachedThumbnail }:
             .catch(() => {});
         }
       },
-      { rootMargin: "200px" }
+      { rootMargin: "200px" },
     );
 
     observer.observe(el);
@@ -64,7 +68,9 @@ export function ResourceCard({ resource, variant = "default", cachedThumbnail }:
           : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/[0.08]"
       }`}
     >
-      <div className={`${variant === "wide" ? "aspect-video" : "aspect-[4/3]"} bg-white/6 flex items-center justify-center overflow-hidden relative`}>
+      <div
+        className={`${variant === "wide" ? "aspect-video" : "aspect-[4/3]"} bg-white/6 flex items-center justify-center overflow-hidden relative`}
+      >
         {ogImage && !imageFailed ? (
           <>
             {!imageLoaded && (
@@ -85,7 +91,9 @@ export function ResourceCard({ resource, variant = "default", cachedThumbnail }:
             />
           </>
         ) : (
-          <div className={`w-full h-full flex items-center justify-center ${fetched ? "" : "animate-pulse bg-white/5"}`}>
+          <div
+            className={`w-full h-full flex items-center justify-center ${fetched ? "" : "animate-pulse bg-white/5"}`}
+          >
             <svg
               className="w-10 h-10 text-white/15"
               fill="none"

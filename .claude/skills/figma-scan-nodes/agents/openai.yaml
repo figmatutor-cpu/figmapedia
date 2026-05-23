@@ -1,0 +1,4 @@
+interface:
+  display_name: "Figma Scan Nodes Helper"
+  short_description: "Thin helper for scanning Figma nodes; use with figma-use"
+  default_prompt: "Use $figma-scan-nodes as a helper skill after loading $figma-use; scan a subtree by node type, collect node IDs/metadata, and hand off edits to specialized skills."

@@ -42,7 +42,7 @@ export function SponsorBanner({ className }: SponsorBannerProps) {
     <div
       className={cn(
         "relative rounded-xl border border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/[0.08] transition-colors mb-6",
-        className
+        className,
       )}
     >
       <a

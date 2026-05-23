@@ -17,8 +17,17 @@ interface SearchInputProps {
 
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   function SearchInput(
-    { query, onQueryChange, onSearch, onCancel, isSearching, placeholder = "검색어를 입력하세요", variant, className = "" },
-    ref
+    {
+      query,
+      onQueryChange,
+      onSearch,
+      onCancel,
+      isSearching,
+      placeholder = "검색어를 입력하세요",
+      variant,
+      className = "",
+    },
+    ref,
   ) {
     const internalRef = useRef<HTMLInputElement>(null);
     useImperativeHandle(ref, () => internalRef.current!);
@@ -53,9 +62,13 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 
     return (
       <div className={className}>
-        <div className={`relative rounded-2xl p-[2px] ${shadow} bg-linear-to-br from-white/10 via-white/5 to-black/20`}>
+        <div
+          className={`relative rounded-2xl p-[2px] ${shadow} bg-linear-to-br from-white/10 via-white/5 to-black/20`}
+        >
           <div className="relative">
-            <SearchIcon className={`absolute ${iconLeft} top-1/2 -translate-y-1/2 h-5 w-5 text-white/40`} />
+            <SearchIcon
+              className={`absolute ${iconLeft} top-1/2 -translate-y-1/2 h-5 w-5 text-white/40`}
+            />
             <input
               ref={internalRef}
               type="text"
@@ -83,11 +96,13 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
                   <span className="block w-2.5 h-2.5 rounded-sm bg-current shrink-0" />
                   정지
                 </>
-              ) : AI_SEARCH_LABEL}
+              ) : (
+                AI_SEARCH_LABEL
+              )}
             </button>
           </div>
         </div>
       </div>
     );
-  }
+  },
 );

@@ -75,7 +75,10 @@ export const getCachedSectionData = unstable_cache(
     try {
       thumbnailMap = await getPageThumbnails(allIds);
     } catch (err) {
-      console.error("Supabase thumbnail lookup failed, continuing without:", err);
+      console.error(
+        "Supabase thumbnail lookup failed, continuing without:",
+        err,
+      );
     }
 
     // Supabase 캐시된 썸네일 적용

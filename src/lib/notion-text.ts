@@ -58,7 +58,7 @@ function extractStructuredBlockText(block: any): string {
  */
 export async function fetchPageFullText(
   pageId: string,
-  maxChars = 6000
+  maxChars = 6000,
 ): Promise<string> {
   try {
     const parts: string[] = [];
@@ -86,7 +86,7 @@ export async function fetchPageFullText(
 
       if (totalChars >= maxChars) break;
       cursor = response.has_more
-        ? response.next_cursor ?? undefined
+        ? (response.next_cursor ?? undefined)
         : undefined;
     } while (cursor);
 

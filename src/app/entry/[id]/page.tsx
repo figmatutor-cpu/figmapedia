@@ -9,7 +9,9 @@ import { Badge } from "@/components/ui/Badge";
 import { EntryMeta } from "@/components/ui/EntryMeta";
 import { NotionBlockRenderer } from "@/components/entry/NotionBlockRenderer";
 
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://figmapedia.com").trim();
+const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://figmapedia.com"
+).trim();
 
 export const revalidate = 3600;
 
@@ -30,7 +32,11 @@ function extractTextFromBlocks(blocks: any[], maxLength: number = 155): string {
     const text = (data.rich_text as any[])
       .map((rt: any) => rt.plain_text ?? "")
       .join("")
-      .replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}\u200d\uFE0F\u20E3]/gu, "").replace(/[0-9]\uFE0F\u20E3/g, "")
+      .replace(
+        /[\p{Emoji_Presentation}\p{Extended_Pictographic}\u200d\uFE0F\u20E3]/gu,
+        "",
+      )
+      .replace(/[0-9]\uFE0F\u20E3/g, "")
       .replace(/\s+/g, " ")
       .trim();
 
@@ -115,7 +121,9 @@ export default async function EntryPage({
       try {
         page = await getEntry(id);
       } catch {
-        throw new Error("일시적으로 요청이 많습니다. 잠시 후 다시 시도해 주세요.");
+        throw new Error(
+          "일시적으로 요청이 많습니다. 잠시 후 다시 시도해 주세요.",
+        );
       }
     } else {
       redirect("/figma-info");
@@ -164,10 +172,12 @@ export default async function EntryPage({
             <Badge key={cat} category={cat} />
           ))}
         </div>
-        <h1 className="text-3xl font-bold text-white mb-3">
-          {entry.title}
-        </h1>
-        <EntryMeta author={entry.author} publishedDate={entry.publishedDate} className="mt-2" />
+        <h1 className="text-3xl font-bold text-white mb-3">{entry.title}</h1>
+        <EntryMeta
+          author={entry.author}
+          publishedDate={entry.publishedDate}
+          className="mt-2"
+        />
       </header>
 
       <div className="border-t border-white/10 pt-8">

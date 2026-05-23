@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     // 2. Supabase 기존 임베딩 ID + lastEditedTime 가져오기
     const existingEmbeddings = await getAllEmbeddingIds();
     const existingMap = new Map(
-      existingEmbeddings.map((e) => [e.id, e.lastEditedTime])
+      existingEmbeddings.map((e) => [e.id, e.lastEditedTime]),
     );
 
     // 3. Diff 계산
@@ -60,7 +60,11 @@ export async function POST(request: NextRequest) {
 
     for (const existing of existingEmbeddings) {
       // "static-" / "community-" prefix 항목은 별도 관리이므로 삭제하지 않음
-      if (!notionMap.has(existing.id) && !existing.id.startsWith("static-") && !existing.id.startsWith("community-")) {
+      if (
+        !notionMap.has(existing.id) &&
+        !existing.id.startsWith("static-") &&
+        !existing.id.startsWith("community-")
+      ) {
         toDelete.push(existing.id);
       }
     }
@@ -90,7 +94,7 @@ export async function POST(request: NextRequest) {
             fullText = await Promise.race([
               fetchPageFullText(item.id),
               new Promise<string>((resolve) =>
-                setTimeout(() => resolve(""), 3000)
+                setTimeout(() => resolve(""), 3000),
               ),
             ]);
           }
@@ -107,7 +111,7 @@ export async function POST(request: NextRequest) {
             embedding,
             lastEditedTime: item.lastEditedTime ?? new Date().toISOString(),
           });
-        })
+        }),
       );
 
       for (const r of results) {
@@ -141,7 +145,7 @@ export async function POST(request: NextRequest) {
     console.error("Sync failed:", error);
     return Response.json(
       { error: "Sync failed", duration: Date.now() - start },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

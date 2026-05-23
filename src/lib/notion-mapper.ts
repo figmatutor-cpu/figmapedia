@@ -1,4 +1,9 @@
-import type { Entry, SearchIndexItem, NotionBlock, RichTextItem } from "@/types";
+import type {
+  Entry,
+  SearchIndexItem,
+  NotionBlock,
+  RichTextItem,
+} from "@/types";
 
 function extractPlainText(richTextArray: any[]): string {
   return richTextArray?.map((t: any) => t.plain_text).join("") ?? "";
@@ -56,7 +61,8 @@ export function mapPromptPage(page: any): SearchIndexItem {
   return {
     id: page.id,
     title: extractPlainText(props["이름"]?.title),
-    categories: props["프롬프트 타입"]?.multi_select?.map((t: any) => t.name) ?? [],
+    categories:
+      props["프롬프트 타입"]?.multi_select?.map((t: any) => t.name) ?? [],
     author: "",
     link: null,
     publishedDate: null,
@@ -201,7 +207,12 @@ export function mapNotionBlock(block: any): NotionBlock {
     : undefined;
 
   // Media blocks: image, video, file, pdf
-  if (type === "image" || type === "video" || type === "file" || type === "pdf") {
+  if (
+    type === "image" ||
+    type === "video" ||
+    type === "file" ||
+    type === "pdf"
+  ) {
     return {
       id: block.id,
       type,
@@ -301,7 +312,7 @@ export function mapNotionBlock(block: any): NotionBlock {
   // Table row: cells are rich_text arrays
   if (type === "table_row") {
     const cells: string[] = (data?.cells ?? []).map((cell: any[]) =>
-      extractPlainText(cell)
+      extractPlainText(cell),
     );
     return {
       id: block.id,

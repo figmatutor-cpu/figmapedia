@@ -99,7 +99,11 @@ export const NAV_ITEMS: NavItem[] = [
       { key: "prompt-kr", label: "한글자연어", categoryFilter: ["한글자연어"] },
       { key: "prompt-en", label: "영문자연어", categoryFilter: ["영문자연어"] },
       { key: "prompt-json", label: "JSON", categoryFilter: ["JSON"] },
-      { key: "prompt-param", label: "파라미터형", categoryFilter: ["파라미터형"] },
+      {
+        key: "prompt-param",
+        label: "파라미터형",
+        categoryFilter: ["파라미터형"],
+      },
       { key: "prompt-code", label: "코드", categoryFilter: ["코드"] },
     ],
   },
@@ -111,13 +115,30 @@ export const NAV_ITEMS: NavItem[] = [
     subTabs: [
       { key: "kiosk-all", label: "전체" },
       { key: "kiosk-food-bev", label: "식음료", categoryFilter: ["식음료"] },
-      { key: "kiosk-pos", label: "계산기&포스", categoryFilter: ["계산기&포스"] },
+      {
+        key: "kiosk-pos",
+        label: "계산기&포스",
+        categoryFilter: ["계산기&포스"],
+      },
       { key: "kiosk-beauty", label: "뷰티", categoryFilter: ["뷰티"] },
       { key: "kiosk-info", label: "안내&검색", categoryFilter: ["안내&검색"] },
-      { key: "kiosk-franchise", label: "프렌차이즈", categoryFilter: ["프렌차이즈"] },
-      { key: "kiosk-mobility", label: "모빌리티", categoryFilter: ["모빌리티"] },
+      {
+        key: "kiosk-franchise",
+        label: "프렌차이즈",
+        categoryFilter: ["프렌차이즈"],
+      },
+      {
+        key: "kiosk-mobility",
+        label: "모빌리티",
+        categoryFilter: ["모빌리티"],
+      },
       { key: "kiosk-finance", label: "금융", categoryFilter: ["금융"] },
     ],
+  },
+  {
+    key: "ai-lab",
+    label: "AI 실험실",
+    href: "/ai-lab",
   },
   {
     key: "community",

@@ -136,7 +136,10 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
       waveContainer.removeChild(waveContainer.firstChild);
     }
 
-    const waveRenderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+    const waveRenderer = new THREE.WebGLRenderer({
+      antialias: false,
+      alpha: true,
+    });
     waveRenderer.setPixelRatio(EFFECT_PR);
     waveRenderer.toneMapping = THREE.ACESFilmicToneMapping;
     waveRenderer.toneMappingExposure = 1.0;
@@ -171,7 +174,8 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
 
     function updateGlowDistance() {
       if (!barMaterial) return;
-      const totalWidth = currentBarCount * (FIXED_BAR_WIDTH + FIXED_BAR_GAP) - FIXED_BAR_GAP;
+      const totalWidth =
+        currentBarCount * (FIXED_BAR_WIDTH + FIXED_BAR_GAP) - FIXED_BAR_GAP;
       const spanPx = totalWidth * 0.3;
       glowConfig.maxGlowDistance = spanPx;
       (barMaterial.uniforms as any).uMaxGlowDist.value = spanPx;
@@ -275,7 +279,8 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
     }
 
     function setupQuickSetters() {
-      const u = (instancedBars!.material as THREE.ShaderMaterial).uniforms as any;
+      const u = (instancedBars!.material as THREE.ShaderMaterial)
+        .uniforms as any;
       setMouseNDC = gsap.quickSetter(u.uMouseClipX, "value") as any;
       setSmoothSpeed = gsap.quickSetter(u.uSmoothSpeed, "value") as any;
       setPhase1 = gsap.quickSetter(u.w1Phase, "value") as any;
@@ -287,7 +292,8 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
     function updateGainMultiplier() {
       if (!barMaterial) return;
       const targetPx = cameraHeight * SCREEN_COVERAGE;
-      (barMaterial.uniforms as any).uGainMul.value = targetPx / MAX_KEYFRAME_GAIN;
+      (barMaterial.uniforms as any).uGainMul.value =
+        targetPx / MAX_KEYFRAME_GAIN;
     }
 
     const listeners: Array<() => void> = [];
@@ -295,9 +301,17 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
 
     function setupPointerTracking() {
       const el = waveRenderer.domElement;
-      const readCoords = (e: PointerEvent | TouchEvent): { x: number; y: number } => {
-        if ("clientX" in e) return { x: (e as PointerEvent).clientX, y: (e as PointerEvent).clientY };
-        const t = (e as TouchEvent).touches?.[0] || (e as TouchEvent).changedTouches?.[0];
+      const readCoords = (
+        e: PointerEvent | TouchEvent,
+      ): { x: number; y: number } => {
+        if ("clientX" in e)
+          return {
+            x: (e as PointerEvent).clientX,
+            y: (e as PointerEvent).clientY,
+          };
+        const t =
+          (e as TouchEvent).touches?.[0] ||
+          (e as TouchEvent).changedTouches?.[0];
         return t ? { x: t.clientX, y: t.clientY } : { x: mouse.x, y: mouse.y };
       };
       const updatePos = (e: any, active: boolean) => {
@@ -314,15 +328,21 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
       };
       const activate = (e: any) => updatePos(e, true);
       const move = (e: any) => updatePos(e, true);
-      const deactivate = () => { mouse.active = false; };
+      const deactivate = () => {
+        mouse.active = false;
+      };
       el.addEventListener("pointerdown", activate, { passive: true });
       el.addEventListener("pointermove", move, { passive: true });
-      window.addEventListener("pointerup", deactivate as any, { passive: true });
+      window.addEventListener("pointerup", deactivate as any, {
+        passive: true,
+      });
       el.addEventListener("pointerleave", deactivate as any, { passive: true });
       el.addEventListener("touchstart", activate as any, { passive: true });
       el.addEventListener("touchmove", move as any, { passive: true });
       window.addEventListener("touchend", deactivate as any, { passive: true });
-      window.addEventListener("touchcancel", deactivate as any, { passive: true });
+      window.addEventListener("touchcancel", deactivate as any, {
+        passive: true,
+      });
       listeners.push(() => {
         el.removeEventListener("pointerdown", activate as any);
         el.removeEventListener("pointermove", move as any);
@@ -339,7 +359,9 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
 
     function accumulateGlow(dt: number) {
       if (!instancedBars) return;
-      const attr = instancedBars.geometry.getAttribute("aGlow") as THREE.InstancedBufferAttribute;
+      const attr = instancedBars.geometry.getAttribute(
+        "aGlow",
+      ) as THREE.InstancedBufferAttribute;
       const arr = attr.array as Float32Array;
       const mouseWorldX = proxyMouseX - cameraWidth * 0.5;
       const mDist = glowConfig.maxGlowDistance;
@@ -370,9 +392,15 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
       const span = waveWidth + EXTEND_LEFT_PX;
       const barCount = Math.min(
         MAX_BARS,
-        Math.max(1, Math.floor((span + FIXED_BAR_GAP) / (FIXED_BAR_WIDTH + FIXED_BAR_GAP)))
+        Math.max(
+          1,
+          Math.floor(
+            (span + FIXED_BAR_GAP) / (FIXED_BAR_WIDTH + FIXED_BAR_GAP),
+          ),
+        ),
       );
-      const gap = barCount > 1 ? (span - barCount * FIXED_BAR_WIDTH) / (barCount - 1) : 0;
+      const gap =
+        barCount > 1 ? (span - barCount * FIXED_BAR_WIDTH) / (barCount - 1) : 0;
       currentBarCount = barCount;
       const startX = -waveWidth / 2 - EXTEND_LEFT_PX;
       const instCnt = barCount * 2;
@@ -395,9 +423,17 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
       const geo = new THREE.PlaneGeometry(FIXED_BAR_WIDTH, 1, 1, 1);
       geo.translate(0, 0.5, 0);
       geo.setAttribute("aXPos", new THREE.InstancedBufferAttribute(aXPos, 1));
-      geo.setAttribute("aPosNorm", new THREE.InstancedBufferAttribute(aPosNorm, 1));
+      geo.setAttribute(
+        "aPosNorm",
+        new THREE.InstancedBufferAttribute(aPosNorm, 1),
+      );
       geo.setAttribute("aGroup", new THREE.InstancedBufferAttribute(aGroup, 1));
-      geo.setAttribute("aGlow", new THREE.InstancedBufferAttribute(aGlow, 1).setUsage(THREE.DynamicDrawUsage));
+      geo.setAttribute(
+        "aGlow",
+        new THREE.InstancedBufferAttribute(aGlow, 1).setUsage(
+          THREE.DynamicDrawUsage,
+        ),
+      );
       barMaterial = createInstancedMaterial();
       instancedBars = new THREE.InstancedMesh(geo, barMaterial, instCnt);
       instancedBars.frustumCulled = false;
@@ -412,7 +448,17 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
         const cur = keyframes[i];
         const nxt = keyframes[i + 1];
         const duration = nxt.time - cur.time;
-        tl.to(target, { gain: nxt.gain, frequency: nxt.frequency, waveLength: nxt.waveLength, duration, ease: "power2.inOut" }, cur.time);
+        tl.to(
+          target,
+          {
+            gain: nxt.gain,
+            frequency: nxt.frequency,
+            waveLength: nxt.waveLength,
+            duration,
+            ease: "power2.inOut",
+          },
+          cur.time,
+        );
       }
       return tl;
     }
@@ -422,11 +468,20 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
         initWaveThree();
         onResize(waveContainer.clientWidth, waveContainer.clientHeight);
       }
-      gsap.to(waveContainer.querySelector("canvas"), { opacity: 1, duration: 1, ease: "power2.out" });
+      gsap.to(waveContainer.querySelector("canvas"), {
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out",
+      });
     }
 
     function buildScene1Timeline() {
-      const tl = gsap.timeline({ repeat: -1, onStart() { showScene1(); } });
+      const tl = gsap.timeline({
+        repeat: -1,
+        onStart() {
+          showScene1();
+        },
+      });
       tl.add(buildKeyframeTweens(wave1, waveKeyframes1), 0);
       tl.add(buildKeyframeTweens(wave2, waveKeyframes2), 0);
       return tl;
@@ -435,7 +490,14 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
     function initWaveThree() {
       cameraWidth = waveContainer.clientWidth;
       cameraHeight = waveContainer.clientHeight;
-      waveCamera = new THREE.OrthographicCamera(-cameraWidth / 2, cameraWidth / 2, cameraHeight / 2, -cameraHeight / 2, -1000, 1000);
+      waveCamera = new THREE.OrthographicCamera(
+        -cameraWidth / 2,
+        cameraWidth / 2,
+        cameraHeight / 2,
+        -cameraHeight / 2,
+        -1000,
+        1000,
+      );
       waveCamera.position.z = 10;
       waveCamera.lookAt(0, 0, 0);
       waveRenderer.setSize(cameraWidth, cameraHeight);
@@ -443,8 +505,16 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
       (waveComposer as any).setPixelRatio(EFFECT_PR);
       waveRenderPass = new RenderPass(waveScene, waveCamera);
       waveComposer.addPass(waveRenderPass);
-      waveBloomPass = new UnrealBloomPass(new THREE.Vector2(cameraWidth, cameraHeight), 1.0, 0.68, 0.0);
-      (waveBloomPass as any).resolution.set(cameraWidth * 0.5, cameraHeight * 0.5);
+      waveBloomPass = new UnrealBloomPass(
+        new THREE.Vector2(cameraWidth, cameraHeight),
+        1.0,
+        0.68,
+        0.0,
+      );
+      (waveBloomPass as any).resolution.set(
+        cameraWidth * 0.5,
+        cameraHeight * 0.5,
+      );
       waveComposer.addPass(waveBloomPass);
       grainPass = createFilmGrainPass();
       waveComposer.addPass(grainPass);
@@ -454,7 +524,9 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
       waveCameraInitialized = true;
     }
 
-    let pendingW = 0, pendingH = 0, heavyResizeTimer: any = null;
+    let pendingW = 0,
+      pendingH = 0,
+      heavyResizeTimer: any = null;
     function onResize(newW: number, newH: number) {
       if (!waveCameraInitialized) return;
       pendingW = newW;
@@ -468,20 +540,37 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
       waveCamera.updateProjectionMatrix();
       const waveWidth = cameraWidth;
       const span = waveWidth + EXTEND_LEFT_PX;
-      const barCount = Math.min(MAX_BARS, Math.max(1, Math.floor((span + FIXED_BAR_GAP) / (FIXED_BAR_WIDTH + FIXED_BAR_GAP))));
-      const gap = barCount > 1 ? (span - barCount * FIXED_BAR_WIDTH) / (barCount - 1) : 0;
+      const barCount = Math.min(
+        MAX_BARS,
+        Math.max(
+          1,
+          Math.floor(
+            (span + FIXED_BAR_GAP) / (FIXED_BAR_WIDTH + FIXED_BAR_GAP),
+          ),
+        ),
+      );
+      const gap =
+        barCount > 1 ? (span - barCount * FIXED_BAR_WIDTH) / (barCount - 1) : 0;
       if (barCount !== currentBarCount) {
         currentBarCount = barCount;
         createInstancedBars();
       } else {
         const startX = -waveWidth / 2 - EXTEND_LEFT_PX;
-        const aX = instancedBars!.geometry.getAttribute("aXPos") as THREE.InstancedBufferAttribute;
-        const aT = instancedBars!.geometry.getAttribute("aPosNorm") as THREE.InstancedBufferAttribute;
+        const aX = instancedBars!.geometry.getAttribute(
+          "aXPos",
+        ) as THREE.InstancedBufferAttribute;
+        const aT = instancedBars!.geometry.getAttribute(
+          "aPosNorm",
+        ) as THREE.InstancedBufferAttribute;
         for (let i = 0; i < barCount; i++) {
           const x = startX + FIXED_BAR_WIDTH / 2 + i * (FIXED_BAR_WIDTH + gap);
           const t = barCount > 1 ? i / (barCount - 1) : 0;
-          (aX.array as Float32Array)[i] = (aX.array as Float32Array)[i + barCount] = x;
-          (aT.array as Float32Array)[i] = (aT.array as Float32Array)[i + barCount] = t;
+          (aX.array as Float32Array)[i] = (aX.array as Float32Array)[
+            i + barCount
+          ] = x;
+          (aT.array as Float32Array)[i] = (aT.array as Float32Array)[
+            i + barCount
+          ] = t;
         }
         aX.needsUpdate = true;
         aT.needsUpdate = true;
@@ -509,7 +598,8 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
       waveScene.traverse((obj: any) => {
         if (obj.isMesh) {
           obj.geometry.dispose();
-          if (Array.isArray(obj.material)) obj.material.forEach((m: any) => m.dispose());
+          if (Array.isArray(obj.material))
+            obj.material.forEach((m: any) => m.dispose());
           else obj.material.dispose();
         }
       });
@@ -523,8 +613,10 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
     const ticker = () => {
       if (!waveCameraInitialized || !instancedBars) return;
       const dt = (gsap.ticker.deltaRatio() as number) * (1 / 60);
-      wave1.currentAngle = (wave1.currentAngle + wave1.frequency * dt) % (Math.PI * 2);
-      wave2.currentAngle = (wave2.currentAngle + wave2.frequency * dt) % (Math.PI * 2);
+      wave1.currentAngle =
+        (wave1.currentAngle + wave1.frequency * dt) % (Math.PI * 2);
+      wave2.currentAngle =
+        (wave2.currentAngle + wave2.frequency * dt) % (Math.PI * 2);
       setPhase1(wave1.currentAngle);
       setPhase2(wave2.currentAngle);
       const kMouse = 1.0 - Math.exp(-glowConfig.mouseSmoothing * dt);
@@ -536,7 +628,8 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
       const kSpeed = 1.0 - Math.exp(-glowDynamics.speedEase * dt);
       smoothSpeed += (rawSpeed - smoothSpeed) * kSpeed;
       setSmoothSpeed(smoothSpeed);
-      const u = (instancedBars.material as THREE.ShaderMaterial).uniforms as any;
+      const u = (instancedBars.material as THREE.ShaderMaterial)
+        .uniforms as any;
       u.w1Gain.value = wave1.gain;
       u.w1Len.value = wave1.waveLength;
       u.w2Gain.value = wave2.gain;
@@ -567,17 +660,24 @@ export function HeroWave({ extendLeftPx = 320 }: HeroWaveProps) {
     listeners.push(() => ro.disconnect());
 
     const onVisibility = () => {
-      document.hidden ? gsap.globalTimeline.pause() : gsap.globalTimeline.resume();
+      document.hidden
+        ? gsap.globalTimeline.pause()
+        : gsap.globalTimeline.resume();
     };
     document.addEventListener("visibilitychange", onVisibility);
-    listeners.push(() => document.removeEventListener("visibilitychange", onVisibility));
+    listeners.push(() =>
+      document.removeEventListener("visibilitychange", onVisibility),
+    );
 
     return () => {
       listeners.forEach((fn) => fn());
-      try { disposeWaveScene(); } catch {}
+      try {
+        disposeWaveScene();
+      } catch {}
       try {
         const canvas = waveRenderer.domElement;
-        if (canvas && canvas.parentElement === waveContainer) waveContainer.removeChild(canvas);
+        if (canvas && canvas.parentElement === waveContainer)
+          waveContainer.removeChild(canvas);
       } catch {}
     };
   }, [extendLeftPx]);

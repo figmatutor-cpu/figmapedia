@@ -17,11 +17,22 @@ interface EntryCardProps {
 }
 
 function isOptimizableUrl(url: string): boolean {
-  return url.includes("amazonaws.com") || url.includes("notion.so") || url.includes("supabase.co");
+  return (
+    url.includes("amazonaws.com") ||
+    url.includes("notion.so") ||
+    url.includes("supabase.co")
+  );
 }
 
-export function EntryCard({ entry, showThumbnail = false, nonClickable = false }: EntryCardProps) {
-  const { url: displayThumbnail, onError: onThumbnailError } = useThumbnail(entry, showThumbnail);
+export function EntryCard({
+  entry,
+  showThumbnail = false,
+  nonClickable = false,
+}: EntryCardProps) {
+  const { url: displayThumbnail, onError: onThumbnailError } = useThumbnail(
+    entry,
+    showThumbnail,
+  );
   const [imageLoaded, setImageLoaded] = useState(false);
   const [copied, setCopied] = useState(false);
   const isShortcut = !!entry.shortcut;
@@ -50,7 +61,9 @@ export function EntryCard({ entry, showThumbnail = false, nonClickable = false }
   };
 
   const cardInner = (
-    <div className={`flex gap-3 sm:gap-4 ${entry.shortcut ? "flex-col sm:flex-row sm:items-center sm:justify-between" : nonClickable ? "items-start justify-between" : showThumbnail ? "flex-row items-start" : "items-center justify-between"}`}>
+    <div
+      className={`flex gap-3 sm:gap-4 ${entry.shortcut ? "flex-col sm:flex-row sm:items-center sm:justify-between" : nonClickable ? "items-start justify-between" : showThumbnail ? "flex-row items-start" : "items-center justify-between"}`}
+    >
       {showThumbnail && (
         <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-white/6 flex items-center justify-center relative">
           {displayThumbnail ? (
@@ -71,8 +84,18 @@ export function EntryCard({ entry, showThumbnail = false, nonClickable = false }
               />
             </>
           ) : (
-            <svg className="w-6 h-6 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" />
+            <svg
+              className="w-6 h-6 text-white/20"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z"
+              />
             </svg>
           )}
         </div>
@@ -86,14 +109,22 @@ export function EntryCard({ entry, showThumbnail = false, nonClickable = false }
             ))}
           </div>
         )}
-        <h3 className={`font-semibold text-gray-100 transition-colors wrap-break-word ${!isShortcut && !nonClickable ? "group-hover:text-brand-blue" : ""}`}>
+        <h3
+          className={`font-semibold text-gray-100 transition-colors wrap-break-word ${!isShortcut && !nonClickable ? "group-hover:text-brand-blue" : ""}`}
+        >
           {entry.title}
         </h3>
         {nonClickable && entry.author && (
-          <p className="text-sm text-gray-400 mt-1.5 line-clamp-2">{entry.author}</p>
+          <p className="text-sm text-gray-400 mt-1.5 line-clamp-2">
+            {entry.author}
+          </p>
         )}
         {!isShortcut && !nonClickable && (
-          <EntryMeta author={entry.author} publishedDate={entry.publishedDate} className="mt-2" />
+          <EntryMeta
+            author={entry.author}
+            publishedDate={entry.publishedDate}
+            className="mt-2"
+          />
         )}
       </div>
 
@@ -108,11 +139,14 @@ export function EntryCard({ entry, showThumbnail = false, nonClickable = false }
           >
             {copied ? "복사됨!" : entry.shortcut}
           </span>
-          <span className={`transition-opacity ${copied ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
-            {copied
-              ? <Check className="w-4 h-4 text-green-400" />
-              : <Copy className="w-4 h-4 text-gray-400" />
-            }
+          <span
+            className={`transition-opacity ${copied ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+          >
+            {copied ? (
+              <Check className="w-4 h-4 text-green-400" />
+            ) : (
+              <Copy className="w-4 h-4 text-gray-400" />
+            )}
           </span>
         </div>
       )}
@@ -121,7 +155,10 @@ export function EntryCard({ entry, showThumbnail = false, nonClickable = false }
         <div className="shrink-0">
           <button
             type="button"
-            onClick={(e) => { e.stopPropagation(); handleCopy(); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleCopy();
+            }}
             className={`p-2 rounded-lg border transition-all ${
               copied
                 ? "border-green-400/50 bg-green-400/10"
@@ -129,10 +166,11 @@ export function EntryCard({ entry, showThumbnail = false, nonClickable = false }
             }`}
             title="복사"
           >
-            {copied
-              ? <Check className="w-4 h-4 text-green-400" />
-              : <Copy className="w-4 h-4 text-gray-400" />
-            }
+            {copied ? (
+              <Check className="w-4 h-4 text-green-400" />
+            ) : (
+              <Copy className="w-4 h-4 text-gray-400" />
+            )}
           </button>
         </div>
       )}

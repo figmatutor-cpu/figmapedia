@@ -213,15 +213,9 @@ async function main() {
     }
 
     try {
-      const url = await uploadToSupabase(
-        page.id,
-        match,
-        page.lastEditedTime,
-      );
+      const url = await uploadToSupabase(page.id, match, page.lastEditedTime);
       uploaded++;
-      console.log(
-        `  ✅ ${page.title} → ${match.fileName} → 업로드 완료`,
-      );
+      console.log(`  ✅ ${page.title} → ${match.fileName} → 업로드 완료`);
     } catch (err: any) {
       console.error(`  ⚠️ ${page.title}: ${err.message}`);
       skipped++;

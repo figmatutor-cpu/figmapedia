@@ -13,7 +13,7 @@ const HeroWave = dynamic(
     import("@/components/hero/HeroWave").then((m) => ({
       default: m.HeroWave,
     })),
-  { ssr: false }
+  { ssr: false },
 );
 
 export default function HomePage() {
@@ -79,7 +79,9 @@ export default function HomePage() {
         {/* Hero text — CSS hide instead of unmount to prevent layout shift */}
         <div
           className={`text-center overflow-hidden transition-all duration-150 ${
-            searchAtBottom ? "max-h-0 opacity-0 mb-0" : "max-h-40 opacity-100 mb-8"
+            searchAtBottom
+              ? "max-h-0 opacity-0 mb-0"
+              : "max-h-40 opacity-100 mb-8"
           }`}
           aria-hidden={searchAtBottom}
         >
@@ -89,7 +91,8 @@ export default function HomePage() {
             실무 디자인, 피그마 정보를 확인하세요.
           </h1>
           <p className="text-gray-300/90 mt-3 sm:mt-4 text-sm sm:text-base">
-            단축키, 용어, 플러그인, 프롬프트, 템플릿 — 디자인과 피그마 실무 정보를 한곳에서.
+            단축키, 용어, 플러그인, 프롬프트, 템플릿 — 디자인과 피그마 실무
+            정보를 한곳에서.
           </p>
         </div>
         <HeroSearch />

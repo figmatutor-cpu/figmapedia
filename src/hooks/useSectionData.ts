@@ -3,7 +3,12 @@
 import { useState, useEffect } from "react";
 import type { SearchIndexItem } from "@/types";
 
-type SectionKey = "prompt" | "kiosk" | "uxui-articles" | "uxui-blogs" | "uxui-terms";
+type SectionKey =
+  | "prompt"
+  | "kiosk"
+  | "uxui-articles"
+  | "uxui-blogs"
+  | "uxui-terms";
 
 /**
  * Fetches data from a separate Notion database for a specific section.
@@ -37,7 +42,7 @@ export function useSectionData(section: SectionKey) {
  */
 export function useMultiSectionData(sections: SectionKey[]) {
   const [items, setItems] = useState<Record<SectionKey, SearchIndexItem[]>>(
-    {} as Record<SectionKey, SearchIndexItem[]>
+    {} as Record<SectionKey, SearchIndexItem[]>,
   );
   const [isLoading, setIsLoading] = useState(true);
 
@@ -50,8 +55,8 @@ export function useMultiSectionData(sections: SectionKey[]) {
             section,
             items: data.items && Array.isArray(data.items) ? data.items : [],
           }))
-          .catch(() => ({ section, items: [] as SearchIndexItem[] }))
-      )
+          .catch(() => ({ section, items: [] as SearchIndexItem[] })),
+      ),
     ).then((results) => {
       const combined = {} as Record<SectionKey, SearchIndexItem[]>;
       for (const r of results) {

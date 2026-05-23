@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AiLabPromoCard } from "@/components/ai-lab/AiLabPromoCard";
 
 const SECTIONS = [
   {
@@ -20,6 +21,11 @@ const SECTIONS = [
     title: "프롬프트 피디아",
     description: "AI 디자인용 한국어/영문 프롬프트 모음",
     href: "/prompt-pedia",
+  },
+  {
+    title: "AI 실험실",
+    description: "매주 새로운 AI 도구를 함께 실험하고 결과를 공유하는 커뮤니티",
+    href: "/ai-lab",
   },
   {
     title: "디자인 리소스",
@@ -54,11 +60,13 @@ export function HomeSections() {
             <h3 className="text-base font-semibold text-white mb-2">
               {section.title}
             </h3>
-            <p className="text-sm text-gray-400">
-              {section.description}
-            </p>
+            <p className="text-sm text-gray-400">{section.description}</p>
           </Link>
         ))}
+      </div>
+
+      <div className="mt-12">
+        <AiLabPromoCard />
       </div>
     </section>
   );

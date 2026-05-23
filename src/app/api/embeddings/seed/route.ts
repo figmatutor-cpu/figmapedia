@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
             fullText = await Promise.race([
               fetchPageFullText(item.id),
               new Promise<string>((resolve) =>
-                setTimeout(() => resolve(""), 3000)
+                setTimeout(() => resolve(""), 3000),
               ),
             ]);
           }
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
             embedding,
             lastEditedTime: item.lastEditedTime ?? new Date().toISOString(),
           });
-        })
+        }),
       );
 
       for (const r of results) {
@@ -91,9 +91,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Seed failed:", error);
-    return Response.json(
-      { error: "Seed failed" },
-      { status: 500 }
-    );
+    return Response.json({ error: "Seed failed" }, { status: 500 });
   }
 }

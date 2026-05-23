@@ -37,11 +37,11 @@ const MAX_EMBEDDING_CHARS = 8000;
 
 export function buildEmbeddingText(
   item: SearchIndexItem,
-  fullText: string
+  fullText: string,
 ): string {
   // 제목+카테고리에서 용어집 한↔영 확장어 추출
   const glossaryTerms = getGlossaryExpansions(
-    `${item.title} ${item.categories.join(" ")}`
+    `${item.title} ${item.categories.join(" ")}`,
   ).join(", ");
 
   const parts = [
@@ -78,7 +78,7 @@ export async function upsertEmbedding(data: {
       last_edited_time: data.lastEditedTime,
       updated_at: new Date().toISOString(),
     },
-    { onConflict: "id" }
+    { onConflict: "id" },
   );
 
   if (error) throw new Error(`Supabase upsert failed: ${error.message}`);
@@ -91,7 +91,7 @@ export async function deleteEmbedding(id: string): Promise<void> {
 
 export async function searchSimilar(
   queryEmbedding: number[],
-  matchCount = 20
+  matchCount = 20,
 ): Promise<EmbeddingMatch[]> {
   const { data, error } = await supabase.rpc("match_embeddings", {
     query_embedding: JSON.stringify(queryEmbedding),

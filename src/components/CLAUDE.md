@@ -15,12 +15,13 @@ components/
 
 ## 카드 컴포넌트
 
-| 컴포넌트 | 레이아웃 | 사용 조건 |
-|---------|---------|----------|
-| `VerticalCard` | 세로형 (grid) | 썸네일 중심, `cardLayout="grid"` |
-| `EntryCard` | 가로형 (list) | 텍스트 중심, `cardLayout="list"` (기본값) |
+| 컴포넌트       | 레이아웃      | 사용 조건                                 |
+| -------------- | ------------- | ----------------------------------------- |
+| `VerticalCard` | 세로형 (grid) | 썸네일 중심, `cardLayout="grid"`          |
+| `EntryCard`    | 가로형 (list) | 텍스트 중심, `cardLayout="list"` (기본값) |
 
 ### VerticalCard 조건부 렌더링 순서
+
 1. `externalLink && entry.link` → `<a target="_blank">` (외부 링크)
 2. `entry.shortcut` → `<div>` (클릭 불가, 단축키 카드)
 3. 기본 → `<Link href="/entry/${id}">` (내부 링크)
@@ -29,12 +30,12 @@ components/
 
 탭(SubTab) 레벨 설정이 페이지 레벨보다 우선:
 
-| 설정 | 타입 | 기본값 | 설명 |
-|------|------|-------|------|
-| `showThumbnail` | boolean | false | EntryCard 썸네일 표시 |
-| `cardLayout` | "list" \| "grid" | "list" | 카드 레이아웃 |
-| `externalLink` | boolean | false | entry.link 새 탭 열기 |
-| `categoryFilter` | string[] | — | 동일 DB 내 카테고리 필터링 |
+| 설정             | 타입             | 기본값 | 설명                       |
+| ---------------- | ---------------- | ------ | -------------------------- |
+| `showThumbnail`  | boolean          | false  | EntryCard 썸네일 표시      |
+| `cardLayout`     | "list" \| "grid" | "list" | 카드 레이아웃              |
+| `externalLink`   | boolean          | false  | entry.link 새 탭 열기      |
+| `categoryFilter` | string[]         | —      | 동일 DB 내 카테고리 필터링 |
 
 ## 검색 컴포넌트 계층
 

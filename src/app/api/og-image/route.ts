@@ -41,7 +41,7 @@ export async function GET(request: Request) {
         headers: {
           "Cache-Control": "public, max-age=86400", // 브라우저 24시간 캐시
         },
-      }
+      },
     );
   }
 
@@ -55,6 +55,6 @@ export async function GET(request: Request) {
       headers: {
         "Cache-Control": "public, max-age=86400",
       },
-    }
+    },
   );
 }

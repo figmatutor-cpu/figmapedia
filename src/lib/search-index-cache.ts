@@ -52,15 +52,33 @@ export const getCachedSearchIndex = unstable_cache(
 
     // Map section entries with section tags (for AI search context)
     const sectionItems = [
-      ...promptPages.map(mapPromptPage).map((item) => ({ ...item, section: "프롬프트" })),
-      ...kioskPages.map(mapKioskPage).map((item) => ({ ...item, section: "키오스크" })),
-      ...articlePages.map(mapArticlePage).map((item) => ({ ...item, section: "UXUI 아티클" })),
-      ...blogPages.map(mapArticlePage).map((item) => ({ ...item, section: "기술 블로그" })),
-      ...termPages.map(mapUxuiTermPage).map((item) => ({ ...item, section: "UXUI 용어" })),
-      ...macPages.map(mapShortcutPage).map((item) => ({ ...item, section: "Mac 단축키" })),
-      ...winPages.map(mapShortcutPage).map((item) => ({ ...item, section: "Win 단축키" })),
-      ...pluginPages.map(mapPluginPage).map((item) => ({ ...item, section: "플러그인" })),
-      ...glossaryPages.map(mapFigmaGlossaryPage).map((item) => ({ ...item, section: "피그마 용어" })),
+      ...promptPages
+        .map(mapPromptPage)
+        .map((item) => ({ ...item, section: "프롬프트" })),
+      ...kioskPages
+        .map(mapKioskPage)
+        .map((item) => ({ ...item, section: "키오스크" })),
+      ...articlePages
+        .map(mapArticlePage)
+        .map((item) => ({ ...item, section: "UXUI 아티클" })),
+      ...blogPages
+        .map(mapArticlePage)
+        .map((item) => ({ ...item, section: "기술 블로그" })),
+      ...termPages
+        .map(mapUxuiTermPage)
+        .map((item) => ({ ...item, section: "UXUI 용어" })),
+      ...macPages
+        .map(mapShortcutPage)
+        .map((item) => ({ ...item, section: "Mac 단축키" })),
+      ...winPages
+        .map(mapShortcutPage)
+        .map((item) => ({ ...item, section: "Win 단축키" })),
+      ...pluginPages
+        .map(mapPluginPage)
+        .map((item) => ({ ...item, section: "플러그인" })),
+      ...glossaryPages
+        .map(mapFigmaGlossaryPage)
+        .map((item) => ({ ...item, section: "피그마 용어" })),
     ];
 
     // Fetch community posts from Supabase
@@ -91,10 +109,14 @@ export const getCachedSearchIndex = unstable_cache(
     const resourceItems: SearchIndexItem[] = FIGMA_RESOURCES.map((r, i) => ({
       id: `resource-${i}`,
       title: r.title,
-      categories: r.category === "template" ? ["추천 리소스"]
-        : r.category === "live" ? ["주간 라이브"]
-        : r.category === "atoz" ? ["Figma A to Z"]
-        : ["피그마 리소스"],
+      categories:
+        r.category === "template"
+          ? ["추천 리소스"]
+          : r.category === "live"
+            ? ["주간 라이브"]
+            : r.category === "atoz"
+              ? ["Figma A to Z"]
+              : ["피그마 리소스"],
       author: "",
       link: r.url,
       publishedDate: null,
@@ -103,7 +125,12 @@ export const getCachedSearchIndex = unstable_cache(
 
     // Merge all items, dedup by id
     const idSet = new Set<string>();
-    const merged = [...mainItems, ...sectionItems, ...resourceItems, ...communityItems].filter((item) => {
+    const merged = [
+      ...mainItems,
+      ...sectionItems,
+      ...resourceItems,
+      ...communityItems,
+    ].filter((item) => {
       if (idSet.has(item.id)) return false;
       idSet.add(item.id);
       return true;
@@ -126,5 +153,5 @@ export const getCachedSearchIndex = unstable_cache(
     };
   },
   ["search-index"],
-  { revalidate: 300, tags: ["search-index"] }
+  { revalidate: 300, tags: ["search-index"] },
 );

@@ -40,3 +40,44 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# design renewal — large reference bundle and team mailbox (local only)
+/design/claude-output/
+/team-notes/
+
+# AI tool config directories (local only, not used by this project)
+/.adal/
+/.agents/
+/.augment/
+/.bob/
+/.codebuddy/
+/.commandcode/
+/.continue/
+/.cortex/
+/.crush/
+/.factory/
+/.goose/
+/.iflow/
+/.junie/
+/.kilocode/
+/.kiro/
+/.kode/
+/.mcpjam/
+/.mux/
+/.neovate/
+/.openhands/
+/.pi/
+/.pochi/
+/.qoder/
+/.qwen/
+/.roo/
+/.trae/
+/.vibe/
+/.windsurf/
+/.zencoder/
+
+# one-off script progress state
+scripts/qa_*_progress.json
+
+# raw data sources (local only)
+/AI_learning source/

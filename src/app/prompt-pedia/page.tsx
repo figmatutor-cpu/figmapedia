@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AiLabPromoCard } from "@/components/ai-lab/AiLabPromoCard";
 import { SectionPageLayout } from "@/components/section/SectionPageLayout";
 import { NAV_ITEMS } from "@/lib/navigation";
 import { SECTION_DESCRIPTIONS } from "@/lib/constants";
@@ -27,14 +28,19 @@ export default async function PromptPediaPage() {
   }
 
   return (
-    <SectionPageLayout
-      title={navItem.label}
-      description={SECTION_DESCRIPTIONS["prompt-pedia"]}
-      sectionDataKey={navItem.sectionDataKey}
-      subTabs={navItem.subTabs}
-      showThumbnail
-      cardLayout="grid"
-      initialSectionItems={initialSectionItems}
-    />
+    <>
+      <SectionPageLayout
+        title={navItem.label}
+        description={SECTION_DESCRIPTIONS["prompt-pedia"]}
+        sectionDataKey={navItem.sectionDataKey}
+        subTabs={navItem.subTabs}
+        showThumbnail
+        cardLayout="grid"
+        initialSectionItems={initialSectionItems}
+      />
+      <section className="mx-auto max-w-6xl px-4 pb-16">
+        <AiLabPromoCard />
+      </section>
+    </>
   );
 }

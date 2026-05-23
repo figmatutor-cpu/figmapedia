@@ -30,10 +30,9 @@ export async function POST(request: NextRequest) {
 
       const results = await Promise.allSettled(
         chunk.map(async (item) => {
-          const videoId = item.thumbnail!.match(
-            /\/vi\/([^/]+)\//
-          )?.[1];
-          if (!videoId) throw new Error(`Invalid thumbnail URL: ${item.thumbnail}`);
+          const videoId = item.thumbnail!.match(/\/vi\/([^/]+)\//)?.[1];
+          if (!videoId)
+            throw new Error(`Invalid thumbnail URL: ${item.thumbnail}`);
 
           const pageId = `yt-${videoId}`;
           const storagePath = `${pageId}.jpg`;
@@ -54,7 +53,8 @@ export async function POST(request: NextRequest) {
           const response = await fetch(item.thumbnail!, {
             signal: AbortSignal.timeout(5000),
           });
-          if (!response.ok) throw new Error(`Download failed: ${response.status}`);
+          if (!response.ok)
+            throw new Error(`Download failed: ${response.status}`);
 
           const buffer = Buffer.from(await response.arrayBuffer());
 
@@ -65,7 +65,8 @@ export async function POST(request: NextRequest) {
               contentType: "image/jpeg",
               upsert: true,
             });
-          if (uploadError) throw new Error(`Upload failed: ${uploadError.message}`);
+          if (uploadError)
+            throw new Error(`Upload failed: ${uploadError.message}`);
 
           // Get public URL
           const { data: urlData } = supabase.storage
@@ -84,10 +85,10 @@ export async function POST(request: NextRequest) {
                 last_edited_time: null,
                 updated_at: new Date().toISOString(),
               },
-              { onConflict: "page_id" }
+              { onConflict: "page_id" },
             );
           if (dbError) throw new Error(`DB upsert failed: ${dbError.message}`);
-        })
+        }),
       );
 
       for (const r of results) {

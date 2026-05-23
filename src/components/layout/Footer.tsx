@@ -46,11 +46,26 @@ export function Footer() {
             {/* 좌측: 텍스트 정보 */}
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3 text-xs">
-                <Link href="/privacy" className="text-[#6C79FF] hover:underline">개인정보처리방침</Link>
+                <Link
+                  href="/privacy"
+                  className="text-[#6C79FF] hover:underline"
+                >
+                  개인정보처리방침
+                </Link>
                 <Divider />
-                <Link href="/terms" className="text-[#858699] hover:text-white transition-colors">서비스 이용 약관</Link>
+                <Link
+                  href="/terms"
+                  className="text-[#858699] hover:text-white transition-colors"
+                >
+                  서비스 이용 약관
+                </Link>
                 <Divider />
-                <Link href="/copyright" className="text-[#858699] hover:text-white transition-colors">저작권 정책</Link>
+                <Link
+                  href="/copyright"
+                  className="text-[#858699] hover:text-white transition-colors"
+                >
+                  저작권 정책
+                </Link>
               </div>
               <p className="text-xs text-[#6B6F76] leading-relaxed">
                 @Figmapedia All rights reserved

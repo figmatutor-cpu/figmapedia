@@ -1,7 +1,10 @@
 import { genAI, GEMINI_MODEL } from "@/lib/gemini";
 import { getCachedSearchIndex } from "@/lib/search-index-cache";
 import { embedQuery, searchSimilar } from "@/lib/embeddings";
-import { getGlossaryContext, expandQueryWithGlossary } from "@/lib/figma-glossary";
+import {
+  getGlossaryContext,
+  expandQueryWithGlossary,
+} from "@/lib/figma-glossary";
 import type { AISearchResponse } from "@/types";
 
 /* ── Response cache: same query → cached result for 5 min ── */
@@ -50,14 +53,14 @@ export async function POST(request: Request) {
     if (!query || typeof query !== "string" || query.trim().length === 0) {
       return Response.json(
         { error: "검색어를 입력해주세요." },
-        { status: 400, headers: CORS_HEADERS }
+        { status: 400, headers: CORS_HEADERS },
       );
     }
 
     if (query.length > 200) {
       return Response.json(
         { error: "검색어가 너무 깁니다." },
-        { status: 400, headers: CORS_HEADERS }
+        { status: 400, headers: CORS_HEADERS },
       );
     }
 
@@ -169,7 +172,8 @@ ${trimmedQuery}`;
     try {
       const parsed = JSON.parse(responseText);
       if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
-        summary = typeof parsed.summary === "string" ? parsed.summary : undefined;
+        summary =
+          typeof parsed.summary === "string" ? parsed.summary : undefined;
         matchedIds = Array.isArray(parsed.ids) ? parsed.ids : [];
       } else if (Array.isArray(parsed)) {
         matchedIds = parsed;
@@ -181,7 +185,8 @@ ${trimmedQuery}`;
       if (objMatch) {
         try {
           const parsed = JSON.parse(objMatch[0]);
-          summary = typeof parsed.summary === "string" ? parsed.summary : undefined;
+          summary =
+            typeof parsed.summary === "string" ? parsed.summary : undefined;
           matchedIds = Array.isArray(parsed.ids) ? parsed.ids : [];
         } catch {
           const arrMatch = responseText.match(/\[[\s\S]*?\]/);
@@ -236,11 +241,10 @@ ${trimmedQuery}`;
     return Response.json(responseData, { headers: CORS_HEADERS });
   } catch (error) {
     console.error("AI search failed:", error);
-    const message =
-      error instanceof Error ? error.message : "Unknown error";
+    const message = error instanceof Error ? error.message : "Unknown error";
     return Response.json(
       { error: "AI 검색에 실패했습니다.", detail: message },
-      { status: 500, headers: CORS_HEADERS }
+      { status: 500, headers: CORS_HEADERS },
     );
   }
 }

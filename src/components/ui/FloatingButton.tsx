@@ -7,13 +7,26 @@ import { useSearchContext } from "@/components/search/SearchProvider";
 
 const INQUIRY_LINK = "https://open.kakao.com/o/gtzKe0lf";
 const KAKAO_LINK = "https://open.kakao.com/o/gPjVAOXf";
-const YOUTUBE_LINK = "https://www.youtube.com/playlist?list=PLPM-mNLGkfO_UJ2ThrNqnoEIE9j5Ac4bH";
+const YOUTUBE_LINK =
+  "https://www.youtube.com/playlist?list=PLPM-mNLGkfO_UJ2ThrNqnoEIE9j5Ac4bH";
 const DONATE_LINK = "https://buymeacoffee.com/figmapedia";
 
 function ChevronRight() {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0">
-      <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      className="shrink-0"
+    >
+      <path
+        d="M6 4l4 4-4 4"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -21,7 +34,12 @@ function ChevronRight() {
 function CloseIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <path
+        d="M4 4l8 8M12 4l-8 8"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -68,7 +86,7 @@ export function FloatingButton() {
           window.removeEventListener("scroll", handleScroll);
         }
       },
-      { threshold: 0 }
+      { threshold: 0 },
     );
 
     function handleScroll() {
@@ -85,7 +103,10 @@ export function FloatingButton() {
   useEffect(() => {
     if (!open) return;
     function handleClick(e: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
         setOpen(false);
       }
     }
@@ -105,13 +126,25 @@ export function FloatingButton() {
   /* ── 커뮤니티: 글쓰기 플로팅 버튼 ── */
   if (isCommunity) {
     return (
-      <div style={{ bottom: bottomValue }} className="fixed right-7 z-50 transition-[bottom] duration-200">
+      <div
+        style={{ bottom: bottomValue }}
+        className="fixed right-7 z-50 transition-[bottom] duration-200"
+      >
         {/* 데스크탑: 연필 아이콘 + 글쓰기 텍스트 */}
         <Link
           href="/community/write"
           className="hidden sm:inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white text-bg-base text-sm font-bold shadow-lg shadow-white/20 hover:bg-gray-100 transition-all hover:scale-105 active:scale-95"
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <path d="M12 20h9" />
             <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
           </svg>
@@ -123,7 +156,16 @@ export function FloatingButton() {
           aria-label="글쓰기"
           className="sm:hidden flex items-center justify-center size-14 rounded-full bg-white text-bg-base shadow-lg shadow-white/20 hover:bg-gray-100 transition-all active:scale-95"
         >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <path d="M12 20h9" />
             <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
           </svg>
@@ -133,7 +175,11 @@ export function FloatingButton() {
   }
 
   return (
-    <div ref={containerRef} style={{ bottom: bottomValue }} className="fixed right-7 z-50 flex flex-col items-end gap-3 transition-[bottom] duration-200">
+    <div
+      ref={containerRef}
+      style={{ bottom: bottomValue }}
+      className="fixed right-7 z-50 flex flex-col items-end gap-3 transition-[bottom] duration-200"
+    >
       {/* 모달 */}
       {open && (
         <div className="w-[305px] sm:w-[335px] rounded-3xl overflow-hidden shadow-2xl shadow-black/40 animate-in fade-in slide-in-from-bottom-4 duration-200">
@@ -148,7 +194,8 @@ export function FloatingButton() {
               </button>
             </div>
             <p className="text-white text-lg font-bold leading-[1.4]">
-              피그마 피디아<br />
+              피그마 피디아
+              <br />
               사이트에 오신걸 환영합니다.👋
             </p>
           </div>
@@ -157,56 +204,72 @@ export function FloatingButton() {
           <div className="bg-[#202128] px-4 pt-4 pb-6 flex flex-col gap-4">
             {/* 운영진 문의 */}
             <div>
-              <p className="text-white text-[15px] font-bold mb-2 ml-1">피그마 피디아 운영진 문의 채널</p>
+              <p className="text-white text-[15px] font-bold mb-2 ml-1">
+                피그마 피디아 운영진 문의 채널
+              </p>
               <a
                 href={INQUIRY_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 bg-[#2a2a36] rounded-xl p-3 hover:bg-[#333340] transition-colors group"
               >
-                <span className="flex-1 text-[15px] text-white">홍보 및 제휴 문의하기</span>
+                <span className="flex-1 text-[15px] text-white">
+                  홍보 및 제휴 문의하기
+                </span>
                 <ChevronRight />
               </a>
             </div>
 
             {/* 오픈카톡방 */}
             <div>
-              <p className="text-white text-[15px] font-bold mb-2 ml-1">피그마 피디아 오픈 카톡방</p>
+              <p className="text-white text-[15px] font-bold mb-2 ml-1">
+                피그마 피디아 오픈 카톡방
+              </p>
               <a
                 href={KAKAO_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 bg-[#2a2a36] rounded-xl p-3 hover:bg-[#333340] transition-colors group"
               >
-                <span className="flex-1 text-[15px] text-white">참여하기(pw:figma)</span>
+                <span className="flex-1 text-[15px] text-white">
+                  참여하기(pw:figma)
+                </span>
                 <ChevronRight />
               </a>
             </div>
 
             {/* 주간 라이브 */}
             <div>
-              <p className="text-white text-[15px] font-bold mb-2 ml-1">주간 라이브</p>
+              <p className="text-white text-[15px] font-bold mb-2 ml-1">
+                주간 라이브
+              </p>
               <a
                 href={YOUTUBE_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 bg-[#2a2a36] rounded-xl p-3 hover:bg-[#333340] transition-colors group"
               >
-                <span className="flex-1 text-[15px] text-white">라이브 보러가기</span>
+                <span className="flex-1 text-[15px] text-white">
+                  라이브 보러가기
+                </span>
                 <ChevronRight />
               </a>
             </div>
 
             {/* 후원하기 */}
             <div>
-              <p className="text-white text-[15px] font-bold mb-2 ml-1">후원하기</p>
+              <p className="text-white text-[15px] font-bold mb-2 ml-1">
+                후원하기
+              </p>
               <a
                 href={DONATE_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 bg-[#2a2a36] rounded-xl p-3 hover:bg-[#333340] transition-colors group"
               >
-                <span className="flex-1 text-[15px] text-white">피그마 피디아 팀에게 커피 사기</span>
+                <span className="flex-1 text-[15px] text-white">
+                  피그마 피디아 팀에게 커피 사기
+                </span>
                 <ChevronRight />
               </a>
             </div>

@@ -39,9 +39,9 @@ export default function PrivacyPage() {
         </p>
         <ul className="list-disc pl-5 space-y-1">
           <li>
-            <span className="text-white font-medium">자동 수집 항목:</span>{" "}
-            접속 IP 주소, 쿠키(Cookie), 방문 일시, 서비스 이용 기록, 브라우저 및
-            OS 정보
+            <span className="text-white font-medium">자동 수집 항목:</span> 접속
+            IP 주소, 쿠키(Cookie), 방문 일시, 서비스 이용 기록, 브라우저 및 OS
+            정보
           </li>
           <li>
             <span className="text-white font-medium">자발적 제공 항목:</span>{" "}
@@ -58,18 +58,16 @@ export default function PrivacyPage() {
             웹사이트 접속 빈도 파악 및 서비스 이용에 대한 통계 분석 (예: 구글
             애널리틱스 활용)
           </li>
-          <li>
-            사용자 경험(UX) 개선 및 맞춤형 콘텐츠(AI 검색 결과 등) 제공
-          </li>
+          <li>사용자 경험(UX) 개선 및 맞춤형 콘텐츠(AI 검색 결과 등) 제공</li>
           <li>서비스 오류 수정 및 문의 사항에 대한 답변 제공</li>
         </ol>
       </Section>
 
       <Section title="제4조 (개인정보의 보유 및 이용 기간)">
         <p>
-          방문자의 개인정보는 원칙적으로 개인정보의 수집 및 이용 목적이
-          달성되면 지체 없이 파기합니다. 단, 관련 법령에 따라 보존할 필요가 있는
-          경우 해당 법령에서 정한 기간 동안 보관합니다.
+          방문자의 개인정보는 원칙적으로 개인정보의 수집 및 이용 목적이 달성되면
+          지체 없이 파기합니다. 단, 관련 법령에 따라 보존할 필요가 있는 경우
+          해당 법령에서 정한 기간 동안 보관합니다.
         </p>
       </Section>
 

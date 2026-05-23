@@ -124,9 +124,7 @@ export default function CommunityWritePage() {
 
           {/* 제목 */}
           <div>
-            <label className="block text-xs text-gray-400 mb-1.5">
-              제목 *
-            </label>
+            <label className="block text-xs text-gray-400 mb-1.5">제목 *</label>
             <input
               type="text"
               value={title}
@@ -152,7 +150,9 @@ export default function CommunityWritePage() {
               className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder:text-gray-600 focus:border-white/25 focus:outline-none resize-y min-h-[120px]"
               style={{ fontSize: "16px" }}
             />
-            <p className={`text-xxs mt-1 text-right ${content.trim().length > 0 && content.trim().length < 30 ? "text-red-400" : "text-gray-600"}`}>
+            <p
+              className={`text-xxs mt-1 text-right ${content.trim().length > 0 && content.trim().length < 30 ? "text-red-400" : "text-gray-600"}`}
+            >
               {content.trim().length} / 10000
             </p>
           </div>
@@ -174,9 +174,7 @@ export default function CommunityWritePage() {
           </div>
 
           {/* Error */}
-          {error && (
-            <p className="text-sm text-red-400">{error}</p>
-          )}
+          {error && <p className="text-sm text-red-400">{error}</p>}
 
           {/* Submit */}
           <button
