@@ -152,7 +152,7 @@ gtag('config', 'G-BN35R5EHNE');`}
           }}
         />
         <ClientProviders>
-          <div className="xl-nav:grid xl-nav:grid-cols-[76px_1fr] min-h-screen">
+          <div className="xl-nav:pl-19 min-h-screen">
             <SideRail />
             <div className="flex flex-col min-w-0">
               <Navbar />

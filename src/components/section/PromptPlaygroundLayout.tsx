@@ -92,7 +92,7 @@ export function PromptPlaygroundLayout({
       <aside className="flex flex-col overflow-hidden border-r border-border-1 min-w-0">
         <div className="px-5 pt-6 pb-3 border-b border-border-1">
           <div className="eyebrow mb-1">{title}</div>
-          <h2 className="text-[22px] font-semibold tracking-tight leading-tight">
+          <h2 className="text-h3-lg font-semibold tracking-tight leading-tight">
             플레이그라운드
           </h2>
 
@@ -107,7 +107,7 @@ export function PromptPlaygroundLayout({
                     setActiveTabKey(t.key);
                     setSelectedId(null);
                   }}
-                  className={`px-2.5 py-1 rounded-full text-[11px] border transition-colors
+                  className={`px-2.5 py-1 rounded-full text-meta border transition-colors
                               ${
                                 active
                                   ? "bg-glass-3 border-border-2 text-fg-1"
@@ -137,7 +137,7 @@ export function PromptPlaygroundLayout({
                               ${active ? "bg-glass-3" : "hover:bg-glass-1"}`}
                 >
                   {it.categories[0] && <Badge category={it.categories[0]} />}
-                  <div className="text-[13px] font-medium leading-snug text-fg-1 mt-1.5 line-clamp-2">
+                  <div className="text-body font-medium leading-snug text-fg-1 mt-1.5 line-clamp-2">
                     {it.title}
                   </div>
                 </button>
@@ -150,7 +150,7 @@ export function PromptPlaygroundLayout({
       {/* ── Right: detail ─────────────────────────────────────────── */}
       <main className="overflow-y-auto custom-scrollbar min-w-0">
         {selected ? (
-          <div className="max-w-4xl mx-auto px-8 xl-nav:px-10 py-8 xl-nav:py-12">
+          <div className="max-w-3xl mx-auto px-8 xl-nav:px-10 py-8 xl-nav:py-12">
             <div className="mb-5 flex items-center gap-2 flex-wrap">
               {selected.categories.map((c) => (
                 <Badge key={c} category={c} />
@@ -170,7 +170,7 @@ export function PromptPlaygroundLayout({
                 <div className="grid grid-cols-2 xl-nav:grid-cols-3 gap-2.5">
                   {["{브랜드명}", "{톤}", "{primary}"].map((p) => (
                     <label key={p} className="block">
-                      <div className="font-mono text-[11px] text-fg-4 mb-1">
+                      <div className="font-mono text-meta text-fg-4 mb-1">
                         {p}
                       </div>
                       <input
@@ -184,7 +184,7 @@ export function PromptPlaygroundLayout({
                     </label>
                   ))}
                 </div>
-                <p className="mt-3 text-[11px] text-fg-4">
+                <p className="mt-3 text-meta text-fg-4">
                   실제 변수 인터폴레이션은{" "}
                   <strong className="text-fg-3">전체 보기</strong>에서 사용
                   가능합니다.
@@ -192,72 +192,44 @@ export function PromptPlaygroundLayout({
               </div>
             )}
 
-            {/* 2-col preview */}
-            <div className="mt-6 grid grid-cols-1 xl-nav:grid-cols-2 gap-3.5">
-              <div>
-                <div className="eyebrow mb-2">PROMPT</div>
-                <div
-                  className="rounded-xl border border-border-1 bg-glass-1
-                             p-4 min-h-[240px] max-h-[480px] overflow-y-auto custom-scrollbar"
-                >
-                  {hasExternalLink ? (
-                    <p className="font-mono text-meta text-fg-4">
-                      외부 링크 항목입니다. 우측 상단 "외부 링크 열기"를
-                      이용하세요.
-                    </p>
-                  ) : isLoadingBody ? (
-                    <div className="space-y-2">
-                      <div className="h-3 bg-glass-3 rounded animate-pulse w-3/4" />
-                      <div className="h-3 bg-glass-3 rounded animate-pulse w-full" />
-                      <div className="h-3 bg-glass-3 rounded animate-pulse w-5/6" />
-                      <div className="h-3 bg-glass-3 rounded animate-pulse w-2/3" />
-                    </div>
-                  ) : bodyError ? (
-                    <p className="font-mono text-meta text-fg-4">
-                      본문을 불러올 수 없습니다.{" "}
-                      <Link
-                        href={`/entry/${selected.id}`}
-                        className="text-fg-2 underline"
-                      >
-                        단독 페이지로 이동
-                      </Link>
-                    </p>
-                  ) : blocks && blocks.length > 0 ? (
-                    <div className="prose-sm">
-                      <NotionBlockRenderer blocks={blocks} />
-                    </div>
-                  ) : (
-                    <p className="font-mono text-meta text-fg-4">
-                      본문이 비어있습니다.
-                    </p>
-                  )}
-                </div>
-              </div>
-              <div>
-                <div className="eyebrow mb-2">예상 결과 미리보기</div>
-                <div className="rounded-xl border border-border-1 bg-glass-2 p-4 min-h-[240px]">
-                  <div className="font-mono text-[11px] text-fg-4 mb-3">
-                    GENERATED · PREVIEW
+            {/* Prompt content */}
+            <div className="mt-6">
+              <div className="eyebrow mb-2">PROMPT</div>
+              <div
+                className="rounded-xl border border-border-1 bg-glass-1
+                           p-4 min-h-60 max-h-120 overflow-y-auto custom-scrollbar"
+              >
+                {hasExternalLink ? (
+                  <p className="font-mono text-meta text-fg-4">
+                    외부 링크 항목입니다. 우측 상단 "외부 링크 열기"를
+                    이용하세요.
+                  </p>
+                ) : isLoadingBody ? (
+                  <div className="space-y-2">
+                    <div className="h-3 bg-glass-3 rounded animate-pulse w-3/4" />
+                    <div className="h-3 bg-glass-3 rounded animate-pulse w-full" />
+                    <div className="h-3 bg-glass-3 rounded animate-pulse w-5/6" />
+                    <div className="h-3 bg-glass-3 rounded animate-pulse w-2/3" />
                   </div>
-                  <div
-                    className="aspect-[9/12] rounded-lg p-3.5 flex flex-col"
-                    style={{
-                      background:
-                        "linear-gradient(180deg, rgba(83,109,254,0.2) 0%, var(--fp-glass-3) 50%)",
-                    }}
-                  >
-                    <div className="h-1.5 w-8 bg-surface-inverse/40 rounded-full mb-3" />
-                    <div className="text-h3 font-bold text-fg-1 tracking-tight">
-                      {selected.title.slice(0, 24)}
-                    </div>
-                    <div className="text-[11px] text-fg-3 mt-1 flex-1">
-                      미리보기 placeholder
-                    </div>
-                    <div className="h-9 rounded-md bg-[var(--fp-brand-blue-accent)] text-fg-1 text-meta font-semibold flex items-center justify-center">
-                      시작하기
-                    </div>
+                ) : bodyError ? (
+                  <p className="font-mono text-meta text-fg-4">
+                    본문을 불러올 수 없습니다.{" "}
+                    <Link
+                      href={`/entry/${selected.id}`}
+                      className="text-fg-2 underline"
+                    >
+                      단독 페이지로 이동
+                    </Link>
+                  </p>
+                ) : blocks && blocks.length > 0 ? (
+                  <div className="prose-sm">
+                    <NotionBlockRenderer blocks={blocks} />
                   </div>
-                </div>
+                ) : (
+                  <p className="font-mono text-meta text-fg-4">
+                    본문이 비어있습니다.
+                  </p>
+                )}
               </div>
             </div>
 

@@ -6,11 +6,11 @@ import {
   FlaskConical,
   Sparkles,
   BookOpen,
-  Terminal,
-  LayoutGrid,
+  Palette,
   MessageSquare,
-  Hash,
   Download,
+  Crown,
+  GraduationCap,
   Search,
   User,
   type LucideIcon,
@@ -23,6 +23,7 @@ interface RailItem {
   href: string;
   icon: LucideIcon;
   badge?: string;
+  matchPaths?: string[];
 }
 
 const RAIL_ITEMS: RailItem[] = [
@@ -35,16 +36,11 @@ const RAIL_ITEMS: RailItem[] = [
     icon: BookOpen,
   },
   {
-    key: "prompt-pedia",
-    label: "프롬프트",
+    key: "design-info",
+    label: "디자인 정보",
     href: "/prompt-pedia",
-    icon: Terminal,
-  },
-  {
-    key: "kiosk-food",
-    label: "키오스크",
-    href: "/kiosk-food",
-    icon: LayoutGrid,
+    icon: Palette,
+    matchPaths: ["/prompt-pedia", "/kiosk-food", "/uxui-study"],
   },
   {
     key: "community",
@@ -52,12 +48,23 @@ const RAIL_ITEMS: RailItem[] = [
     href: "/community",
     icon: MessageSquare,
   },
-  { key: "uxui-study", label: "UXUI", href: "/uxui-study", icon: Hash },
   {
     key: "figma-resource",
     label: "리소스",
     href: "/figma-resource",
     icon: Download,
+  },
+  {
+    key: "membership",
+    label: "멤버십",
+    href: "/study-room",
+    icon: Crown,
+  },
+  {
+    key: "mentors",
+    label: "멘토",
+    href: "/mentors",
+    icon: GraduationCap,
   },
 ];
 
@@ -65,13 +72,17 @@ export function SideRail() {
   const pathname = usePathname();
   const { toggleSearch } = useSearchContext();
 
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+  const isActive = (item: RailItem) => {
+    if (item.matchPaths?.some((p) => pathname.startsWith(p))) return true;
+    return item.href === "/"
+      ? pathname === "/"
+      : pathname.startsWith(item.href);
+  };
 
   return (
     <aside
-      className="hidden xl-nav:flex sticky top-0 self-start
-                 h-screen w-[76px] py-4
+      className="hidden xl-nav:flex fixed top-0 left-0
+                 h-screen w-19 py-4
                  flex-col items-center gap-1
                  border-r border-border-1
                  bg-bg-base z-40"
@@ -91,14 +102,14 @@ export function SideRail() {
       <nav className="flex flex-col items-center gap-1 flex-1">
         {RAIL_ITEMS.map((item) => {
           const Icon = item.icon;
-          const active = isActive(item.href);
+          const active = isActive(item);
           return (
             <Link
               key={item.key}
               href={item.href}
               className={`relative w-14 py-2.5 rounded-xl
                           flex flex-col items-center gap-1
-                          text-[10px] font-medium tracking-tight
+                          text-xxs font-medium tracking-tight
                           transition-colors duration-200
                           ${
                             active
@@ -112,7 +123,7 @@ export function SideRail() {
               {item.badge && (
                 <span
                   className="absolute top-1 right-1.5
-                             px-1 py-px text-[8px] font-bold leading-none
+                             px-1 py-px text-xxs font-bold leading-none
                              rounded-full text-fg-1
                              bg-[var(--fp-brand-blue)]
                              tracking-wider"

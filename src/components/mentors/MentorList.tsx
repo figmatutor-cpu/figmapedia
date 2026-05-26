@@ -49,7 +49,7 @@ export function MentorList({ mentors }: Props) {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-xl border border-border-1 bg-glass-2 p-4 md:p-5">
+      <div>
         <div className="grid grid-cols-1 gap-3 md:grid-cols-[1fr_auto_auto]">
           <input
             type="text"
@@ -81,7 +81,7 @@ export function MentorList({ mentors }: Props) {
           </select>
         </div>
         <div className="mt-3 text-xxs text-fg-4">{filtered.length}명</div>
-      </section>
+      </div>
 
       {filtered.length === 0 ? (
         <div className="rounded-xl border border-dashed border-border-1 bg-glass-1 p-10 text-center">
