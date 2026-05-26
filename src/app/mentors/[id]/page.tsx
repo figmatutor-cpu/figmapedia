@@ -8,6 +8,8 @@ import {
   getMentorSessions,
 } from "@/lib/supabase/mentors";
 
+const HAS_TOSS_KEY = Boolean(process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY);
+
 export const revalidate = 600;
 
 export async function generateMetadata({
@@ -65,15 +67,17 @@ export default async function MentorDetailPage({
 
         <MentorProfile mentor={mentor} sessions={sessions} reviews={reviews} />
 
-        <section className="mt-10 rounded-xl border border-brand-blue/30 bg-brand-blue/10 p-6 md:p-8">
-          <h2 className="text-h3 font-semibold text-fg-1">
-            세션 신청은 곧 오픈됩니다
-          </h2>
-          <p className="mt-2 text-meta text-fg-2">
-            결제 시스템 연동이 완료되면 위 세션 카드에서 바로 신청할 수 있게
-            됩니다. 그동안은 멤버 채널을 통해 운영자에게 문의해주세요.
-          </p>
-        </section>
+        {!HAS_TOSS_KEY && (
+          <section className="mt-10 rounded-xl border border-brand-blue/30 bg-brand-blue/10 p-6 md:p-8">
+            <h2 className="text-h3 font-semibold text-fg-1">
+              세션 신청은 곧 오픈됩니다
+            </h2>
+            <p className="mt-2 text-meta text-fg-2">
+              결제 시스템 연동이 완료되면 위 세션 카드에서 바로 신청할 수 있게
+              됩니다. 그동안은 멤버 채널을 통해 운영자에게 문의해주세요.
+            </p>
+          </section>
+        )}
       </div>
     </main>
   );

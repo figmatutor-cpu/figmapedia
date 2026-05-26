@@ -1,10 +1,17 @@
 import Link from "next/link";
+import { MembershipCheckoutButtons } from "@/components/membership/MembershipCheckoutButtons";
 
 interface MembershipPageProps {
   searchParams: Promise<{ reason?: string; next?: string }>;
 }
 
-const BENEFITS: { title: string; description: string }[] = [
+const HAS_TOSS_KEY = Boolean(process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY);
+
+const BENEFITS: {
+  title: string;
+  description: string;
+  cta?: { label: string; href: string };
+}[] = [
   {
     title: "실험 리포트 전체 본문",
     description:
@@ -19,6 +26,7 @@ const BENEFITS: { title: string; description: string }[] = [
     title: "오프라인 스터디 공간",
     description:
       "디자이너의 AI 실험실 오프라인 공간을 무료로 예약하고 사용할 수 있습니다.",
+    cta: { label: "스터디룸 예약하러 가기", href: "/study-room" },
   },
   {
     title: "Discord 커뮤니티",
@@ -56,12 +64,14 @@ export default async function MembershipPage({
             Membership
           </p>
           <h1 className="text-h1 font-semibold leading-snug text-fg-1 md:text-display">
-            멤버십이 곧 오픈됩니다
+            {HAS_TOSS_KEY ? "멤버십에 참여하세요" : "멤버십이 곧 오픈됩니다"}
           </h1>
           <p className="mt-4 text-body leading-7 text-fg-3 md:text-body-lg">
-            토스페이먼츠 결제 시스템을 연동 중입니다. 가맹 심사가 완료되는 대로
-            정식 오픈하며, Discord 커뮤니티 공지로 알림드립니다.
+            {HAS_TOSS_KEY
+              ? "월간 5,900원 또는 연간 49,000원으로 모든 실험 리포트 본문, VOD 다시보기, 오프라인 스터디 공간을 이용할 수 있습니다."
+              : "토스페이먼츠 결제 시스템을 연동 중입니다. 가맹 심사가 완료되는 대로 정식 오픈하며, Discord 커뮤니티 공지로 알림드립니다."}
           </p>
+          {HAS_TOSS_KEY && <MembershipCheckoutButtons />}
         </header>
 
         <section className="mt-12">
@@ -72,7 +82,7 @@ export default async function MembershipPage({
             {BENEFITS.map((b) => (
               <div
                 key={b.title}
-                className="rounded-xl border border-border-1 bg-glass-1 p-5"
+                className="flex flex-col rounded-xl border border-border-1 bg-glass-1 p-5"
               >
                 <h3 className="text-body-lg font-semibold text-fg-1">
                   {b.title}
@@ -80,6 +90,15 @@ export default async function MembershipPage({
                 <p className="mt-2 text-body leading-6 text-fg-3">
                   {b.description}
                 </p>
+                {b.cta && (
+                  <Link
+                    href={b.cta.href}
+                    className="mt-4 inline-flex items-center gap-1 text-meta font-medium text-brand-blue-light transition hover:text-fg-1"
+                  >
+                    {b.cta.label}
+                    <span aria-hidden>→</span>
+                  </Link>
+                )}
               </div>
             ))}
           </div>
@@ -139,6 +158,12 @@ export default async function MembershipPage({
             >
               Discord 커뮤니티 참여하기
             </a>
+            <Link
+              href="/study-room"
+              className="rounded-full border border-border-1 bg-glass-1 px-5 py-2.5 text-body font-medium text-fg-2 transition hover:border-border-2 hover:bg-glass-2"
+            >
+              스터디룸 둘러보기
+            </Link>
             <Link
               href="/ai-lab"
               className="rounded-full border border-border-1 bg-glass-1 px-5 py-2.5 text-body font-medium text-fg-2 transition hover:border-border-2 hover:bg-glass-2"

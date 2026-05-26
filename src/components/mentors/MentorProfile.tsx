@@ -4,6 +4,9 @@ import type {
   MentorWithStats,
 } from "@/types/mentor";
 import { SESSION_TYPE_LABEL } from "@/types/mentor";
+import { SessionCheckoutButton } from "@/components/mentors/SessionCheckoutButton";
+
+const HAS_TOSS_KEY = Boolean(process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY);
 
 interface Props {
   mentor: MentorWithStats;
@@ -178,6 +181,13 @@ export function MentorProfile({ mentor, sessions, reviews }: Props) {
                     </div>
                   )}
                 </dl>
+                {HAS_TOSS_KEY && s.price > 0 && (
+                  <SessionCheckoutButton
+                    sessionId={s.id}
+                    mentorId={s.mentor_id}
+                    displayPrice={s.price}
+                  />
+                )}
               </section>
             ))
           )}
