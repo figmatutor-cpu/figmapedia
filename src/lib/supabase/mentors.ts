@@ -140,6 +140,89 @@ export async function getMentorSessions(
   }
 }
 
+export interface MentorPayoutMonth {
+  month: string;
+  paid_count: number;
+  gross_amount: number;
+  platform_fee_total: number;
+  mentor_payout_total: number;
+}
+
+export interface MentorOwnSession {
+  id: string;
+  type: "mentoring" | "workshop" | "study";
+  title: string;
+  price: number;
+  max_participants: number;
+  status: "open" | "closed" | "completed" | "cancelled";
+  created_at: string;
+}
+
+export interface MentorIncomingBooking {
+  id: string;
+  user_id: string;
+  amount: number;
+  platform_fee_amount: number;
+  mentor_payout_amount: number;
+  status: string;
+  scheduled_at: string | null;
+  created_at: string;
+}
+
+export async function getMyMentorPayouts(): Promise<MentorPayoutMonth[]> {
+  const supabase = await createSupabaseServerClient();
+  try {
+    const { data, error } = await supabase
+      .from("mentor_payout_summary")
+      .select(
+        "month, paid_count, gross_amount, platform_fee_total, mentor_payout_total",
+      )
+      .order("month", { ascending: false });
+    if (error) throw error;
+    return (data ?? []) as MentorPayoutMonth[];
+  } catch {
+    return [];
+  }
+}
+
+export async function getMyMentorSessions(
+  mentorId: string,
+): Promise<MentorOwnSession[]> {
+  const supabase = await createSupabaseServerClient();
+  try {
+    const { data, error } = await supabase
+      .from("mentor_sessions")
+      .select("id, type, title, price, max_participants, status, created_at")
+      .eq("mentor_id", mentorId)
+      .order("created_at", { ascending: false });
+    if (error) throw error;
+    return (data ?? []) as MentorOwnSession[];
+  } catch {
+    return [];
+  }
+}
+
+export async function getMyIncomingBookings(
+  mentorId: string,
+  limit = 20,
+): Promise<MentorIncomingBooking[]> {
+  const supabase = await createSupabaseServerClient();
+  try {
+    const { data, error } = await supabase
+      .from("mentor_session_bookings")
+      .select(
+        "id, user_id, amount, platform_fee_amount, mentor_payout_amount, status, scheduled_at, created_at",
+      )
+      .eq("mentor_id", mentorId)
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    if (error) throw error;
+    return (data ?? []) as MentorIncomingBooking[];
+  } catch {
+    return [];
+  }
+}
+
 export async function getMentorReviews(
   mentorId: string,
   limit = 5,

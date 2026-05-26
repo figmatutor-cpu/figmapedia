@@ -8,6 +8,7 @@ const ITEMS = [
   { href: "/mypage/billing", label: "구독 관리" },
   { href: "/mypage/activity", label: "활동 이력" },
   { href: "/mypage/badges", label: "뱃지" },
+  { href: "/mypage/mentor", label: "멘토" },
 ];
 
 export function MyPageNav() {
