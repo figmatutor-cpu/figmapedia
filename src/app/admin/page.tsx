@@ -64,19 +64,19 @@ export default async function AdminDashboardPage() {
   return (
     <div className="space-y-8">
       <section>
-        <h2 className="mb-4 text-sm font-semibold text-white">현황</h2>
+        <h2 className="mb-4 text-body font-semibold text-fg-1">현황</h2>
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
           {metrics.map((m) => (
             <div
               key={m.label}
               className="rounded-xl border border-border-1 bg-glass-1 p-4"
             >
-              <div className="text-xxs text-gray-500">{m.label}</div>
-              <div className="mt-2 text-2xl font-semibold text-white">
+              <div className="text-xxs text-fg-4">{m.label}</div>
+              <div className="mt-2 text-h2 font-semibold text-fg-1">
                 {m.value}
               </div>
               {m.hint && (
-                <div className="mt-1 text-xxs text-gray-500">{m.hint}</div>
+                <div className="mt-1 text-xxs text-fg-4">{m.hint}</div>
               )}
             </div>
           ))}
@@ -84,16 +84,16 @@ export default async function AdminDashboardPage() {
       </section>
 
       <section>
-        <h2 className="mb-4 text-sm font-semibold text-white">빠른 작업</h2>
+        <h2 className="mb-4 text-body font-semibold text-fg-1">빠른 작업</h2>
         <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
           <Link
             href="/admin/topics"
             className="rounded-xl border border-border-1 bg-glass-1 p-5 transition hover:border-border-2 hover:bg-glass-2"
           >
-            <div className="text-base font-semibold text-white">
+            <div className="text-body-lg font-semibold text-fg-1">
               이번 주 주제 등록
             </div>
-            <p className="mt-2 text-sm text-gray-400">
+            <p className="mt-2 text-body text-fg-3">
               후보 3~4개를 등록하고 마감 시각을 설정하세요.
             </p>
           </Link>
@@ -101,8 +101,8 @@ export default async function AdminDashboardPage() {
             href="/admin/vods"
             className="rounded-xl border border-border-1 bg-glass-1 p-5 transition hover:border-border-2 hover:bg-glass-2"
           >
-            <div className="text-base font-semibold text-white">VOD 등록</div>
-            <p className="mt-2 text-sm text-gray-400">
+            <div className="text-body-lg font-semibold text-fg-1">VOD 등록</div>
+            <p className="mt-2 text-body text-fg-3">
               YouTube Unlisted 영상 ID를 등록하면 멤버에게 노출됩니다.
             </p>
           </Link>
@@ -110,8 +110,10 @@ export default async function AdminDashboardPage() {
             href="/admin/members"
             className="rounded-xl border border-border-1 bg-glass-1 p-5 transition hover:border-border-2 hover:bg-glass-2"
           >
-            <div className="text-base font-semibold text-white">회원 관리</div>
-            <p className="mt-2 text-sm text-gray-400">
+            <div className="text-body-lg font-semibold text-fg-1">
+              회원 관리
+            </div>
+            <p className="mt-2 text-body text-fg-3">
               role 변경, 강제 해지, Discord 연동 정보 확인.
             </p>
           </Link>
@@ -119,8 +121,8 @@ export default async function AdminDashboardPage() {
       </section>
 
       <section className="rounded-xl border border-border-1 bg-glass-1 p-5">
-        <h3 className="text-sm font-semibold text-white">베타 운영 가이드</h3>
-        <ul className="mt-3 space-y-1 text-xs leading-6 text-gray-400">
+        <h3 className="text-body font-semibold text-fg-1">베타 운영 가이드</h3>
+        <ul className="mt-3 space-y-1 text-meta leading-6 text-fg-3">
           <li>· 매주 월요일: 후보 주제 3~4개 등록 (마감을 화요일 18:00로)</li>
           <li>· 화요일 18:00 자동 마감 후 winner 자동 결정</li>
           <li>· 일요일: 라이브 후 VOD 등록 + 리포트 MDX 추가</li>

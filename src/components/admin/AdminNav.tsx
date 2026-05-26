@@ -23,10 +23,10 @@ export function AdminNav() {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className={`block rounded-lg px-3 py-2 text-sm transition ${
+                className={`block rounded-lg px-3 py-2 text-body transition ${
                   active
-                    ? "bg-glass-3 text-white"
-                    : "text-gray-400 hover:bg-glass-1 hover:text-white"
+                    ? "bg-glass-3 text-fg-1"
+                    : "text-fg-3 hover:bg-glass-1 hover:text-fg-1"
                 }`}
               >
                 {item.label}

@@ -129,5 +129,23 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
+  // 활동 로그 (best-effort)
+  supabase
+    .from("member_activities")
+    .insert({
+      user_id: user.id,
+      type: "study_room_book",
+      target_type: "study_reservation",
+      target_id: data.id,
+      metadata: { reserved_at, time_slot },
+    })
+    .then(({ error: actErr }) => {
+      if (actErr)
+        console.warn(
+          "[study-reservations] activity log failed",
+          actErr.message,
+        );
+    });
+
   return NextResponse.json({ reservation: data }, { status: 201 });
 }

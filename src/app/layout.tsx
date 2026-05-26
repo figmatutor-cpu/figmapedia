@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Geist_Mono, Instrument_Serif } from "next/font/google";
 import localFont from "next/font/local";
 import { Navbar } from "@/components/layout/Navbar";
+import { SideRail } from "@/components/layout/SideRail";
 import { ClientProviders } from "@/components/layout/ClientProviders";
 import { GlobalSearchOverlay } from "@/components/search/GlobalSearchOverlay";
 import { FooterWrapper } from "@/components/layout/FooterWrapper";
@@ -118,7 +119,7 @@ gtag('config', 'G-BN35R5EHNE');`}
         </Script>
       </head>
       <body
-        className={`${pretendard.variable} ${geistMono.variable} ${instrumentSerif.variable} antialiased min-h-screen bg-bg-base text-gray-100`}
+        className={`${pretendard.variable} ${geistMono.variable} ${instrumentSerif.variable} antialiased min-h-screen bg-bg-base text-fg-1`}
       >
         <script
           type="application/ld+json"
@@ -151,10 +152,15 @@ gtag('config', 'G-BN35R5EHNE');`}
           }}
         />
         <ClientProviders>
-          <Navbar />
-          <GlobalSearchOverlay />
-          {children}
-          <FooterWrapper />
+          <div className="xl-nav:grid xl-nav:grid-cols-[76px_1fr] min-h-screen">
+            <SideRail />
+            <div className="flex flex-col min-w-0">
+              <Navbar />
+              <GlobalSearchOverlay />
+              <main className="flex-1">{children}</main>
+              <FooterWrapper />
+            </div>
+          </div>
           <FloatingButton />
         </ClientProviders>
         {process.env.NODE_ENV === "development" && <Agentation />}

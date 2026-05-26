@@ -12,8 +12,8 @@ const STATUS_LABEL: Record<string, string> = {
 const STATUS_BADGE: Record<string, string> = {
   candidate: "border-brand-blue/40 bg-brand-blue/15 text-brand-blue-light",
   winner: "border-emerald-500/40 bg-emerald-500/15 text-emerald-300",
-  archived: "border-border-1 bg-glass-1 text-gray-400",
-  rejected: "border-red-500/30 bg-red-500/10 text-red-300",
+  archived: "border-border-1 bg-glass-1 text-fg-3",
+  rejected: "border-red-500/30 bg-status-danger/10 text-red-300",
 };
 
 interface TopicRow {
@@ -159,56 +159,56 @@ export function TopicAdminPanel() {
         onSubmit={handleSubmit}
         className="space-y-4 rounded-xl border border-border-1 bg-glass-1 p-6"
       >
-        <h2 className="text-base font-semibold text-white">새 후보 등록</h2>
+        <h2 className="text-body-lg font-semibold text-fg-1">새 후보 등록</h2>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <label className="block">
-            <span className="text-xs text-gray-400">주차 (월요일 권장)</span>
+            <span className="text-meta text-fg-3">주차 (월요일 권장)</span>
             <input
               type="date"
               required
               value={week}
               onChange={(e) => setWeek(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-2.5 text-sm text-white focus:border-border-3 focus:outline-none"
+              className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-2.5 text-body text-fg-1 focus:border-border-3 focus:outline-none"
             />
           </label>
           <label className="block">
-            <span className="text-xs text-gray-400">투표 마감 시각</span>
+            <span className="text-meta text-fg-3">투표 마감 시각</span>
             <input
               type="datetime-local"
               required
               value={closesAt}
               onChange={(e) => setClosesAt(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-2.5 text-sm text-white focus:border-border-3 focus:outline-none"
+              className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-2.5 text-body text-fg-1 focus:border-border-3 focus:outline-none"
             />
           </label>
         </div>
 
         <label className="block">
-          <span className="text-xs text-gray-400">제목</span>
+          <span className="text-meta text-fg-3">제목</span>
           <input
             type="text"
             required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="예: Claude로 와이어프레임 그리기"
-            className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
+            className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-2.5 text-body text-fg-1 placeholder:text-fg-5 focus:border-border-3 focus:outline-none"
           />
         </label>
 
         <label className="block">
-          <span className="text-xs text-gray-400">설명 (선택)</span>
+          <span className="text-meta text-fg-3">설명 (선택)</span>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             rows={3}
             placeholder="이 주제에서 어떤 실험을 할지 짧게..."
-            className="mt-1 w-full resize-none rounded-lg border border-border-1 bg-glass-1 px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
+            className="mt-1 w-full resize-none rounded-lg border border-border-1 bg-glass-1 px-4 py-2.5 text-body text-fg-1 placeholder:text-fg-5 focus:border-border-3 focus:outline-none"
           />
         </label>
 
         {submitError && (
-          <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300">
+          <div className="rounded-lg border border-red-500/30 bg-status-danger/10 p-3 text-meta text-red-300">
             {submitError}
           </div>
         )}
@@ -216,27 +216,27 @@ export function TopicAdminPanel() {
         <button
           type="submit"
           disabled={submitting}
-          className="rounded-full bg-brand-blue px-5 py-2.5 text-sm font-medium text-white transition hover:bg-brand-blue-accent disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-full bg-brand-blue px-5 py-2.5 text-body font-medium text-fg-1 transition hover:bg-brand-blue-accent disabled:cursor-not-allowed disabled:opacity-50"
         >
           {submitting ? "등록 중..." : "등록"}
         </button>
       </form>
 
       <section>
-        <h2 className="mb-4 text-base font-semibold text-white">전체 주제</h2>
+        <h2 className="mb-4 text-body-lg font-semibold text-fg-1">전체 주제</h2>
 
         {loadError && (
-          <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300">
+          <div className="mb-4 rounded-lg border border-red-500/30 bg-status-danger/10 p-3 text-meta text-red-300">
             {loadError}
           </div>
         )}
 
         {topics === null && !loadError && (
-          <p className="text-xs text-gray-500">불러오는 중...</p>
+          <p className="text-meta text-fg-4">불러오는 중...</p>
         )}
 
         {topics?.length === 0 && (
-          <p className="text-xs text-gray-500">등록된 주제가 없습니다.</p>
+          <p className="text-meta text-fg-4">등록된 주제가 없습니다.</p>
         )}
 
         {topics && topics.length > 0 && (
@@ -248,7 +248,7 @@ export function TopicAdminPanel() {
               >
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-2 text-xxs text-gray-500">
+                    <div className="flex flex-wrap items-center gap-2 text-xxs text-fg-4">
                       <span>{t.week} 주차</span>
                       <span aria-hidden>·</span>
                       <span>
@@ -258,11 +258,11 @@ export function TopicAdminPanel() {
                       <span aria-hidden>·</span>
                       <span>{extractVotes(t)}표</span>
                     </div>
-                    <h3 className="mt-2 text-base font-semibold text-white">
+                    <h3 className="mt-2 text-body-lg font-semibold text-fg-1">
                       {t.title}
                     </h3>
                     {t.description && (
-                      <p className="mt-1 text-sm text-gray-400">
+                      <p className="mt-1 text-body text-fg-3">
                         {t.description}
                       </p>
                     )}
@@ -289,7 +289,7 @@ export function TopicAdminPanel() {
                         type="button"
                         onClick={() => handleStatusChange(t.id, "archived")}
                         disabled={pendingActionId === t.id}
-                        className="rounded-full border border-border-1 bg-glass-1 px-3 py-1.5 text-xxs font-medium text-gray-300 transition hover:bg-glass-2 disabled:opacity-50"
+                        className="rounded-full border border-border-1 bg-glass-1 px-3 py-1.5 text-xxs font-medium text-fg-2 transition hover:bg-glass-2 disabled:opacity-50"
                       >
                         archive
                       </button>
@@ -297,7 +297,7 @@ export function TopicAdminPanel() {
                         type="button"
                         onClick={() => handleStatusChange(t.id, "rejected")}
                         disabled={pendingActionId === t.id}
-                        className="rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1.5 text-xxs font-medium text-red-300 transition hover:bg-red-500/20 disabled:opacity-50"
+                        className="rounded-full border border-red-500/30 bg-status-danger/10 px-3 py-1.5 text-xxs font-medium text-red-300 transition hover:bg-status-danger/20 disabled:opacity-50"
                       >
                         reject
                       </button>
@@ -308,7 +308,7 @@ export function TopicAdminPanel() {
                       type="button"
                       onClick={() => handleStatusChange(t.id, "candidate")}
                       disabled={pendingActionId === t.id}
-                      className="rounded-full border border-border-1 bg-glass-1 px-3 py-1.5 text-xxs font-medium text-gray-300 transition hover:bg-glass-2 disabled:opacity-50"
+                      className="rounded-full border border-border-1 bg-glass-1 px-3 py-1.5 text-xxs font-medium text-fg-2 transition hover:bg-glass-2 disabled:opacity-50"
                     >
                       candidate로 복귀
                     </button>
@@ -317,7 +317,7 @@ export function TopicAdminPanel() {
                     type="button"
                     onClick={() => handleDelete(t.id)}
                     disabled={pendingActionId === t.id}
-                    className="rounded-full border border-red-500/30 bg-transparent px-3 py-1.5 text-xxs text-red-300 transition hover:bg-red-500/10 disabled:opacity-50"
+                    className="rounded-full border border-red-500/30 bg-transparent px-3 py-1.5 text-xxs text-red-300 transition hover:bg-status-danger/10 disabled:opacity-50"
                   >
                     삭제
                   </button>

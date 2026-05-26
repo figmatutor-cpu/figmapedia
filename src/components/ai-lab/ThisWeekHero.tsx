@@ -15,22 +15,22 @@ export function ThisWeekHero({ experiment }: ThisWeekHeroProps) {
           <span className="inline-block rounded-full border border-brand-blue/40 bg-brand-blue/15 px-3 py-1 text-xxs font-medium text-brand-blue-light">
             이번 주 주제
           </span>
-          <h2 className="mt-4 text-xl font-semibold text-white md:text-2xl">
+          <h2 className="mt-4 text-h3-lg font-semibold text-fg-1 md:text-h2">
             {title}
           </h2>
-          <p className="mt-3 line-clamp-4 whitespace-pre-line text-sm text-gray-400 md:text-base">
+          <p className="mt-3 line-clamp-4 whitespace-pre-line text-body text-fg-3 md:text-body-lg">
             {summary}
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
             <Link
               href={`/ai-lab/${slug}`}
-              className="rounded-full bg-brand-blue px-5 py-2.5 text-sm font-medium text-white transition hover:bg-brand-blue-accent"
+              className="rounded-full bg-brand-blue px-5 py-2.5 text-body font-medium text-fg-1 transition hover:bg-brand-blue-accent"
             >
               실험 참여하기
             </Link>
             <Link
               href="#past-experiments"
-              className="rounded-full border border-border-1 bg-glass-1 px-5 py-2.5 text-sm font-medium text-gray-200 transition hover:border-border-2 hover:bg-glass-2"
+              className="rounded-full border border-border-1 bg-glass-1 px-5 py-2.5 text-body font-medium text-fg-2 transition hover:border-border-2 hover:bg-glass-2"
             >
               지난 주제 보기
             </Link>
@@ -46,7 +46,7 @@ export function ThisWeekHero({ experiment }: ThisWeekHeroProps) {
               className="h-full w-full object-cover"
             />
           ) : (
-            <span className="text-xs text-gray-500">
+            <span className="text-meta text-fg-4">
               이번 주 주제 커버 이미지
             </span>
           )}

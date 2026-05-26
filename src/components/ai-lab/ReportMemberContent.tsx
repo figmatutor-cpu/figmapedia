@@ -51,7 +51,7 @@ export function ReportMemberContent({ slug }: ReportMemberContentProps) {
   if (isAuthLoading) {
     return (
       <section className="mt-8 rounded-xl border border-border-1 bg-glass-1 p-8 text-center">
-        <p className="text-xs text-gray-500">불러오는 중...</p>
+        <p className="text-meta text-fg-4">불러오는 중...</p>
       </section>
     );
   }
@@ -61,18 +61,18 @@ export function ReportMemberContent({ slug }: ReportMemberContentProps) {
   if (state.status === "loading" || state.status === "idle") {
     return (
       <section className="mt-8 rounded-xl border border-border-1 bg-glass-1 p-8 text-center">
-        <p className="text-xs text-gray-500">본문을 불러오는 중...</p>
+        <p className="text-meta text-fg-4">본문을 불러오는 중...</p>
       </section>
     );
   }
 
   if (state.status === "error") {
     return (
-      <section className="mt-8 rounded-xl border border-red-500/30 bg-red-500/10 p-6">
-        <p className="text-sm text-red-300">
+      <section className="mt-8 rounded-xl border border-red-500/30 bg-status-danger/10 p-6">
+        <p className="text-body text-red-300">
           콘텐츠를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.
         </p>
-        <p className="mt-1 text-xs text-red-300/70">{state.message}</p>
+        <p className="mt-1 text-meta text-red-300/70">{state.message}</p>
       </section>
     );
   }

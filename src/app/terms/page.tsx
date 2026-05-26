@@ -15,7 +15,7 @@ function Section({
 }) {
   return (
     <section className="space-y-3">
-      <h2 className="text-white text-lg font-semibold">{title}</h2>
+      <h2 className="text-fg-1 text-h3 font-semibold">{title}</h2>
       <div className="space-y-2">{children}</div>
     </section>
   );

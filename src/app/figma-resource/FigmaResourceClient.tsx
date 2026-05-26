@@ -57,8 +57,8 @@ export function FigmaResourceClient({ cachedThumbnails }: Props) {
     <main className="min-h-screen bg-bg-base pt-28 pb-16">
       <div className="mx-auto max-w-4xl px-4">
         <SponsorBanner />
-        <h1 className="text-xl font-bold text-white mb-2">피그마 리소스</h1>
-        <p className="text-gray-400 text-sm sm:text-base mb-6">
+        <h1 className="text-h3-lg font-bold text-fg-1 mb-2">피그마 리소스</h1>
+        <p className="text-fg-3 text-body sm:text-body-lg mb-6">
           피그마 디자인 템플릿, 튜토리얼, 프로토타이핑 예제 모음
         </p>
 
@@ -74,13 +74,13 @@ export function FigmaResourceClient({ cachedThumbnails }: Props) {
 
           {/* Desktop search */}
           <div className="relative shrink-0 w-[180px] hidden sm:block">
-            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-fg-4" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="페이지 내 검색"
-              className="w-full pl-8 pr-3 h-11 text-sm rounded-lg bg-glass-1 border border-border-1 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-border-3 focus:bg-glass-2 transition-colors"
+              className="w-full pl-8 pr-3 h-11 text-body rounded-lg bg-glass-1 border border-border-1 text-fg-2 placeholder-gray-500 focus:outline-none focus:border-border-3 focus:bg-glass-2 transition-colors"
               autoComplete="off"
             />
           </div>
@@ -89,23 +89,23 @@ export function FigmaResourceClient({ cachedThumbnails }: Props) {
         {/* Mobile search */}
         <div className="sm:hidden mb-6">
           <div className="relative">
-            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-fg-4" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="페이지 내 검색"
-              className="w-full pl-8 pr-3 h-12 text-base rounded-lg bg-glass-1 border border-border-1 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-border-3 focus:bg-glass-2 transition-colors"
+              className="w-full pl-8 pr-3 h-12 text-body-lg rounded-lg bg-glass-1 border border-border-1 text-fg-2 placeholder-gray-500 focus:outline-none focus:border-border-3 focus:bg-glass-2 transition-colors"
               autoComplete="off"
             />
           </div>
         </div>
 
         {/* Item count */}
-        <p className="text-sm text-gray-400 mb-4">
+        <p className="text-body text-fg-3 mb-4">
           {displayItems.length}개의 항목
           {searchQuery.trim() && (
-            <span className="ml-1 text-gray-500">
+            <span className="ml-1 text-fg-4">
               &middot; &quot;{searchQuery}&quot; 검색 결과
             </span>
           )}
@@ -125,7 +125,7 @@ export function FigmaResourceClient({ cachedThumbnails }: Props) {
           </div>
         ) : (
           <div className="text-center py-16">
-            <p className="text-gray-400">
+            <p className="text-fg-3">
               {searchQuery.trim()
                 ? `"${searchQuery}"에 대한 검색 결과가 없습니다.`
                 : "항목이 없습니다."}

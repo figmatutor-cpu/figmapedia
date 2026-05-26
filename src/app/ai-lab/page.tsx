@@ -2,9 +2,10 @@ import Link from "next/link";
 import { ActivityStats } from "@/components/ai-lab/ActivityStats";
 import { AiLabHeader } from "@/components/ai-lab/AiLabHeader";
 import { DiscordPanel } from "@/components/ai-lab/DiscordPanel";
+import { NextLiveCard } from "@/components/ai-lab/NextLiveCard";
 import { ReportListItem } from "@/components/ai-lab/ReportListItem";
 import { ThisWeekHero } from "@/components/ai-lab/ThisWeekHero";
-import { VotingActiveCard } from "@/components/ai-lab/VotingActiveCard";
+import { WeeklyVoteCard } from "@/components/ai-lab/WeeklyVoteCard";
 import { WinnerTopicHero } from "@/components/ai-lab/WinnerTopicHero";
 import { getAllExperiments } from "@/lib/mdx/experiments";
 import { getCurrentTopics } from "@/lib/supabase/topics";
@@ -18,27 +19,14 @@ export default async function AiLabPage() {
   ]);
 
   const winner = topicsData.topics.find((t) => t.status === "winner");
-  const candidates = topicsData.topics.filter((t) => t.status === "candidate");
-  const hasActiveVoting =
-    !topicsData.is_closed &&
-    candidates.length > 0 &&
-    !!topicsData.voting_closes_at;
-
   const [latest, ...past] = experiments;
   const recentReports = past.slice(0, 3);
 
+  // Hero: winner 있으면 우선, 없으면 latest 실험. (투표 진행 중은 아래 split에서 항상 표시)
   let heroSection: React.ReactNode = null;
   if (winner) {
     heroSection = (
       <WinnerTopicHero topic={winner} totalVotes={topicsData.total_votes} />
-    );
-  } else if (hasActiveVoting && topicsData.voting_closes_at) {
-    heroSection = (
-      <VotingActiveCard
-        closesAt={topicsData.voting_closes_at}
-        candidatesCount={candidates.length}
-        totalVotes={topicsData.total_votes}
-      />
     );
   } else if (latest) {
     heroSection = <ThisWeekHero experiment={latest} />;
@@ -53,15 +41,21 @@ export default async function AiLabPage() {
 
         {!heroSection && experiments.length === 0 && (
           <section className="mt-10 rounded-xl border border-border-1 bg-glass-1 p-12 text-center">
-            <p className="text-sm text-gray-400">
+            <p className="text-body text-fg-3">
               첫 실험 리포트가 곧 공개됩니다.
             </p>
           </section>
         )}
 
+        {/* Vote + Live split — 항상 표시 (디자인 가이드 TILE 3) */}
+        <section className="mt-12 grid gap-6 md:grid-cols-2">
+          <WeeklyVoteCard data={topicsData} />
+          <NextLiveCard />
+        </section>
+
         <section className="mt-12 grid gap-8 md:grid-cols-2">
           <div id="past-experiments">
-            <h2 className="mb-4 text-sm font-semibold text-white">
+            <h2 className="mb-4 text-body font-semibold text-fg-1">
               최신 리포트
             </h2>
             {recentReports.length > 0 ? (
@@ -72,7 +66,7 @@ export default async function AiLabPage() {
                 <div className="pt-2">
                   <Link
                     href="/ai-lab/archive"
-                    className="inline-block rounded-full border border-border-1 bg-glass-1 px-4 py-2 text-xs font-medium text-gray-200 transition hover:border-border-2 hover:bg-glass-2"
+                    className="inline-block rounded-full border border-border-1 bg-glass-1 px-4 py-2 text-meta font-medium text-fg-2 transition hover:border-border-2 hover:bg-glass-2"
                   >
                     리포트 전체 보기
                   </Link>
@@ -80,7 +74,7 @@ export default async function AiLabPage() {
               </div>
             ) : (
               <div className="rounded-xl border border-dashed border-border-1 bg-glass-1 p-8 text-center">
-                <p className="text-xs text-gray-500">
+                <p className="text-meta text-fg-4">
                   지난 리포트가 곧 추가됩니다.
                 </p>
               </div>

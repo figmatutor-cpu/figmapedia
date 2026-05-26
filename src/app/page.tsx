@@ -85,12 +85,12 @@ export default function HomePage() {
           }`}
           aria-hidden={searchAtBottom}
         >
-          <h1 className="text-white text-2xl sm:text-4xl font-semibold tracking-tight drop-shadow-[0_1px_8px_rgba(31,61,188,0.25)] leading-snug">
+          <h1 className="text-fg-1 text-h2 sm:text-display font-semibold tracking-tight drop-shadow-[0_1px_8px_rgba(31,61,188,0.25)] leading-snug">
             AI로 검색해도 잘 나오지 않는
             <br />
             실무 디자인, 피그마 정보를 확인하세요.
           </h1>
-          <p className="text-gray-300/90 mt-3 sm:mt-4 text-sm sm:text-base">
+          <p className="text-fg-2/90 mt-3 sm:mt-4 text-body sm:text-body-lg">
             단축키, 용어, 플러그인, 프롬프트, 템플릿 — 디자인과 피그마 실무
             정보를 한곳에서.
           </p>

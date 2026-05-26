@@ -18,7 +18,7 @@ function RenderRichText({
         let node: React.ReactNode = item.plain_text;
         if (item.annotations.code)
           node = (
-            <code className="bg-glass-3 rounded px-1 text-sm font-mono">
+            <code className="bg-glass-3 rounded px-1 text-body font-mono">
               {node}
             </code>
           );
@@ -77,7 +77,7 @@ function ToggleHeading({
         className="flex items-center gap-2 w-full text-left rounded-lg px-2 py-1 -mx-2 cursor-pointer hover:bg-glass-1 transition-colors group"
       >
         <svg
-          className={`shrink-0 transition-transform duration-200 ${open ? "rotate-90 text-white" : "text-gray-500 group-hover:text-gray-300"}`}
+          className={`shrink-0 transition-transform duration-200 ${open ? "rotate-90 text-fg-1" : "text-fg-4 group-hover:text-fg-2"}`}
           width="14"
           height="14"
           viewBox="0 0 14 14"
@@ -96,7 +96,7 @@ function ToggleHeading({
           <RenderRichText items={richText} fallback={content} />
         </span>
         {!open && (
-          <span className="ml-auto text-xs text-gray-600 group-hover:text-gray-500 shrink-0 transition-colors">
+          <span className="ml-auto text-meta text-fg-5 group-hover:text-fg-4 shrink-0 transition-colors">
             {count}개 항목
           </span>
         )}
@@ -118,7 +118,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
       if (!block.content && (!block.richText || block.richText.length === 0))
         return <div className="h-4" />;
       return (
-        <p className="text-gray-300 leading-relaxed mb-4">
+        <p className="text-fg-2 leading-relaxed mb-4">
           <RenderRichText items={block.richText} fallback={block.content} />
         </p>
       );
@@ -130,13 +130,13 @@ function RenderBlock({ block }: { block: NotionBlock }) {
             content={block.content}
             richText={block.richText}
             children={block.children}
-            headingClass="text-2xl font-bold text-white group-hover:text-gray-200 transition-colors"
+            headingClass="text-h2 font-bold text-fg-1 group-hover:text-fg-2 transition-colors"
             wrapperClass="mt-8 mb-2"
           />
         );
       }
       return (
-        <h1 className="text-2xl font-bold text-white mt-8 mb-4">
+        <h1 className="text-h2 font-bold text-fg-1 mt-8 mb-4">
           <RenderRichText items={block.richText} fallback={block.content} />
         </h1>
       );
@@ -148,13 +148,13 @@ function RenderBlock({ block }: { block: NotionBlock }) {
             content={block.content}
             richText={block.richText}
             children={block.children}
-            headingClass="text-xl font-bold text-white group-hover:text-gray-200 transition-colors"
+            headingClass="text-h3-lg font-bold text-fg-1 group-hover:text-fg-2 transition-colors"
             wrapperClass="mt-6 mb-2"
           />
         );
       }
       return (
-        <h2 className="text-xl font-bold text-white mt-6 mb-3">
+        <h2 className="text-h3-lg font-bold text-fg-1 mt-6 mb-3">
           <RenderRichText items={block.richText} fallback={block.content} />
         </h2>
       );
@@ -166,20 +166,20 @@ function RenderBlock({ block }: { block: NotionBlock }) {
             content={block.content}
             richText={block.richText}
             children={block.children}
-            headingClass="text-lg font-semibold text-gray-100 group-hover:text-white transition-colors"
+            headingClass="text-h3 font-semibold text-fg-1 group-hover:text-fg-1 transition-colors"
             wrapperClass="mt-5 mb-2"
           />
         );
       }
       return (
-        <h3 className="text-lg font-semibold text-gray-100 mt-5 mb-2">
+        <h3 className="text-h3 font-semibold text-fg-1 mt-5 mb-2">
           <RenderRichText items={block.richText} fallback={block.content} />
         </h3>
       );
 
     case "bulleted_list_item":
       return (
-        <li className="text-gray-300 ml-5 list-disc mb-1">
+        <li className="text-fg-2 ml-5 list-disc mb-1">
           <RenderRichText items={block.richText} fallback={block.content} />
           {block.children && block.children.length > 0 && (
             <ul className="mt-1">
@@ -191,7 +191,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
 
     case "numbered_list_item":
       return (
-        <li className="text-gray-300 ml-5 list-decimal mb-1">
+        <li className="text-fg-2 ml-5 list-decimal mb-1">
           <RenderRichText items={block.richText} fallback={block.content} />
           {block.children && block.children.length > 0 && (
             <ol className="mt-1">
@@ -211,7 +211,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
             className="mt-1 h-4 w-4 shrink-0 accent-blue-400 cursor-default"
           />
           <span
-            className={`text-gray-300 ${block.checked ? "line-through text-gray-500" : ""}`}
+            className={`text-fg-2 ${block.checked ? "line-through text-fg-4" : ""}`}
           >
             <RenderRichText items={block.richText} fallback={block.content} />
           </span>
@@ -223,10 +223,10 @@ function RenderBlock({ block }: { block: NotionBlock }) {
         <div className="my-2">
           <button
             onClick={() => setToggleOpen((o) => !o)}
-            className="flex items-center gap-2 w-full text-left text-gray-200 font-medium hover:text-white transition-colors"
+            className="flex items-center gap-2 w-full text-left text-fg-2 font-medium hover:text-fg-1 transition-colors"
           >
             <span
-              className="text-gray-400 transition-transform duration-200 shrink-0"
+              className="text-fg-3 transition-transform duration-200 shrink-0"
               style={{
                 transform: toggleOpen ? "rotate(90deg)" : "rotate(0deg)",
               }}
@@ -245,7 +245,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
 
     case "quote":
       return (
-        <blockquote className="border-l-4 border-border-2 pl-4 py-1 my-4 text-gray-400 italic">
+        <blockquote className="border-l-4 border-border-2 pl-4 py-1 my-4 text-fg-3 italic">
           <RenderRichText items={block.richText} fallback={block.content} />
           {block.children && block.children.length > 0 && (
             <div className="mt-2 not-italic">
@@ -259,7 +259,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
       return (
         <div className="flex items-start gap-3 bg-glass-1 border border-border-1 rounded-lg p-4 my-4">
           {block.icon && (
-            <span className="text-xl shrink-0 leading-none mt-0.5">
+            <span className="text-h3-lg shrink-0 leading-none mt-0.5">
               {block.icon.startsWith("http") ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -272,7 +272,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
               )}
             </span>
           )}
-          <div className="text-gray-300 min-w-0">
+          <div className="text-fg-2 min-w-0">
             <RenderRichText items={block.richText} fallback={block.content} />
             {block.children && block.children.length > 0 && (
               <div className="mt-2">
@@ -317,14 +317,14 @@ function RenderBlock({ block }: { block: NotionBlock }) {
       const headerCells = headerRow?.content?.split("\t") ?? [];
       return (
         <div className="overflow-x-auto my-6">
-          <table className="w-full text-sm text-gray-300 border border-border-1 rounded-lg overflow-hidden">
+          <table className="w-full text-body text-fg-2 border border-border-1 rounded-lg overflow-hidden">
             {headerCells.length > 0 && (
               <thead>
                 <tr className="bg-glass-3">
                   {headerCells.map((cell, i) => (
                     <th
                       key={i}
-                      className="px-4 py-2 text-left text-white font-semibold border-b border-border-1"
+                      className="px-4 py-2 text-left text-fg-1 font-semibold border-b border-border-1"
                     >
                       {cell}
                     </th>
@@ -366,7 +366,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
             loading="lazy"
           />
           {block.caption && (
-            <figcaption className="text-xs text-gray-500 mt-2 text-center">
+            <figcaption className="text-meta text-fg-4 mt-2 text-center">
               {block.caption}
             </figcaption>
           )}
@@ -393,7 +393,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
               />
             </div>
             {block.caption && (
-              <figcaption className="text-xs text-gray-500 mt-2 text-center">
+              <figcaption className="text-meta text-fg-4 mt-2 text-center">
                 {block.caption}
               </figcaption>
             )}
@@ -409,7 +409,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
             preload="metadata"
           />
           {block.caption && (
-            <figcaption className="text-xs text-gray-500 mt-2 text-center">
+            <figcaption className="text-meta text-fg-4 mt-2 text-center">
               {block.caption}
             </figcaption>
           )}
@@ -429,7 +429,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
             />
           </div>
           {block.caption && (
-            <figcaption className="text-xs text-gray-500 mt-2 text-center">
+            <figcaption className="text-meta text-fg-4 mt-2 text-center">
               {block.caption}
             </figcaption>
           )}
@@ -445,7 +445,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
           rel="noopener noreferrer"
           className="block my-4 rounded-lg border border-border-1 bg-glass-1 p-4 hover:bg-glass-2 transition-colors"
         >
-          <span className="text-sm text-blue-400 underline break-all">
+          <span className="text-body text-blue-400 underline break-all">
             {block.caption || block.mediaUrl}
           </span>
         </a>
@@ -459,7 +459,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
           href={block.mediaUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 my-4 rounded-lg border border-border-1 bg-glass-1 px-4 py-3 text-sm text-blue-400 hover:bg-glass-2 transition-colors"
+          className="inline-flex items-center gap-2 my-4 rounded-lg border border-border-1 bg-glass-1 px-4 py-3 text-body text-blue-400 hover:bg-glass-2 transition-colors"
         >
           <svg
             className="w-4 h-4 shrink-0"
@@ -481,7 +481,7 @@ function RenderBlock({ block }: { block: NotionBlock }) {
     default:
       if (block.content || (block.richText && block.richText.length > 0)) {
         return (
-          <p className="text-gray-300 mb-4">
+          <p className="text-fg-2 mb-4">
             <RenderRichText items={block.richText} fallback={block.content} />
           </p>
         );

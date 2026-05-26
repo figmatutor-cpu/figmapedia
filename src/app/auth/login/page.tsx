@@ -61,23 +61,23 @@ function LoginForm() {
   return (
     <main className="min-h-screen flex items-center justify-center bg-base px-6 py-16">
       <div className="w-full max-w-md rounded-xl border border-border-1 bg-glass-1 p-8 backdrop-blur-md">
-        <h1 className="text-2xl font-semibold text-white">
+        <h1 className="text-h2 font-semibold text-fg-1">
           디자이너의 AI 실험실
         </h1>
-        <p className="mt-2 text-sm text-gray-400">
+        <p className="mt-2 text-body text-fg-3">
           로그인하고 실험에 참여해보세요
         </p>
 
         <button
           type="button"
           onClick={signInWithGoogle}
-          className="mt-8 flex w-full items-center justify-center gap-2 rounded-lg bg-white px-4 py-3 text-sm font-medium text-gray-900 transition hover:bg-gray-100"
+          className="mt-8 flex w-full items-center justify-center gap-2 rounded-lg bg-surface-inverse px-4 py-3 text-body font-medium text-fg-inverse transition hover:bg-surface-inverse"
         >
           <GoogleIcon className="h-4 w-4" />
           Google로 시작
         </button>
 
-        <div className="my-6 flex items-center gap-3 text-xs text-gray-500">
+        <div className="my-6 flex items-center gap-3 text-meta text-fg-4">
           <div className="h-px flex-1 bg-glass-3" />
           또는
           <div className="h-px flex-1 bg-glass-3" />
@@ -85,14 +85,14 @@ function LoginForm() {
 
         <form onSubmit={sendMagicLink} className="space-y-3">
           <label className="block">
-            <span className="text-xs text-gray-400">이메일</span>
+            <span className="text-meta text-fg-3">이메일</span>
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="mt-1 block w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-3 text-sm text-white placeholder:text-gray-600 focus:border-border-2 focus:bg-glass-1 focus:outline-none"
+              className="mt-1 block w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-3 text-body text-fg-1 placeholder:text-fg-5 focus:border-border-2 focus:bg-glass-1 focus:outline-none"
               disabled={status === "sending" || status === "sent"}
             />
           </label>
@@ -100,7 +100,7 @@ function LoginForm() {
           <button
             type="submit"
             disabled={status === "sending" || status === "sent"}
-            className="w-full rounded-lg border border-border-1 bg-glass-3 px-4 py-3 text-sm font-medium text-white transition hover:border-border-2 hover:bg-glass-4 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-lg border border-border-1 bg-glass-3 px-4 py-3 text-body font-medium text-fg-1 transition hover:border-border-2 hover:bg-glass-4 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {status === "sending"
               ? "전송 중..."
@@ -111,24 +111,24 @@ function LoginForm() {
         </form>
 
         {status === "sent" && (
-          <p className="mt-4 rounded-lg border border-border-1 bg-glass-1 p-3 text-xs text-gray-300">
+          <p className="mt-4 rounded-lg border border-border-1 bg-glass-1 p-3 text-meta text-fg-2">
             {email}로 로그인 링크를 보냈습니다. 메일함을 확인해주세요.
           </p>
         )}
 
         {status === "error" && errorMessage && (
-          <p className="mt-4 rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300">
+          <p className="mt-4 rounded-lg border border-red-500/30 bg-status-danger/10 p-3 text-meta text-red-300">
             {errorMessage}
           </p>
         )}
 
-        <p className="mt-8 text-xs text-gray-500">
+        <p className="mt-8 text-meta text-fg-4">
           로그인하면{" "}
-          <a href="/terms" className="underline hover:text-gray-300">
+          <a href="/terms" className="underline hover:text-fg-2">
             이용약관
           </a>
           {" 및 "}
-          <a href="/privacy" className="underline hover:text-gray-300">
+          <a href="/privacy" className="underline hover:text-fg-2">
             개인정보처리방침
           </a>
           에 동의한 것으로 간주됩니다.

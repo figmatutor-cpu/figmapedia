@@ -43,23 +43,23 @@ export default async function VodPage({
   return (
     <main className="min-h-screen bg-base">
       <div className="container mx-auto max-w-5xl px-6 py-10 md:py-14">
-        <nav className="mb-6 flex items-center gap-2 text-xs text-gray-500">
-          <Link href="/ai-lab" className="transition hover:text-gray-300">
+        <nav className="mb-6 flex items-center gap-2 text-meta text-fg-4">
+          <Link href="/ai-lab" className="transition hover:text-fg-2">
             AI 실험실
           </Link>
           <span aria-hidden>›</span>
-          <Link href="/ai-lab/live" className="transition hover:text-gray-300">
+          <Link href="/ai-lab/live" className="transition hover:text-fg-2">
             라이브 세션
           </Link>
           <span aria-hidden>›</span>
-          <span className="text-gray-400">다시보기</span>
+          <span className="text-fg-3">다시보기</span>
         </nav>
 
         <header className="mb-6">
-          <h1 className="text-2xl font-semibold leading-snug text-white md:text-3xl">
+          <h1 className="text-h2 font-semibold leading-snug text-fg-1 md:text-h1">
             {vod.title}
           </h1>
-          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500">
+          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-meta text-fg-4">
             <time dateTime={vod.recorded_at}>{vod.recorded_at}</time>
             {duration && (
               <>
@@ -75,23 +75,23 @@ export default async function VodPage({
         <YouTubeEmbed videoId={vod.youtube_id} title={vod.title} />
 
         <section className="mt-10 rounded-xl border border-border-1 bg-glass-1 p-6">
-          <h2 className="text-sm font-semibold text-white">
+          <h2 className="text-body font-semibold text-fg-1">
             시청해 주셔서 감사합니다
           </h2>
-          <p className="mt-2 text-xs leading-6 text-gray-400">
+          <p className="mt-2 text-meta leading-6 text-fg-3">
             실시간 라이브는 매주 일요일 저녁 YouTube Live로 진행됩니다. 더 많은
             실험 콘텐츠는 AI 실험실에서 확인하세요.
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             <Link
               href="/ai-lab/live"
-              className="rounded-full border border-border-1 bg-glass-1 px-4 py-2 text-sm font-medium text-gray-200 transition hover:border-border-2 hover:bg-glass-2"
+              className="rounded-full border border-border-1 bg-glass-1 px-4 py-2 text-body font-medium text-fg-2 transition hover:border-border-2 hover:bg-glass-2"
             >
               라이브 세션 보기
             </Link>
             <Link
               href="/ai-lab"
-              className="rounded-full border border-border-1 bg-glass-1 px-4 py-2 text-sm font-medium text-gray-200 transition hover:border-border-2 hover:bg-glass-2"
+              className="rounded-full border border-border-1 bg-glass-1 px-4 py-2 text-body font-medium text-fg-2 transition hover:border-border-2 hover:bg-glass-2"
             >
               AI 실험실
             </Link>

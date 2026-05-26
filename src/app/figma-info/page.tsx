@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SectionPageLayout } from "@/components/section/SectionPageLayout";
+import { FigmaInfoThreePane } from "@/components/section/FigmaInfoThreePane";
 import { NAV_ITEMS } from "@/lib/navigation";
 import { SECTION_DESCRIPTIONS } from "@/lib/constants";
 import { getCachedSearchIndex } from "@/lib/search-index-cache";
@@ -39,14 +40,30 @@ export default async function FigmaInfoPage() {
   }
 
   return (
-    <SectionPageLayout
-      title={navItem.label}
-      description={SECTION_DESCRIPTIONS["figma-info"]}
-      subTabs={navItem.subTabs}
-      defaultFilter={navItem.defaultFilter}
-      initialMainItems={initialMainItems}
-      initialMultiSectionData={initialMultiSectionData}
-      enableSortFilter
-    />
+    <>
+      {/* Desktop (>= xl-nav): 3-pane 레이아웃 */}
+      <div className="hidden xl-nav:block">
+        <FigmaInfoThreePane
+          title={navItem.label}
+          description={SECTION_DESCRIPTIONS["figma-info"]}
+          subTabs={navItem.subTabs ?? []}
+          initialMainItems={initialMainItems ?? []}
+          initialMultiSectionData={initialMultiSectionData ?? {}}
+        />
+      </div>
+
+      {/* Mobile (< xl-nav): 기존 카드 레이아웃 */}
+      <div className="xl-nav:hidden">
+        <SectionPageLayout
+          title={navItem.label}
+          description={SECTION_DESCRIPTIONS["figma-info"]}
+          subTabs={navItem.subTabs}
+          defaultFilter={navItem.defaultFilter}
+          initialMainItems={initialMainItems}
+          initialMultiSectionData={initialMultiSectionData}
+          enableSortFilter
+        />
+      </div>
+    </>
   );
 }

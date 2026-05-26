@@ -16,7 +16,7 @@ export function PolicyLayout({ title, children }: PolicyLayoutProps) {
         {/* 뒤로가기 */}
         <button
           onClick={() => router.back()}
-          className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8"
+          className="flex items-center gap-2 text-fg-3 hover:text-fg-1 transition-colors mb-8"
         >
           <svg
             width="20"
@@ -33,16 +33,16 @@ export function PolicyLayout({ title, children }: PolicyLayoutProps) {
               strokeLinejoin="round"
             />
           </svg>
-          <span className="text-sm">뒤로가기</span>
+          <span className="text-body">뒤로가기</span>
         </button>
 
         {/* 제목 */}
-        <h1 className="text-white text-2xl sm:text-3xl font-bold mb-10">
+        <h1 className="text-fg-1 text-h2 sm:text-h1 font-bold mb-10">
           {title}
         </h1>
 
         {/* 본문 */}
-        <div className="text-gray-300 text-sm sm:text-base leading-relaxed space-y-8">
+        <div className="text-fg-2 text-body sm:text-body-lg leading-relaxed space-y-8">
           {children}
         </div>
       </div>

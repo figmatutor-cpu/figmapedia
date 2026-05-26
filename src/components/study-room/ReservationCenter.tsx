@@ -95,32 +95,32 @@ export function ReservationCenter() {
         onSubmit={handleSubmit}
         className="space-y-5 rounded-xl border border-border-1 bg-glass-1 p-6 md:p-8"
       >
-        <h2 className="text-base font-semibold text-white">새 예약 신청</h2>
+        <h2 className="text-body-lg font-semibold text-fg-1">새 예약 신청</h2>
 
         <label className="block">
-          <span className="text-xs text-gray-400">날짜</span>
+          <span className="text-meta text-fg-3">날짜</span>
           <input
             type="date"
             required
             min={todayString()}
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-3 text-sm text-white focus:border-border-3 focus:outline-none"
+            className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-3 text-body text-fg-1 focus:border-border-3 focus:outline-none"
           />
         </label>
 
         <div>
-          <span className="text-xs text-gray-400">시간대</span>
+          <span className="text-meta text-fg-3">시간대</span>
           <div className="mt-1 grid grid-cols-3 gap-2">
             {TIME_SLOTS.map((s) => (
               <button
                 key={s}
                 type="button"
                 onClick={() => setSlot(s)}
-                className={`rounded-lg border px-3 py-2.5 text-xs transition ${
+                className={`rounded-lg border px-3 py-2.5 text-meta transition ${
                   slot === s
-                    ? "border-brand-blue/50 bg-brand-blue/20 text-white"
-                    : "border-border-1 bg-glass-1 text-gray-300 hover:border-border-2 hover:bg-glass-2"
+                    ? "border-brand-blue/50 bg-brand-blue/20 text-fg-1"
+                    : "border-border-1 bg-glass-1 text-fg-2 hover:border-border-2 hover:bg-glass-2"
                 }`}
               >
                 {slotShortLabel(s)}
@@ -130,19 +130,19 @@ export function ReservationCenter() {
         </div>
 
         <label className="block">
-          <span className="text-xs text-gray-400">사용 목적 (선택)</span>
+          <span className="text-meta text-fg-3">사용 목적 (선택)</span>
           <textarea
             value={note}
             onChange={(e) => setNote(e.target.value)}
             placeholder="예: 4명 디자인 스터디"
             rows={3}
             maxLength={500}
-            className="mt-1 w-full resize-none rounded-lg border border-border-1 bg-glass-1 px-4 py-3 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
+            className="mt-1 w-full resize-none rounded-lg border border-border-1 bg-glass-1 px-4 py-3 text-body text-fg-1 placeholder:text-fg-5 focus:border-border-3 focus:outline-none"
           />
         </label>
 
         {submitError && (
-          <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300">
+          <div className="rounded-lg border border-red-500/30 bg-status-danger/10 p-3 text-meta text-red-300">
             {submitError}
           </div>
         )}
@@ -150,33 +150,31 @@ export function ReservationCenter() {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full rounded-full bg-brand-blue px-6 py-3 text-sm font-medium text-white transition hover:bg-brand-blue-accent disabled:cursor-not-allowed disabled:opacity-50"
+          className="w-full rounded-full bg-brand-blue px-6 py-3 text-body font-medium text-fg-1 transition hover:bg-brand-blue-accent disabled:cursor-not-allowed disabled:opacity-50"
         >
           {submitting ? "신청 중..." : "예약 신청"}
         </button>
 
-        <p className="text-xxs text-gray-500">
+        <p className="text-xxs text-fg-4">
           예약은 운영자 확인 후 확정됩니다. 확정되면 알림을 드립니다.
         </p>
       </form>
 
       <div className="rounded-xl border border-border-1 bg-glass-1 p-6 md:p-8">
-        <h2 className="text-base font-semibold text-white">내 예약 현황</h2>
+        <h2 className="text-body-lg font-semibold text-fg-1">내 예약 현황</h2>
 
         {loadError && (
-          <div className="mt-4 rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300">
+          <div className="mt-4 rounded-lg border border-red-500/30 bg-status-danger/10 p-3 text-meta text-red-300">
             예약을 불러오지 못했습니다: {loadError}
           </div>
         )}
 
         {reservations === null && !loadError && (
-          <p className="mt-4 text-xs text-gray-500">불러오는 중...</p>
+          <p className="mt-4 text-meta text-fg-4">불러오는 중...</p>
         )}
 
         {reservations !== null && reservations.length === 0 && (
-          <p className="mt-4 text-xs text-gray-500">
-            아직 예약 내역이 없습니다.
-          </p>
+          <p className="mt-4 text-meta text-fg-4">아직 예약 내역이 없습니다.</p>
         )}
 
         {reservations !== null && reservations.length > 0 && (
@@ -188,14 +186,14 @@ export function ReservationCenter() {
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <div className="text-sm text-white">
+                    <div className="text-body text-fg-1">
                       {r.reserved_at} · {slotShortLabel(r.time_slot)}
                     </div>
-                    <div className="mt-1 text-xxs text-gray-500">
+                    <div className="mt-1 text-xxs text-fg-4">
                       {TIME_SLOT_LABELS[r.time_slot]}
                     </div>
                     {r.note && (
-                      <p className="mt-2 line-clamp-2 text-xs text-gray-400">
+                      <p className="mt-2 line-clamp-2 text-meta text-fg-3">
                         {r.note}
                       </p>
                     )}
@@ -205,8 +203,8 @@ export function ReservationCenter() {
                       r.status === "confirmed"
                         ? "border border-emerald-500/30 bg-emerald-500/15 text-emerald-300"
                         : r.status === "cancelled"
-                          ? "border border-border-1 bg-glass-1 text-gray-500"
-                          : "border border-yellow-500/30 bg-yellow-500/15 text-yellow-300"
+                          ? "border border-border-1 bg-glass-1 text-fg-4"
+                          : "border border-yellow-500/30 bg-status-warning/15 text-yellow-300"
                     }`}
                   >
                     {STATUS_LABELS[r.status]}
@@ -216,7 +214,7 @@ export function ReservationCenter() {
                   <button
                     type="button"
                     onClick={() => handleCancel(r.id)}
-                    className="mt-3 text-xxs text-gray-500 transition hover:text-gray-300"
+                    className="mt-3 text-xxs text-fg-4 transition hover:text-fg-2"
                   >
                     예약 취소
                   </button>

@@ -31,7 +31,7 @@ export async function POST(
 
   const { data: topic, error: topicError } = await supabase
     .from("experiment_topics")
-    .select("id, week, status, voting_closes_at")
+    .select("id, week, title, status, voting_closes_at")
     .eq("id", topicId)
     .maybeSingle();
 
@@ -74,6 +74,21 @@ export async function POST(
   if (insertError) {
     return NextResponse.json({ error: insertError.message }, { status: 500 });
   }
+
+  // 활동 로그 (best-effort — 실패해도 본 응답 영향 없음)
+  supabase
+    .from("member_activities")
+    .insert({
+      user_id: user.id,
+      type: "vote",
+      target_type: "topic",
+      target_id: topicId,
+      metadata: { topic_title: topic.title, week: topic.week },
+    })
+    .then(({ error }) => {
+      if (error)
+        console.warn("[topics/vote] activity log failed", error.message);
+    });
 
   return NextResponse.json(
     { topic_id: topicId, week: topic.week },

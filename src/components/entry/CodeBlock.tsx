@@ -31,15 +31,15 @@ export function CodeBlock({ content, language }: CodeBlockProps) {
   }, [content]);
 
   return (
-    <div className="relative my-4 rounded-lg border border-border-1 bg-black/40 overflow-hidden">
+    <div className="relative my-4 rounded-lg border border-border-1 bg-bg-base/40 overflow-hidden">
       {/* 헤더: 복사 버튼 */}
       <div className="flex items-center justify-between px-4 py-2 border-b border-border-1 bg-glass-1">
         {language && (
-          <span className="text-xs text-gray-500 font-mono">{language}</span>
+          <span className="text-meta text-fg-4 font-mono">{language}</span>
         )}
         <button
           onClick={handleCopy}
-          className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors"
+          className="inline-flex items-center gap-1.5 text-meta text-fg-3 hover:text-fg-1 transition-colors"
         >
           {copied ? (
             <>
@@ -80,7 +80,7 @@ export function CodeBlock({ content, language }: CodeBlockProps) {
       </div>
 
       {/* 코드 영역 */}
-      <pre className="p-4 overflow-x-auto text-sm text-gray-200">
+      <pre className="p-4 overflow-x-auto text-body text-fg-2">
         <code>{content}</code>
       </pre>
     </div>

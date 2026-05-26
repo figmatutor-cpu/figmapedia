@@ -24,15 +24,15 @@ export function SegmentedControl({
           <button
             key={tab.key}
             onClick={() => onTabChange(tab.key)}
-            className={`h-11 inline-flex items-center px-4 rounded-full text-sm whitespace-nowrap transition-all border ${
+            className={`h-11 inline-flex items-center px-4 rounded-full text-body whitespace-nowrap transition-all border ${
               activeTab === tab.key
-                ? "bg-brand-blue-accent border-brand-blue-accent text-white font-medium"
-                : "bg-glass-1 border-border-1 text-gray-400 hover:text-gray-200 hover:border-border-2"
+                ? "bg-brand-blue-accent border-brand-blue-accent text-fg-1 font-medium"
+                : "bg-glass-1 border-border-1 text-fg-3 hover:text-fg-2 hover:border-border-2"
             }`}
           >
             {tab.label}
             {tab.count !== undefined && (
-              <span className="ml-1.5 text-xs opacity-75">{tab.count}</span>
+              <span className="ml-1.5 text-meta opacity-75">{tab.count}</span>
             )}
           </button>
         ))}

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import type { CommunityPost, CommunityComment } from "@/types";
+import { useMember } from "@/lib/auth/use-member";
 
 function formatDate(dateStr: string) {
   const d = new Date(dateStr);
@@ -30,8 +31,8 @@ function formatRelative(dateStr: string) {
   return d.toLocaleDateString("ko-KR", { month: "short", day: "numeric" });
 }
 
-/* ── 비밀번호 확인 모달 ── */
-function PasswordModal({
+/* ── 삭제 확인 모달 ── */
+function ConfirmDeleteModal({
   title,
   onConfirm,
   onClose,
@@ -39,13 +40,11 @@ function PasswordModal({
   error,
 }: {
   title: string;
-  onConfirm: (password: string) => void;
+  onConfirm: () => void;
   onClose: () => void;
   isLoading: boolean;
   error: string;
 }) {
-  const [password, setPassword] = useState("");
-
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4"
@@ -55,34 +54,22 @@ function PasswordModal({
         className="w-full max-w-sm rounded-xl border border-border-1 bg-modal-bg p-5"
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 className="text-sm font-bold text-white mb-3">{title}</h3>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="비밀번호 입력"
-          className="w-full px-3 py-2.5 rounded-lg bg-glass-1 border border-border-1 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none mb-3"
-          style={{ fontSize: "16px" }}
-          autoFocus
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && password.trim())
-              onConfirm(password.trim());
-          }}
-        />
-        {error && <p className="text-xs text-red-400 mb-3">{error}</p>}
+        <h3 className="text-body font-bold text-fg-1 mb-3">{title}</h3>
+        <p className="text-meta text-fg-3 mb-4">삭제하면 되돌릴 수 없습니다.</p>
+        {error && <p className="text-meta text-red-400 mb-3">{error}</p>}
         <div className="flex gap-2 justify-end">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-lg text-sm text-gray-400 border border-border-1 hover:border-border-2 transition-colors"
+            className="px-4 py-2 rounded-lg text-body text-fg-3 border border-border-1 hover:border-border-2 transition-colors"
           >
             취소
           </button>
           <button
             type="button"
-            onClick={() => password.trim() && onConfirm(password.trim())}
-            disabled={isLoading || !password.trim()}
-            className="px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-bold hover:bg-red-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={onConfirm}
+            disabled={isLoading}
+            className="px-4 py-2 rounded-lg bg-red-600 text-fg-1 text-body font-bold hover:bg-red-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? "삭제 중..." : "삭제"}
           </button>
@@ -96,6 +83,7 @@ export default function CommunityPostPage() {
   const params = useParams();
   const router = useRouter();
   const postId = params.id as string;
+  const { user, isAdmin } = useMember();
 
   const [post, setPost] = useState<CommunityPost | null>(null);
   const [comments, setComments] = useState<CommunityComment[]>([]);
@@ -105,7 +93,6 @@ export default function CommunityPostPage() {
   // Comment form
   const [nickname, setNickname] = useState("");
   const [commentText, setCommentText] = useState("");
-  const [commentPassword, setCommentPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [commentError, setCommentError] = useState("");
 
@@ -138,20 +125,23 @@ export default function CommunityPostPage() {
     fetchPost();
   }, [fetchPost]);
 
+  const canDelete = (ownerId: string | null) =>
+    Boolean(user && ownerId && (user.id === ownerId || isAdmin));
+
   const handleCommentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setCommentError("");
 
+    if (!user) {
+      setCommentError("로그인이 필요합니다.");
+      return;
+    }
     if (!nickname.trim()) {
       setCommentError("닉네임을 입력해주세요.");
       return;
     }
     if (!commentText.trim()) {
       setCommentError("댓글 내용을 입력해주세요.");
-      return;
-    }
-    if (commentPassword.trim().length < 4) {
-      setCommentError("비밀번호는 4자 이상 입력해주세요.");
       return;
     }
 
@@ -164,7 +154,6 @@ export default function CommunityPostPage() {
           post_id: postId,
           nickname: nickname.trim(),
           content: commentText.trim(),
-          password: commentPassword.trim(),
         }),
       });
 
@@ -176,7 +165,6 @@ export default function CommunityPostPage() {
 
       setComments((prev) => [...prev, data.comment]);
       setCommentText("");
-      setCommentPassword("");
     } catch {
       setCommentError("댓글 작성에 실패했습니다.");
     } finally {
@@ -184,7 +172,7 @@ export default function CommunityPostPage() {
     }
   };
 
-  const handleDelete = async (password: string) => {
+  const handleDelete = async () => {
     if (!deleteTarget) return;
     setDeleteLoading(true);
     setDeleteError("");
@@ -195,11 +183,7 @@ export default function CommunityPostPage() {
           ? `/api/community/posts/${deleteTarget.id}`
           : `/api/community/comments/${deleteTarget.id}`;
 
-      const res = await fetch(url, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
-      });
+      const res = await fetch(url, { method: "DELETE" });
 
       const data = await res.json();
       if (!res.ok) {
@@ -239,12 +223,10 @@ export default function CommunityPostPage() {
     return (
       <div className="min-h-screen bg-bg-base pt-28 pb-16 px-4">
         <div className="max-w-3xl mx-auto text-center py-16">
-          <p className="text-lg text-gray-400 mb-4">
-            게시글을 찾을 수 없습니다
-          </p>
+          <p className="text-h3 text-fg-3 mb-4">게시글을 찾을 수 없습니다</p>
           <Link
             href="/community"
-            className="text-sm text-[var(--brand-blue)] hover:underline"
+            className="text-body text-[var(--brand-blue)] hover:underline"
           >
             목록으로 돌아가기
           </Link>
@@ -259,7 +241,7 @@ export default function CommunityPostPage() {
         {/* Back link */}
         <Link
           href="/community"
-          className="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-white transition-colors mb-4"
+          className="inline-flex items-center gap-1 text-body text-fg-3 hover:text-fg-1 transition-colors mb-4"
         >
           <svg
             width="16"
@@ -277,25 +259,27 @@ export default function CommunityPostPage() {
         {/* Post */}
         <article className="rounded-xl border border-border-1 bg-glass-1 p-5 mb-6">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs px-2 py-0.5 rounded-full border border-border-1 text-gray-400">
+            <span className="text-meta px-2 py-0.5 rounded-full border border-border-1 text-fg-3">
               {post.category}
             </span>
-            <button
-              type="button"
-              onClick={() => setDeleteTarget({ type: "post", id: post.id })}
-              className="text-xs text-gray-600 hover:text-red-400 transition-colors"
-            >
-              삭제
-            </button>
+            {canDelete(post.user_id) && (
+              <button
+                type="button"
+                onClick={() => setDeleteTarget({ type: "post", id: post.id })}
+                className="text-meta text-fg-5 hover:text-red-400 transition-colors"
+              >
+                삭제
+              </button>
+            )}
           </div>
-          <h1 className="text-lg font-bold text-white mb-2">{post.title}</h1>
-          <div className="flex items-center gap-2 text-xs text-gray-500 mb-4">
-            <span className="text-gray-300">{post.nickname}</span>
+          <h1 className="text-h3 font-bold text-fg-1 mb-2">{post.title}</h1>
+          <div className="flex items-center gap-2 text-meta text-fg-4 mb-4">
+            <span className="text-fg-2">{post.nickname}</span>
             <span>·</span>
             <span>{formatDate(post.created_at)}</span>
           </div>
           {post.content && (
-            <div className="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap border-t border-border-1 pt-4">
+            <div className="text-body text-fg-2 leading-relaxed whitespace-pre-wrap border-t border-border-1 pt-4">
               {post.content}
             </div>
           )}
@@ -303,7 +287,7 @@ export default function CommunityPostPage() {
 
         {/* Comments */}
         <div className="mb-6">
-          <h2 className="text-base font-medium text-white mb-3">
+          <h2 className="text-body-lg font-medium text-fg-1 mb-3">
             댓글 {comments.length}개
           </h2>
 
@@ -316,24 +300,29 @@ export default function CommunityPostPage() {
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-medium text-gray-300">
+                      <span className="text-meta font-medium text-fg-2">
                         {comment.nickname}
                       </span>
-                      <span className="text-xxs text-gray-600">
+                      <span className="text-xxs text-fg-5">
                         {formatRelative(comment.created_at)}
                       </span>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setDeleteTarget({ type: "comment", id: comment.id })
-                      }
-                      className="text-xxs text-gray-600 hover:text-red-400 transition-colors"
-                    >
-                      삭제
-                    </button>
+                    {canDelete(comment.user_id) && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setDeleteTarget({
+                            type: "comment",
+                            id: comment.id,
+                          })
+                        }
+                        className="text-xxs text-fg-5 hover:text-red-400 transition-colors"
+                      >
+                        삭제
+                      </button>
+                    )}
                   </div>
-                  <p className="text-sm text-gray-400 whitespace-pre-wrap">
+                  <p className="text-body text-fg-3 whitespace-pre-wrap">
                     {comment.content}
                   </p>
                 </div>
@@ -342,60 +331,65 @@ export default function CommunityPostPage() {
           )}
 
           {/* Comment Form */}
-          <form
-            onSubmit={handleCommentSubmit}
-            className="rounded-xl border border-border-1 bg-glass-1 p-4"
-          >
-            <div className="grid grid-cols-2 gap-2 mb-3">
-              <input
-                type="text"
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
-                placeholder="닉네임"
-                maxLength={20}
-                className="w-full min-w-0 px-3 py-2 rounded-lg bg-glass-1 border border-border-1 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
-                style={{ fontSize: "16px" }}
-              />
-              <input
-                type="password"
-                value={commentPassword}
-                onChange={(e) => setCommentPassword(e.target.value)}
-                placeholder="비밀번호 (4자 이상)"
-                maxLength={30}
-                className="w-full min-w-0 px-3 py-2 rounded-lg bg-glass-1 border border-border-1 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
-                style={{ fontSize: "16px" }}
-              />
-            </div>
-            <div className="mb-3">
-              <textarea
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
-                placeholder="댓글을 작성하세요"
-                rows={3}
-                maxLength={2000}
-                className="w-full px-3 py-2 rounded-lg bg-glass-1 border border-border-1 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none resize-y min-h-[60px]"
-                style={{ fontSize: "16px" }}
-              />
-            </div>
-            {commentError && (
-              <p className="text-xs text-red-400 mb-2">{commentError}</p>
-            )}
-            <div className="flex justify-end">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="px-5 py-2.5 rounded-lg bg-white text-bg-base text-sm font-bold shadow-lg shadow-white/20 hover:bg-gray-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+          {user ? (
+            <form
+              onSubmit={handleCommentSubmit}
+              className="rounded-xl border border-border-1 bg-glass-1 p-4"
+            >
+              <div className="mb-3">
+                <input
+                  type="text"
+                  value={nickname}
+                  onChange={(e) => setNickname(e.target.value)}
+                  placeholder="닉네임"
+                  maxLength={20}
+                  className="w-full min-w-0 px-3 py-2 rounded-lg bg-glass-1 border border-border-1 text-body text-fg-1 placeholder:text-fg-5 focus:border-border-3 focus:outline-none"
+                  style={{ fontSize: "16px" }}
+                />
+              </div>
+              <div className="mb-3">
+                <textarea
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                  placeholder="댓글을 작성하세요"
+                  rows={3}
+                  maxLength={2000}
+                  className="w-full px-3 py-2 rounded-lg bg-glass-1 border border-border-1 text-body text-fg-1 placeholder:text-fg-5 focus:border-border-3 focus:outline-none resize-y min-h-[60px]"
+                  style={{ fontSize: "16px" }}
+                />
+              </div>
+              {commentError && (
+                <p className="text-meta text-red-400 mb-2">{commentError}</p>
+              )}
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-5 py-2.5 rounded-lg bg-surface-inverse text-bg-base text-body font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? "작성 중..." : "댓글 작성"}
+                </button>
+              </div>
+            </form>
+          ) : (
+            <div className="rounded-xl border border-border-1 bg-glass-1 p-5 text-center">
+              <p className="text-body text-fg-3 mb-3">
+                댓글을 작성하려면 로그인이 필요합니다.
+              </p>
+              <Link
+                href={`/auth/login?next=${encodeURIComponent(`/community/${postId}`)}`}
+                className="inline-block px-5 py-2.5 rounded-lg bg-surface-inverse text-bg-base text-body font-bold transition-colors"
               >
-                {isSubmitting ? "작성 중..." : "댓글 작성"}
-              </button>
+                로그인
+              </Link>
             </div>
-          </form>
+          )}
         </div>
       </div>
 
-      {/* Delete Password Modal */}
+      {/* Delete Confirm Modal */}
       {deleteTarget && (
-        <PasswordModal
+        <ConfirmDeleteModal
           title={
             deleteTarget.type === "post"
               ? "게시글을 삭제하시겠습니까?"

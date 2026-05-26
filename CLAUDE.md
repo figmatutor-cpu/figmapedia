@@ -43,6 +43,44 @@ Before -> After:
 
 ---
 
+## 운영 모드 (Interactive vs Auto)
+
+### Interactive 모드 (기본)
+
+위의 4단계 계획 보고 → 사용자 승인 → 실행을 그대로 따른다.
+
+### Auto 모드
+
+사용자가 명시적으로 다음 중 하나를 표명한 경우 적용:
+
+- 하네스가 auto-accept(자동 승인) 모드로 가동 중
+- "그냥 진행", "auto", "알아서 해" 등의 지시
+- 사전에 합의된 반복 작업의 후속 실행
+
+Auto 모드 규칙:
+
+1. **계획 보고 생략, 즉시 실행** — 단, 작업 의도를 한 줄로 선언
+2. **작업 종료 시 리포트 필수** — 변경 파일 목록 + 빌드/토큰 체크 결과
+3. **다음 작업은 Auto 모드여도 사전 확인 필수** (위반 시 즉시 중단)
+   - 배포: `npx vercel --prod`, `git push` (특히 `--force`)
+   - 의존성 변경: `npm install`, `npm uninstall`
+   - 파일/폴더 대량 삭제, 광범위 리팩토링
+   - DB 마이그레이션: `supabase apply_migration`, `execute_sql` 쓰기
+   - `.env*` 파일 직접 수정
+   - 외부에 영향: PR/이슈 생성·코멘트, 외부 서비스 호출
+
+> 위험 작업 대부분은 하네스 permissions 의 `ask`/`deny` 로 강제됨.
+> 그래도 Auto 모드 모델은 "지금 이게 위험 작업인가?" 를 항상 자가 점검.
+
+### 자동 가드레일 (하네스 hooks)
+
+- `PostToolUse` (Write/Edit) — `scripts/claude-check-tokens.sh`
+  hex 색상 / Tailwind 기본 클래스 사용 시 exit 2 로 차단
+- `Stop` — `scripts/claude-check-build.sh`
+  `tsc --noEmit` 결과를 stderr 로 보고 (차단하지 않음)
+
+---
+
 ## 프로젝트 개요
 
 **Figmapedia** — 피그마(Figma) 디자인 도구 한국어 지식 베이스

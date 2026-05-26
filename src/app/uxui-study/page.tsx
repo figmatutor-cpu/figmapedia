@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SectionPageLayout } from "@/components/section/SectionPageLayout";
+import { UXUIMagazineLayout } from "@/components/section/UXUIMagazineLayout";
 import { NAV_ITEMS } from "@/lib/navigation";
 import { SECTION_DESCRIPTIONS } from "@/lib/constants";
 import { getCachedSectionData } from "@/lib/section-data-cache";
@@ -31,13 +32,28 @@ export default async function UXUIStudyPage() {
   }
 
   return (
-    <SectionPageLayout
-      title={navItem.label}
-      description={SECTION_DESCRIPTIONS["uxui-study"]}
-      subTabs={navItem.subTabs}
-      showThumbnail
-      cardLayout="grid"
-      initialMultiSectionData={initialMultiSectionData}
-    />
+    <>
+      {/* Desktop (>= xl-nav): 매거진 레이아웃 */}
+      <div className="hidden xl-nav:block">
+        <UXUIMagazineLayout
+          title={navItem.label}
+          description={SECTION_DESCRIPTIONS["uxui-study"]}
+          subTabs={navItem.subTabs ?? []}
+          initialMultiSectionData={initialMultiSectionData ?? {}}
+        />
+      </div>
+
+      {/* Mobile (< xl-nav): 기존 그리드 */}
+      <div className="xl-nav:hidden">
+        <SectionPageLayout
+          title={navItem.label}
+          description={SECTION_DESCRIPTIONS["uxui-study"]}
+          subTabs={navItem.subTabs}
+          showThumbnail
+          cardLayout="grid"
+          initialMultiSectionData={initialMultiSectionData}
+        />
+      </div>
+    </>
   );
 }

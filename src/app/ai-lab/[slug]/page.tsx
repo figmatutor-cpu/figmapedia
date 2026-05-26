@@ -85,12 +85,12 @@ export default async function ExperimentReportPage({
       />
 
       <div className="container mx-auto max-w-4xl px-6 py-10 md:py-14">
-        <nav className="mb-8 flex items-center gap-2 text-xs text-gray-500">
-          <Link href="/ai-lab" className="transition hover:text-gray-300">
+        <nav className="mb-8 flex items-center gap-2 text-meta text-fg-4">
+          <Link href="/ai-lab" className="transition hover:text-fg-2">
             AI 실험실
           </Link>
           <span aria-hidden>›</span>
-          <span className="text-gray-400">리포트</span>
+          <span className="text-fg-3">리포트</span>
         </nav>
 
         <ReportMeta experiment={experiment} />

@@ -54,7 +54,7 @@ export function GlobalSearchOverlay() {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+        className="fixed inset-0 z-40 bg-bg-base/60 backdrop-blur-sm"
         onClick={closeSearch}
       />
 

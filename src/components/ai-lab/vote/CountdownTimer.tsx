@@ -42,14 +42,14 @@ export function CountdownTimer({ targetIso }: CountdownTimerProps) {
   }, [target]);
 
   if (parts.done) {
-    return <span className="text-xs text-gray-500">투표 마감</span>;
+    return <span className="text-meta text-fg-4">투표 마감</span>;
   }
 
   if (parts.days > 0) {
     return (
-      <span className="text-xs text-gray-300">
+      <span className="text-meta text-fg-2">
         마감까지{" "}
-        <strong className="text-white">
+        <strong className="text-fg-1">
           {parts.days}일 {parts.hours}시간
         </strong>
       </span>
@@ -57,9 +57,9 @@ export function CountdownTimer({ targetIso }: CountdownTimerProps) {
   }
 
   return (
-    <span className="text-xs text-gray-300">
+    <span className="text-meta text-fg-2">
       마감까지{" "}
-      <strong className="text-white">
+      <strong className="text-fg-1">
         {String(parts.hours).padStart(2, "0")}:
         {String(parts.minutes).padStart(2, "0")}:
         {String(parts.seconds).padStart(2, "0")}

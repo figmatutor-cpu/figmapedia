@@ -15,6 +15,27 @@
   --breakpoint-xl-nav: 1080px;
   --text-xxs: 10px;
   --text-xxs--line-height: 1.4;
+  /* 의미 기반 타이포 토큰 (Tailwind text-NAME 클래스 자동 생성) */
+  --text-meta: 12px;
+  --text-meta--line-height: 1.4;
+  --text-body: 14px;
+  --text-body--line-height: 1.5;
+  --text-body-lg: 16px;
+  --text-body-lg--line-height: 1.55;
+  --text-h3: 18px;
+  --text-h3--line-height: 1.4;
+  --text-h3-lg: 20px;
+  --text-h3-lg--line-height: 1.35;
+  --text-h2: 24px;
+  --text-h2--line-height: 1.25;
+  --text-h1: 30px;
+  --text-h1--line-height: 1.2;
+  --text-display: 36px;
+  --text-display--line-height: 1.1;
+  --text-display-lg: 48px;
+  --text-display-lg--line-height: 1.05;
+  --text-display-xl: 60px;
+  --text-display-xl--line-height: 1;
   --color-bg-base: #050510;
   --color-brand-blue: #1f3dbc;
   --color-brand-blue-accent: #536dfe;
@@ -48,6 +69,14 @@
   --color-fg-3: var(--fp-fg-3);
   --color-fg-4: var(--fp-fg-4);
   --color-fg-5: var(--fp-fg-5);
+  /* 다크모드 안에서 라이트 배경 위 어두운 텍스트 / 화이트 버튼 배경 */
+  --color-fg-inverse: #111118;
+  --color-surface-inverse: #ffffff;
+  /* 시맨틱 상태 컬러 */
+  --color-status-danger: #ef4444;
+  --color-status-warning: #facc15;
+  --color-status-success: #22c55e;
+  --color-status-info: #3b82f6;
 
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -312,6 +341,15 @@ body {
     var(--fp-border-2),
     transparent
   );
+}
+
+.eyebrow {
+  font-family: var(--font-pretendard), sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--fp-fg-4);
+  text-transform: none;
 }
 
 .fp-display {

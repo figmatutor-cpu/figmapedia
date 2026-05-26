@@ -124,23 +124,23 @@ export function VodAdminPanel() {
         onSubmit={handleSubmit}
         className="space-y-4 rounded-xl border border-border-1 bg-glass-1 p-6"
       >
-        <h2 className="text-base font-semibold text-white">새 VOD 등록</h2>
+        <h2 className="text-body-lg font-semibold text-fg-1">새 VOD 등록</h2>
 
         <label className="block">
-          <span className="text-xs text-gray-400">제목</span>
+          <span className="text-meta text-fg-3">제목</span>
           <input
             type="text"
             required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="예: Week 22 라이브 — Claude 와이어프레임"
-            className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
+            className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-2.5 text-body text-fg-1 placeholder:text-fg-5 focus:border-border-3 focus:outline-none"
           />
         </label>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <label className="block">
-            <span className="text-xs text-gray-400">
+            <span className="text-meta text-fg-3">
               YouTube 영상 ID (11자리)
             </span>
             <input
@@ -150,35 +150,35 @@ export function VodAdminPanel() {
               value={youtubeId}
               onChange={(e) => setYoutubeId(e.target.value)}
               placeholder="예: dQw4w9WgXcQ"
-              className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-2.5 font-mono text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
+              className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-2.5 font-mono text-body text-fg-1 placeholder:text-fg-5 focus:border-border-3 focus:outline-none"
             />
           </label>
           <label className="block">
-            <span className="text-xs text-gray-400">녹화일</span>
+            <span className="text-meta text-fg-3">녹화일</span>
             <input
               type="date"
               required
               value={recordedAt}
               onChange={(e) => setRecordedAt(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-2.5 text-sm text-white focus:border-border-3 focus:outline-none"
+              className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-2.5 text-body text-fg-1 focus:border-border-3 focus:outline-none"
             />
           </label>
         </div>
 
         <label className="block">
-          <span className="text-xs text-gray-400">영상 길이 (초, 선택)</span>
+          <span className="text-meta text-fg-3">영상 길이 (초, 선택)</span>
           <input
             type="number"
             min="0"
             value={duration}
             onChange={(e) => setDuration(e.target.value)}
             placeholder="예: 3600"
-            className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none md:max-w-xs"
+            className="mt-1 w-full rounded-lg border border-border-1 bg-glass-1 px-4 py-2.5 text-body text-fg-1 placeholder:text-fg-5 focus:border-border-3 focus:outline-none md:max-w-xs"
           />
         </label>
 
         {submitError && (
-          <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300">
+          <div className="rounded-lg border border-red-500/30 bg-status-danger/10 p-3 text-meta text-red-300">
             {submitError}
           </div>
         )}
@@ -186,27 +186,27 @@ export function VodAdminPanel() {
         <button
           type="submit"
           disabled={submitting}
-          className="rounded-full bg-brand-blue px-5 py-2.5 text-sm font-medium text-white transition hover:bg-brand-blue-accent disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-full bg-brand-blue px-5 py-2.5 text-body font-medium text-fg-1 transition hover:bg-brand-blue-accent disabled:cursor-not-allowed disabled:opacity-50"
         >
           {submitting ? "등록 중..." : "등록"}
         </button>
       </form>
 
       <section>
-        <h2 className="mb-4 text-base font-semibold text-white">전체 VOD</h2>
+        <h2 className="mb-4 text-body-lg font-semibold text-fg-1">전체 VOD</h2>
 
         {loadError && (
-          <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300">
+          <div className="mb-4 rounded-lg border border-red-500/30 bg-status-danger/10 p-3 text-meta text-red-300">
             {loadError}
           </div>
         )}
 
         {vods === null && !loadError && (
-          <p className="text-xs text-gray-500">불러오는 중...</p>
+          <p className="text-meta text-fg-4">불러오는 중...</p>
         )}
 
         {vods?.length === 0 && (
-          <p className="text-xs text-gray-500">등록된 VOD가 없습니다.</p>
+          <p className="text-meta text-fg-4">등록된 VOD가 없습니다.</p>
         )}
 
         {vods && vods.length > 0 && (
@@ -218,7 +218,7 @@ export function VodAdminPanel() {
               >
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-2 text-xxs text-gray-500">
+                    <div className="flex flex-wrap items-center gap-2 text-xxs text-fg-4">
                       <span>{v.recorded_at}</span>
                       <span aria-hidden>·</span>
                       <span>{formatDuration(v.duration_seconds)}</span>
@@ -227,7 +227,7 @@ export function VodAdminPanel() {
                         {v.youtube_id}
                       </code>
                     </div>
-                    <h3 className="mt-2 text-base font-semibold text-white">
+                    <h3 className="mt-2 text-body-lg font-semibold text-fg-1">
                       {v.title}
                     </h3>
                   </div>
@@ -235,7 +235,7 @@ export function VodAdminPanel() {
                     className={`flex-shrink-0 rounded-full border px-2.5 py-1 text-xxs ${
                       v.is_published
                         ? "border-emerald-500/40 bg-emerald-500/15 text-emerald-300"
-                        : "border-border-1 bg-glass-1 text-gray-400"
+                        : "border-border-1 bg-glass-1 text-fg-3"
                     }`}
                   >
                     {v.is_published ? "공개" : "비공개"}
@@ -247,7 +247,7 @@ export function VodAdminPanel() {
                     type="button"
                     onClick={() => handleTogglePublish(v.id, v.is_published)}
                     disabled={pendingActionId === v.id}
-                    className="rounded-full border border-border-1 bg-glass-1 px-3 py-1.5 text-xxs font-medium text-gray-300 transition hover:bg-glass-2 disabled:opacity-50"
+                    className="rounded-full border border-border-1 bg-glass-1 px-3 py-1.5 text-xxs font-medium text-fg-2 transition hover:bg-glass-2 disabled:opacity-50"
                   >
                     {v.is_published ? "비공개로 전환" : "공개로 전환"}
                   </button>
@@ -255,7 +255,7 @@ export function VodAdminPanel() {
                     href={`https://www.youtube.com/watch?v=${encodeURIComponent(v.youtube_id)}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-full border border-border-1 bg-glass-1 px-3 py-1.5 text-xxs font-medium text-gray-300 transition hover:bg-glass-2"
+                    className="rounded-full border border-border-1 bg-glass-1 px-3 py-1.5 text-xxs font-medium text-fg-2 transition hover:bg-glass-2"
                   >
                     YouTube에서 보기 →
                   </a>
@@ -263,7 +263,7 @@ export function VodAdminPanel() {
                     type="button"
                     onClick={() => handleDelete(v.id)}
                     disabled={pendingActionId === v.id}
-                    className="rounded-full border border-red-500/30 bg-transparent px-3 py-1.5 text-xxs text-red-300 transition hover:bg-red-500/10 disabled:opacity-50"
+                    className="rounded-full border border-red-500/30 bg-transparent px-3 py-1.5 text-xxs text-red-300 transition hover:bg-status-danger/10 disabled:opacity-50"
                   >
                     삭제
                   </button>

@@ -49,17 +49,17 @@ export function SponsorBanner({ className }: SponsorBannerProps) {
         href={SPONSOR_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center gap-3 px-4 py-3 pr-12 text-sm text-gray-200 sm:pr-14"
+        className="flex items-center gap-3 px-4 py-3 pr-12 text-body text-fg-2 sm:pr-14"
       >
         <span className="flex-1 text-left sm:text-center">
-          <span className="font-medium text-white">
+          <span className="font-medium text-fg-1">
             월간 조회수 9만회, 활성 유저 2.5만명!
           </span>{" "}
-          <span className="text-gray-300">
+          <span className="text-fg-2">
             피그마 피디아의 첫 광고주가 되어보세요.
           </span>
         </span>
-        <span className="hidden shrink-0 items-center justify-center rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-black transition-colors hover:bg-gray-100 sm:inline-flex">
+        <span className="hidden shrink-0 items-center justify-center rounded-full bg-surface-inverse px-3 py-1.5 text-meta font-semibold text-fg-inverse transition-colors hover:bg-surface-inverse sm:inline-flex">
           신청하기
         </span>
       </a>
@@ -67,7 +67,7 @@ export function SponsorBanner({ className }: SponsorBannerProps) {
         type="button"
         onClick={handleClose}
         aria-label="배너 닫기"
-        className="absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center justify-center w-9 h-9 rounded-full text-gray-400 hover:text-white hover:bg-glass-3 transition-colors"
+        className="absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center justify-center w-9 h-9 rounded-full text-fg-3 hover:text-fg-1 hover:bg-glass-3 transition-colors"
       >
         <X className="w-4 h-4" strokeWidth={2} />
       </button>

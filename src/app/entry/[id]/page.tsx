@@ -148,7 +148,7 @@ export default async function EntryPage({
     <article className="mx-auto max-w-3xl px-4 pt-28 pb-16 min-h-screen bg-bg-base">
       <Link
         href="/"
-        className="inline-flex items-center text-sm text-gray-400 hover:text-white mb-8 transition-colors"
+        className="inline-flex items-center text-body text-fg-3 hover:text-fg-1 mb-8 transition-colors"
       >
         <svg
           className="w-4 h-4 mr-1"
@@ -172,7 +172,7 @@ export default async function EntryPage({
             <Badge key={cat} category={cat} />
           ))}
         </div>
-        <h1 className="text-3xl font-bold text-white mb-3">{entry.title}</h1>
+        <h1 className="text-h1 font-bold text-fg-1 mb-3">{entry.title}</h1>
         <EntryMeta
           author={entry.author}
           publishedDate={entry.publishedDate}
@@ -189,7 +189,7 @@ export default async function EntryPage({
             className="flex items-center gap-3 p-4 bg-glass-1 border border-border-1 rounded-xl hover:border-border-2 hover:bg-glass-2 transition-all"
           >
             <svg
-              className="w-5 h-5 text-gray-400 shrink-0"
+              className="w-5 h-5 text-fg-3 shrink-0"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -201,7 +201,7 @@ export default async function EntryPage({
                 d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
               />
             </svg>
-            <span className="text-sm text-gray-300 truncate">{entry.link}</span>
+            <span className="text-body text-fg-2 truncate">{entry.link}</span>
           </a>
         ) : (
           <NotionBlockRenderer blocks={blocks} />

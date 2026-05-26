@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AiLabPromoCard } from "@/components/ai-lab/AiLabPromoCard";
 import { SectionPageLayout } from "@/components/section/SectionPageLayout";
+import { PromptPlaygroundLayout } from "@/components/section/PromptPlaygroundLayout";
 import { NAV_ITEMS } from "@/lib/navigation";
 import { SECTION_DESCRIPTIONS } from "@/lib/constants";
 import { getCachedSectionData } from "@/lib/section-data-cache";
@@ -29,18 +30,31 @@ export default async function PromptPediaPage() {
 
   return (
     <>
-      <SectionPageLayout
-        title={navItem.label}
-        description={SECTION_DESCRIPTIONS["prompt-pedia"]}
-        sectionDataKey={navItem.sectionDataKey}
-        subTabs={navItem.subTabs}
-        showThumbnail
-        cardLayout="grid"
-        initialSectionItems={initialSectionItems}
-      />
-      <section className="mx-auto max-w-6xl px-4 pb-16">
-        <AiLabPromoCard />
-      </section>
+      {/* Desktop (>= xl-nav): Playground 분할 */}
+      <div className="hidden xl-nav:block">
+        <PromptPlaygroundLayout
+          title={navItem.label}
+          description={SECTION_DESCRIPTIONS["prompt-pedia"]}
+          subTabs={navItem.subTabs ?? []}
+          initialSectionItems={initialSectionItems ?? []}
+        />
+      </div>
+
+      {/* Mobile (< xl-nav): 기존 그리드 + AI Lab promo */}
+      <div className="xl-nav:hidden">
+        <SectionPageLayout
+          title={navItem.label}
+          description={SECTION_DESCRIPTIONS["prompt-pedia"]}
+          sectionDataKey={navItem.sectionDataKey}
+          subTabs={navItem.subTabs}
+          showThumbnail
+          cardLayout="grid"
+          initialSectionItems={initialSectionItems}
+        />
+        <section className="mx-auto max-w-6xl px-4 pb-16">
+          <AiLabPromoCard />
+        </section>
+      </div>
     </>
   );
 }

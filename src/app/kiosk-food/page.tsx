@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SectionPageLayout } from "@/components/section/SectionPageLayout";
+import { KioskMasonryLayout } from "@/components/section/KioskMasonryLayout";
 import { NAV_ITEMS } from "@/lib/navigation";
 import { SECTION_DESCRIPTIONS } from "@/lib/constants";
 import { getCachedSectionData } from "@/lib/section-data-cache";
@@ -27,14 +28,37 @@ export default async function KioskFoodPage() {
   }
 
   return (
-    <SectionPageLayout
-      title={navItem.label}
-      description={SECTION_DESCRIPTIONS["kiosk-food"]}
-      sectionDataKey={navItem.sectionDataKey}
-      subTabs={navItem.subTabs}
-      showThumbnail
-      cardLayout="grid"
-      initialSectionItems={initialSectionItems}
-    />
+    <>
+      {/* Desktop (>= xl-nav): Masonry */}
+      <div className="hidden xl-nav:block">
+        <KioskMasonryLayout
+          title={navItem.label}
+          description={SECTION_DESCRIPTIONS["kiosk-food"]}
+          eyebrow="키오스크 갤러리"
+          heroTitle={
+            <>
+              실제 운영 중인
+              <br />
+              키오스크 110+ 화면
+            </>
+          }
+          subTabs={navItem.subTabs}
+          initialSectionItems={initialSectionItems ?? []}
+        />
+      </div>
+
+      {/* Mobile (< xl-nav): 기존 그리드 */}
+      <div className="xl-nav:hidden">
+        <SectionPageLayout
+          title={navItem.label}
+          description={SECTION_DESCRIPTIONS["kiosk-food"]}
+          sectionDataKey={navItem.sectionDataKey}
+          subTabs={navItem.subTabs}
+          showThumbnail
+          cardLayout="grid"
+          initialSectionItems={initialSectionItems}
+        />
+      </div>
+    </>
   );
 }

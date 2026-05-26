@@ -64,7 +64,7 @@ export function ResourceCard({
       rel="noopener noreferrer"
       className={`group flex flex-col rounded-xl border overflow-hidden transition-all ${
         resource.category === "template"
-          ? "border-yellow-400/20 bg-yellow-400/[0.03] hover:border-yellow-400/40 hover:bg-yellow-400/[0.06]"
+          ? "border-yellow-400/20 bg-status-warning/[0.03] hover:border-yellow-400/40 hover:bg-status-warning/[0.06]"
           : "border-border-1 bg-glass-1 hover:border-border-2 hover:bg-glass-2"
       }`}
     >
@@ -95,7 +95,7 @@ export function ResourceCard({
             className={`w-full h-full flex items-center justify-center ${fetched ? "" : "animate-pulse bg-glass-1"}`}
           >
             <svg
-              className="w-10 h-10 text-white/15"
+              className="w-10 h-10 text-fg-1/15"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -114,15 +114,15 @@ export function ResourceCard({
       <div className="p-4 flex-1 flex flex-col">
         <div className="flex items-start justify-between gap-2">
           <h3
-            className={`text-sm font-medium transition-colors line-clamp-2 ${
+            className={`text-body font-medium transition-colors line-clamp-2 ${
               resource.category === "template"
-                ? "text-gray-100 group-hover:text-yellow-300"
-                : "text-gray-200 group-hover:text-brand-blue"
+                ? "text-fg-1 group-hover:text-yellow-300"
+                : "text-fg-2 group-hover:text-brand-blue"
             }`}
           >
             {resource.title}
           </h3>
-          <ExternalLink className="w-3.5 h-3.5 text-gray-600 shrink-0 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <ExternalLink className="w-3.5 h-3.5 text-fg-5 shrink-0 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
         <div className="mt-auto pt-2">
           <Badge

@@ -133,7 +133,7 @@ export function FloatingButton() {
         {/* 데스크탑: 연필 아이콘 + 글쓰기 텍스트 */}
         <Link
           href="/community/write"
-          className="hidden sm:inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white text-bg-base text-sm font-bold shadow-lg shadow-white/20 hover:bg-gray-100 transition-all hover:scale-105 active:scale-95"
+          className="hidden sm:inline-flex items-center gap-2 px-5 py-3 rounded-full bg-surface-inverse text-bg-base text-body font-bold shadow-lg shadow-white/20 hover:bg-surface-inverse transition-all hover:scale-105 active:scale-95"
         >
           <svg
             width="18"
@@ -154,7 +154,7 @@ export function FloatingButton() {
         <Link
           href="/community/write"
           aria-label="글쓰기"
-          className="sm:hidden flex items-center justify-center size-14 rounded-full bg-white text-bg-base shadow-lg shadow-white/20 hover:bg-gray-100 transition-all active:scale-95"
+          className="sm:hidden flex items-center justify-center size-14 rounded-full bg-surface-inverse text-bg-base shadow-lg shadow-white/20 hover:bg-surface-inverse transition-all active:scale-95"
         >
           <svg
             width="22"
@@ -188,12 +188,12 @@ export function FloatingButton() {
             <div className="flex justify-end mb-1">
               <button
                 onClick={() => setOpen(false)}
-                className="text-white/60 hover:text-white transition-colors p-0.5"
+                className="text-fg-1/60 hover:text-fg-1 transition-colors p-0.5"
               >
                 <CloseIcon />
               </button>
             </div>
-            <p className="text-white text-lg font-bold leading-[1.4]">
+            <p className="text-fg-1 text-h3 font-bold leading-[1.4]">
               피그마 피디아
               <br />
               사이트에 오신걸 환영합니다.👋
@@ -204,7 +204,7 @@ export function FloatingButton() {
           <div className="bg-[#202128] px-4 pt-4 pb-6 flex flex-col gap-4">
             {/* 운영진 문의 */}
             <div>
-              <p className="text-white text-[15px] font-bold mb-2 ml-1">
+              <p className="text-fg-1 text-[15px] font-bold mb-2 ml-1">
                 피그마 피디아 운영진 문의 채널
               </p>
               <a
@@ -213,7 +213,7 @@ export function FloatingButton() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 bg-[#2a2a36] rounded-xl p-3 hover:bg-[#333340] transition-colors group"
               >
-                <span className="flex-1 text-[15px] text-white">
+                <span className="flex-1 text-[15px] text-fg-1">
                   홍보 및 제휴 문의하기
                 </span>
                 <ChevronRight />
@@ -222,7 +222,7 @@ export function FloatingButton() {
 
             {/* 오픈카톡방 */}
             <div>
-              <p className="text-white text-[15px] font-bold mb-2 ml-1">
+              <p className="text-fg-1 text-[15px] font-bold mb-2 ml-1">
                 피그마 피디아 오픈 카톡방
               </p>
               <a
@@ -231,7 +231,7 @@ export function FloatingButton() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 bg-[#2a2a36] rounded-xl p-3 hover:bg-[#333340] transition-colors group"
               >
-                <span className="flex-1 text-[15px] text-white">
+                <span className="flex-1 text-[15px] text-fg-1">
                   참여하기(pw:figma)
                 </span>
                 <ChevronRight />
@@ -240,7 +240,7 @@ export function FloatingButton() {
 
             {/* 주간 라이브 */}
             <div>
-              <p className="text-white text-[15px] font-bold mb-2 ml-1">
+              <p className="text-fg-1 text-[15px] font-bold mb-2 ml-1">
                 주간 라이브
               </p>
               <a
@@ -249,7 +249,7 @@ export function FloatingButton() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 bg-[#2a2a36] rounded-xl p-3 hover:bg-[#333340] transition-colors group"
               >
-                <span className="flex-1 text-[15px] text-white">
+                <span className="flex-1 text-[15px] text-fg-1">
                   라이브 보러가기
                 </span>
                 <ChevronRight />
@@ -258,7 +258,7 @@ export function FloatingButton() {
 
             {/* 후원하기 */}
             <div>
-              <p className="text-white text-[15px] font-bold mb-2 ml-1">
+              <p className="text-fg-1 text-[15px] font-bold mb-2 ml-1">
                 후원하기
               </p>
               <a
@@ -267,7 +267,7 @@ export function FloatingButton() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 bg-[#2a2a36] rounded-xl p-3 hover:bg-[#333340] transition-colors group"
               >
-                <span className="flex-1 text-[15px] text-white">
+                <span className="flex-1 text-[15px] text-fg-1">
                   피그마 피디아 팀에게 커피 사기
                 </span>
                 <ChevronRight />
@@ -275,7 +275,7 @@ export function FloatingButton() {
             </div>
 
             {/* 푸터 */}
-            <p className="text-center text-[10px] text-gray-400 tracking-wide">
+            <p className="text-center text-[10px] text-fg-3 tracking-wide">
               Powered by Figmapedia
             </p>
           </div>
@@ -293,7 +293,7 @@ export function FloatingButton() {
         )}
         <button
           onClick={() => setOpen((v) => !v)}
-          className="relative flex items-center justify-center rounded-full bg-white text-bg-base shadow-lg shadow-white/20 transition-transform hover:scale-110 active:scale-95 size-16"
+          className="relative flex items-center justify-center rounded-full bg-surface-inverse text-bg-base shadow-lg shadow-white/20 transition-transform hover:scale-110 active:scale-95 size-16"
         >
           <span className="text-center font-bold leading-tight text-[13px] select-none">
             Figma

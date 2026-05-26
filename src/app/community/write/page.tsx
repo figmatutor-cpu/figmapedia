@@ -12,7 +12,6 @@ export default function CommunityWritePage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("일반");
-  const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
@@ -36,10 +35,6 @@ export default function CommunityWritePage() {
       setError("내용은 최소 30자 이상 입력해주세요.");
       return;
     }
-    if (password.trim().length < 4) {
-      setError("비밀번호는 4자 이상 입력해주세요.");
-      return;
-    }
 
     setIsSubmitting(true);
     try {
@@ -51,7 +46,6 @@ export default function CommunityWritePage() {
           title: title.trim(),
           content: content.trim(),
           category,
-          password: password.trim(),
         }),
       });
 
@@ -73,10 +67,10 @@ export default function CommunityWritePage() {
     <div className="min-h-screen bg-bg-base pt-28 pb-16 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-xl font-bold text-white">글쓰기</h1>
+          <h1 className="text-h3-lg font-bold text-fg-1">글쓰기</h1>
           <Link
             href="/community"
-            className="text-sm text-gray-400 hover:text-white transition-colors"
+            className="text-body text-fg-3 hover:text-fg-1 transition-colors"
           >
             취소
           </Link>
@@ -85,35 +79,31 @@ export default function CommunityWritePage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* 닉네임 */}
           <div>
-            <label className="block text-xs text-gray-400 mb-1.5">
-              닉네임 *
-            </label>
+            <label className="block text-meta text-fg-3 mb-1.5">닉네임 *</label>
             <input
               type="text"
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
               placeholder="닉네임을 입력하세요"
               maxLength={20}
-              className="w-full px-3 py-2.5 rounded-lg bg-glass-1 border border-border-1 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
+              className="w-full px-3 py-2.5 rounded-lg bg-glass-1 border border-border-1 text-body text-fg-1 placeholder:text-fg-5 focus:border-border-3 focus:outline-none"
               style={{ fontSize: "16px" }}
             />
           </div>
 
           {/* 카테고리 */}
           <div>
-            <label className="block text-xs text-gray-400 mb-1.5">
-              카테고리
-            </label>
+            <label className="block text-meta text-fg-3 mb-1.5">카테고리</label>
             <div className="flex gap-2">
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat}
                   type="button"
                   onClick={() => setCategory(cat)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                  className={`px-3 py-1.5 rounded-full text-meta font-medium border transition-colors ${
                     category === cat
-                      ? "bg-brand-blue-accent border-brand-blue-accent text-white"
-                      : "bg-glass-1 border-border-1 text-gray-400 hover:text-gray-200 hover:border-border-2"
+                      ? "bg-brand-blue-accent border-brand-blue-accent text-fg-1"
+                      : "bg-glass-1 border-border-1 text-fg-3 hover:text-fg-2 hover:border-border-2"
                   }`}
                 >
                   {cat}
@@ -124,22 +114,22 @@ export default function CommunityWritePage() {
 
           {/* 제목 */}
           <div>
-            <label className="block text-xs text-gray-400 mb-1.5">제목 *</label>
+            <label className="block text-meta text-fg-3 mb-1.5">제목 *</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="제목을 입력하세요"
               maxLength={200}
-              className="w-full px-3 py-2.5 rounded-lg bg-glass-1 border border-border-1 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
+              className="w-full px-3 py-2.5 rounded-lg bg-glass-1 border border-border-1 text-body text-fg-1 placeholder:text-fg-5 focus:border-border-3 focus:outline-none"
               style={{ fontSize: "16px" }}
             />
           </div>
 
           {/* 내용 */}
           <div>
-            <label className="block text-xs text-gray-400 mb-1.5">
-              내용 * <span className="text-gray-600">(최소 30자)</span>
+            <label className="block text-meta text-fg-3 mb-1.5">
+              내용 * <span className="text-fg-5">(최소 30자)</span>
             </label>
             <textarea
               value={content}
@@ -147,40 +137,24 @@ export default function CommunityWritePage() {
               placeholder="내용을 입력하세요 (최소 30자)"
               rows={10}
               maxLength={10000}
-              className="w-full px-3 py-2.5 rounded-lg bg-glass-1 border border-border-1 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none resize-y min-h-[120px]"
+              className="w-full px-3 py-2.5 rounded-lg bg-glass-1 border border-border-1 text-body text-fg-1 placeholder:text-fg-5 focus:border-border-3 focus:outline-none resize-y min-h-[120px]"
               style={{ fontSize: "16px" }}
             />
             <p
-              className={`text-xxs mt-1 text-right ${content.trim().length > 0 && content.trim().length < 30 ? "text-red-400" : "text-gray-600"}`}
+              className={`text-xxs mt-1 text-right ${content.trim().length > 0 && content.trim().length < 30 ? "text-red-400" : "text-fg-5"}`}
             >
               {content.trim().length} / 10000
             </p>
           </div>
 
-          {/* 비밀번호 */}
-          <div>
-            <label className="block text-xs text-gray-400 mb-1.5">
-              비밀번호 * <span className="text-gray-600">(삭제 시 필요)</span>
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="비밀번호 (4자 이상)"
-              maxLength={30}
-              className="w-full px-3 py-2.5 rounded-lg bg-glass-1 border border-border-1 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
-              style={{ fontSize: "16px" }}
-            />
-          </div>
-
           {/* Error */}
-          {error && <p className="text-sm text-red-400">{error}</p>}
+          {error && <p className="text-body text-red-400">{error}</p>}
 
           {/* Submit */}
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 rounded-lg bg-white text-bg-base text-sm font-bold shadow-lg shadow-white/20 hover:bg-gray-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+            className="w-full py-3 rounded-lg bg-surface-inverse text-bg-base text-body font-bold shadow-lg shadow-white/20 hover:bg-surface-inverse transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
           >
             {isSubmitting ? "작성 중..." : "작성하기"}
           </button>

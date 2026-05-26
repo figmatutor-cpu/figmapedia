@@ -15,7 +15,7 @@ function Section({
 }) {
   return (
     <section className="space-y-3">
-      <h2 className="text-white text-lg font-semibold">{title}</h2>
+      <h2 className="text-fg-1 text-h3 font-semibold">{title}</h2>
       <div className="space-y-2">{children}</div>
     </section>
   );
@@ -34,7 +34,7 @@ export default function CopyrightPage() {
           <li>
             본 사이트의 콘텐츠를 비상업적 목적(개인 학습, 사내 공유 등)으로
             이용할 경우 반드시{" "}
-            <strong className="text-white">
+            <strong className="text-fg-1">
               출처(피그마피디아 웹사이트 링크)
             </strong>
             를 명시해야 합니다.
@@ -50,11 +50,11 @@ export default function CopyrightPage() {
         <ol className="list-decimal pl-5 space-y-1">
           <li>
             Figma의 명칭, 로고 및 관련 상표는{" "}
-            <strong className="text-white">Figma, Inc.</strong>의 등록
+            <strong className="text-fg-1">Figma, Inc.</strong>의 등록
             상표입니다.
           </li>
           <li>
-            <strong className="text-white">피그마피디아(Figmapedia)</strong>는
+            <strong className="text-fg-1">피그마피디아(Figmapedia)</strong>는
             디자이너들을 위한 독립적인 지식 공유 커뮤니티 및 정보 아카이브이며,
             Figma, Inc.와 공식적인 제휴 관계이거나 공식적으로 승인받은
             웹사이트가 아님을 밝힙니다.

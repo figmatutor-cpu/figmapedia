@@ -70,7 +70,7 @@ export function FilterModal({
         className={`w-9 h-9 inline-flex items-center justify-center rounded-lg border transition-colors ${
           selected.length > 0 || isOpen
             ? "bg-glass-3 border-border-2 text-[rgba(153,161,175,1)]"
-            : "bg-glass-1 border-border-1 text-gray-400 hover:text-white hover:border-border-2"
+            : "bg-glass-1 border-border-1 text-fg-3 hover:text-fg-1 hover:border-border-2"
         }`}
       >
         <SlidersHorizontal className="w-4 h-4" />
@@ -84,13 +84,13 @@ export function FilterModal({
         >
           {/* 헤더 */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-border-1">
-            <span className="text-sm font-medium text-white">
+            <span className="text-body font-medium text-fg-1">
               카테고리 필터
             </span>
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-fg-3 hover:text-fg-1 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -100,7 +100,7 @@ export function FilterModal({
           <div className="px-3 pt-3 pb-2">
             <div className="flex flex-wrap items-center gap-1.5 min-h-10 px-3 py-1.5 rounded-lg bg-glass-1 border border-border-1 focus-within:border-border-3 focus-within:bg-glass-2 transition-colors">
               {selected.length === 0 && (
-                <Search className="w-3.5 h-3.5 text-gray-500 shrink-0" />
+                <Search className="w-3.5 h-3.5 text-fg-4 shrink-0" />
               )}
               {selected.map((cat) => {
                 const badgeColor =
@@ -108,7 +108,7 @@ export function FilterModal({
                 return (
                   <span
                     key={cat}
-                    className={`shrink-0 inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded text-xs font-medium ${badgeColor}`}
+                    className={`shrink-0 inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded text-meta font-medium ${badgeColor}`}
                   >
                     {cat}
                     <button
@@ -128,7 +128,7 @@ export function FilterModal({
                 placeholder={
                   selected.length > 0 ? "" : "카테고리 검색 또는 선택"
                 }
-                className="flex-1 min-w-[3rem] bg-transparent text-sm text-gray-200 placeholder-gray-500 outline-none"
+                className="flex-1 min-w-[3rem] bg-transparent text-body text-fg-2 placeholder-gray-500 outline-none"
               />
             </div>
           </div>
@@ -137,7 +137,7 @@ export function FilterModal({
           <div className="px-2 pb-3">
             <div className="max-h-[260px] overflow-y-auto custom-scrollbar pr-1">
               {filteredCategories.length === 0 ? (
-                <p className="py-4 text-center text-xs text-gray-500">
+                <p className="py-4 text-center text-meta text-fg-4">
                   결과 없음
                 </p>
               ) : (
@@ -163,14 +163,14 @@ export function FilterModal({
                       >
                         {isChecked && (
                           <Check
-                            className="w-2.5 h-2.5 text-white"
+                            className="w-2.5 h-2.5 text-fg-1"
                             strokeWidth={3}
                           />
                         )}
                       </div>
                       {/* 카테고리 뱃지 — CATEGORY_COLORS 전체 클래스(bg + text) 적용 */}
                       <span
-                        className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium transition-opacity ${badgeColor} ${
+                        className={`inline-flex items-center px-2 py-0.5 rounded text-meta font-medium transition-opacity ${badgeColor} ${
                           isChecked
                             ? "opacity-100"
                             : "opacity-60 group-hover:opacity-90"

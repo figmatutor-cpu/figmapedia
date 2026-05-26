@@ -90,6 +90,7 @@ export interface EntryDetail extends Entry {
 
 export interface CommunityPost {
   id: string;
+  user_id: string | null;
   nickname: string;
   title: string;
   content: string;
@@ -104,6 +105,7 @@ export interface CommunityPost {
 export interface CommunityComment {
   id: string;
   post_id: string;
+  user_id: string | null;
   nickname: string;
   content: string;
   created_at: string;

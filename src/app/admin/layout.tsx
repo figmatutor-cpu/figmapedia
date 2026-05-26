@@ -19,7 +19,7 @@ export default function AdminLayout({
           <p className="text-xxs uppercase tracking-widest text-brand-blue-light">
             Admin
           </p>
-          <h1 className="mt-1 text-2xl font-semibold text-white md:text-3xl">
+          <h1 className="mt-1 text-h2 font-semibold text-fg-1 md:text-h1">
             운영자 페이지
           </h1>
         </header>

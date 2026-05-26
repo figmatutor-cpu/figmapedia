@@ -1,29 +1,29 @@
 export const CATEGORY_COLORS: Record<string, string> = {
-  "기초 인터페이스": "bg-yellow-500/15 text-yellow-400",
-  베리어블: "bg-gray-500/15 text-gray-400",
+  "기초 인터페이스": "bg-status-warning/15 text-yellow-400",
+  베리어블: "bg-fg-4/15 text-fg-3",
   피그잼: "bg-purple-500/15 text-purple-400",
-  "피그마 소식 업데이트 ": "bg-blue-500/15 text-blue-400",
+  "피그마 소식 업데이트 ": "bg-status-info/15 text-blue-400",
   데일리콘텐츠: "bg-violet-500/15 text-violet-400",
   "소소한 꿀팁": "bg-pink-500/15 text-pink-400",
-  플러그인: "bg-green-500/15 text-green-400",
-  프로토타이핑: "bg-orange-500/15 text-orange-400",
-  컴포넌트: "bg-red-500/15 text-red-400",
+  플러그인: "bg-status-success/15 text-green-400",
+  프로토타이핑: "bg-status-warning/15 text-orange-400",
+  컴포넌트: "bg-status-danger/15 text-red-400",
   "오토 레이아웃 ": "bg-amber-500/15 text-amber-400",
-  데브모드: "bg-orange-500/15 text-orange-400",
-  피그마사이트: "bg-blue-500/15 text-blue-400",
-  "피그마 슬라이드": "bg-yellow-500/15 text-yellow-400",
+  데브모드: "bg-status-warning/15 text-orange-400",
+  피그마사이트: "bg-status-info/15 text-blue-400",
+  "피그마 슬라이드": "bg-status-warning/15 text-yellow-400",
   이벤트: "bg-pink-500/15 text-pink-400",
   업데이트: "bg-amber-500/15 text-amber-400",
-  피그마메이크: "bg-gray-500/15 text-gray-400",
+  피그마메이크: "bg-fg-4/15 text-fg-3",
   피그마버즈: "bg-pink-500/15 text-pink-400",
   리소스: "bg-emerald-500/15 text-emerald-400",
-  템플릿: "bg-yellow-500/15 text-yellow-400",
+  템플릿: "bg-status-warning/15 text-yellow-400",
   수업자료: "bg-cyan-500/15 text-cyan-400",
   "주간 라이브": "bg-rose-500/15 text-rose-400",
   "Figma A to Z": "bg-indigo-500/15 text-indigo-400",
 };
 
-export const DEFAULT_CATEGORY_COLOR = "bg-gray-500/15 text-gray-400";
+export const DEFAULT_CATEGORY_COLOR = "bg-fg-4/15 text-fg-3";
 
 // 검색 UI
 export const SEARCH_PLACEHOLDER = "검색어를 입력하세요 ";

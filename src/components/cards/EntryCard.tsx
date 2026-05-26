@@ -85,7 +85,7 @@ export function EntryCard({
             </>
           ) : (
             <svg
-              className="w-6 h-6 text-white/20"
+              className="w-6 h-6 text-fg-1/20"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -110,12 +110,12 @@ export function EntryCard({
           </div>
         )}
         <h3
-          className={`font-semibold text-gray-100 transition-colors wrap-break-word ${!isShortcut && !nonClickable ? "group-hover:text-brand-blue" : ""}`}
+          className={`font-semibold text-fg-1 transition-colors wrap-break-word ${!isShortcut && !nonClickable ? "group-hover:text-brand-blue" : ""}`}
         >
           {entry.title}
         </h3>
         {nonClickable && entry.author && (
-          <p className="text-sm text-gray-400 mt-1.5 line-clamp-2">
+          <p className="text-body text-fg-3 mt-1.5 line-clamp-2">
             {entry.author}
           </p>
         )}
@@ -131,10 +131,10 @@ export function EntryCard({
       {entry.shortcut && (
         <div className="flex items-center gap-2 shrink-0">
           <span
-            className={`px-3 py-1.5 rounded-lg bg-glass-2 border text-sm font-mono whitespace-normal break-all sm:whitespace-nowrap sm:break-normal transition-colors ${
+            className={`px-3 py-1.5 rounded-lg bg-glass-2 border text-body font-mono whitespace-normal break-all sm:whitespace-nowrap sm:break-normal transition-colors ${
               copied
                 ? "border-green-400/50 text-green-300"
-                : "border-border-1 text-gray-300 group-hover:border-brand-blue/50 group-hover:text-brand-blue"
+                : "border-border-1 text-fg-2 group-hover:border-brand-blue/50 group-hover:text-brand-blue"
             }`}
           >
             {copied ? "복사됨!" : entry.shortcut}
@@ -145,7 +145,7 @@ export function EntryCard({
             {copied ? (
               <Check className="w-4 h-4 text-green-400" />
             ) : (
-              <Copy className="w-4 h-4 text-gray-400" />
+              <Copy className="w-4 h-4 text-fg-3" />
             )}
           </span>
         </div>
@@ -161,7 +161,7 @@ export function EntryCard({
             }}
             className={`p-2 rounded-lg border transition-all ${
               copied
-                ? "border-green-400/50 bg-green-400/10"
+                ? "border-green-400/50 bg-status-success/10"
                 : "border-transparent opacity-0 group-hover:opacity-100 hover:border-border-2 hover:bg-glass-3"
             }`}
             title="복사"
@@ -169,7 +169,7 @@ export function EntryCard({
             {copied ? (
               <Check className="w-4 h-4 text-green-400" />
             ) : (
-              <Copy className="w-4 h-4 text-gray-400" />
+              <Copy className="w-4 h-4 text-fg-3" />
             )}
           </button>
         </div>

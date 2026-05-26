@@ -15,7 +15,7 @@ function Section({
 }) {
   return (
     <section className="space-y-3">
-      <h2 className="text-white text-lg font-semibold">{title}</h2>
+      <h2 className="text-fg-1 text-h3 font-semibold">{title}</h2>
       <div className="space-y-2">{children}</div>
     </section>
   );
@@ -39,12 +39,12 @@ export default function PrivacyPage() {
         </p>
         <ul className="list-disc pl-5 space-y-1">
           <li>
-            <span className="text-white font-medium">자동 수집 항목:</span> 접속
+            <span className="text-fg-1 font-medium">자동 수집 항목:</span> 접속
             IP 주소, 쿠키(Cookie), 방문 일시, 서비스 이용 기록, 브라우저 및 OS
             정보
           </li>
           <li>
-            <span className="text-white font-medium">자발적 제공 항목:</span>{" "}
+            <span className="text-fg-1 font-medium">자발적 제공 항목:</span>{" "}
             문의하기, 오류 제보, 오픈채팅방 등을 통해 방문자가 자발적으로
             제공하는 이메일 주소, 이름(닉네임) 등
           </li>

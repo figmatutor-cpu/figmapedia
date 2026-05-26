@@ -1,24 +1,17 @@
-import { supabase } from "@/lib/supabase";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { supabase as adminDb } from "@/lib/supabase";
 import { revalidateTag, unstable_cache } from "next/cache";
 import { deleteEmbedding } from "@/lib/embeddings";
 import { NextRequest } from "next/server";
+import { readRoleFromJwt } from "@/types/member";
 
-async function hashPassword(password: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(password);
-  const hash = await crypto.subtle.digest("SHA-256", data);
-  return Array.from(new Uint8Array(hash))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-}
-
-/* ── 캐시된 게시글 상세 + 댓글 조회 ── */
+/* ── 캐시된 게시글 상세 + 댓글 조회 (공개) ── */
 const getCachedPostDetail = unstable_cache(
   async (id: string) => {
     const [{ data: post, error: postError }, { data: comments }] =
       await Promise.all([
-        supabase.from("community_posts").select("*").eq("id", id).single(),
-        supabase
+        adminDb.from("community_posts").select("*").eq("id", id).single(),
+        adminDb
           .from("community_comments")
           .select("*")
           .eq("post_id", id)
@@ -43,7 +36,6 @@ const getCachedPostDetail = unstable_cache(
   { revalidate: 60, tags: ["community-posts"] },
 );
 
-/* ── GET: 게시글 상세 + 댓글 ── */
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
@@ -61,67 +53,50 @@ export async function GET(
   return Response.json(data);
 }
 
-/* ── DELETE: 게시글 삭제 (비밀번호 확인) ── */
+/* ── DELETE: 게시글 삭제 (본인 또는 admin) ── */
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  try {
-    const { id } = await params;
-    const { password } = await request.json();
+  const { id } = await params;
 
-    if (!password || typeof password !== "string") {
-      return Response.json(
-        { error: "비밀번호를 입력해주세요." },
-        { status: 400 },
-      );
-    }
-
-    const { data: post } = await supabase
-      .from("community_posts")
-      .select("password_hash")
-      .eq("id", id)
-      .single();
-
-    if (!post) {
-      return Response.json(
-        { error: "게시글을 찾을 수 없습니다." },
-        { status: 404 },
-      );
-    }
-    if (!post.password_hash) {
-      return Response.json(
-        { error: "이 게시글은 삭제할 수 없습니다." },
-        { status: 403 },
-      );
-    }
-
-    const inputHash = await hashPassword(password.trim());
-    if (inputHash !== post.password_hash) {
-      return Response.json(
-        { error: "비밀번호가 일치하지 않습니다." },
-        { status: 403 },
-      );
-    }
-
-    // 댓글 먼저 삭제 후 게시글 삭제
-    await supabase.from("community_comments").delete().eq("post_id", id);
-    const { error } = await supabase
-      .from("community_posts")
-      .delete()
-      .eq("id", id);
-
-    if (error) {
-      return Response.json({ error: error.message }, { status: 500 });
-    }
-
-    // 캐시 갱신 + 임베딩 제거
-    revalidateTag("community-posts", "max");
-    revalidateTag("search-index", "max");
-    deleteEmbedding(`community-${id}`).catch(() => {});
-
-    return Response.json({ success: true });
-  } catch {
-    return Response.json({ error: "잘못된 요청입니다." }, { status: 400 });
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return Response.json({ error: "로그인이 필요합니다." }, { status: 401 });
   }
+
+  const { data: post } = await adminDb
+    .from("community_posts")
+    .select("user_id")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (!post) {
+    return Response.json(
+      { error: "게시글을 찾을 수 없습니다." },
+      { status: 404 },
+    );
+  }
+
+  const isAdmin = readRoleFromJwt(user.app_metadata) === "admin";
+  const isOwner = post.user_id === user.id;
+  if (!isOwner && !isAdmin) {
+    return Response.json({ error: "삭제 권한이 없습니다." }, { status: 403 });
+  }
+
+  await adminDb.from("community_comments").delete().eq("post_id", id);
+  const { error } = await adminDb.from("community_posts").delete().eq("id", id);
+
+  if (error) {
+    return Response.json({ error: error.message }, { status: 500 });
+  }
+
+  revalidateTag("community-posts", "max");
+  revalidateTag("search-index", "max");
+  deleteEmbedding(`community-${id}`).catch(() => {});
+
+  return Response.json({ success: true });
 }

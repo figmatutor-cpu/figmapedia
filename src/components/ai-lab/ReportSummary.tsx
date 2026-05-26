@@ -9,7 +9,7 @@ export function ReportSummary({ experiment }: ReportSummaryProps) {
 
   return (
     <section className="mt-10 rounded-xl border border-border-1 bg-glass-1 p-6 md:p-8">
-      <h2 className="text-sm font-semibold text-white">리포트 요약</h2>
+      <h2 className="text-body font-semibold text-fg-1">리포트 요약</h2>
 
       {keyMetrics && keyMetrics.length > 0 && (
         <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -18,8 +18,8 @@ export function ReportSummary({ experiment }: ReportSummaryProps) {
               key={m.label}
               className="rounded-lg border border-border-1 bg-glass-1 p-4"
             >
-              <div className="text-xs text-gray-500">{m.label}</div>
-              <div className="mt-1 text-lg font-semibold text-white md:text-xl">
+              <div className="text-meta text-fg-4">{m.label}</div>
+              <div className="mt-1 text-h3 font-semibold text-fg-1 md:text-h3-lg">
                 {m.value}
               </div>
             </div>
@@ -27,7 +27,7 @@ export function ReportSummary({ experiment }: ReportSummaryProps) {
         </div>
       )}
 
-      <p className="mt-6 whitespace-pre-line text-sm leading-7 text-gray-300 md:text-base">
+      <p className="mt-6 whitespace-pre-line text-body leading-7 text-fg-2 md:text-body-lg">
         {summary}
       </p>
     </section>

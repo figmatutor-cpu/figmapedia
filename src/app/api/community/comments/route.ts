@@ -1,106 +1,88 @@
-import { supabase } from "@/lib/supabase";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { supabase as adminDb } from "@/lib/supabase";
 import { revalidateTag } from "next/cache";
 import { NextRequest } from "next/server";
 
-async function hashPassword(password: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(password);
-  const hash = await crypto.subtle.digest("SHA-256", data);
-  return Array.from(new Uint8Array(hash))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-}
-
-/* ── POST: 댓글 작성 ── */
+/* ── POST: 댓글 작성 (로그인 필수) ── */
 export async function POST(request: NextRequest) {
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return Response.json({ error: "로그인이 필요합니다." }, { status: 401 });
+  }
+
+  let body: Record<string, unknown>;
   try {
-    const body = await request.json();
-    const { post_id, nickname, content, password } = body;
-
-    if (!post_id || typeof post_id !== "string") {
-      return Response.json({ error: "잘못된 게시글입니다." }, { status: 400 });
-    }
-    if (
-      !nickname ||
-      typeof nickname !== "string" ||
-      nickname.trim().length === 0
-    ) {
-      return Response.json(
-        { error: "닉네임을 입력해주세요." },
-        { status: 400 },
-      );
-    }
-    if (nickname.trim().length > 20) {
-      return Response.json(
-        { error: "닉네임은 20자 이내로 입력해주세요." },
-        { status: 400 },
-      );
-    }
-    if (
-      !content ||
-      typeof content !== "string" ||
-      content.trim().length === 0
-    ) {
-      return Response.json(
-        { error: "댓글 내용을 입력해주세요." },
-        { status: 400 },
-      );
-    }
-    if (content.trim().length > 2000) {
-      return Response.json(
-        { error: "댓글은 2000자 이내로 입력해주세요." },
-        { status: 400 },
-      );
-    }
-    if (
-      !password ||
-      typeof password !== "string" ||
-      password.trim().length < 4
-    ) {
-      return Response.json(
-        { error: "비밀번호는 4자 이상 입력해주세요." },
-        { status: 400 },
-      );
-    }
-
-    // 게시글 존재 확인
-    const { data: post } = await supabase
-      .from("community_posts")
-      .select("id")
-      .eq("id", post_id)
-      .single();
-
-    if (!post) {
-      return Response.json(
-        { error: "게시글을 찾을 수 없습니다." },
-        { status: 404 },
-      );
-    }
-
-    const password_hash = await hashPassword(password.trim());
-
-    const { data, error } = await supabase
-      .from("community_comments")
-      .insert({
-        post_id,
-        nickname: nickname.trim(),
-        content: content.trim(),
-        password_hash,
-      })
-      .select()
-      .single();
-
-    if (error) {
-      return Response.json({ error: error.message }, { status: 500 });
-    }
-
-    const { password_hash: _ph, ...safeComment } = data;
-
-    // 댓글 수 변경 → 게시글 캐시 갱신
-    revalidateTag("community-posts", "max");
-
-    return Response.json({ comment: safeComment }, { status: 201 });
+    body = (await request.json()) as Record<string, unknown>;
   } catch {
     return Response.json({ error: "잘못된 요청입니다." }, { status: 400 });
   }
+
+  const post_id = typeof body.post_id === "string" ? body.post_id : "";
+  const nickname =
+    typeof body.nickname === "string" ? body.nickname.trim() : "";
+  const content = typeof body.content === "string" ? body.content.trim() : "";
+
+  if (!post_id) {
+    return Response.json({ error: "잘못된 게시글입니다." }, { status: 400 });
+  }
+  if (!nickname) {
+    return Response.json({ error: "닉네임을 입력해주세요." }, { status: 400 });
+  }
+  if (nickname.length > 20) {
+    return Response.json(
+      { error: "닉네임은 20자 이내로 입력해주세요." },
+      { status: 400 },
+    );
+  }
+  if (!content) {
+    return Response.json(
+      { error: "댓글 내용을 입력해주세요." },
+      { status: 400 },
+    );
+  }
+  if (content.length > 2000) {
+    return Response.json(
+      { error: "댓글은 2000자 이내로 입력해주세요." },
+      { status: 400 },
+    );
+  }
+
+  const { data: post } = await adminDb
+    .from("community_posts")
+    .select("id")
+    .eq("id", post_id)
+    .maybeSingle();
+  if (!post) {
+    return Response.json(
+      { error: "게시글을 찾을 수 없습니다." },
+      { status: 404 },
+    );
+  }
+
+  const { data, error } = await supabase
+    .from("community_comments")
+    .insert({
+      post_id,
+      user_id: user.id,
+      nickname,
+      content,
+    })
+    .select()
+    .single();
+
+  if (error || !data) {
+    return Response.json(
+      { error: error?.message ?? "댓글 저장 실패" },
+      { status: 500 },
+    );
+  }
+
+  const { password_hash: _ph, ...safeComment } = data;
+
+  revalidateTag("community-posts", "max");
+
+  return Response.json({ comment: safeComment }, { status: 201 });
 }

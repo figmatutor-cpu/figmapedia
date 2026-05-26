@@ -63,12 +63,14 @@ export function TopicCard({
           }`}
           aria-hidden
         >
-          {selected && <span className="h-2 w-2 rounded-full bg-white" />}
+          {selected && (
+            <span className="h-2 w-2 rounded-full bg-surface-inverse" />
+          )}
         </div>
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <h3 className="text-base font-semibold text-white">
+            <h3 className="text-body-lg font-semibold text-fg-1">
               {topic.title}
             </h3>
             {showStatusBadge && statusLabel(topic.status) && (
@@ -76,7 +78,7 @@ export function TopicCard({
                 className={`rounded-full px-2 py-0.5 text-xxs ${
                   isWinner
                     ? "border border-emerald-500/40 bg-emerald-500/15 text-emerald-300"
-                    : "border border-border-1 bg-glass-1 text-gray-400"
+                    : "border border-border-1 bg-glass-1 text-fg-3"
                 }`}
               >
                 {statusLabel(topic.status)}
@@ -85,7 +87,7 @@ export function TopicCard({
           </div>
 
           {topic.description && (
-            <p className="mt-2 text-sm leading-6 text-gray-400">
+            <p className="mt-2 text-body leading-6 text-fg-3">
               {topic.description}
             </p>
           )}
@@ -106,7 +108,7 @@ export function TopicCard({
                 style={{ width: `${pct}%` }}
               />
             </div>
-            <div className="flex items-center justify-between text-xxs text-gray-500">
+            <div className="flex items-center justify-between text-xxs text-fg-4">
               <span>{topic.votes}표</span>
               <span>{pct}%</span>
             </div>

@@ -43,10 +43,10 @@ export function HomeSections() {
   return (
     <section className="mx-auto max-w-4xl px-4 py-24">
       <div className="text-center mb-10">
-        <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-3">
+        <h2 className="text-h2 sm:text-h1 font-semibold text-fg-1 mb-3">
           무엇을 찾으세요?
         </h2>
-        <p className="text-sm sm:text-base text-gray-400">
+        <p className="text-body sm:text-body-lg text-fg-3">
           피그마와 UX/UI 실무에 필요한 정보를 카테고리별로 확인하세요.
         </p>
       </div>
@@ -57,10 +57,10 @@ export function HomeSections() {
             href={section.href}
             className="group block rounded-xl border border-border-1 bg-glass-1 p-5 transition-colors hover:border-border-2 hover:bg-glass-2"
           >
-            <h3 className="text-base font-semibold text-white mb-2">
+            <h3 className="text-body-lg font-semibold text-fg-1 mb-2">
               {section.title}
             </h3>
-            <p className="text-sm text-gray-400">{section.description}</p>
+            <p className="text-body text-fg-3">{section.description}</p>
           </Link>
         ))}
       </div>

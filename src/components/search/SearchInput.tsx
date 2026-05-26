@@ -67,7 +67,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         >
           <div className="relative">
             <SearchIcon
-              className={`absolute ${iconLeft} top-1/2 -translate-y-1/2 h-5 w-5 text-white/40`}
+              className={`absolute ${iconLeft} top-1/2 -translate-y-1/2 h-5 w-5 text-fg-1/40`}
             />
             <input
               ref={internalRef}
@@ -77,7 +77,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
               onChange={(e) => onQueryChange(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
-              className={`w-full rounded-2xl ${bgClass} border border-border-1 text-white placeholder:text-white/40 outline-none focus:ring-2 focus:ring-brand-blue/40 focus:border-brand-blue/40 backdrop-blur-md ${inputPl} pr-[100px] h-12 sm:h-14 text-base`}
+              className={`w-full rounded-2xl ${bgClass} border border-border-1 text-fg-1 placeholder:text-fg-1/40 outline-none focus:ring-2 focus:ring-brand-blue/40 focus:border-brand-blue/40 backdrop-blur-md ${inputPl} pr-[100px] h-12 sm:h-14 text-body-lg`}
               autoComplete="off"
               lang="ko"
             />
@@ -85,10 +85,10 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
               type="button"
               onClick={handleSearchClick}
               disabled={!isSearching && !query.trim()}
-              className={`absolute right-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center gap-1.5 h-9 px-4 rounded-xl text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap ${
+              className={`absolute right-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center gap-1.5 h-9 px-4 rounded-xl text-body font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap ${
                 isSearching
-                  ? "bg-glass-4 text-white hover:bg-glass-4"
-                  : "bg-brand-blue-light text-gray-900 hover:bg-white"
+                  ? "bg-glass-4 text-fg-1 hover:bg-glass-4"
+                  : "bg-brand-blue-light text-fg-inverse hover:bg-surface-inverse"
               }`}
             >
               {isSearching ? (

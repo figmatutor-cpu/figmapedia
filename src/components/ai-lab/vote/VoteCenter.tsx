@@ -60,9 +60,7 @@ export function VoteCenter({ initialData }: VoteCenterProps) {
   if (topics.length === 0) {
     return (
       <div className="rounded-xl border border-dashed border-border-1 bg-glass-1 p-8 text-center">
-        <p className="text-sm text-gray-400">
-          이번 주 후보 주제가 곧 등록됩니다
-        </p>
+        <p className="text-body text-fg-3">이번 주 후보 주제가 곧 등록됩니다</p>
       </div>
     );
   }
@@ -85,7 +83,7 @@ export function VoteCenter({ initialData }: VoteCenterProps) {
       </div>
 
       {error && (
-        <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300">
+        <div className="rounded-lg border border-red-500/30 bg-status-danger/10 p-3 text-meta text-red-300">
           {error}
         </div>
       )}
@@ -94,7 +92,7 @@ export function VoteCenter({ initialData }: VoteCenterProps) {
       {!is_closed && !user && !authLoading && <VoteCTA variant="login" />}
 
       {!is_closed && user && my_vote_topic_id && (
-        <p className="text-xxs text-gray-500">
+        <p className="text-xxs text-fg-4">
           같은 후보를 다시 누르면 표가 취소됩니다. 다른 후보를 클릭하면 표가
           자동으로 변경됩니다.
         </p>

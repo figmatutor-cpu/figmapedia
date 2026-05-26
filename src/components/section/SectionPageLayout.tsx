@@ -329,10 +329,10 @@ export function SectionPageLayout({
       <div className="mx-auto max-w-4xl px-4">
         <SponsorBanner />
         {/* Title */}
-        <h1 className="text-xl font-bold text-white mb-2">{title}</h1>
+        <h1 className="text-h3-lg font-bold text-fg-1 mb-2">{title}</h1>
 
         {description && (
-          <p className="text-gray-400 mb-6 text-sm sm:text-base">
+          <p className="text-fg-3 mb-6 text-body sm:text-body-lg">
             {description}
           </p>
         )}
@@ -364,14 +364,14 @@ export function SectionPageLayout({
               {isSearchExpanded ? (
                 <div className="flex items-center gap-2">
                   <div className="relative flex-1 min-w-0">
-                    <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+                    <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-fg-4" />
                     <input
                       ref={mobileSearchRef}
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="페이지 내 검색"
-                      className="w-full pl-8 pr-3 h-10 text-base rounded-lg bg-glass-1 border border-border-1 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-border-3 focus:bg-glass-2 transition-colors"
+                      className="w-full pl-8 pr-3 h-10 text-body-lg rounded-lg bg-glass-1 border border-border-1 text-fg-2 placeholder-gray-500 focus:outline-none focus:border-border-3 focus:bg-glass-2 transition-colors"
                       autoComplete="off"
                     />
                   </div>
@@ -381,7 +381,7 @@ export function SectionPageLayout({
                       setSearchQuery("");
                       setIsSearchExpanded(false);
                     }}
-                    className="shrink-0 p-2 text-gray-400 hover:text-white transition-colors"
+                    className="shrink-0 p-2 text-fg-3 hover:text-fg-1 transition-colors"
                   >
                     <svg
                       className="w-4 h-4"
@@ -405,7 +405,7 @@ export function SectionPageLayout({
                     setIsSearchExpanded(true);
                     setTimeout(() => mobileSearchRef.current?.focus(), 100);
                   }}
-                  className="w-11 h-11 inline-flex items-center justify-center rounded-lg bg-glass-1 border border-border-1 text-gray-400 hover:text-white hover:border-border-2 transition-colors"
+                  className="w-11 h-11 inline-flex items-center justify-center rounded-lg bg-glass-1 border border-border-1 text-fg-3 hover:text-fg-1 hover:border-border-2 transition-colors"
                 >
                   <SearchIcon className="w-4 h-4" />
                 </button>
@@ -417,13 +417,13 @@ export function SectionPageLayout({
           <div
             className={`relative ${subTabs ? "hidden xl-nav:block" : "w-full"} xl-nav:shrink-0 xl-nav:w-[180px]`}
           >
-            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-fg-4" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="페이지 내 검색"
-              className="w-full pl-8 pr-3 h-12 text-base xl-nav:text-sm rounded-lg bg-glass-1 border border-border-1 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-border-3 focus:bg-glass-2 transition-colors"
+              className="w-full pl-8 pr-3 h-12 text-body-lg xl-nav:text-body rounded-lg bg-glass-1 border border-border-1 text-fg-2 placeholder-gray-500 focus:outline-none focus:border-border-3 focus:bg-glass-2 transition-colors"
             />
           </div>
         </div>
@@ -435,10 +435,10 @@ export function SectionPageLayout({
           <>
             {/* 항목 수 + 필터 컨트롤 — displayItems 조건과 무관하게 항상 렌더링하여 FilterModal unmount 방지 */}
             <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-              <p className="text-sm text-gray-400">
+              <p className="text-body text-fg-3">
                 {displayItems.length}개의 항목
                 {searchQuery.trim() && (
-                  <span className="ml-1 text-gray-500">
+                  <span className="ml-1 text-fg-4">
                     &middot; &quot;{searchQuery}&quot; 검색 결과
                   </span>
                 )}

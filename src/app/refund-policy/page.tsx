@@ -15,7 +15,7 @@ function Section({
 }) {
   return (
     <section className="space-y-3">
-      <h2 className="text-white text-lg font-semibold">{title}</h2>
+      <h2 className="text-fg-1 text-h3 font-semibold">{title}</h2>
       <div className="space-y-2">{children}</div>
     </section>
   );
@@ -108,7 +108,7 @@ export default function RefundPolicyPage() {
         </p>
       </Section>
 
-      <p className="text-xs text-gray-500 pt-6">
+      <p className="text-meta text-fg-4 pt-6">
         본 정책은 디자이너의 AI 실험실 멤버십 정식 오픈 시점에 발효됩니다. 멘토
         유료 세션 등 추가 유료 서비스의 환불 정책은 해당 서비스 오픈 시 별도로
         고지합니다.

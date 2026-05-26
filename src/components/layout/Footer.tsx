@@ -37,7 +37,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-8 md:px-12 py-10 md:py-12">
         <div className="flex flex-col gap-8 md:gap-10">
           {/* 로고 */}
-          <p className="font-bold text-xl text-white tracking-tight">
+          <p className="font-bold text-h3-lg text-fg-1 tracking-tight">
             Figma pedia
           </p>
 
@@ -45,7 +45,7 @@ export function Footer() {
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             {/* 좌측: 텍스트 정보 */}
             <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-3 text-xs">
+              <div className="flex items-center gap-3 text-meta">
                 <Link
                   href="/privacy"
                   className="text-[#6C79FF] hover:underline"
@@ -55,22 +55,22 @@ export function Footer() {
                 <Divider />
                 <Link
                   href="/terms"
-                  className="text-[#858699] hover:text-white transition-colors"
+                  className="text-[#858699] hover:text-fg-1 transition-colors"
                 >
                   서비스 이용 약관
                 </Link>
                 <Divider />
                 <Link
                   href="/copyright"
-                  className="text-[#858699] hover:text-white transition-colors"
+                  className="text-[#858699] hover:text-fg-1 transition-colors"
                 >
                   저작권 정책
                 </Link>
               </div>
-              <p className="text-xs text-[#6B6F76] leading-relaxed">
+              <p className="text-meta text-[#6B6F76] leading-relaxed">
                 @Figmapedia All rights reserved
               </p>
-              <p className="text-xs text-[#6B6F76]">
+              <p className="text-meta text-[#6B6F76]">
                 문의:yiseo@figmatutor.info
               </p>
             </div>

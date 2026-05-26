@@ -56,9 +56,9 @@ function TypingText() {
   }, []);
 
   return (
-    <p className="-mt-[72px] text-sm text-white">
+    <p className="-mt-[72px] text-body text-fg-1">
       {displayed}
-      <span className="inline-block w-[2px] h-[14px] bg-white ml-0.5 align-middle animate-pulse" />
+      <span className="inline-block w-[2px] h-[14px] bg-surface-inverse ml-0.5 align-middle animate-pulse" />
     </p>
   );
 }
@@ -77,17 +77,17 @@ function AISummaryCard({
   return (
     <div className="rounded-xl border border-brand-blue-accent/20 bg-brand-blue-accent/5 p-4 mb-5">
       <div className="flex items-center gap-1.5 mb-2">
-        <span className="text-sm">✨</span>
-        <span className="text-xs font-medium text-brand-blue-accent">
+        <span className="text-body">✨</span>
+        <span className="text-meta font-medium text-brand-blue-accent">
           {AI_SUMMARY_LABEL}
         </span>
       </div>
-      <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-line">
+      <p className="text-body text-fg-2 leading-relaxed whitespace-pre-line">
         {summary}
       </p>
       {(sources && sources.length > 0) || recommendedLinks.length > 0 ? (
         <div className="mt-3 pt-3 border-t border-brand-blue-accent/15">
-          <p className="text-xs text-gray-500 mb-1.5">출처</p>
+          <p className="text-meta text-fg-4 mb-1.5">출처</p>
           <ul className="space-y-1 min-w-0">
             {sources?.map((item) => {
               const href = item.id.startsWith("community-")
@@ -100,11 +100,11 @@ function AISummaryCard({
                     href={href}
                     target={isExternal ? "_blank" : "_self"}
                     rel={isExternal ? "noopener noreferrer" : undefined}
-                    className="flex items-center gap-1.5 text-xs text-brand-blue-accent/80 hover:text-brand-blue-accent transition-colors min-w-0"
+                    className="flex items-center gap-1.5 text-meta text-brand-blue-accent/80 hover:text-brand-blue-accent transition-colors min-w-0"
                   >
                     <span className="truncate">{item.title}</span>
                     {item.section && (
-                      <span className="shrink-0 text-gray-500">
+                      <span className="shrink-0 text-fg-4">
                         · {item.section}
                       </span>
                     )}
@@ -118,10 +118,10 @@ function AISummaryCard({
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-xs text-brand-blue-accent/80 hover:text-brand-blue-accent transition-colors min-w-0"
+                  className="flex items-center gap-1.5 text-meta text-brand-blue-accent/80 hover:text-brand-blue-accent transition-colors min-w-0"
                 >
                   <span className="truncate">{link.title}</span>
-                  <span className="shrink-0 text-gray-500">· 추천</span>
+                  <span className="shrink-0 text-fg-4">· 추천</span>
                 </a>
               </li>
             ))}
@@ -164,15 +164,13 @@ export function SearchResults() {
   if (aiError) {
     return (
       <div className="space-y-3">
-        <div className="rounded-lg border border-red-500/20 bg-red-500/5 px-4 py-3 mb-4">
-          <p className="text-sm text-red-400">{aiError}</p>
-          <p className="text-xs text-gray-500 mt-1">
-            {FALLBACK_RESULTS_MESSAGE}
-          </p>
+        <div className="rounded-lg border border-red-500/20 bg-status-danger/5 px-4 py-3 mb-4">
+          <p className="text-body text-red-400">{aiError}</p>
+          <p className="text-meta text-fg-4 mt-1">{FALLBACK_RESULTS_MESSAGE}</p>
         </div>
         {results.length > 0 ? (
           <>
-            <p className="text-sm text-gray-400 mb-4">
+            <p className="text-body text-fg-3 mb-4">
               {results.length}개의 결과
             </p>
             {results.map((entry) => (
@@ -204,11 +202,11 @@ export function SearchResults() {
       {/* 관련 콘텐츠 헤더 */}
       <div className="flex items-center gap-2 mb-4">
         {searchMode === "ai" && (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-brand-blue-accent/10 border border-brand-blue-accent/20 text-xs text-brand-blue-accent">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-brand-blue-accent/10 border border-brand-blue-accent/20 text-meta text-brand-blue-accent">
             {AI_SEARCH_LABEL}
           </span>
         )}
-        <p className="text-sm text-gray-400">
+        <p className="text-body text-fg-3">
           {searchMode === "ai" ? "관련 콘텐츠" : ""} {results.length}개의 결과
         </p>
       </div>

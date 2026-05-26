@@ -26,7 +26,7 @@ const ROLE_LABEL: Record<Role, string> = {
 };
 
 const ROLE_BADGE: Record<Role, string> = {
-  free: "border-border-1 bg-glass-1 text-gray-400",
+  free: "border-border-1 bg-glass-1 text-fg-3",
   member: "border-brand-blue/40 bg-brand-blue/15 text-brand-blue-light",
   admin: "border-emerald-500/40 bg-emerald-500/15 text-emerald-300",
 };
@@ -114,21 +114,21 @@ export function MemberAdminPanel() {
       <section className="rounded-xl border border-border-1 bg-glass-1 p-5">
         <div className="flex flex-wrap items-end gap-3">
           <label className="block">
-            <span className="text-xs text-gray-400">검색 (이메일)</span>
+            <span className="text-meta text-fg-3">검색 (이메일)</span>
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="이메일 일부"
-              className="mt-1 w-64 rounded-lg border border-border-1 bg-glass-1 px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:border-border-3 focus:outline-none"
+              className="mt-1 w-64 rounded-lg border border-border-1 bg-glass-1 px-3 py-2 text-body text-fg-1 placeholder:text-fg-5 focus:border-border-3 focus:outline-none"
             />
           </label>
           <label className="block">
-            <span className="text-xs text-gray-400">역할 필터</span>
+            <span className="text-meta text-fg-3">역할 필터</span>
             <select
               value={filterRole}
               onChange={(e) => setFilterRole(e.target.value as "" | Role)}
-              className="mt-1 rounded-lg border border-border-1 bg-glass-1 px-3 py-2 text-sm text-white focus:border-border-3 focus:outline-none"
+              className="mt-1 rounded-lg border border-border-1 bg-glass-1 px-3 py-2 text-body text-fg-1 focus:border-border-3 focus:outline-none"
             >
               <option value="">전체</option>
               <option value="free">무료</option>
@@ -139,7 +139,7 @@ export function MemberAdminPanel() {
           <button
             type="button"
             onClick={load}
-            className="rounded-full border border-border-1 bg-glass-1 px-4 py-2 text-sm text-gray-200 transition hover:border-border-2 hover:bg-glass-2"
+            className="rounded-full border border-border-1 bg-glass-1 px-4 py-2 text-body text-fg-2 transition hover:border-border-2 hover:bg-glass-2"
           >
             새로고침
           </button>
@@ -147,23 +147,23 @@ export function MemberAdminPanel() {
       </section>
 
       {actionNote && (
-        <div className="rounded-lg border border-brand-blue/30 bg-brand-blue/10 p-3 text-xs text-brand-blue-light">
+        <div className="rounded-lg border border-brand-blue/30 bg-brand-blue/10 p-3 text-meta text-brand-blue-light">
           {actionNote}
         </div>
       )}
 
       {loadError && (
-        <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300">
+        <div className="rounded-lg border border-red-500/30 bg-status-danger/10 p-3 text-meta text-red-300">
           {loadError}
         </div>
       )}
 
       {members === null && !loadError && (
-        <p className="text-xs text-gray-500">불러오는 중...</p>
+        <p className="text-meta text-fg-4">불러오는 중...</p>
       )}
 
       {members?.length === 0 && (
-        <p className="text-xs text-gray-500">조건에 맞는 회원이 없습니다.</p>
+        <p className="text-meta text-fg-4">조건에 맞는 회원이 없습니다.</p>
       )}
 
       {members && members.length > 0 && (
@@ -181,11 +181,11 @@ export function MemberAdminPanel() {
                     >
                       {ROLE_LABEL[m.role]}
                     </span>
-                    <h3 className="text-sm font-semibold text-white">
+                    <h3 className="text-body font-semibold text-fg-1">
                       {m.email ?? "(이메일 없음)"}
                     </h3>
                   </div>
-                  <div className="mt-2 grid grid-cols-1 gap-1 text-xxs text-gray-500 md:grid-cols-2">
+                  <div className="mt-2 grid grid-cols-1 gap-1 text-xxs text-fg-4 md:grid-cols-2">
                     <span>
                       가입: {formatDate(m.auth_created_at ?? m.created_at)}
                     </span>
@@ -198,16 +198,14 @@ export function MemberAdminPanel() {
                     <span>해지일: {formatDate(m.cancelled_at)}</span>
                     <span>
                       Discord:{" "}
-                      <code className="text-gray-400">
-                        {m.discord_id ?? "-"}
-                      </code>
+                      <code className="text-fg-3">{m.discord_id ?? "-"}</code>
                     </span>
                   </div>
                 </div>
               </div>
 
               <div className="mt-4 flex flex-wrap items-center gap-2">
-                <span className="text-xxs text-gray-500">역할 변경:</span>
+                <span className="text-xxs text-fg-4">역할 변경:</span>
                 {(["free", "member", "admin"] as Role[]).map((r) => (
                   <button
                     key={r}
@@ -222,8 +220,8 @@ export function MemberAdminPanel() {
                     disabled={pendingActionId === m.id || m.role === r}
                     className={`rounded-full border px-3 py-1.5 text-xxs font-medium transition disabled:opacity-50 ${
                       m.role === r
-                        ? "border-border-1 bg-glass-1 text-white"
-                        : "border-border-1 bg-transparent text-gray-300 hover:bg-glass-2"
+                        ? "border-border-1 bg-glass-1 text-fg-1"
+                        : "border-border-1 bg-transparent text-fg-2 hover:bg-glass-2"
                     }`}
                   >
                     {ROLE_LABEL[r]}
@@ -245,7 +243,7 @@ export function MemberAdminPanel() {
                     pendingActionId === m.id ||
                     m.subscription_status === "cancelled"
                   }
-                  className="rounded-full border border-red-500/30 bg-transparent px-3 py-1.5 text-xxs text-red-300 transition hover:bg-red-500/10 disabled:opacity-50"
+                  className="rounded-full border border-red-500/30 bg-transparent px-3 py-1.5 text-xxs text-red-300 transition hover:bg-status-danger/10 disabled:opacity-50"
                 >
                   강제 해지
                 </button>

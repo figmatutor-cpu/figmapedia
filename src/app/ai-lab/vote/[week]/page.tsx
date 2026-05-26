@@ -62,26 +62,26 @@ export default async function WeekVoteResultPage({
   return (
     <main className="min-h-screen bg-base">
       <div className="container mx-auto max-w-3xl px-6 py-12 md:py-16">
-        <nav className="mb-8 flex items-center gap-2 text-xs text-gray-500">
-          <Link href="/ai-lab" className="transition hover:text-gray-300">
+        <nav className="mb-8 flex items-center gap-2 text-meta text-fg-4">
+          <Link href="/ai-lab" className="transition hover:text-fg-2">
             AI 실험실
           </Link>
           <span aria-hidden>›</span>
-          <Link href="/ai-lab/vote" className="transition hover:text-gray-300">
+          <Link href="/ai-lab/vote" className="transition hover:text-fg-2">
             주제 투표
           </Link>
           <span aria-hidden>›</span>
-          <span className="text-gray-400">{formatWeek(week)}</span>
+          <span className="text-fg-3">{formatWeek(week)}</span>
         </nav>
 
         <header className="mb-8">
-          <p className="mb-2 text-xxs uppercase tracking-widest text-gray-500">
+          <p className="mb-2 text-xxs uppercase tracking-widest text-fg-4">
             {formatWeek(week)} 주차
           </p>
-          <h1 className="text-2xl font-semibold leading-snug text-white md:text-3xl">
+          <h1 className="text-h2 font-semibold leading-snug text-fg-1 md:text-h1">
             주제 투표 결과
           </h1>
-          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500">
+          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-meta text-fg-4">
             <span>총 {data.total_votes}표</span>
             <span aria-hidden>·</span>
             <span>{data.is_closed ? "투표 마감" : "진행 중"}</span>
@@ -93,11 +93,11 @@ export default async function WeekVoteResultPage({
             <span className="inline-block rounded-full border border-emerald-500/40 bg-emerald-500/15 px-2.5 py-0.5 text-xxs font-medium text-emerald-300">
               선정 주제
             </span>
-            <h2 className="mt-3 text-lg font-semibold text-white">
+            <h2 className="mt-3 text-h3 font-semibold text-fg-1">
               {winner.title}
             </h2>
             {winner.description && (
-              <p className="mt-2 text-sm leading-6 text-gray-300">
+              <p className="mt-2 text-body leading-6 text-fg-2">
                 {winner.description}
               </p>
             )}
@@ -120,7 +120,7 @@ export default async function WeekVoteResultPage({
         <section className="mt-10">
           <Link
             href="/ai-lab/vote"
-            className="inline-block rounded-full border border-border-1 bg-glass-1 px-4 py-2 text-sm font-medium text-gray-200 transition hover:border-border-2 hover:bg-glass-2"
+            className="inline-block rounded-full border border-border-1 bg-glass-1 px-4 py-2 text-body font-medium text-fg-2 transition hover:border-border-2 hover:bg-glass-2"
           >
             이번 주 투표 보러가기 →
           </Link>

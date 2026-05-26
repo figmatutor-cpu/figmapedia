@@ -41,6 +41,7 @@ export function Navbar() {
   return (
     <header
       className={`fixed top-6 left-1/2 -translate-x-1/2 z-50
+                   xl-nav:hidden
                    flex flex-col items-center
                    px-6 backdrop-blur-sm
                    ${headerShapeClass}
@@ -53,7 +54,7 @@ export function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="text-white font-semibold text-base leading-none whitespace-nowrap"
+          className="text-fg-1 font-semibold text-body-lg leading-none whitespace-nowrap"
           onClick={(e) => {
             if (isHome && hasSearched) {
               e.preventDefault();
@@ -72,8 +73,8 @@ export function Navbar() {
             <Link
               key={item.key}
               href={item.href}
-              className={`text-sm leading-none whitespace-nowrap transition-colors hover:text-white ${
-                isActive(item.href) ? "text-white" : "text-gray-400"
+              className={`text-body leading-none whitespace-nowrap transition-colors hover:text-fg-1 ${
+                isActive(item.href) ? "text-fg-1" : "text-fg-3"
               }`}
             >
               {item.label}
@@ -81,8 +82,8 @@ export function Navbar() {
           ))}
           <Link
             href="/figma-resource"
-            className={`text-sm leading-none whitespace-nowrap transition-colors hover:text-white ${
-              isActive("/figma-resource") ? "text-white" : "text-gray-400"
+            className={`text-body leading-none whitespace-nowrap transition-colors hover:text-fg-1 ${
+              isActive("/figma-resource") ? "text-fg-1" : "text-fg-3"
             }`}
           >
             피그마 리소스
@@ -99,8 +100,8 @@ export function Navbar() {
             <button
               className={`flex items-center justify-center w-8 h-8 rounded-full transition-colors focus:outline-none ${
                 isSearchOpen || (isHome && hasSearched)
-                  ? "text-white bg-glass-3"
-                  : "text-gray-400 hover:text-white hover:bg-glass-1"
+                  ? "text-fg-1 bg-glass-3"
+                  : "text-fg-3 hover:text-fg-1 hover:bg-glass-1"
               }`}
               onClick={() => {
                 if (isHome && hasSearched) {
@@ -137,7 +138,7 @@ export function Navbar() {
 
           {/* Mobile: hamburger — visible below xl-nav breakpoint */}
           <button
-            className="xl-nav:hidden flex items-center justify-center w-8 h-8 text-gray-300 focus:outline-none"
+            className="xl-nav:hidden flex items-center justify-center w-8 h-8 text-fg-2 focus:outline-none"
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? "메뉴 닫기" : "메뉴 열기"}
           >
@@ -179,15 +180,13 @@ export function Navbar() {
         className={`xl-nav:hidden flex flex-col items-center w-full transition-all ease-in-out duration-300 overflow-hidden
                      ${isOpen ? "max-h-[1000px] opacity-100 pt-4 pb-5" : "max-h-0 opacity-0 pt-0 pb-0 pointer-events-none"}`}
       >
-        <nav className="flex flex-col items-center space-y-4 text-base w-full">
+        <nav className="flex flex-col items-center space-y-4 text-body-lg w-full">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.key}
               href={item.href}
               className={`transition-colors w-full text-center ${
-                isActive(item.href)
-                  ? "text-white"
-                  : "text-gray-300 hover:text-white"
+                isActive(item.href) ? "text-fg-1" : "text-fg-2 hover:text-fg-1"
               }`}
             >
               {item.label}
@@ -197,8 +196,8 @@ export function Navbar() {
             href="/figma-resource"
             className={`transition-colors w-full text-center ${
               isActive("/figma-resource")
-                ? "text-white"
-                : "text-gray-300 hover:text-white"
+                ? "text-fg-1"
+                : "text-fg-2 hover:text-fg-1"
             }`}
           >
             피그마 리소스

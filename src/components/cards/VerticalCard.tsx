@@ -75,7 +75,7 @@ export function VerticalCard({
           </>
         ) : (
           <svg
-            className="w-10 h-10 text-white/15"
+            className="w-10 h-10 text-fg-1/15"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -101,7 +101,7 @@ export function VerticalCard({
         )}
 
         <h3
-          className={`font-semibold text-gray-100 transition-colors line-clamp-2 text-sm sm:text-base ${!isShortcut ? "group-hover:text-brand-blue" : ""}`}
+          className={`font-semibold text-fg-1 transition-colors line-clamp-2 text-body sm:text-body-lg ${!isShortcut ? "group-hover:text-brand-blue" : ""}`}
         >
           {entry.title}
         </h3>
