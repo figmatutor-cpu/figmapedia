@@ -74,11 +74,10 @@ export async function getActiveMentors(): Promise<MentorWithStats[]> {
   try {
     const [membersRes, statsRes] = await Promise.all([
       supabase
-        .from("members")
+        .from("mentor_public_profiles")
         .select(
           "id, display_name, avatar_url, mentor_title, mentor_intro, specialties, career, live_count, archive_count",
         )
-        .eq("mentor_status", "active")
         .order("display_name", { ascending: true }),
       supabase.from("mentor_stats").select("*"),
     ]);
@@ -102,9 +101,9 @@ export async function getMentorById(
   try {
     const [memberRes, statsRes] = await Promise.all([
       supabase
-        .from("members")
+        .from("mentor_public_profiles")
         .select(
-          "id, display_name, avatar_url, mentor_title, mentor_intro, specialties, career, live_count, archive_count, mentor_status",
+          "id, display_name, avatar_url, mentor_title, mentor_intro, specialties, career, live_count, archive_count",
         )
         .eq("id", id)
         .maybeSingle(),
@@ -115,8 +114,7 @@ export async function getMentorById(
         .maybeSingle(),
     ]);
     if (memberRes.error || !memberRes.data) return null;
-    const row = memberRes.data as MemberRow & { mentor_status: string | null };
-    if (row.mentor_status !== "active") return null;
+    const row = memberRes.data as MemberRow;
     return mergeStats(toMentor(row), (statsRes.data as StatsRow) ?? undefined);
   } catch (e) {
     console.warn("[mentors] fetch failed", e);

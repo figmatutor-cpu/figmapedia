@@ -141,6 +141,16 @@ export const NAV_ITEMS: NavItem[] = [
     href: "/ai-lab",
   },
   {
+    key: "mentors",
+    label: "멘토",
+    href: "/mentors",
+  },
+  {
+    key: "study-room",
+    label: "스터디룸",
+    href: "/study-room",
+  },
+  {
     key: "community",
     label: "커뮤니티",
     href: "/community",

@@ -1,0 +1,58 @@
+-- ============================================================================
+-- 0006_seed_mentors.sql
+-- 멘토 시드 템플릿 (실제 INSERT는 주석 처리)
+--
+-- 이 파일은 **자동 실행되는 시드 로직을 포함하지 않습니다.**
+-- auth.users / public.members 에 의존하므로, production DB에서 자동 시드 시
+-- FK 제약을 위반할 수 있어 운영자가 손으로 채워 실행해야 합니다.
+--
+-- 사용법:
+--   1) /admin 으로 로그인한 자기 계정의 members.id 를 확인
+--      예: select id, email from public.members order by created_at desc limit 5;
+--   2) 아래 UPDATE 또는 INSERT 블록의 :mentor_uuid 자리에 그 id 를 넣고 실행
+--   3) /mentors 페이지에서 노출 확인
+-- ============================================================================
+
+-- ----------------------------------------------------------------------------
+-- 옵션 A: 기존 멤버를 active 멘토로 승급 (가장 안전)
+-- ----------------------------------------------------------------------------
+-- update public.members
+-- set
+--   mentor_status   = 'active',
+--   display_name    = '하이서',
+--   mentor_title    = 'Figma · AI 디자인 멘토',
+--   mentor_intro    = 'AI 도구를 활용한 디자인 워크플로우를 5년째 연구하고 있습니다.',
+--   specialties     = array['Figma', 'AI 워크플로우', '디자인 시스템'],
+--   career          = '[
+--     {"title":"디자인 리드","company":"Figmatutor","period":"2023 — 현재"},
+--     {"title":"프로덕트 디자이너","company":"카카오","period":"2020 — 2023"}
+--   ]'::jsonb
+-- where id = :'mentor_uuid';
+
+-- ----------------------------------------------------------------------------
+-- 옵션 B: 데모용 가상 멘토 (auth.users 가 먼저 만들어져 있어야 함)
+-- ----------------------------------------------------------------------------
+-- insert into public.members (id, email, role, mentor_status, display_name, mentor_title, mentor_intro, specialties)
+-- values (
+--   :'mentor_uuid',
+--   'demo-mentor@figmatutor.info',
+--   'member',
+--   'active',
+--   '데모 멘토',
+--   '데모용 멘토 프로필',
+--   '/mentors 페이지 노출 확인용 데모.',
+--   array['데모']
+-- )
+-- on conflict (id) do update set
+--   mentor_status = 'active',
+--   display_name  = excluded.display_name,
+--   mentor_title  = excluded.mentor_title;
+
+-- ============================================================================
+-- 검증
+-- ============================================================================
+-- select id, display_name, mentor_status, mentor_title
+-- from public.members
+-- where mentor_status = 'active';
+--
+-- select * from public.mentor_stats;
