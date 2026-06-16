@@ -94,6 +94,12 @@ export function Navbar() {
           >
             피그마 리소스
           </Link>
+          <span className="flex items-center gap-1.5 text-sm leading-none whitespace-nowrap text-gray-500 cursor-default select-none">
+            AI리포트
+            <span className="px-1.5 py-0.5 rounded-full text-[10px] leading-none bg-white/10 text-gray-400 border border-white/10">
+              준비중
+            </span>
+          </span>
         </nav>
 
         {/* Right-side actions: search icon + mobile hamburger */}
@@ -174,6 +180,12 @@ export function Navbar() {
           >
             피그마 리소스
           </Link>
+          <div className="flex items-center justify-center gap-1.5 w-full text-center text-gray-500 cursor-default select-none">
+            AI리포트
+            <span className="px-1.5 py-0.5 rounded-full text-[10px] leading-none bg-white/10 text-gray-400 border border-white/10">
+              준비중
+            </span>
+          </div>
         </nav>
       </div>
     </header>
