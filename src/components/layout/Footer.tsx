@@ -43,7 +43,7 @@ export function Footer() {
             alt="Figmapedia"
             width={161}
             height={32}
-            className="h-8 w-auto"
+            className="h-8 w-auto self-start"
           />
 
           {/* 링크 + 카피라이트 + 연락처 + 아바타 */}
