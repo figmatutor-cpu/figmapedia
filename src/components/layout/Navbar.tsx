@@ -66,10 +66,10 @@ export function Navbar() {
           <Image
             src="/logo.png"
             alt="Figmapedia"
-            width={121}
-            height={24}
+            width={161}
+            height={32}
             priority
-            className="h-6 w-auto"
+            className="h-8 w-auto"
           />
         </Link>
 

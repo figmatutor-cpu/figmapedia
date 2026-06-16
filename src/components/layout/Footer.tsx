@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const TEAM_MEMBERS = [
   {
@@ -37,9 +38,13 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-8 md:px-12 py-10 md:py-12">
         <div className="flex flex-col gap-8 md:gap-10">
           {/* 로고 */}
-          <p className="font-bold text-xl text-white tracking-tight">
-            Figma pedia
-          </p>
+          <Image
+            src="/logo.png"
+            alt="Figmapedia"
+            width={161}
+            height={32}
+            className="h-8 w-auto"
+          />
 
           {/* 링크 + 카피라이트 + 연락처 + 아바타 */}
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
