@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { NAV_ITEMS } from "@/lib/navigation";
 import { useSearchContext } from "@/components/search/SearchProvider";
@@ -52,7 +53,7 @@ export function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="text-white font-semibold text-base leading-none whitespace-nowrap"
+          className="flex items-center"
           onClick={(e) => {
             if (isHome && hasSearched) {
               e.preventDefault();
@@ -62,7 +63,14 @@ export function Navbar() {
             }
           }}
         >
-          Figmapedia
+          <Image
+            src="/logo.png"
+            alt="Figmapedia"
+            width={121}
+            height={24}
+            priority
+            className="h-6 w-auto"
+          />
         </Link>
 
         {/* Desktop nav — visible above xl-nav breakpoint */}
