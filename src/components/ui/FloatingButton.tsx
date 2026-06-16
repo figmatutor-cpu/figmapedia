@@ -104,14 +104,14 @@ export function FloatingButton() {
     <div style={{ bottom: bottomValue }} className="fixed right-7 z-50 flex flex-col items-end gap-3 transition-[bottom] duration-200">
       {/* 허들링 클럽 사전 신청 CTA */}
       <div className="relative">
-        <span className="absolute inset-0 rounded-3xl bg-white/20 animate-[floating-ripple_2s_ease-out_infinite]" />
-        <span className="absolute inset-0 rounded-3xl bg-white/15 animate-[floating-ripple_2s_ease-out_0.6s_infinite]" />
-        <span className="absolute inset-0 rounded-3xl bg-white/10 animate-[floating-ripple_2s_ease-out_1.2s_infinite]" />
+        <span className="absolute inset-0 rounded-[1000px] bg-white/20 animate-[floating-ripple_2s_ease-out_infinite]" />
+        <span className="absolute inset-0 rounded-[1000px] bg-white/15 animate-[floating-ripple_2s_ease-out_0.6s_infinite]" />
+        <span className="absolute inset-0 rounded-[1000px] bg-white/10 animate-[floating-ripple_2s_ease-out_1.2s_infinite]" />
         <a
           href={PRE_REGISTER_LINK}
           target="_blank"
           rel="noopener noreferrer"
-          className="relative flex items-center justify-center rounded-3xl bg-white text-bg-base shadow-lg shadow-white/20 transition-transform hover:scale-105 active:scale-95 px-6 py-4"
+          className="relative flex items-center justify-center rounded-[1000px] bg-white text-bg-base shadow-lg shadow-white/20 transition-transform hover:scale-105 active:scale-95 size-28"
         >
           <span className="text-center font-bold leading-tight text-sm select-none whitespace-nowrap">
             허들링 클럽
