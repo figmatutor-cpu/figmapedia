@@ -62,10 +62,10 @@ export async function generateMetadata({
 
     const hasFigmaKeyword = /피그마|figma/i.test(entry.title);
     const seoTitle = hasFigmaKeyword ? entry.title : `피그마 ${entry.title}`;
-    const title = `${seoTitle} | Figmapedia`;
+    const title = `${seoTitle} | HuddlingClub`;
     const description = excerpt
       ? `${entry.title} — ${excerpt}`
-      : `${entry.title} — ${entry.categories.join(", ")} | Figmapedia 디자인 용어사전`;
+      : `${entry.title} — ${entry.categories.join(", ")} | HuddlingClub 디자인 용어사전`;
     const url = `${SITE_URL}/entry/${id}`;
 
     // 본문 없이 외부 링크만 있는 엔트리 → thin content이므로 noindex

@@ -31,11 +31,10 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Figmapedia - 디자인 용어사전 & 리소스",
-    template: "%s | 피그마 가이드 - Figmapedia",
+    default: "HuddlingClub",
+    template: "%s | HuddlingClub",
   },
-  description:
-    "피그마(Figma) 디자인 용어사전, UI/UX 리소스, 아티클을 검색하세요. 한국어로 정리된 피그마 사용법, 디자인 시스템, 프로토타입 가이드.",
+  description: "AI 시대의 불안감, 행동으로 함께 이겨냅니다.",
   keywords: [
     "피그마",
     "Figma",
@@ -51,21 +50,19 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Figmapedia - 디자인 용어사전 & 리소스",
-    description:
-      "피그마(Figma) 디자인 용어사전, UI/UX 리소스, 아티클을 검색하세요.",
+    title: "HuddlingClub",
+    description: "AI 시대의 불안감, 행동으로 함께 이겨냅니다.",
     url: SITE_URL,
-    siteName: "Figmapedia",
+    siteName: "HuddlingClub",
     type: "website",
     locale: "ko_KR",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Figmapedia" }],
+    images: [{ url: "/og-image.png?v=2", width: 1200, height: 630, alt: "HuddlingClub" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Figmapedia - 디자인 용어사전 & 리소스",
-    description:
-      "피그마(Figma) 디자인 용어사전, UI/UX 리소스, 아티클을 검색하세요.",
-    images: ["/og-image.png"],
+    title: "HuddlingClub",
+    description: "AI 시대의 불안감, 행동으로 함께 이겨냅니다.",
+    images: ["/og-image.png?v=2"],
   },
   verification: {
     google: "itQSqt8mb56aUgnHLQozl7K0Sydr2-p0zozUqZE3hiw",
@@ -110,9 +107,9 @@ gtag('config', 'G-BN35R5EHNE');`}
               "@graph": [
                 {
                   "@type": "WebSite",
-                  name: "Figmapedia",
+                  name: "HuddlingClub",
                   url: SITE_URL,
-                  description: "피그마(Figma) 디자인 도구 한국어 지식 베이스",
+                  description: "AI 시대의 불안감, 행동으로 함께 이겨냅니다.",
                   inLanguage: "ko",
                   potentialAction: {
                     "@type": "SearchAction",
@@ -125,7 +122,7 @@ gtag('config', 'G-BN35R5EHNE');`}
                 },
                 {
                   "@type": "Organization",
-                  name: "Figmapedia",
+                  name: "HuddlingClub",
                   url: SITE_URL,
                 },
               ],
