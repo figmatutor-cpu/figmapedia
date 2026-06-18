@@ -8,6 +8,9 @@ import { NAV_ITEMS } from "@/lib/navigation";
 import { useSearchContext } from "@/components/search/SearchProvider";
 import { SearchIcon } from "@/components/ui/SearchIcon";
 
+// 네비게이션에 노출할 항목 (커뮤니티 메뉴는 헤더에서 숨김 — 라우트/데이터는 유지)
+const VISIBLE_NAV_ITEMS = NAV_ITEMS.filter((item) => item.key !== "community");
+
 export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
@@ -76,7 +79,7 @@ export function Navbar() {
 
         {/* Desktop nav — visible above xl-nav breakpoint */}
         <nav className="hidden xl-nav:flex items-center gap-6">
-          {NAV_ITEMS.map((item) => (
+          {VISIBLE_NAV_ITEMS.map((item) => (
             <Link
               key={item.key}
               href={item.href}
@@ -194,7 +197,7 @@ export function Navbar() {
                      ${isOpen ? "max-h-[1000px] opacity-100 pt-4 pb-5" : "max-h-0 opacity-0 pt-0 pb-0 pointer-events-none"}`}
       >
         <nav className="flex flex-col items-center space-y-4 text-base w-full">
-          {NAV_ITEMS.map((item) => (
+          {VISIBLE_NAV_ITEMS.map((item) => (
             <Link
               key={item.key}
               href={item.href}
