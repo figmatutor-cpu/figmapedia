@@ -11,7 +11,8 @@ import { SearchIcon } from "@/components/ui/SearchIcon";
 export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { toggleSearch, isSearchOpen, hasSearched, clearSearch } = useSearchContext();
+  const { toggleSearch, isSearchOpen, hasSearched, clearSearch } =
+    useSearchContext();
   const isHome = pathname === "/";
   const [isOpen, setIsOpen] = useState(false);
   const [headerShapeClass, setHeaderShapeClass] = useState("rounded-full");
@@ -53,7 +54,7 @@ export function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center"
+          className="flex items-center shrink-0"
           onClick={(e) => {
             if (isHome && hasSearched) {
               e.preventDefault();
@@ -69,7 +70,7 @@ export function Navbar() {
             width={161}
             height={32}
             priority
-            className="h-8 w-auto"
+            className="h-8 w-auto max-w-none"
           />
         </Link>
 
@@ -104,7 +105,9 @@ export function Navbar() {
 
         {/* Right-side actions: search icon + mobile hamburger */}
         {/* On home desktop: no search icon + hamburger hidden = empty div → hide entirely */}
-        <div className={`flex items-center gap-2 ${isHome && !hasSearched ? "xl-nav:hidden" : ""}`}>
+        <div
+          className={`flex items-center gap-2 ${isHome && !hasSearched ? "xl-nav:hidden" : ""}`}
+        >
           {/* Search icon — visible on non-home pages, or home when AI search results are shown */}
           {(!isHome || hasSearched) && (
             <button
@@ -120,11 +123,25 @@ export function Navbar() {
                   toggleSearch();
                 }
               }}
-              aria-label={isSearchOpen || (isHome && hasSearched) ? "검색 닫기" : "검색 열기"}
+              aria-label={
+                isSearchOpen || (isHome && hasSearched)
+                  ? "검색 닫기"
+                  : "검색 열기"
+              }
             >
               {isSearchOpen || (isHome && hasSearched) ? (
-                <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-[18px] h-[18px]"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               ) : (
                 <SearchIcon className="w-[18px] h-[18px]" />
@@ -139,12 +156,32 @@ export function Navbar() {
             aria-label={isOpen ? "메뉴 닫기" : "메뉴 열기"}
           >
             {isOpen ? (
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             ) : (
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             )}
           </button>
