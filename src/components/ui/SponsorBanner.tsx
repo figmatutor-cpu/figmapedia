@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const STORAGE_KEY = "figmapedia-sponsor-banner-dismissed";
-const SPONSOR_URL = "https://tally.so/r/b5rJp0";
+const SPONSOR_URL = "https://www.figmapedia.co.kr/all/?idx=12";
 
 interface SponsorBannerProps {
   className?: string;
@@ -42,7 +42,7 @@ export function SponsorBanner({ className }: SponsorBannerProps) {
     <div
       className={cn(
         "relative rounded-xl border border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/[0.08] transition-colors mb-6",
-        className
+        className,
       )}
     >
       <a
@@ -53,11 +53,9 @@ export function SponsorBanner({ className }: SponsorBannerProps) {
       >
         <span className="flex-1 text-left sm:text-center">
           <span className="font-medium text-white">
-            월간 조회수 9만회, 활성 유저 2.5만명!
+            AI 시대의 불안감을 원동력으로 바꾸는 커뮤니티,
           </span>{" "}
-          <span className="text-gray-300">
-            피그마 피디아의 첫 광고주가 되어보세요.
-          </span>
+          <span className="text-gray-300">허들링 클럽 1기 모집 중 (~6/30)</span>
         </span>
         <span className="hidden shrink-0 items-center justify-center rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-black transition-colors hover:bg-gray-100 sm:inline-flex">
           신청하기
