@@ -53,12 +53,12 @@ export function SponsorBanner({ className }: SponsorBannerProps) {
       >
         <span className="flex-1 text-left sm:text-center">
           <span className="font-medium text-white">
-            AI 시대의 불안감을 원동력으로 바꾸는 커뮤니티,
+            성장하는 실무자들의 AI 커뮤니티 허들링 클럽,
           </span>{" "}
-          <span className="text-gray-300">허들링 클럽 1기 모집 중 (~6/30)</span>
+          <span className="text-gray-300">2기 대기 신청</span>
         </span>
         <span className="hidden shrink-0 items-center justify-center rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-black transition-colors hover:bg-gray-100 sm:inline-flex">
-          신청하기
+          바로가기
         </span>
       </a>
       <button
