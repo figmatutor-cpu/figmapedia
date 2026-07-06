@@ -51,7 +51,10 @@ export const getCachedSectionData = unstable_cache(
     ]);
 
     // 모든 섹션 map
-    const mappedPrompt = promptPages.map(mapPromptPage);
+    // 제목이 비어 있는 항목(내용 없는 빈 Notion 페이지) 제외 — 빈 카드 방지
+    const mappedPrompt = promptPages
+      .map(mapPromptPage)
+      .filter((item) => item.title.trim() !== "");
     const mappedKiosk = kioskPages.map(mapKioskPage);
     const mappedArticles = articlePages.map(mapArticlePage);
     const mappedBlogs = blogPages.map(mapArticlePage);
@@ -75,7 +78,10 @@ export const getCachedSectionData = unstable_cache(
     try {
       thumbnailMap = await getPageThumbnails(allIds);
     } catch (err) {
-      console.error("Supabase thumbnail lookup failed, continuing without:", err);
+      console.error(
+        "Supabase thumbnail lookup failed, continuing without:",
+        err,
+      );
     }
 
     // Supabase 캐시된 썸네일 적용
