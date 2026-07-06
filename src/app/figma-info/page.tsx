@@ -8,11 +8,11 @@ import { getCachedSectionData } from "@/lib/section-data-cache";
 const navItem = NAV_ITEMS.find((n) => n.key === "figma-info")!;
 
 export const metadata: Metadata = {
-  title: "피그마 용어 & 정보 | Figmapedia",
+  title: "피그마 용어 & 정보",
   description: SECTION_DESCRIPTIONS["figma-info"],
   alternates: { canonical: "/figma-info" },
   openGraph: {
-    title: "피그마 용어 & 정보 | Figmapedia",
+    title: "피그마 용어 & 정보 | HuddlingClub",
     description: SECTION_DESCRIPTIONS["figma-info"],
     type: "website",
   },

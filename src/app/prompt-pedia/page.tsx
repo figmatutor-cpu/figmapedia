@@ -7,11 +7,11 @@ import { getCachedSectionData } from "@/lib/section-data-cache";
 const navItem = NAV_ITEMS.find((n) => n.key === "prompt-pedia")!;
 
 export const metadata: Metadata = {
-  title: "프롬프트 피디아 | Figmapedia",
+  title: "프롬프트 피디아",
   description: SECTION_DESCRIPTIONS["prompt-pedia"],
   alternates: { canonical: "/prompt-pedia" },
   openGraph: {
-    title: "프롬프트 피디아 | Figmapedia",
+    title: "프롬프트 피디아 | HuddlingClub",
     description: SECTION_DESCRIPTIONS["prompt-pedia"],
     type: "website",
   },

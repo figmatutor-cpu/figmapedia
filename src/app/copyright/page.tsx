@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { PolicyLayout } from "@/components/layout/PolicyLayout";
 
 export const metadata: Metadata = {
-  title: "저작권 정책 - Figmapedia",
-  description: "피그마피디아 저작권 정책 및 법적 고지",
+  title: "저작권 정책 - HuddlingClub",
+  description: "허들링클럽 저작권 정책 및 법적 고지",
 };
 
 function Section({
@@ -27,15 +27,15 @@ export default function CopyrightPage() {
       <Section title="제1조 (본 사이트 콘텐츠의 저작권)">
         <ol className="list-decimal pl-5 space-y-1">
           <li>
-            피그마피디아 운영진이 직접 창작하고 큐레이션 한 글, 디자인,
+            허들링클럽 운영진이 직접 창작하고 큐레이션 한 글, 디자인,
             튜토리얼, 데이터베이스(노션 DB 구조 등)에 대한 모든 저작권 및
-            지적재산권은 &apos;피그마피디아&apos;에 귀속됩니다.
+            지적재산권은 &apos;허들링클럽&apos;에 귀속됩니다.
           </li>
           <li>
             본 사이트의 콘텐츠를 비상업적 목적(개인 학습, 사내 공유 등)으로
             이용할 경우 반드시{" "}
             <strong className="text-white">
-              출처(피그마피디아 웹사이트 링크)
+              출처(허들링클럽 웹사이트 링크)
             </strong>
             를 명시해야 합니다.
           </li>
@@ -54,7 +54,7 @@ export default function CopyrightPage() {
             상표입니다.
           </li>
           <li>
-            <strong className="text-white">피그마피디아(Figmapedia)</strong>는
+            <strong className="text-white">허들링클럽(HuddlingClub)</strong>는
             디자이너들을 위한 독립적인 지식 공유 커뮤니티 및 정보 아카이브이며,
             Figma, Inc.와 공식적인 제휴 관계이거나 공식적으로 승인받은
             웹사이트가 아님을 밝힙니다.

@@ -69,7 +69,7 @@ export function Navbar() {
         >
           <Image
             src="/logo.png"
-            alt="Figmapedia"
+            alt="HuddlingClub"
             width={161}
             height={32}
             priority

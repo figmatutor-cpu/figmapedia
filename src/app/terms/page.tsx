@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { PolicyLayout } from "@/components/layout/PolicyLayout";
 
 export const metadata: Metadata = {
-  title: "서비스 이용약관 - Figmapedia",
-  description: "피그마피디아 서비스 이용약관",
+  title: "서비스 이용약관 - HuddlingClub",
+  description: "허들링클럽 서비스 이용약관",
 };
 
 function Section({
@@ -26,7 +26,7 @@ export default function TermsPage() {
     <PolicyLayout title="서비스 이용약관">
       <Section title="제1조 (목적)">
         <p>
-          본 약관은 피그마피디아가 제공하는 모든 정보 및 서비스의 이용 조건,
+          본 약관은 허들링클럽이 제공하는 모든 정보 및 서비스의 이용 조건,
           운영자와 이용자의 권리, 의무 및 책임 사항을 규정함을 목적으로 합니다.
         </p>
       </Section>

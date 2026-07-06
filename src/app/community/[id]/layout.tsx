@@ -27,14 +27,14 @@ export async function generateMetadata({
     description,
     alternates: { canonical: `/community/${id}` },
     openGraph: {
-      title: `${post.title} | Figmapedia 커뮤니티`,
+      title: `${post.title} | HuddlingClub 커뮤니티`,
       description,
       url: `/community/${id}`,
       type: "article",
     },
     twitter: {
       card: "summary",
-      title: `${post.title} | Figmapedia 커뮤니티`,
+      title: `${post.title} | HuddlingClub 커뮤니티`,
       description,
     },
   };

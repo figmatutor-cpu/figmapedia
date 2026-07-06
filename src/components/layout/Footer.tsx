@@ -40,7 +40,7 @@ export function Footer() {
           {/* 로고 */}
           <Image
             src="/logo.png"
-            alt="Figmapedia"
+            alt="HuddlingClub"
             width={161}
             height={32}
             className="h-8 w-auto self-start"
@@ -58,7 +58,7 @@ export function Footer() {
                 <Link href="/copyright" className="text-[#858699] hover:text-white transition-colors">저작권 정책</Link>
               </div>
               <p className="text-xs text-[#6B6F76] leading-relaxed">
-                @Figmapedia All rights reserved
+                @HuddlingClub All rights reserved
               </p>
               <p className="text-xs text-[#6B6F76]">
                 문의:yiseo@figmatutor.info

@@ -7,11 +7,11 @@ import { getCachedSectionData } from "@/lib/section-data-cache";
 const navItem = NAV_ITEMS.find((n) => n.key === "uxui-study")!;
 
 export const metadata: Metadata = {
-  title: "UX/UI 스터디 | Figmapedia",
+  title: "UX/UI 스터디",
   description: SECTION_DESCRIPTIONS["uxui-study"],
   alternates: { canonical: "/uxui-study" },
   openGraph: {
-    title: "UX/UI 스터디 | Figmapedia",
+    title: "UX/UI 스터디 | HuddlingClub",
     description: SECTION_DESCRIPTIONS["uxui-study"],
     type: "website",
   },

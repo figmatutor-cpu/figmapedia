@@ -7,11 +7,11 @@ import { getCachedSectionData } from "@/lib/section-data-cache";
 const navItem = NAV_ITEMS.find((n) => n.key === "kiosk-food")!;
 
 export const metadata: Metadata = {
-  title: "키오스크 스크린샷 | Figmapedia",
+  title: "키오스크 스크린샷",
   description: SECTION_DESCRIPTIONS["kiosk-food"],
   alternates: { canonical: "/kiosk-food" },
   openGraph: {
-    title: "키오스크 스크린샷 | Figmapedia",
+    title: "키오스크 스크린샷 | HuddlingClub",
     description: SECTION_DESCRIPTIONS["kiosk-food"],
     type: "website",
   },

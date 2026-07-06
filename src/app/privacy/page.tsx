@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { PolicyLayout } from "@/components/layout/PolicyLayout";
 
 export const metadata: Metadata = {
-  title: "개인정보 처리방침 - Figmapedia",
-  description: "피그마피디아 개인정보 처리방침",
+  title: "개인정보 처리방침 - HuddlingClub",
+  description: "허들링클럽 개인정보 처리방침",
 };
 
 function Section({
@@ -26,7 +26,7 @@ export default function PrivacyPage() {
     <PolicyLayout title="개인정보 처리방침">
       <Section title="제1조 (목적)">
         <p>
-          피그마피디아(이하 &apos;본 사이트&apos;)는 방문자의 개인정보를
+          허들링클럽(이하 &apos;본 사이트&apos;)는 방문자의 개인정보를
           보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 다음과
           같이 개인정보 처리방침을 수립·공개합니다.
         </p>

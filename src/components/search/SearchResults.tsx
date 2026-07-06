@@ -14,7 +14,7 @@ import {
 } from "@/lib/constants";
 import type { SearchIndexItem } from "@/types";
 
-const TYPING_MESSAGES = ["AI 검색 중", "Figmapedia DB와 결합 중"];
+const TYPING_MESSAGES = ["AI 검색 중", "HuddlingClub DB와 결합 중"];
 
 function TypingText() {
   const [displayed, setDisplayed] = useState("");
