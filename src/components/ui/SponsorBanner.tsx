@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const STORAGE_KEY = "figmapedia-sponsor-banner-dismissed";
-const SPONSOR_URL = "https://www.figmapedia.co.kr/all/?idx=12";
+const SPONSOR_URL = "https://tally.so/r/689pr5";
 
 interface SponsorBannerProps {
   className?: string;
