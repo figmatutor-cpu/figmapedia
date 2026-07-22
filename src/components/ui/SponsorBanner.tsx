@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const STORAGE_KEY = "figmapedia-sponsor-banner-dismissed";
-const SPONSOR_URL = "https://tally.so/r/689pr5";
+const SPONSOR_URL = "https://www.huddling.club/shop_view/?idx=13";
 
 interface SponsorBannerProps {
   className?: string;
@@ -53,9 +53,9 @@ export function SponsorBanner({ className }: SponsorBannerProps) {
       >
         <span className="flex-1 text-left sm:text-center">
           <span className="font-medium text-white">
-            성장하는 실무자들의 AI 커뮤니티 허들링 클럽,
+            성장하는 실무자들의 AI 커뮤니티 허들링 클럽
           </span>{" "}
-          <span className="text-gray-300">2기 대기 신청</span>
+          <span className="text-gray-300">2기 모집 중</span>
         </span>
         <span className="hidden shrink-0 items-center justify-center rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-black transition-colors hover:bg-gray-100 sm:inline-flex">
           바로가기

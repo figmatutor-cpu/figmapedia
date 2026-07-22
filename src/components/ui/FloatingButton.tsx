@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useSearchContext } from "@/components/search/SearchProvider";
 
-const PRE_REGISTER_LINK = "https://tally.so/r/689pr5";
+const PRE_REGISTER_LINK = "https://www.huddling.club/shop_view/?idx=13";
 
 export function FloatingButton() {
   const [footerVisible, setFooterVisible] = useState(false);
@@ -152,7 +152,7 @@ export function FloatingButton() {
           <span className="text-center font-bold leading-tight text-sm select-none whitespace-nowrap">
             허들링 클럽
             <br />
-            2기 대기 신청
+            2기 모집 중
           </span>
         </a>
       </div>
