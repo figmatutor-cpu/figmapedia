@@ -37,13 +37,17 @@ export function useThumbnail(
       // 1단계: 외부 링크가 있으면 OG 이미지 시도 (Notion API 사용 안 함)
       if (entry.link) {
         try {
-          const res = await fetch(`/api/og-image?url=${encodeURIComponent(entry.link)}`);
+          const res = await fetch(
+            `/api/og-image?url=${encodeURIComponent(entry.link)}`,
+          );
           const data = await res.json();
           if (!cancelled && data.ogImage) {
             setFallback(data.ogImage);
             return;
           }
-        } catch { /* fall through */ }
+        } catch {
+          /* fall through */
+        }
       }
 
       // 2단계: Notion 페이지 블록에서 첫 이미지 시도
@@ -53,14 +57,18 @@ export function useThumbnail(
         if (!cancelled && data.thumbnail) {
           setFallback(data.thumbnail);
         }
-      } catch { /* give up */ }
+      } catch {
+        /* give up */
+      }
     }
 
     resolve();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [entry.id, entry.link, enabled, needsFallback]);
 
   // primary가 실패했거나 없으면 fallback 사용
-  const url = (!primaryFailed && entry.thumbnail) ? entry.thumbnail : fallback;
+  const url = !primaryFailed && entry.thumbnail ? entry.thumbnail : fallback;
   return { url, onError };
 }

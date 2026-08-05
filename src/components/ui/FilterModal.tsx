@@ -10,7 +10,11 @@ interface FilterModalProps {
   onChange: (selected: string[]) => void;
 }
 
-export function FilterModal({ categories, selected, onChange }: FilterModalProps) {
+export function FilterModal({
+  categories,
+  selected,
+  onChange,
+}: FilterModalProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const modalRef = useRef<HTMLDivElement>(null);
@@ -20,7 +24,7 @@ export function FilterModal({ categories, selected, onChange }: FilterModalProps
   const filteredCategories = useMemo(() => {
     if (!searchQuery.trim()) return categories;
     return categories.filter((c) =>
-      c.toLowerCase().includes(searchQuery.toLowerCase())
+      c.toLowerCase().includes(searchQuery.toLowerCase()),
     );
   }, [categories, searchQuery]);
 
@@ -58,7 +62,6 @@ export function FilterModal({ categories, selected, onChange }: FilterModalProps
 
   return (
     <div className="relative shrink-0">
-
       {/* 필터 토글 버튼 */}
       <button
         ref={buttonRef}
@@ -81,7 +84,9 @@ export function FilterModal({ categories, selected, onChange }: FilterModalProps
         >
           {/* 헤더 */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
-            <span className="text-sm font-medium text-white">카테고리 필터</span>
+            <span className="text-sm font-medium text-white">
+              카테고리 필터
+            </span>
             <button
               type="button"
               onClick={() => setIsOpen(false)}
@@ -94,9 +99,12 @@ export function FilterModal({ categories, selected, onChange }: FilterModalProps
           {/* 검색 인풋 — 선택된 뱃지 가로 나열, 고정 높이, overflow clip */}
           <div className="px-3 pt-3 pb-2">
             <div className="flex flex-wrap items-center gap-1.5 min-h-10 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 focus-within:border-white/25 focus-within:bg-white/[0.07] transition-colors">
-              {selected.length === 0 && <Search className="w-3.5 h-3.5 text-gray-500 shrink-0" />}
+              {selected.length === 0 && (
+                <Search className="w-3.5 h-3.5 text-gray-500 shrink-0" />
+              )}
               {selected.map((cat) => {
-                const badgeColor = CATEGORY_COLORS[cat] ?? DEFAULT_CATEGORY_COLOR;
+                const badgeColor =
+                  CATEGORY_COLORS[cat] ?? DEFAULT_CATEGORY_COLOR;
                 return (
                   <span
                     key={cat}
@@ -117,7 +125,9 @@ export function FilterModal({ categories, selected, onChange }: FilterModalProps
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={selected.length > 0 ? "" : "카테고리 검색 또는 선택"}
+                placeholder={
+                  selected.length > 0 ? "" : "카테고리 검색 또는 선택"
+                }
                 className="flex-1 min-w-[3rem] bg-transparent text-sm text-gray-200 placeholder-gray-500 outline-none"
               />
             </div>
@@ -127,11 +137,14 @@ export function FilterModal({ categories, selected, onChange }: FilterModalProps
           <div className="px-2 pb-3">
             <div className="max-h-[260px] overflow-y-auto custom-scrollbar pr-1">
               {filteredCategories.length === 0 ? (
-                <p className="py-4 text-center text-xs text-gray-500">결과 없음</p>
+                <p className="py-4 text-center text-xs text-gray-500">
+                  결과 없음
+                </p>
               ) : (
                 filteredCategories.map((cat) => {
                   const isChecked = selected.includes(cat);
-                  const badgeColor = CATEGORY_COLORS[cat] ?? DEFAULT_CATEGORY_COLOR;
+                  const badgeColor =
+                    CATEGORY_COLORS[cat] ?? DEFAULT_CATEGORY_COLOR;
                   return (
                     <div
                       key={cat}
@@ -148,12 +161,19 @@ export function FilterModal({ categories, selected, onChange }: FilterModalProps
                             : "border-white/20 bg-transparent group-hover:border-white/40"
                         }`}
                       >
-                        {isChecked && <Check className="w-2.5 h-2.5 text-white" strokeWidth={3} />}
+                        {isChecked && (
+                          <Check
+                            className="w-2.5 h-2.5 text-white"
+                            strokeWidth={3}
+                          />
+                        )}
                       </div>
                       {/* 카테고리 뱃지 — CATEGORY_COLORS 전체 클래스(bg + text) 적용 */}
                       <span
                         className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium transition-opacity ${badgeColor} ${
-                          isChecked ? "opacity-100" : "opacity-60 group-hover:opacity-90"
+                          isChecked
+                            ? "opacity-100"
+                            : "opacity-60 group-hover:opacity-90"
                         }`}
                       >
                         {cat}

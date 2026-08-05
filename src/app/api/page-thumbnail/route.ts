@@ -29,7 +29,10 @@ export async function GET(request: Request) {
   const pageId = searchParams.get("pageId");
 
   if (!pageId) {
-    return Response.json({ error: "pageId parameter required" }, { status: 400 });
+    return Response.json(
+      { error: "pageId parameter required" },
+      { status: 400 },
+    );
   }
 
   // 메모리 캐시 확인
@@ -41,7 +44,7 @@ export async function GET(request: Request) {
         headers: {
           "Cache-Control": "public, max-age=2700", // 브라우저 45분 캐시
         },
-      }
+      },
     );
   }
 
@@ -55,6 +58,6 @@ export async function GET(request: Request) {
       headers: {
         "Cache-Control": "public, max-age=2700",
       },
-    }
+    },
   );
 }

@@ -65,7 +65,8 @@ function PasswordModal({
           style={{ fontSize: "16px" }}
           autoFocus
           onKeyDown={(e) => {
-            if (e.key === "Enter" && password.trim()) onConfirm(password.trim());
+            if (e.key === "Enter" && password.trim())
+              onConfirm(password.trim());
           }}
         />
         {error && <p className="text-xs text-red-400 mb-3">{error}</p>}
@@ -260,7 +261,14 @@ export default function CommunityPostPage() {
           href="/community"
           className="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-white transition-colors mb-4"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
             <path d="M15 18l-6-6 6-6" />
           </svg>
           목록
@@ -317,7 +325,9 @@ export default function CommunityPostPage() {
                     </div>
                     <button
                       type="button"
-                      onClick={() => setDeleteTarget({ type: "comment", id: comment.id })}
+                      onClick={() =>
+                        setDeleteTarget({ type: "comment", id: comment.id })
+                      }
                       className="text-xxs text-gray-600 hover:text-red-400 transition-colors"
                     >
                       삭제

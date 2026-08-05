@@ -1,0 +1,19 @@
+:root {
+  --primitive-white: #ffffff;
+  --primitive-gray-50: #f9fafb;
+  --primitive-gray-200: #e5e7eb;
+  --primitive-gray-500: #6b7280;
+  --primitive-gray-900: #111827;
+  --primitive-blue-500: #3b82f6;
+  --primitive-green-500: #22c55e;
+  --primitive-red-500: #ef4444;
+
+  --color-bg-primary: var(--primitive-white);
+  --color-bg-secondary: var(--primitive-gray-50);
+  --color-text-primary: var(--primitive-gray-900);
+  --color-text-secondary: var(--primitive-gray-500);
+  --color-border-default: var(--primitive-gray-200);
+  --color-brand-primary: var(--primitive-blue-500);
+  --color-status-success: var(--primitive-green-500);
+  --color-status-error: var(--primitive-red-500);
+}

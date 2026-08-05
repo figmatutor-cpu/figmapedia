@@ -56,10 +56,12 @@ const getCachedPosts = unstable_cache(
       }
     }
 
-    const postsWithCounts = (posts ?? []).map(({ password_hash: _ph, ...p }) => ({
-      ...p,
-      comment_count: commentCounts[p.id] || 0,
-    }));
+    const postsWithCounts = (posts ?? []).map(
+      ({ password_hash: _ph, ...p }) => ({
+        ...p,
+        comment_count: commentCounts[p.id] || 0,
+      }),
+    );
 
     return {
       posts: postsWithCounts,
@@ -77,14 +79,18 @@ const getCachedPosts = unstable_cache(
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const page = Math.max(1, Number(searchParams.get("page")) || 1);
-  const limit = Math.min(50, Math.max(1, Number(searchParams.get("limit")) || 20));
+  const limit = Math.min(
+    50,
+    Math.max(1, Number(searchParams.get("limit")) || 20),
+  );
   const category = searchParams.get("category");
 
   try {
     const data = await getCachedPosts(page, limit, category);
     return Response.json(data);
   } catch (err) {
-    const message = err instanceof Error ? err.message : "서버 오류가 발생했습니다.";
+    const message =
+      err instanceof Error ? err.message : "서버 오류가 발생했습니다.";
     return Response.json({ error: message }, { status: 500 });
   }
 }
@@ -95,29 +101,59 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { nickname, title, content, category, password } = body;
 
-    if (!nickname || typeof nickname !== "string" || nickname.trim().length === 0) {
-      return Response.json({ error: "닉네임을 입력해주세요." }, { status: 400 });
+    if (
+      !nickname ||
+      typeof nickname !== "string" ||
+      nickname.trim().length === 0
+    ) {
+      return Response.json(
+        { error: "닉네임을 입력해주세요." },
+        { status: 400 },
+      );
     }
     if (nickname.trim().length > 20) {
-      return Response.json({ error: "닉네임은 20자 이내로 입력해주세요." }, { status: 400 });
+      return Response.json(
+        { error: "닉네임은 20자 이내로 입력해주세요." },
+        { status: 400 },
+      );
     }
     if (!title || typeof title !== "string" || title.trim().length === 0) {
       return Response.json({ error: "제목을 입력해주세요." }, { status: 400 });
     }
     if (title.trim().length > 200) {
-      return Response.json({ error: "제목은 200자 이내로 입력해주세요." }, { status: 400 });
+      return Response.json(
+        { error: "제목은 200자 이내로 입력해주세요." },
+        { status: 400 },
+      );
     }
-    if (!content || typeof content !== "string" || content.trim().length === 0) {
+    if (
+      !content ||
+      typeof content !== "string" ||
+      content.trim().length === 0
+    ) {
       return Response.json({ error: "내용을 입력해주세요." }, { status: 400 });
     }
     if (content.trim().length < 30) {
-      return Response.json({ error: "내용은 최소 30자 이상 입력해주세요." }, { status: 400 });
+      return Response.json(
+        { error: "내용은 최소 30자 이상 입력해주세요." },
+        { status: 400 },
+      );
     }
     if (content.trim().length > 10000) {
-      return Response.json({ error: "내용은 10000자 이내로 입력해주세요." }, { status: 400 });
+      return Response.json(
+        { error: "내용은 10000자 이내로 입력해주세요." },
+        { status: 400 },
+      );
     }
-    if (!password || typeof password !== "string" || password.trim().length < 4) {
-      return Response.json({ error: "비밀번호는 4자 이상 입력해주세요." }, { status: 400 });
+    if (
+      !password ||
+      typeof password !== "string" ||
+      password.trim().length < 4
+    ) {
+      return Response.json(
+        { error: "비밀번호는 4자 이상 입력해주세요." },
+        { status: 400 },
+      );
     }
 
     const password_hash = await hashPassword(password.trim());
@@ -165,7 +201,7 @@ export async function POST(request: NextRequest) {
           fullText: data.content ?? "",
           embedding,
           lastEditedTime: data.created_at,
-        })
+        }),
       )
       .catch(() => {});
 

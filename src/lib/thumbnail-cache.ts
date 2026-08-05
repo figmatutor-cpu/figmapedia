@@ -232,9 +232,7 @@ export async function deleteThumbnail(pageId: string): Promise<void> {
     .single();
 
   if (data?.storage_path) {
-    await supabase.storage
-      .from("thumbnails")
-      .remove([data.storage_path]);
+    await supabase.storage.from("thumbnails").remove([data.storage_path]);
   }
 
   await supabase.from("page_thumbnails").delete().eq("page_id", pageId);

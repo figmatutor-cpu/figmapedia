@@ -21,7 +21,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://huddling.ai").trim();
+const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://huddling.ai"
+).trim();
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -56,7 +58,14 @@ export const metadata: Metadata = {
     siteName: "HuddlingClub",
     type: "website",
     locale: "ko_KR",
-    images: [{ url: "/og-image.png?v=2", width: 1200, height: 630, alt: "HuddlingClub" }],
+    images: [
+      {
+        url: "/og-image.png?v=2",
+        width: 1200,
+        height: 630,
+        alt: "HuddlingClub",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -66,7 +75,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "itQSqt8mb56aUgnHLQozl7K0Sydr2-p0zozUqZE3hiw",
-    other: { "naver-site-verification": ["67e11a1d64f436a367a098073032fe4433dc5ce7"] },
+    other: {
+      "naver-site-verification": ["67e11a1d64f436a367a098073032fe4433dc5ce7"],
+    },
   },
   other: {
     "geo.region": "KR",
@@ -88,7 +99,10 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-BN35R5EHNE" strategy="afterInteractive" />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-BN35R5EHNE"
+          strategy="afterInteractive"
+        />
         <Script id="gtag-init" strategy="afterInteractive">
           {`window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}

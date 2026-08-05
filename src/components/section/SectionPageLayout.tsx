@@ -41,7 +41,7 @@ interface SectionPageLayoutProps {
 
 function useSectionItems(
   sectionKey: string | undefined,
-  initialItems?: SearchIndexItem[]
+  initialItems?: SearchIndexItem[],
 ) {
   const [items, setItems] = useState<SearchIndexItem[]>(initialItems ?? []);
   const [isLoading, setIsLoading] = useState(!!sectionKey && !initialItems);
@@ -66,13 +66,13 @@ function useSectionItems(
 
 function useMultiSectionItems(
   sectionKeys: string[],
-  initialData?: Record<string, SearchIndexItem[]>
+  initialData?: Record<string, SearchIndexItem[]>,
 ) {
   const [data, setData] = useState<Record<string, SearchIndexItem[]>>(
-    initialData ?? {}
+    initialData ?? {},
   );
   const [isLoading, setIsLoading] = useState(
-    sectionKeys.length > 0 && !initialData
+    sectionKeys.length > 0 && !initialData,
   );
   const keysStr = sectionKeys.join(",");
 
@@ -87,8 +87,8 @@ function useMultiSectionItems(
             key,
             items: d.items && Array.isArray(d.items) ? d.items : [],
           }))
-          .catch(() => ({ key, items: [] as SearchIndexItem[] }))
-      )
+          .catch(() => ({ key, items: [] as SearchIndexItem[] })),
+      ),
     ).then((results) => {
       const combined: Record<string, SearchIndexItem[]> = {};
       for (const r of results) combined[r.key] = r.items;
@@ -103,11 +103,11 @@ function useMultiSectionItems(
 /** Filter items by category names (exact match on any) */
 function filterByCategory(
   items: SearchIndexItem[],
-  categories: string[]
+  categories: string[],
 ): SearchIndexItem[] {
   if (categories.length === 0) return items;
   return items.filter((item) =>
-    item.categories.some((c) => categories.includes(c))
+    item.categories.some((c) => categories.includes(c)),
   );
 }
 
@@ -145,27 +145,31 @@ export function SectionPageLayout({
 
   const subTabSectionKeys = useMemo(
     () =>
-      subTabs
-        ?.filter((t) => t.sectionDataKey)
-        .map((t) => t.sectionDataKey!) ?? [],
-    [subTabs]
+      subTabs?.filter((t) => t.sectionDataKey).map((t) => t.sectionDataKey!) ??
+      [],
+    [subTabs],
   );
   const hasSubTabSections = subTabSectionKeys.length > 0;
 
-  const { items: fetchedMainItems, isLoading: fetchedMainLoading } = useSearchIndex();
+  const { items: fetchedMainItems, isLoading: fetchedMainLoading } =
+    useSearchIndex();
   const mainItems = initialMainItems ?? fetchedMainItems;
   const mainLoading = initialMainItems ? false : fetchedMainLoading;
 
   const { items: singleSectionItems, isLoading: singleLoading } =
     useSectionItems(sectionDataKey, initialSectionItems);
   const { data: multiSectionData, isLoading: multiLoading } =
-    useMultiSectionItems(hasSubTabSections ? subTabSectionKeys : [], initialMultiSectionData);
+    useMultiSectionItems(
+      hasSubTabSections ? subTabSectionKeys : [],
+      initialMultiSectionData,
+    );
 
   // 현재 활성 탭 객체
   const activeTabObj = subTabs?.find((t) => t.key === activeTab);
 
   // 정렬/필터 UI 표시 여부 — 외부 prop + 탭의 showSortFilter 명시적 boolean으로 결정
-  const shouldShowSortFilter = enableSortFilter && activeTabObj?.showSortFilter === true;
+  const shouldShowSortFilter =
+    enableSortFilter && activeTabObj?.showSortFilter === true;
 
   // Items before sort/filter/search
   const baseItems = useMemo(() => {
@@ -210,15 +214,16 @@ export function SectionPageLayout({
   const availableCategories = useMemo(() => {
     if (!shouldShowSortFilter) return [];
     return Array.from(
-      new Set(baseItems.flatMap((item) => item.categories))
+      new Set(baseItems.flatMap((item) => item.categories)),
     ).sort();
   }, [baseItems, shouldShowSortFilter]);
 
   // 카테고리 필터 적용 (shouldShowSortFilter일 때만)
   const categoryFilteredItems = useMemo(() => {
-    if (!shouldShowSortFilter || selectedCategories.length === 0) return baseItems;
+    if (!shouldShowSortFilter || selectedCategories.length === 0)
+      return baseItems;
     return baseItems.filter((item) =>
-      item.categories.some((c) => selectedCategories.includes(c))
+      item.categories.some((c) => selectedCategories.includes(c)),
     );
   }, [baseItems, selectedCategories, shouldShowSortFilter]);
 
@@ -231,7 +236,7 @@ export function SectionPageLayout({
         item.title.toLowerCase().includes(q) ||
         item.categories.some((c) => c.toLowerCase().includes(q)) ||
         (item.author && item.author.toLowerCase().includes(q)) ||
-        (item.shortcut && item.shortcut.toLowerCase().includes(q))
+        (item.shortcut && item.shortcut.toLowerCase().includes(q)),
     );
   }, [categoryFilteredItems, searchQuery]);
 
@@ -299,7 +304,7 @@ export function SectionPageLayout({
       } else if (tab.categoryFilter) {
         counts[tab.key] = filterByCategory(
           singleSectionItems,
-          tab.categoryFilter
+          tab.categoryFilter,
         ).length;
       } else if (tab.filter) {
         counts[tab.key] = filterItems(mainItems, tab.filter).length;
@@ -311,16 +316,20 @@ export function SectionPageLayout({
       }
     }
     return counts;
-  }, [subTabs, mainItems, multiSectionData, singleSectionItems, sectionDataKey]);
+  }, [
+    subTabs,
+    mainItems,
+    multiSectionData,
+    singleSectionItems,
+    sectionDataKey,
+  ]);
 
   return (
     <div className="min-h-screen bg-bg-base pt-28 pb-16">
       <div className="mx-auto max-w-4xl px-4">
         <SponsorBanner />
         {/* Title */}
-        <h1 className="text-xl font-bold text-white mb-2">
-          {title}
-        </h1>
+        <h1 className="text-xl font-bold text-white mb-2">{title}</h1>
 
         {description && (
           <p className="text-gray-400 mb-6 text-sm sm:text-base">
@@ -332,7 +341,9 @@ export function SectionPageLayout({
         <div className="flex items-center gap-3 mb-8 overflow-hidden">
           {/* Tabs — 모바일: 스와이프, 검색 펼침 시 숨김 / 데스크탑: 항상 표시 */}
           {subTabs && (
-            <div className={`${isSearchExpanded ? "hidden xl-nav:flex" : "flex"} flex-1 min-w-0 overflow-hidden`}>
+            <div
+              className={`${isSearchExpanded ? "hidden xl-nav:flex" : "flex"} flex-1 min-w-0 overflow-hidden`}
+            >
               <SegmentedControl
                 tabs={subTabs.map((tab) => ({
                   key: tab.key,
@@ -347,7 +358,9 @@ export function SectionPageLayout({
 
           {/* 모바일 검색 — 아이콘 / 펼침 인풋 (subTabs 있는 페이지만) */}
           {subTabs && (
-            <div className={`xl-nav:hidden ${isSearchExpanded ? "flex-1 min-w-0" : "shrink-0"}`}>
+            <div
+              className={`xl-nav:hidden ${isSearchExpanded ? "flex-1 min-w-0" : "shrink-0"}`}
+            >
               {isSearchExpanded ? (
                 <div className="flex items-center gap-2">
                   <div className="relative flex-1 min-w-0">
@@ -370,8 +383,18 @@ export function SectionPageLayout({
                     }}
                     className="shrink-0 p-2 text-gray-400 hover:text-white transition-colors"
                   >
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </button>
                 </div>
@@ -391,7 +414,9 @@ export function SectionPageLayout({
           )}
 
           {/* 데스크탑 검색 (≥ xl-nav) + subTabs 없는 페이지 모바일 검색 */}
-          <div className={`relative ${subTabs ? "hidden xl-nav:block" : "w-full"} xl-nav:shrink-0 xl-nav:w-[180px]`}>
+          <div
+            className={`relative ${subTabs ? "hidden xl-nav:block" : "w-full"} xl-nav:shrink-0 xl-nav:w-[180px]`}
+          >
             <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
             <input
               type="text"
@@ -431,13 +456,22 @@ export function SectionPageLayout({
             ) : resolvedCardLayout === "grid" ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {displayItems.map((entry) => (
-                  <VerticalCard key={entry.id} entry={entry} externalLink={resolvedExternalLink} />
+                  <VerticalCard
+                    key={entry.id}
+                    entry={entry}
+                    externalLink={resolvedExternalLink}
+                  />
                 ))}
               </div>
             ) : (
               <div className="space-y-3">
                 {displayItems.map((entry) => (
-                  <EntryCard key={entry.id} entry={entry} showThumbnail={resolvedShowThumbnail} nonClickable={resolvedNonClickable} />
+                  <EntryCard
+                    key={entry.id}
+                    entry={entry}
+                    showThumbnail={resolvedShowThumbnail}
+                    nonClickable={resolvedNonClickable}
+                  />
                 ))}
               </div>
             )}

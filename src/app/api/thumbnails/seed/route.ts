@@ -68,10 +68,7 @@ export async function POST(request: NextRequest) {
       const results = await Promise.allSettled(
         chunk.map(async (page) => {
           const coverUrl = extractFileUrl(page.cover);
-          const coverType = page.cover?.type as
-            | "file"
-            | "external"
-            | undefined;
+          const coverType = page.cover?.type as "file" | "external" | undefined;
           // 외부 링크 프로퍼티는 DB마다 이름이 다를 수 있음
           const link =
             page.properties?.["링크"]?.url ??

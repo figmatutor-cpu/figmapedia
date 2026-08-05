@@ -1,0 +1,194 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Figmapedia — Colors & Type
+   Source: figmapedia_renewal/src/app/globals.css + components/CLAUDE.md
+   Voice: dark glassmorphic UI with Pretendard Variable (Korean + Latin),
+          Geist Mono for code/shortcuts, accented by deep brand blue.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: "Pretendard Variable";
+  src: url("./fonts/PretendardVariable.woff2") format("woff2-variations");
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ── BRAND ─────────────────────────────────────────────────────────── */
+  --fp-brand-blue: #1f3dbc; /* primary action, focus, link hover */
+  --fp-brand-blue-accent: #536dfe; /* AI search accent, badges, highlights */
+  --fp-brand-blue-light: #f0f2ff; /* inverse pill / button on dark */
+  --fp-footer-link: #6c79ff; /* link in footer */
+
+  /* ── SURFACE ──────────────────────────────────────────────────────── */
+  --fp-bg-base: #050510; /* page background — near-black indigo */
+  --fp-navbar-bg: rgba(31, 31, 31, 0.34); /* glass capsule */
+  --fp-navbar-border: #333;
+  --fp-glass-hero: rgba(15, 15, 20, 0.55); /* hero search input bg */
+  --fp-glass-overlay: rgba(15, 15, 20, 0.85); /* overlay search input bg */
+  --fp-modal-bg: #111118;
+  --fp-floating-bg: #202128; /* FAB modal sheet */
+  --fp-floating-item: #2a2a36; /* FAB row */
+  --fp-floating-item-hover: #333340;
+
+  /* ── FOREGROUND ───────────────────────────────────────────────────── */
+  --fp-fg-1: #ffffff; /* primary text */
+  --fp-fg-2: #e5e7eb; /* gray-200 — secondary */
+  --fp-fg-3: #9ca3af; /* gray-400 — tertiary, descriptions */
+  --fp-fg-4: #6b7280; /* gray-500 — meta, source */
+  --fp-fg-5: #858699; /* footer sub-text */
+  --fp-fg-6: #6b6f76; /* footer meta (copyright) */
+
+  /* ── GLASS ALPHA SCALE (the core motif) ───────────────────────────── */
+  --fp-glass-1: rgba(255, 255, 255, 0.03); /* subtle inactive bg */
+  --fp-glass-2: rgba(255, 255, 255, 0.05); /* default card bg */
+  --fp-glass-3: rgba(255, 255, 255, 0.06); /* thumbnail well */
+  --fp-glass-4: rgba(255, 255, 255, 0.08); /* hover bg */
+  --fp-glass-5: rgba(255, 255, 255, 0.1); /* active tab bg */
+  --fp-glass-6: rgba(255, 255, 255, 0.15);
+
+  --fp-border-1: rgba(255, 255, 255, 0.1); /* default card border */
+  --fp-border-2: rgba(255, 255, 255, 0.15);
+  --fp-border-3: rgba(255, 255, 255, 0.2); /* hover border */
+  --fp-border-4: rgba(255, 255, 255, 0.25); /* focused input border */
+
+  /* ── SEMANTIC STATES ──────────────────────────────────────────────── */
+  --fp-success: #4ade80; /* green-400 — copied! */
+  --fp-success-bg: rgba(34, 197, 94, 0.1);
+  --fp-success-border: rgba(74, 222, 128, 0.5);
+  --fp-error: #f87171; /* red-400 */
+  --fp-error-bg: rgba(239, 68, 68, 0.05);
+  --fp-error-border: rgba(239, 68, 68, 0.2);
+
+  /* ── CATEGORY BADGE PALETTE (15% bg / 100% text on dark) ──────────── */
+  --fp-cat-yellow: #facc15; /* 기초 인터페이스, 템플릿, 피그마 슬라이드 */
+  --fp-cat-purple: #a855f7; /* 피그잼 */
+  --fp-cat-blue: #3b82f6; /* 피그마 소식, 피그마사이트 */
+  --fp-cat-violet: #8b5cf6; /* 데일리콘텐츠 */
+  --fp-cat-pink: #ec4899; /* 소소한 꿀팁, 이벤트, 피그마버즈 */
+  --fp-cat-green: #22c55e; /* 플러그인 */
+  --fp-cat-orange: #f97316; /* 프로토타이핑, 데브모드 */
+  --fp-cat-red: #ef4444; /* 컴포넌트 */
+  --fp-cat-amber: #f59e0b; /* 오토 레이아웃, 업데이트 */
+  --fp-cat-gray: #6b7280; /* 베리어블, 피그마메이크 */
+  --fp-cat-emerald: #10b981; /* 리소스 */
+  --fp-cat-cyan: #06b6d4; /* 수업자료 */
+  --fp-cat-rose: #f43f5e; /* 주간 라이브 */
+  --fp-cat-indigo: #6366f1; /* Figma A to Z */
+
+  /* ── TYPOGRAPHY ───────────────────────────────────────────────────── */
+  --fp-font-sans:
+    "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fp-font-mono:
+    "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --fp-letter-spacing: -0.01em;
+
+  /* type ramp (px) */
+  --fp-text-xxs: 10px;
+  --fp-text-xs: 12px;
+  --fp-text-sm: 14px;
+  --fp-text-base: 16px;
+  --fp-text-lg: 18px;
+  --fp-text-xl: 20px;
+  --fp-text-2xl: 24px;
+  --fp-text-3xl: 30px;
+  --fp-text-4xl: 36px;
+
+  /* line-heights */
+  --fp-lh-tight: 1.25;
+  --fp-lh-snug: 1.4;
+  --fp-lh-normal: 1.5;
+  --fp-lh-relaxed: 1.625;
+
+  /* ── RADIUS ───────────────────────────────────────────────────────── */
+  --fp-radius-sm: 6px; /* small chip */
+  --fp-radius-md: 8px; /* badges */
+  --fp-radius-lg: 10px; /* inputs (rounded-lg) */
+  --fp-radius-xl: 12px; /* cards (rounded-xl) — the workhorse */
+  --fp-radius-2xl: 16px; /* hero search wrapper */
+  --fp-radius-3xl: 24px; /* FAB modal sheet */
+  --fp-radius-full: 9999px; /* tabs, pills, navbar capsule, FAB */
+
+  /* ── SPACING (4-px base) ──────────────────────────────────────────── */
+  --fp-space-0_5: 2px;
+  --fp-space-1: 4px;
+  --fp-space-1_5: 6px;
+  --fp-space-2: 8px;
+  --fp-space-3: 12px;
+  --fp-space-4: 16px; /* card padding */
+  --fp-space-5: 20px; /* card padding (loose) */
+  --fp-space-6: 24px;
+  --fp-space-8: 32px;
+  --fp-space-10: 40px;
+  --fp-space-12: 48px;
+
+  /* ── SHADOW & GLOW ────────────────────────────────────────────────── */
+  --fp-shadow-hero: 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --fp-shadow-overlay: 0 -4px 24px 0 rgba(0, 0, 0, 0.3);
+  --fp-shadow-fab:
+    0 10px 25px -5px rgba(0, 0, 0, 0.4),
+    0 8px 10px -6px rgba(255, 255, 255, 0.2);
+  --fp-shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+  --fp-glow-hero-text: 0 1px 8px rgba(31, 61, 188, 0.25); /* H1 drop-shadow */
+
+  /* ── BREAKPOINTS ─────────────────────────────────────────────────── */
+  --fp-bp-sm: 640px;
+  --fp-bp-md: 768px;
+  --fp-bp-lg: 1024px;
+  --fp-bp-xl: 1280px;
+  --fp-bp-xl-nav: 1080px; /* navbar mobile↔desktop pivot */
+
+  /* ── MOTION ───────────────────────────────────────────────────────── */
+  --fp-ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --fp-dur-quick: 150ms;
+  --fp-dur-base: 200ms;
+  --fp-dur-slow: 300ms;
+}
+
+/* ─── SEMANTIC TYPOGRAPHY CLASSES ───────────────────────────────────── */
+.fp-h1 {
+  font: 600 var(--fp-text-3xl)/var(--fp-lh-snug) var(--fp-font-sans);
+  letter-spacing: -0.02em;
+  color: var(--fp-fg-1);
+}
+.fp-h2 {
+  font: 600 var(--fp-text-2xl)/var(--fp-lh-snug) var(--fp-font-sans);
+  letter-spacing: -0.015em;
+  color: var(--fp-fg-1);
+}
+.fp-h3 {
+  font: 600 var(--fp-text-base)/var(--fp-lh-snug) var(--fp-font-sans);
+  color: var(--fp-fg-1);
+}
+.fp-body {
+  font: 400 var(--fp-text-sm)/var(--fp-lh-relaxed) var(--fp-font-sans);
+  color: var(--fp-fg-2);
+  letter-spacing: var(--fp-letter-spacing);
+}
+.fp-meta {
+  font: 400 var(--fp-text-xs)/var(--fp-lh-snug) var(--fp-font-sans);
+  color: var(--fp-fg-4);
+}
+.fp-xxs {
+  font: 400 var(--fp-text-xxs)/1.4 var(--fp-font-sans);
+  color: var(--fp-fg-4);
+}
+.fp-mono {
+  font: 500 var(--fp-text-sm)/1.4 var(--fp-font-mono);
+  color: var(--fp-fg-2);
+}
+
+/* ─── REUSABLE GLASS CARD ────────────────────────────────────────────── */
+.fp-card {
+  background: var(--fp-glass-2);
+  border: 1px solid var(--fp-border-1);
+  border-radius: var(--fp-radius-xl);
+  transition:
+    background var(--fp-dur-base) var(--fp-ease-default),
+    border-color var(--fp-dur-base) var(--fp-ease-default);
+}
+.fp-card:hover {
+  background: var(--fp-glass-4);
+  border-color: var(--fp-border-3);
+}

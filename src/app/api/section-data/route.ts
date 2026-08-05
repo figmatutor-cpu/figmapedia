@@ -1,4 +1,7 @@
-import { getCachedSectionData, type SectionKey } from "@/lib/section-data-cache";
+import {
+  getCachedSectionData,
+  type SectionKey,
+} from "@/lib/section-data-cache";
 
 export async function GET(request: Request) {
   try {
@@ -14,7 +17,7 @@ export async function GET(request: Request) {
           headers: {
             "Cache-Control": "no-store, max-age=0",
           },
-        }
+        },
       );
     }
 
@@ -28,7 +31,7 @@ export async function GET(request: Request) {
     console.error("Failed to fetch section data:", error);
     return Response.json(
       { error: "Failed to fetch section data" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

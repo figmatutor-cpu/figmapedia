@@ -4,7 +4,14 @@ import { useSearchContext } from "./SearchProvider";
 import { SearchIcon } from "@/components/ui/SearchIcon";
 
 export function SearchBar() {
-  const { query, setQuery, totalCount, triggerAISearch, isAISearching, cancelAISearch } = useSearchContext();
+  const {
+    query,
+    setQuery,
+    totalCount,
+    triggerAISearch,
+    isAISearching,
+    cancelAISearch,
+  } = useSearchContext();
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.nativeEvent.isComposing) return;

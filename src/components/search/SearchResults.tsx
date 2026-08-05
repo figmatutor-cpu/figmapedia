@@ -31,7 +31,10 @@ function TypingText() {
         charIdx++;
         setDisplayed(text.slice(0, charIdx));
         if (charIdx >= text.length) {
-          timer = setTimeout(() => { deleting = true; step(); }, 1200);
+          timer = setTimeout(() => {
+            deleting = true;
+            step();
+          }, 1200);
         } else {
           timer = setTimeout(step, 60);
         }
@@ -60,14 +63,24 @@ function TypingText() {
   );
 }
 
-function AISummaryCard({ summary, sources, query }: { summary: string; sources?: SearchIndexItem[]; query: string }) {
+function AISummaryCard({
+  summary,
+  sources,
+  query,
+}: {
+  summary: string;
+  sources?: SearchIndexItem[];
+  query: string;
+}) {
   const recommendedLinks = getRecommendedLinks(query);
 
   return (
     <div className="rounded-xl border border-brand-blue-accent/20 bg-brand-blue-accent/5 p-4 mb-5">
       <div className="flex items-center gap-1.5 mb-2">
         <span className="text-sm">✨</span>
-        <span className="text-xs font-medium text-brand-blue-accent">{AI_SUMMARY_LABEL}</span>
+        <span className="text-xs font-medium text-brand-blue-accent">
+          {AI_SUMMARY_LABEL}
+        </span>
       </div>
       <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-line">
         {summary}
@@ -77,7 +90,9 @@ function AISummaryCard({ summary, sources, query }: { summary: string; sources?:
           <p className="text-xs text-gray-500 mb-1.5">출처</p>
           <ul className="space-y-1 min-w-0">
             {sources?.map((item) => {
-              const href = item.id.startsWith("community-") ? `/community/${item.id.replace("community-", "")}` : item.link ?? `/entry/${item.id}`;
+              const href = item.id.startsWith("community-")
+                ? `/community/${item.id.replace("community-", "")}`
+                : (item.link ?? `/entry/${item.id}`);
               const isExternal = !!item.link && item.link.startsWith("http");
               return (
                 <li key={item.id} className="min-w-0">
@@ -89,7 +104,9 @@ function AISummaryCard({ summary, sources, query }: { summary: string; sources?:
                   >
                     <span className="truncate">{item.title}</span>
                     {item.section && (
-                      <span className="shrink-0 text-gray-500">· {item.section}</span>
+                      <span className="shrink-0 text-gray-500">
+                        · {item.section}
+                      </span>
                     )}
                   </a>
                 </li>
@@ -116,7 +133,16 @@ function AISummaryCard({ summary, sources, query }: { summary: string; sources?:
 }
 
 export function SearchResults() {
-  const { results, isLoading, isAISearching, query, hasSearched, searchMode, aiError, aiSummary } = useSearchContext();
+  const {
+    results,
+    isLoading,
+    isAISearching,
+    query,
+    hasSearched,
+    searchMode,
+    aiError,
+    aiSummary,
+  } = useSearchContext();
 
   if (!hasSearched) {
     return null;
@@ -140,7 +166,9 @@ export function SearchResults() {
       <div className="space-y-3">
         <div className="rounded-lg border border-red-500/20 bg-red-500/5 px-4 py-3 mb-4">
           <p className="text-sm text-red-400">{aiError}</p>
-          <p className="text-xs text-gray-500 mt-1">{FALLBACK_RESULTS_MESSAGE}</p>
+          <p className="text-xs text-gray-500 mt-1">
+            {FALLBACK_RESULTS_MESSAGE}
+          </p>
         </div>
         {results.length > 0 ? (
           <>
@@ -166,7 +194,11 @@ export function SearchResults() {
     <div className="space-y-3">
       {/* AI 요약 카드 */}
       {searchMode === "ai" && aiSummary && (
-        <AISummaryCard summary={aiSummary} sources={results.slice(0, 3)} query={query} />
+        <AISummaryCard
+          summary={aiSummary}
+          sources={results.slice(0, 3)}
+          query={query}
+        />
       )}
 
       {/* 관련 콘텐츠 헤더 */}
@@ -185,7 +217,6 @@ export function SearchResults() {
       {results.map((entry) => (
         <EntryCard key={entry.id} entry={entry} />
       ))}
-
     </div>
   );
 }

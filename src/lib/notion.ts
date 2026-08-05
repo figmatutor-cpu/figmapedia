@@ -7,27 +7,21 @@ const notion = new Client({
 const NOTION_API_KEY = process.env.NOTION_API_KEY!;
 const DATABASE_ID = process.env.NOTION_DATABASE_ID!;
 
-async function queryNotionDB(
-  dbId: string,
-  body: Record<string, unknown> = {}
-) {
-  const res = await fetch(
-    `https://api.notion.com/v1/databases/${dbId}/query`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${NOTION_API_KEY}`,
-        "Notion-Version": "2022-06-28",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    }
-  );
+async function queryNotionDB(dbId: string, body: Record<string, unknown> = {}) {
+  const res = await fetch(`https://api.notion.com/v1/databases/${dbId}/query`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${NOTION_API_KEY}`,
+      "Notion-Version": "2022-06-28",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
 
   if (!res.ok) {
     const error = await res.json().catch(() => ({}));
     throw new Error(
-      `Notion API error ${res.status}: ${error.message ?? res.statusText}`
+      `Notion API error ${res.status}: ${error.message ?? res.statusText}`,
     );
   }
 
@@ -52,7 +46,9 @@ export async function fetchAllEntries() {
     const response = await queryDatabase(body);
 
     results.push(...response.results);
-    cursor = response.has_more ? response.next_cursor ?? undefined : undefined;
+    cursor = response.has_more
+      ? (response.next_cursor ?? undefined)
+      : undefined;
   } while (cursor);
 
   return results;
@@ -73,7 +69,9 @@ export async function fetchAllFromDatabase(
 
     const response = await queryNotionDB(dbId, body);
     results.push(...response.results);
-    cursor = response.has_more ? response.next_cursor ?? undefined : undefined;
+    cursor = response.has_more
+      ? (response.next_cursor ?? undefined)
+      : undefined;
   } while (cursor);
 
   return results;
@@ -111,7 +109,9 @@ async function fetchBlockChildren(blockId: string): Promise<any[]> {
       page_size: 100,
     });
     blocks.push(...response.results);
-    cursor = response.has_more ? response.next_cursor ?? undefined : undefined;
+    cursor = response.has_more
+      ? (response.next_cursor ?? undefined)
+      : undefined;
   } while (cursor);
 
   // has_children인 블록은 재귀적으로 children fetch
@@ -120,7 +120,7 @@ async function fetchBlockChildren(blockId: string): Promise<any[]> {
       if (block.has_children && NESTED_BLOCK_TYPES.has(block.type)) {
         block.__children = await fetchBlockChildren(block.id);
       }
-    })
+    }),
   );
 
   return blocks;
@@ -131,7 +131,9 @@ export async function fetchPageBlocks(pageId: string) {
 }
 
 /** 페이지 블록에서 첫 번째 이미지 URL을 추출 (커버 없는 페이지의 썸네일 fallback용) */
-export async function fetchFirstImageUrl(pageId: string): Promise<string | undefined> {
+export async function fetchFirstImageUrl(
+  pageId: string,
+): Promise<string | undefined> {
   try {
     const response: any = await notion.blocks.children.list({
       block_id: pageId,
@@ -148,7 +150,13 @@ export async function fetchFirstImageUrl(pageId: string): Promise<string | undef
     }
 
     // 2단계: 중첩 블록(column_list, column, toggle 등) 안에서 이미지 검색
-    const NESTED_TYPES = ["column_list", "column", "synced_block", "toggle", "callout"];
+    const NESTED_TYPES = [
+      "column_list",
+      "column",
+      "synced_block",
+      "toggle",
+      "callout",
+    ];
     for (const block of response.results) {
       if (!NESTED_TYPES.includes(block.type) || !block.has_children) continue;
       try {
@@ -177,7 +185,9 @@ export async function fetchFirstImageUrl(pageId: string): Promise<string | undef
             }
           }
         }
-      } catch { /* 중첩 블록 실패 시 다음으로 */ }
+      } catch {
+        /* 중첩 블록 실패 시 다음으로 */
+      }
     }
 
     return undefined;
@@ -187,17 +197,31 @@ export async function fetchFirstImageUrl(pageId: string): Promise<string | undef
 }
 
 /** 페이지 첫 5블록에서 텍스트 추출 (AI 검색 컨텍스트 스니펫용) */
-export async function fetchPageTextSnippet(pageId: string, maxChars = 500): Promise<string> {
+export async function fetchPageTextSnippet(
+  pageId: string,
+  maxChars = 500,
+): Promise<string> {
   try {
     const response: any = await notion.blocks.children.list({
       block_id: pageId,
       page_size: 5,
     });
-    const textTypes = ["paragraph", "heading_1", "heading_2", "heading_3",
-                       "bulleted_list_item", "numbered_list_item", "quote", "callout"];
+    const textTypes = [
+      "paragraph",
+      "heading_1",
+      "heading_2",
+      "heading_3",
+      "bulleted_list_item",
+      "numbered_list_item",
+      "quote",
+      "callout",
+    ];
     return response.results
       .filter((b: any) => textTypes.includes(b.type))
-      .map((b: any) => b[b.type]?.rich_text?.map((t: any) => t.plain_text).join("") ?? "")
+      .map(
+        (b: any) =>
+          b[b.type]?.rich_text?.map((t: any) => t.plain_text).join("") ?? "",
+      )
       .filter(Boolean)
       .join(" ")
       .slice(0, maxChars);
@@ -219,11 +243,14 @@ export async function fetchOgImage(url: string): Promise<string | undefined> {
     const html = await res.text();
     // og:image — property가 content 앞 또는 뒤에 올 수 있음
     const match =
-      html.match(/<meta[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i) ??
-      html.match(/<meta[^>]*content=["']([^"']+)["'][^>]*property=["']og:image["']/i);
+      html.match(
+        /<meta[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i,
+      ) ??
+      html.match(
+        /<meta[^>]*content=["']([^"']+)["'][^>]*property=["']og:image["']/i,
+      );
     return match?.[1] || undefined;
   } catch {
     return undefined;
   }
 }
-

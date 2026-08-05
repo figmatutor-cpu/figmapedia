@@ -89,9 +89,7 @@ export async function POST(request: NextRequest) {
             if (page) {
               coverUrl = extractFileUrl((page as any).cover);
               coverType = (page as any).cover?.type as
-                | "file"
-                | "external"
-                | undefined;
+                "file" | "external" | undefined;
             }
           } catch {
             // Notion API 실패 시 cover 정보 없이 진행

@@ -42,7 +42,7 @@ export function useAISearch() {
     } catch (err) {
       if (err instanceof DOMException && err.name === "AbortError") return;
       setAIError(
-        err instanceof Error ? err.message : "AI 검색에 실패했습니다."
+        err instanceof Error ? err.message : "AI 검색에 실패했습니다.",
       );
     } finally {
       if (abortControllerRef.current === controller) {

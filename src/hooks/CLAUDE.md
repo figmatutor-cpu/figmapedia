@@ -4,15 +4,15 @@
 
 ## 훅 목록 & 역할
 
-| 훅 | 역할 | 의존 |
-|----|------|------|
-| `useSearch` | 하이브리드 검색 통합 (메인 훅) | useSearchIndex, useAISearch, useDebounce |
-| `useSearchIndex` | `/api/search-index` fetch + 캐싱 | — |
-| `useAISearch` | `/api/ai-search` POST + AbortController | — |
-| `useDebounce` | 값 디바운스 (200ms) | — |
-| `useSectionData` | `/api/section-data` fetch (단일/멀티) | — |
-| `useSectionFilter` | FilterConfig 기반 아이템 필터링 | — |
-| `useThumbnail` | 썸네일 단계적 resolve | — |
+| 훅                 | 역할                                    | 의존                                     |
+| ------------------ | --------------------------------------- | ---------------------------------------- |
+| `useSearch`        | 하이브리드 검색 통합 (메인 훅)          | useSearchIndex, useAISearch, useDebounce |
+| `useSearchIndex`   | `/api/search-index` fetch + 캐싱        | —                                        |
+| `useAISearch`      | `/api/ai-search` POST + AbortController | —                                        |
+| `useDebounce`      | 값 디바운스 (200ms)                     | —                                        |
+| `useSectionData`   | `/api/section-data` fetch (단일/멀티)   | —                                        |
+| `useSectionFilter` | FilterConfig 기반 아이템 필터링         | —                                        |
+| `useThumbnail`     | 썸네일 단계적 resolve                   | —                                        |
 
 ## 검색 흐름 (useSearch)
 

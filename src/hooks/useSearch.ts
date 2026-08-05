@@ -43,9 +43,8 @@ export function useSearch() {
 
   const fuse = useMemo(
     () => (index.length > 0 ? new Fuse(index, FUSE_OPTIONS) : null),
-    [index]
+    [index],
   );
-
 
   // When query text changes AFTER an AI search, revert to instant mode
   // Skip if AI search is still in progress (debounce timing race condition 방지)
@@ -67,7 +66,7 @@ export function useSearch() {
       return fuse.search(debouncedQuery).map((result) => result.item);
     }
     return index.filter((item) =>
-      item.title.toLowerCase().includes(debouncedQuery.toLowerCase())
+      item.title.toLowerCase().includes(debouncedQuery.toLowerCase()),
     );
   }, [debouncedQuery, index, fuse]);
 
@@ -80,8 +79,7 @@ export function useSearch() {
   }, [query, triggerAI]);
 
   // AI 실패 시 Fuse.js 키워드 결과로 폴백
-  const results =
-    searchMode === "ai" && !aiError ? aiResults : fuseResults;
+  const results = searchMode === "ai" && !aiError ? aiResults : fuseResults;
 
   const clearSearch = useCallback(() => {
     setQuery("");

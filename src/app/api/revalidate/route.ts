@@ -30,7 +30,9 @@ export async function POST(request: NextRequest) {
     revalidateTag("section-data", "max");
 
     // 임베딩 동기화 트리거 (fire-and-forget)
-    const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").trim();
+    const baseUrl = (
+      process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+    ).trim();
     const syncHeaders = {
       Authorization: `Bearer ${process.env.REVALIDATION_SECRET}`,
       "Content-Type": "application/json",

@@ -76,7 +76,9 @@ export async function POST(request: NextRequest) {
             signal: AbortSignal.timeout(10_000),
           });
           if (!response.ok) {
-            throw new Error(`Download failed (${response.status}): ${thumbnailUrl}`);
+            throw new Error(
+              `Download failed (${response.status}): ${thumbnailUrl}`,
+            );
           }
 
           const contentType =
@@ -136,7 +138,9 @@ export async function POST(request: NextRequest) {
       processed,
       errors,
       force,
-      ...(errorDetails.length > 0 && { errorDetails: errorDetails.slice(0, 10) }),
+      ...(errorDetails.length > 0 && {
+        errorDetails: errorDetails.slice(0, 10),
+      }),
     });
   } catch (error) {
     console.error("Resource thumbnail seed failed:", error);

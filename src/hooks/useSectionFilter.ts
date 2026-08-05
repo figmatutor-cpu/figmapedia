@@ -6,21 +6,21 @@ import type { FilterConfig } from "@/lib/navigation";
 
 export function filterItems(
   items: SearchIndexItem[],
-  config: FilterConfig
+  config: FilterConfig,
 ): SearchIndexItem[] {
   return items.filter((item) => {
     const titleLower = item.title.toLowerCase();
 
     if (config.titleAllRequired?.length) {
       const allPresent = config.titleAllRequired.every((kw) =>
-        titleLower.includes(kw.toLowerCase())
+        titleLower.includes(kw.toLowerCase()),
       );
       if (!allPresent) return false;
     }
 
     if (config.titleExclude?.length) {
       const anyExcluded = config.titleExclude.some((kw) =>
-        titleLower.includes(kw.toLowerCase())
+        titleLower.includes(kw.toLowerCase()),
       );
       if (anyExcluded) return false;
     }
@@ -28,7 +28,7 @@ export function filterItems(
     let hasKeywordMatch = false;
     if (config.titleKeywords?.length) {
       hasKeywordMatch = config.titleKeywords.some((kw) =>
-        titleLower.includes(kw.toLowerCase())
+        titleLower.includes(kw.toLowerCase()),
       );
     }
 
@@ -36,8 +36,8 @@ export function filterItems(
     if (config.categoryMatch?.length) {
       hasCategoryMatch = config.categoryMatch.some((cat) =>
         item.categories.some((c) =>
-          c.toLowerCase().includes(cat.toLowerCase())
-        )
+          c.toLowerCase().includes(cat.toLowerCase()),
+        ),
       );
     }
 
@@ -51,7 +51,7 @@ export function filterItems(
 
 export function useSectionFilter(
   items: SearchIndexItem[],
-  config: FilterConfig | undefined
+  config: FilterConfig | undefined,
 ) {
   return useMemo(() => {
     if (!config) return items;

@@ -4,20 +4,36 @@ import { useState } from "react";
 import type { NotionBlock, RichTextItem } from "@/types";
 import { CodeBlock } from "./CodeBlock";
 
-function RenderRichText({ items, fallback }: { items?: RichTextItem[]; fallback: string }) {
+function RenderRichText({
+  items,
+  fallback,
+}: {
+  items?: RichTextItem[];
+  fallback: string;
+}) {
   if (!items || items.length === 0) return <>{fallback}</>;
   return (
     <>
       {items.map((item, i) => {
         let node: React.ReactNode = item.plain_text;
-        if (item.annotations.code) node = <code className="bg-white/10 rounded px-1 text-sm font-mono">{node}</code>;
+        if (item.annotations.code)
+          node = (
+            <code className="bg-white/10 rounded px-1 text-sm font-mono">
+              {node}
+            </code>
+          );
         if (item.annotations.bold) node = <strong>{node}</strong>;
         if (item.annotations.italic) node = <em>{node}</em>;
         if (item.annotations.strikethrough) node = <s>{node}</s>;
         if (item.annotations.underline) node = <u>{node}</u>;
         if (item.href) {
           node = (
-            <a href={item.href} target="_blank" rel="noopener noreferrer" className="text-blue-400 underline hover:text-blue-300 transition-colors">
+            <a
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 underline hover:text-blue-300 transition-colors"
+            >
               {node}
             </a>
           );
@@ -62,11 +78,23 @@ function ToggleHeading({
       >
         <svg
           className={`shrink-0 transition-transform duration-200 ${open ? "rotate-90 text-white" : "text-gray-500 group-hover:text-gray-300"}`}
-          width="14" height="14" viewBox="0 0 14 14" fill="currentColor"
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="currentColor"
         >
-          <path d="M4.5 2 L10.5 7 L4.5 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <path
+            d="M4.5 2 L10.5 7 L4.5 12"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
+          />
         </svg>
-        <span className={headingClass}><RenderRichText items={richText} fallback={content} /></span>
+        <span className={headingClass}>
+          <RenderRichText items={richText} fallback={content} />
+        </span>
         {!open && (
           <span className="ml-auto text-xs text-gray-600 group-hover:text-gray-500 shrink-0 transition-colors">
             {count}개 항목
@@ -87,8 +115,13 @@ function RenderBlock({ block }: { block: NotionBlock }) {
 
   switch (block.type) {
     case "paragraph":
-      if (!block.content && (!block.richText || block.richText.length === 0)) return <div className="h-4" />;
-      return <p className="text-gray-300 leading-relaxed mb-4"><RenderRichText items={block.richText} fallback={block.content} /></p>;
+      if (!block.content && (!block.richText || block.richText.length === 0))
+        return <div className="h-4" />;
+      return (
+        <p className="text-gray-300 leading-relaxed mb-4">
+          <RenderRichText items={block.richText} fallback={block.content} />
+        </p>
+      );
 
     case "heading_1":
       if (block.children && block.children.length > 0) {
@@ -102,7 +135,11 @@ function RenderBlock({ block }: { block: NotionBlock }) {
           />
         );
       }
-      return <h1 className="text-2xl font-bold text-white mt-8 mb-4"><RenderRichText items={block.richText} fallback={block.content} /></h1>;
+      return (
+        <h1 className="text-2xl font-bold text-white mt-8 mb-4">
+          <RenderRichText items={block.richText} fallback={block.content} />
+        </h1>
+      );
 
     case "heading_2":
       if (block.children && block.children.length > 0) {
@@ -116,7 +153,11 @@ function RenderBlock({ block }: { block: NotionBlock }) {
           />
         );
       }
-      return <h2 className="text-xl font-bold text-white mt-6 mb-3"><RenderRichText items={block.richText} fallback={block.content} /></h2>;
+      return (
+        <h2 className="text-xl font-bold text-white mt-6 mb-3">
+          <RenderRichText items={block.richText} fallback={block.content} />
+        </h2>
+      );
 
     case "heading_3":
       if (block.children && block.children.length > 0) {
@@ -130,7 +171,11 @@ function RenderBlock({ block }: { block: NotionBlock }) {
           />
         );
       }
-      return <h3 className="text-lg font-semibold text-gray-100 mt-5 mb-2"><RenderRichText items={block.richText} fallback={block.content} /></h3>;
+      return (
+        <h3 className="text-lg font-semibold text-gray-100 mt-5 mb-2">
+          <RenderRichText items={block.richText} fallback={block.content} />
+        </h3>
+      );
 
     case "bulleted_list_item":
       return (
@@ -165,7 +210,9 @@ function RenderBlock({ block }: { block: NotionBlock }) {
             readOnly
             className="mt-1 h-4 w-4 shrink-0 accent-blue-400 cursor-default"
           />
-          <span className={`text-gray-300 ${block.checked ? "line-through text-gray-500" : ""}`}>
+          <span
+            className={`text-gray-300 ${block.checked ? "line-through text-gray-500" : ""}`}
+          >
             <RenderRichText items={block.richText} fallback={block.content} />
           </span>
         </div>
@@ -180,7 +227,9 @@ function RenderBlock({ block }: { block: NotionBlock }) {
           >
             <span
               className="text-gray-400 transition-transform duration-200 shrink-0"
-              style={{ transform: toggleOpen ? "rotate(90deg)" : "rotate(0deg)" }}
+              style={{
+                transform: toggleOpen ? "rotate(90deg)" : "rotate(0deg)",
+              }}
             >
               ▶
             </span>
@@ -213,7 +262,11 @@ function RenderBlock({ block }: { block: NotionBlock }) {
             <span className="text-xl shrink-0 leading-none mt-0.5">
               {block.icon.startsWith("http") ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={block.icon} alt="" className="w-5 h-5 object-contain" />
+                <img
+                  src={block.icon}
+                  alt=""
+                  className="w-5 h-5 object-contain"
+                />
               ) : (
                 block.icon
               )}
@@ -241,7 +294,9 @@ function RenderBlock({ block }: { block: NotionBlock }) {
       return (
         <div
           className="grid gap-6 my-4"
-          style={{ gridTemplateColumns: `repeat(${block.children.length}, 1fr)` }}
+          style={{
+            gridTemplateColumns: `repeat(${block.children.length}, 1fr)`,
+          }}
         >
           <RenderChildren blocks={block.children} />
         </div>
@@ -267,7 +322,10 @@ function RenderBlock({ block }: { block: NotionBlock }) {
               <thead>
                 <tr className="bg-white/10">
                   {headerCells.map((cell, i) => (
-                    <th key={i} className="px-4 py-2 text-left text-white font-semibold border-b border-white/10">
+                    <th
+                      key={i}
+                      className="px-4 py-2 text-left text-white font-semibold border-b border-white/10"
+                    >
                       {cell}
                     </th>
                   ))}
@@ -278,7 +336,10 @@ function RenderBlock({ block }: { block: NotionBlock }) {
               {bodyRows.map((row) => {
                 const cells = row.content?.split("\t") ?? [];
                 return (
-                  <tr key={row.id} className="border-b border-white/5 hover:bg-white/[0.03]">
+                  <tr
+                    key={row.id}
+                    className="border-b border-white/5 hover:bg-white/[0.03]"
+                  >
                     {cells.map((cell, i) => (
                       <td key={i} className="px-4 py-2">
                         {cell}
@@ -400,8 +461,18 @@ function RenderBlock({ block }: { block: NotionBlock }) {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 my-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-blue-400 hover:bg-white/[0.08] transition-colors"
         >
-          <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          <svg
+            className="w-4 h-4 shrink-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            />
           </svg>
           {block.caption || "파일 다운로드"}
         </a>
@@ -409,7 +480,11 @@ function RenderBlock({ block }: { block: NotionBlock }) {
 
     default:
       if (block.content || (block.richText && block.richText.length > 0)) {
-        return <p className="text-gray-300 mb-4"><RenderRichText items={block.richText} fallback={block.content} /></p>;
+        return (
+          <p className="text-gray-300 mb-4">
+            <RenderRichText items={block.richText} fallback={block.content} />
+          </p>
+        );
       }
       return null;
   }
@@ -417,7 +492,9 @@ function RenderBlock({ block }: { block: NotionBlock }) {
 
 /** Convert a YouTube/Vimeo watch URL to an embeddable URL */
 function toEmbedUrl(url: string): string {
-  const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+  const ytMatch = url.match(
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/,
+  );
   if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
 
   const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);

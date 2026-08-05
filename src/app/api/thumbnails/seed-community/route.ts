@@ -90,8 +90,7 @@ export async function POST(request: NextRequest) {
               },
               { onConflict: "page_id" },
             );
-          if (dbError)
-            throw new Error(`DB upsert failed: ${dbError.message}`);
+          if (dbError) throw new Error(`DB upsert failed: ${dbError.message}`);
         }),
       );
 

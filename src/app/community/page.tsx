@@ -67,11 +67,13 @@ export default function CommunityPage() {
         (post) =>
           post.title.toLowerCase().includes(q) ||
           post.nickname.toLowerCase().includes(q) ||
-          post.category.toLowerCase().includes(q)
+          post.category.toLowerCase().includes(q),
       );
     }
     // 고정글 항상 상단
-    return [...list].sort((a, b) => (b.is_pinned ? 1 : 0) - (a.is_pinned ? 1 : 0));
+    return [...list].sort(
+      (a, b) => (b.is_pinned ? 1 : 0) - (a.is_pinned ? 1 : 0),
+    );
   }, [posts, searchQuery]);
 
   return (
@@ -79,9 +81,7 @@ export default function CommunityPage() {
       <div className="mx-auto max-w-4xl px-4">
         <SponsorBanner />
         {/* Title */}
-        <h1 className="text-xl font-bold text-white mb-2">
-          커뮤니티
-        </h1>
+        <h1 className="text-xl font-bold text-white mb-2">커뮤니티</h1>
         <p className="text-gray-400 mb-6 text-sm sm:text-base">
           자유롭게 질문하고 정보를 공유하세요
         </p>
@@ -89,7 +89,9 @@ export default function CommunityPage() {
         {/* Category Tabs + Search */}
         <div className="flex items-center gap-3 mb-8 overflow-hidden">
           {/* 탭 — 모바일: 검색 펼침 시 숨김 */}
-          <div className={`${isSearchExpanded ? "hidden xl-nav:flex" : "flex"} flex-1 min-w-0 overflow-hidden`}>
+          <div
+            className={`${isSearchExpanded ? "hidden xl-nav:flex" : "flex"} flex-1 min-w-0 overflow-hidden`}
+          >
             <SegmentedControl
               tabs={CATEGORIES.map((cat) => ({ key: cat, label: cat }))}
               activeTab={category}
@@ -98,7 +100,9 @@ export default function CommunityPage() {
           </div>
 
           {/* 모바일 검색 — 아이콘 / 펼침 인풋 */}
-          <div className={`xl-nav:hidden ${isSearchExpanded ? "flex-1 min-w-0" : "shrink-0"}`}>
+          <div
+            className={`xl-nav:hidden ${isSearchExpanded ? "flex-1 min-w-0" : "shrink-0"}`}
+          >
             {isSearchExpanded ? (
               <div className="flex items-center gap-2">
                 <div className="relative flex-1 min-w-0">
@@ -121,8 +125,18 @@ export default function CommunityPage() {
                   }}
                   className="shrink-0 p-2 text-gray-400 hover:text-white transition-colors"
                 >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               </div>
@@ -196,7 +210,11 @@ export default function CommunityPage() {
                     </div>
                     <h3 className="text-base font-medium text-white truncate">
                       {post.is_pinned && (
-                        <svg className="inline-block w-3.5 h-3.5 mr-1 -mt-0.5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                        <svg
+                          className="inline-block w-3.5 h-3.5 mr-1 -mt-0.5 text-blue-400"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
                           <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                         </svg>
                       )}

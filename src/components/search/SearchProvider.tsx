@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  type ReactNode,
+} from "react";
 import { useSearch, type SearchMode } from "@/hooks/useSearch";
 import type { SearchIndexItem } from "@/types";
 
@@ -35,7 +41,8 @@ const SearchContext = createContext<SearchContextValue | null>(null);
 
 export function useSearchContext() {
   const ctx = useContext(SearchContext);
-  if (!ctx) throw new Error("useSearchContext must be used within SearchProvider");
+  if (!ctx)
+    throw new Error("useSearchContext must be used within SearchProvider");
   return ctx;
 }
 

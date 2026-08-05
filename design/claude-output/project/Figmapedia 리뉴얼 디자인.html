@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Figmapedia · 리뉴얼 디자인 제안</title>
+    <link rel="stylesheet" href="styles/system.css" />
+    <style>
+      /* page-level helpers (loaded before babel) */
+      body {
+        background: #050510;
+      }
+      .bold-typing {
+        display: inline-flex;
+        gap: 4px;
+      }
+      .bold-typing span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--fp-brand-blue-accent);
+        animation: tdot 1.2s ease-in-out infinite;
+      }
+      .bold-typing span:nth-child(2) {
+        animation-delay: 0.15s;
+      }
+      .bold-typing span:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      @keyframes tdot {
+        0%,
+        60%,
+        100% {
+          opacity: 0.3;
+          transform: translateY(0);
+        }
+        30% {
+          opacity: 1;
+          transform: translateY(-4px);
+        }
+      }
+
+      /* artboard frame */
+      .frame {
+        width: 100%;
+        height: 100%;
+        background: var(--fp-bg-base);
+        color: var(--fp-fg-1);
+        overflow: auto;
+        position: relative;
+        font-family: var(--fp-font-sans);
+        letter-spacing: -0.01em;
+      }
+      /* mobile frame */
+      .mobile-frame {
+        width: 100%;
+        height: 100%;
+        background: var(--fp-bg-base);
+        border-radius: 36px;
+        border: 1px solid var(--fp-border-2);
+        overflow: hidden;
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- React + Babel -->
+    <script
+      src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+      integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+      integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+      integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Data first (plain JS) -->
+    <script src="components/data.js"></script>
+
+    <!-- Starter components -->
+    <script type="text/babel" src="design-canvas.jsx"></script>
+    <script type="text/babel" src="tweaks-panel.jsx"></script>
+
+    <!-- Shared & component layers -->
+    <script type="text/babel" src="components/shared.jsx"></script>
+    <script type="text/babel" src="components/shell.jsx"></script>
+    <script type="text/babel" src="components/safe.jsx"></script>
+    <script type="text/babel" src="components/safe2.jsx"></script>
+    <script type="text/babel" src="components/bold.jsx"></script>
+    <script type="text/babel" src="components/bold2.jsx"></script>
+    <script type="text/babel" src="components/mobile.jsx"></script>
+
+    <!-- Main app -->
+    <script type="text/babel">
+      const { useState, useEffect } = React;
+
+      const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/ {
+        theme: "dark",
+        density: "comfortable",
+        aiEntry: "hybrid",
+      }; /*EDITMODE-END*/
+
+      /* Apply theme/density to document root */
+      function applyTokens(t) {
+        document.documentElement.setAttribute("data-theme", t.theme);
+        document.documentElement.setAttribute("data-density", t.density);
+      }
+
+      /* Page chrome — includes navbar (safe) or rail (bold) */
+      function SafeShell({ children, page, onNav }) {
+        return (
+          <div className="frame">
+            <Navbar active={page} onNav={onNav} />
+            {children}
+          </div>
+        );
+      }
+      function BoldShell({ children, page, onNav }) {
+        return (
+          <div
+            className="frame"
+            style={{ display: "grid", gridTemplateColumns: "76px 1fr" }}
+          >
+            <BoldRail active={page} onNav={onNav} />
+            <div style={{ overflow: "auto" }}>{children}</div>
+          </div>
+        );
+      }
+
+      /* Live navigable artboard pages — hosts an entire mini-app */
+      function SafeApp({ density }) {
+        const [page, setPage] = useState("home");
+        const [qaItem, setQaItem] = useState(null);
+        return (
+          <SafeShell
+            page={page === "qa-detail" ? "info" : page}
+            onNav={(p) => {
+              setPage(p);
+              setQaItem(null);
+            }}
+          >
+            {page === "home" && <SafeHome density={density} onNav={setPage} />}
+            {page === "info" && (
+              <SafeInfo
+                density={density}
+                onOpen={(it) => {
+                  setQaItem(it);
+                  setPage("qa-detail");
+                }}
+              />
+            )}
+            {page === "qa-detail" && (
+              <SafeQADetail item={qaItem} onBack={() => setPage("info")} />
+            )}
+            {page === "prompt" && <SafePrompt />}
+            {page === "kiosk" && <SafeKiosk />}
+            {page === "community" && <SafeCommunity />}
+            {page === "uxui" && <SafeUXUI />}
+            {page === "resources" && <SafeResources />}
+          </SafeShell>
+        );
+      }
+      function BoldApp({ density }) {
+        const [page, setPage] = useState("home");
+        return (
+          <BoldShell page={page} onNav={setPage}>
+            {page === "home" && <BoldHome density={density} onNav={setPage} />}
+            {page === "info" && <BoldInfo density={density} />}
+            {page === "prompt" && <BoldPrompt />}
+            {page === "kiosk" && <BoldKiosk />}
+            {page === "community" && <BoldCommunity />}
+            {page === "uxui" && <BoldUXUI />}
+            {page === "resources" && <SafeResources />}
+          </BoldShell>
+        );
+      }
+
+      /* Mobile snapshot — show home screen in a phone frame */
+      function MobileSafe({ density }) {
+        return (
+          <div className="mobile-frame">
+            <div
+              style={{
+                height: "100%",
+                overflow: "auto",
+                background: "var(--fp-bg-base)",
+              }}
+            >
+              {/* compact safe home */}
+              <div
+                style={{
+                  padding: "20px 16px 8px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <div style={{ fontWeight: 700, letterSpacing: "-0.02em" }}>
+                  Figmapedia{" "}
+                  <sub
+                    style={{
+                      color: "var(--fp-brand-blue-accent)",
+                      fontSize: 9,
+                    }}
+                  >
+                    2.0
+                  </sub>
+                </div>
+                <div style={{ display: "flex", gap: 6 }}>
+                  <button
+                    style={{
+                      width: 34,
+                      height: 34,
+                      borderRadius: 9,
+                      background: "var(--fp-glass-2)",
+                      border: "1px solid var(--fp-border-1)",
+                      color: "var(--fp-fg-2)",
+                    }}
+                  >
+                    {I.menu}
+                  </button>
+                </div>
+              </div>
+              <div style={{ padding: "12px 16px 24px" }}>
+                <h1
+                  style={{
+                    fontSize: 24,
+                    fontWeight: 700,
+                    letterSpacing: "-0.025em",
+                    lineHeight: 1.2,
+                    margin: "20px 0 16px",
+                  }}
+                >
+                  디자인과 AI팁, <br />
+                  그냥 물어보세요.
+                </h1>
+                <div
+                  style={{
+                    position: "relative",
+                    padding: 2,
+                    borderRadius: 14,
+                    background:
+                      "linear-gradient(135deg, rgba(83,109,254,0.5), rgba(83,109,254,0.1))",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "relative",
+                      borderRadius: 12,
+                      background: "rgba(15,15,20,0.7)",
+                      padding: 14,
+                    }}
+                  >
+                    <div style={{ fontSize: 14, color: "var(--fp-fg-3)" }}>
+                      오토 레이아웃 패딩과 갭…
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        marginTop: 12,
+                      }}
+                    >
+                      <div style={{ fontSize: 11, color: "var(--fp-fg-4)" }}>
+                        AI 검색 활성화
+                      </div>
+                      <button
+                        style={{
+                          width: 32,
+                          height: 32,
+                          borderRadius: 8,
+                          background: "var(--fp-brand-blue-accent)",
+                          color: "#fff",
+                          border: "none",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {I.send}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 6,
+                    marginTop: 12,
+                    overflowX: "auto",
+                    paddingBottom: 4,
+                  }}
+                >
+                  {DATA.SUGGESTIONS.slice(0, 4).map((s) => (
+                    <span
+                      key={s}
+                      style={{
+                        padding: "5px 10px",
+                        borderRadius: 9999,
+                        fontSize: 11,
+                        background: "var(--fp-glass-2)",
+                        border: "1px solid var(--fp-border-1)",
+                        color: "var(--fp-fg-3)",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ padding: "0 16px 30px" }}>
+                <div className="eyebrow" style={{ marginBottom: 10 }}>
+                  실무 Q&A
+                </div>
+                <div
+                  style={{ display: "flex", flexDirection: "column", gap: 8 }}
+                >
+                  {DATA.QA_ITEMS.slice(0, 4).map((q) => (
+                    <div
+                      key={q.id}
+                      style={{
+                        padding: 14,
+                        borderRadius: 12,
+                        background: "var(--fp-glass-2)",
+                        border: "1px solid var(--fp-border-1)",
+                      }}
+                    >
+                      <Badge label={q.cat} size="sm" />
+                      <div
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 600,
+                          lineHeight: 1.4,
+                          marginTop: 6,
+                        }}
+                      >
+                        {q.title}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: 11,
+                          color: "var(--fp-fg-4)",
+                          marginTop: 6,
+                        }}
+                      >
+                        {q.author} · {q.views} 조회
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bottom tab bar */}
+              <div
+                style={{
+                  position: "sticky",
+                  bottom: 0,
+                  padding: "10px 16px 20px",
+                  background: "rgba(5,5,16,0.85)",
+                  backdropFilter: "blur(12px)",
+                  borderTop: "1px solid var(--fp-border-1)",
+                  display: "flex",
+                  justifyContent: "space-around",
+                }}
+              >
+                {[
+                  { i: I.spark, l: "홈" },
+                  { i: I.search, l: "검색" },
+                  { i: I.message, l: "커뮤" },
+                  { i: I.user, l: "마이" },
+                ].map((t, i) => (
+                  <button
+                    key={i}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: 3,
+                      background: "transparent",
+                      border: "none",
+                      color: i === 0 ? "var(--fp-fg-1)" : "var(--fp-fg-4)",
+                      fontSize: 10,
+                    }}
+                  >
+                    <span style={{ fontSize: 18 }}>{t.i}</span>
+                    {t.l}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      function MobileBold({ density }) {
+        return (
+          <div className="mobile-frame">
+            <div
+              style={{
+                height: "100%",
+                overflow: "hidden",
+                background: "var(--fp-bg-base)",
+                position: "relative",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              {/* AI-first home, full bleed */}
+              <div
+                style={{
+                  flex: 1,
+                  padding: "60px 20px 0",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+              >
+                <div style={{ position: "absolute", inset: 0, opacity: 0.5 }}>
+                  <HeroWave height={420} intensity={0.7} hue={235} />
+                </div>
+                <div style={{ position: "relative", textAlign: "center" }}>
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 6,
+                      padding: "4px 10px",
+                      borderRadius: 9999,
+                      background: "rgba(83,109,254,0.15)",
+                      border: "1px solid rgba(83,109,254,0.3)",
+                      fontSize: 10,
+                      color: "var(--fp-brand-blue-accent)",
+                      fontFamily: "var(--fp-font-mono)",
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: 4,
+                        height: 4,
+                        borderRadius: "50%",
+                        background: "var(--fp-brand-blue-accent)",
+                      }}
+                    />
+                    FIGMAPEDIA AI
+                  </div>
+                  <h1
+                    style={{
+                      fontSize: 32,
+                      fontWeight: 800,
+                      letterSpacing: "-0.03em",
+                      margin: "16px 0",
+                      lineHeight: 1.05,
+                    }}
+                  >
+                    디자인과 AI팁,
+                    <br />
+                    <span
+                      style={{
+                        background: "linear-gradient(120deg, #536DFE, #ec4899)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                      }}
+                    >
+                      그냥 물어보세요.
+                    </span>
+                  </h1>
+                  <p
+                    style={{
+                      fontSize: 12,
+                      color: "var(--fp-fg-3)",
+                      lineHeight: 1.5,
+                      marginBottom: 20,
+                    }}
+                  >
+                    9,420개 답변 학습 · 출처와 함께
+                  </p>
+                </div>
+
+                <div
+                  style={{
+                    position: "relative",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 8,
+                  }}
+                >
+                  {[
+                    "Variables 2.0 모드 설계법",
+                    "Component 인스턴스 스왑이 안 돼요",
+                    "Smart Animate 끊김 해결",
+                  ].map((q) => (
+                    <button
+                      key={q}
+                      style={{
+                        textAlign: "left",
+                        padding: "12px 14px",
+                        borderRadius: 11,
+                        background: "var(--fp-glass-3)",
+                        border: "1px solid var(--fp-border-1)",
+                        color: "var(--fp-fg-2)",
+                        fontSize: 12,
+                        lineHeight: 1.4,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 8,
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: "var(--fp-brand-blue-accent)",
+                          fontSize: 12,
+                        }}
+                      >
+                        {I.sparkles}
+                      </span>
+                      <span style={{ flex: 1 }}>{q}</span>
+                      <span style={{ fontSize: 12, color: "var(--fp-fg-4)" }}>
+                        {I.arrowUpRight}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* AI input dock */}
+              <div style={{ padding: 12, position: "relative" }}>
+                <div
+                  style={{
+                    padding: 3,
+                    borderRadius: 16,
+                    background:
+                      "linear-gradient(135deg, rgba(83,109,254,0.6), rgba(168,85,247,0.5))",
+                  }}
+                >
+                  <div
+                    style={{
+                      borderRadius: 13,
+                      background: "rgba(8,8,18,0.95)",
+                      padding: 12,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "var(--fp-brand-blue-accent)",
+                        fontSize: 16,
+                      }}
+                    >
+                      {I.sparkles}
+                    </span>
+                    <input
+                      placeholder="피그마에 대해 물어보세요…"
+                      style={{
+                        flex: 1,
+                        background: "transparent",
+                        border: "none",
+                        outline: "none",
+                        color: "var(--fp-fg-1)",
+                        fontSize: 14,
+                        fontFamily: "inherit",
+                      }}
+                    />
+                    <button
+                      style={{
+                        width: 32,
+                        height: 32,
+                        borderRadius: 9,
+                        background: "var(--fp-brand-blue-accent)",
+                        color: "#fff",
+                        border: "none",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {I.send}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      /* ───── Tweaks panel ─────────────────────────────────────────── */
+      function TweakUI({ tweaks, setTweak }) {
+        return (
+          <TweaksPanel title="Tweaks">
+            <TweakSection title="테마">
+              <TweakRadio
+                label="모드"
+                value={tweaks.theme}
+                options={[
+                  { value: "dark", label: "다크" },
+                  { value: "light", label: "라이트" },
+                ]}
+                onChange={(v) => setTweak("theme", v)}
+              />
+            </TweakSection>
+            <TweakSection title="밀도">
+              <TweakRadio
+                label="정보 밀도"
+                value={tweaks.density}
+                options={[
+                  { value: "comfortable", label: "Comfortable" },
+                  { value: "compact", label: "Compact" },
+                ]}
+                onChange={(v) => setTweak("density", v)}
+              />
+            </TweakSection>
+            <TweakSection title="AI 진입 방식">
+              <TweakRadio
+                label="홈 우선순위"
+                value={tweaks.aiEntry}
+                options={[
+                  { value: "hybrid", label: "하이브리드" },
+                  { value: "ai-first", label: "AI 우선 (Bold)" },
+                  { value: "search-first", label: "검색 우선 (Safe)" },
+                ]}
+                onChange={(v) => setTweak("aiEntry", v)}
+              />
+            </TweakSection>
+          </TweaksPanel>
+        );
+      }
+
+      /* ───── Root app ─────────────────────────────────────────────── */
+      function App() {
+        const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+        useEffect(() => {
+          applyTokens(tweaks);
+        }, [tweaks]);
+
+        return (
+          <>
+            <DesignCanvas
+              title="Figmapedia · 리뉴얼 디자인"
+              subtitle="Bold(AI-first) 방향으로 통일. 피그마 리소스만 Safe(차분한 카드 그리드)로 — 다운로드·정렬·필터가 핵심이라 시각적 화려함보다 정보 명료성이 우선."
+            >
+              <DCSection id="home" title="홈 / 검색">
+                <DCArtboard
+                  id="bold-home"
+                  label="홈 — AI-first 대화형 (전체 앱)"
+                  width={1280}
+                  height={1100}
+                >
+                  <BoldApp density={tweaks.density} />
+                </DCArtboard>
+              </DCSection>
+
+              <DCSection
+                id="info"
+                title="피그마 정보 (Q&A · 용어 · 단축키 · 플러그인)"
+              >
+                <DCArtboard
+                  id="bold-info"
+                  label="3-pane (목록·상세·AI sidekick)"
+                  width={1280}
+                  height={900}
+                >
+                  <BoldShell page="info">
+                    <BoldInfo density={tweaks.density} />
+                  </BoldShell>
+                </DCArtboard>
+              </DCSection>
+
+              <DCSection id="prompt" title="프롬프트 페디아">
+                <DCArtboard
+                  id="bold-prompt"
+                  label="플레이그라운드 + 결과 미리보기"
+                  width={1280}
+                  height={900}
+                >
+                  <BoldShell page="prompt">
+                    <BoldPrompt />
+                  </BoldShell>
+                </DCArtboard>
+              </DCSection>
+
+              <DCSection id="kiosk" title="키오스크 갤러리">
+                <DCArtboard
+                  id="bold-kiosk"
+                  label="Masonry 갤러리"
+                  width={1280}
+                  height={1300}
+                >
+                  <BoldShell page="kiosk">
+                    <BoldKiosk />
+                  </BoldShell>
+                </DCArtboard>
+              </DCSection>
+
+              <DCSection id="community" title="커뮤니티">
+                <DCArtboard
+                  id="bold-community"
+                  label="피드 + 사이드바"
+                  width={1280}
+                  height={900}
+                >
+                  <BoldShell page="community">
+                    <BoldCommunity />
+                  </BoldShell>
+                </DCArtboard>
+              </DCSection>
+
+              <DCSection id="uxui" title="UXUI 디자인">
+                <DCArtboard
+                  id="bold-uxui"
+                  label="매거진 레이아웃"
+                  width={1280}
+                  height={1100}
+                >
+                  <BoldShell page="uxui">
+                    <BoldUXUI />
+                  </BoldShell>
+                </DCArtboard>
+              </DCSection>
+
+              <DCSection id="resources" title="피그마 리소스 (← Safe 버전)">
+                <DCArtboard
+                  id="safe-resources"
+                  label="Safe · 균일 카드 그리드 — Bold 쉘 안에서 호스트"
+                  width={1280}
+                  height={900}
+                >
+                  <BoldShell page="resources">
+                    <SafeResources />
+                  </BoldShell>
+                </DCArtboard>
+              </DCSection>
+
+              <DCSection id="mobile" title="모바일 — 전 화면">
+                <DCArtboard
+                  id="m-bold-home"
+                  label="홈 — AI-first"
+                  width={390}
+                  height={780}
+                >
+                  <MobileBold density={tweaks.density} />
+                </DCArtboard>
+                <DCArtboard
+                  id="m-safe-home"
+                  label="홈 — 검색 우선 (Safe 변형)"
+                  width={390}
+                  height={780}
+                >
+                  <MobileSafe density={tweaks.density} />
+                </DCArtboard>
+                <DCArtboard
+                  id="m-info"
+                  label="피그마 정보 — Q&A 리더"
+                  width={390}
+                  height={780}
+                >
+                  <MobileInfo />
+                </DCArtboard>
+                <DCArtboard
+                  id="m-prompt"
+                  label="프롬프트 페디아"
+                  width={390}
+                  height={780}
+                >
+                  <MobilePrompt />
+                </DCArtboard>
+                <DCArtboard
+                  id="m-kiosk"
+                  label="키오스크 갤러리"
+                  width={390}
+                  height={780}
+                >
+                  <MobileKiosk />
+                </DCArtboard>
+                <DCArtboard
+                  id="m-community"
+                  label="커뮤니티 피드"
+                  width={390}
+                  height={780}
+                >
+                  <MobileCommunity />
+                </DCArtboard>
+                <DCArtboard
+                  id="m-uxui"
+                  label="UXUI 매거진"
+                  width={390}
+                  height={780}
+                >
+                  <MobileUXUI />
+                </DCArtboard>
+                <DCArtboard
+                  id="m-resources"
+                  label="리소스 (Safe)"
+                  width={390}
+                  height={780}
+                >
+                  <MobileResources />
+                </DCArtboard>
+              </DCSection>
+            </DesignCanvas>
+
+            <TweakUI tweaks={tweaks} setTweak={setTweak} />
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

@@ -19,7 +19,12 @@ interface VerticalCardProps {
 }
 
 function isOptimizableUrl(url: string): boolean {
-  return url.startsWith("/") || url.includes("amazonaws.com") || url.includes("notion.so") || url.includes("supabase.co");
+  return (
+    url.startsWith("/") ||
+    url.includes("amazonaws.com") ||
+    url.includes("notion.so") ||
+    url.includes("supabase.co")
+  );
 }
 
 export function VerticalCard({
@@ -28,7 +33,10 @@ export function VerticalCard({
   showMeta = true,
   externalLink = false,
 }: VerticalCardProps) {
-  const { url: displayThumbnail, onError: onThumbnailError } = useThumbnail(entry, true);
+  const { url: displayThumbnail, onError: onThumbnailError } = useThumbnail(
+    entry,
+    true,
+  );
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const isShortcut = !!entry.shortcut;
@@ -58,7 +66,10 @@ export function VerticalCard({
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className={`w-full h-full object-cover transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
               onLoad={() => setImageLoaded(true)}
-              onError={() => { onThumbnailError(); setImageError(true); }}
+              onError={() => {
+                onThumbnailError();
+                setImageError(true);
+              }}
               unoptimized={!isOptimizableUrl(displayThumbnail)}
             />
           </>
@@ -89,11 +100,19 @@ export function VerticalCard({
           </div>
         )}
 
-        <h3 className={`font-semibold text-gray-100 transition-colors line-clamp-2 text-sm sm:text-base ${!isShortcut ? "group-hover:text-brand-blue" : ""}`}>
+        <h3
+          className={`font-semibold text-gray-100 transition-colors line-clamp-2 text-sm sm:text-base ${!isShortcut ? "group-hover:text-brand-blue" : ""}`}
+        >
           {entry.title}
         </h3>
 
-        {showMeta && <EntryMeta author={entry.author} publishedDate={entry.publishedDate} className="mt-auto pt-2" />}
+        {showMeta && (
+          <EntryMeta
+            author={entry.author}
+            publishedDate={entry.publishedDate}
+            className="mt-auto pt-2"
+          />
+        )}
       </div>
     </>
   );
@@ -114,11 +133,7 @@ export function VerticalCard({
 
   // 단축키 카드
   if (isShortcut) {
-    return (
-      <div className={`${cardClassName} cursor-default`}>
-        {cardInner}
-      </div>
-    );
+    return <div className={`${cardClassName} cursor-default`}>{cardInner}</div>;
   }
 
   // 기본 내부 링크
