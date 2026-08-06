@@ -58,8 +58,9 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        // 구 커뮤니티 운영 가이드 게시글 → 커뮤니티 폐지로 실무 Q&A로 유도
         source: "/bc95f6b0-0075-48bb-bbaa-311b6750098d",
-        destination: "/community/312baef6-290e-4457-bdad-00ed832aebbe",
+        destination: "/figma-info",
         permanent: true,
       },
       {
@@ -72,6 +73,13 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: true,
       },
+      // 커뮤니티 폐지 → AI리포트 아카이브로 대체 (기존 색인 URL 보존)
+      {
+        source: "/community/:path*",
+        destination: "/ai-report",
+        permanent: true,
+      },
+      { source: "/community", destination: "/ai-report", permanent: true },
       // 비정상 URL → 실무 Q&A
       { source: "/&", destination: "/figma-info", permanent: true },
       { source: "/$", destination: "/figma-info", permanent: true },

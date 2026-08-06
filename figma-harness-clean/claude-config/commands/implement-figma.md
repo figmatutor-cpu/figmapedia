@@ -1,6 +1,7 @@
 Figma 디자인을 코드 + Storybook story로 구현합니다.
 
 ## 절차
+
 1. `docs/design-tokens.md` 읽어 토큰 매핑 파악
 2. `figma-code-connect.json` 확인
 3. Figma MCP: `get_design_context` 호출

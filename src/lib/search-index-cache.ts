@@ -14,7 +14,7 @@ import {
 import { SECTION_DB_IDS } from "@/lib/section-databases";
 import { FIGMA_RESOURCES } from "@/lib/resource-data";
 import { getGlossaryExpansions } from "@/lib/figma-glossary";
-import { supabase } from "@/lib/supabase";
+import { getPublishedIssues, formatIssueLabel } from "@/lib/ai-report";
 import type { SearchIndex, SearchIndexItem } from "@/types";
 
 export const getCachedSearchIndex = unstable_cache(
@@ -81,28 +81,23 @@ export const getCachedSearchIndex = unstable_cache(
         .map((item) => ({ ...item, section: "피그마 용어" })),
     ];
 
-    // Fetch community posts from Supabase
-    let communityItems: SearchIndexItem[] = [];
+    // AI리포트 뉴스레터 — 발행일이 지난 호만 (reports.json 기준)
+    let reportItems: SearchIndexItem[] = [];
     try {
-      const { data: communityPosts } = await supabase
-        .from("community_posts")
-        .select("id, nickname, title, category, created_at, updated_at")
-        .order("created_at", { ascending: false });
-
-      if (communityPosts) {
-        communityItems = communityPosts.map((p) => ({
-          id: `community-${p.id}`,
-          title: p.title,
-          categories: [p.category],
-          author: p.nickname,
-          link: null,
-          publishedDate: p.created_at,
-          section: "커뮤니티",
-          lastEditedTime: p.updated_at,
-        }));
-      }
+      const reports = await getPublishedIssues();
+      reportItems = reports.map((r) => ({
+        id: `ai-report-${r.issue}`,
+        // "1호"로도 검색되게 라벨을 제목에 포함
+        title: `${formatIssueLabel(r.issue)} · ${r.title}`,
+        categories: ["AI리포트"],
+        author: "허들링 클럽",
+        link: null,
+        publishedDate: r.publishedAt,
+        section: "AI리포트",
+        lastEditedTime: r.publishedAt,
+      }));
     } catch {
-      // Supabase 실패 시 커뮤니티 없이 진행
+      // 리포트 앱 미배포 등 — AI리포트 없이 진행
     }
 
     // Map figma resources to search index items
@@ -129,7 +124,7 @@ export const getCachedSearchIndex = unstable_cache(
       ...mainItems,
       ...sectionItems,
       ...resourceItems,
-      ...communityItems,
+      ...reportItems,
     ].filter((item) => {
       if (idSet.has(item.id)) return false;
       idSet.add(item.id);

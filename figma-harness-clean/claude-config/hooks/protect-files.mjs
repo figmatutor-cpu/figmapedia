@@ -22,7 +22,13 @@ try {
 const filePath = data?.tool_input?.file_path ?? "";
 if (!filePath) process.exit(0);
 
-const blockedPatterns = [".env", ".env.local", "package-lock.json", ".git/", ".git\\"];
+const blockedPatterns = [
+  ".env",
+  ".env.local",
+  "package-lock.json",
+  ".git/",
+  ".git\\",
+];
 
 if (blockedPatterns.some((p) => filePath.includes(p))) {
   process.exit(2); // exit 2 = 차단

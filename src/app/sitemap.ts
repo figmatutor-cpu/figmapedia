@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getCachedSearchIndex } from "@/lib/search-index-cache";
+import { getPublishedIssues } from "@/lib/ai-report";
 
 const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://huddling.ai"
@@ -44,9 +45,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
-      url: `${SITE_URL}/community`,
+      url: `${SITE_URL}/ai-report`,
       lastModified: new Date(),
-      changeFrequency: "daily",
+      changeFrequency: "weekly",
       priority: 0.7,
     },
     { url: `${SITE_URL}/privacy`, changeFrequency: "yearly", priority: 0.2 },
@@ -67,8 +68,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "UXUI 용어",
   ]);
 
+  // AI리포트 — 발행된 호만 (미발행 호는 getPublishedIssues에서 제외됨)
+  let reportPages: MetadataRoute.Sitemap = [];
+  try {
+    const reports = await getPublishedIssues();
+    reportPages = reports.map((report) => ({
+      url: `${SITE_URL}/ai-report/${report.issue}`,
+      lastModified: new Date(report.publishedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    }));
+  } catch (error) {
+    console.error("Sitemap: failed to fetch AI reports", error);
+  }
+
   let entryPages: MetadataRoute.Sitemap = [];
-  let communityPages: MetadataRoute.Sitemap = [];
   try {
     const { items } = await getCachedSearchIndex();
     entryPages = items
@@ -84,21 +98,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "weekly" as const,
         priority: item.section === "피그마 Q&A" ? 0.6 : 0.5,
       }));
-
-    // 커뮤니티 게시글 — layout.tsx에서 SSR 메타데이터 생성됨
-    communityPages = items
-      .filter((item) => item.section === "커뮤니티")
-      .map((item) => ({
-        url: `${SITE_URL}/community/${item.id.replace(/^community-/, "")}`,
-        lastModified: item.lastEditedTime
-          ? new Date(item.lastEditedTime)
-          : new Date(),
-        changeFrequency: "weekly" as const,
-        priority: 0.4,
-      }));
   } catch (error) {
     console.error("Sitemap: failed to fetch entries", error);
   }
 
-  return [...staticPages, ...entryPages, ...communityPages];
+  return [...staticPages, ...entryPages, ...reportPages];
 }

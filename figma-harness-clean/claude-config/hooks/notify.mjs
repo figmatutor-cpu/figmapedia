@@ -12,13 +12,13 @@ try {
   if (os === "darwin") {
     // macOS
     execSync(
-      `osascript -e 'display notification "Claude Code 입력 대기 중" with title "Claude Code"'`
+      `osascript -e 'display notification "Claude Code 입력 대기 중" with title "Claude Code"'`,
     );
   } else if (os === "win32") {
     // Windows
     execSync(
       `powershell -Command "[System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms'); [System.Windows.Forms.MessageBox]::Show('Claude Code 입력 대기 중','Claude Code','OK','Information')" `,
-      { stdio: "ignore" }
+      { stdio: "ignore" },
     );
   } else {
     // Linux

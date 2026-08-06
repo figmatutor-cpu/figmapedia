@@ -136,11 +136,6 @@ export const NAV_ITEMS: NavItem[] = [
     ],
   },
   {
-    key: "community",
-    label: "커뮤니티",
-    href: "/community",
-  },
-  {
     key: "uxui-study",
     label: "UXUI디자인",
     href: "/uxui-study",

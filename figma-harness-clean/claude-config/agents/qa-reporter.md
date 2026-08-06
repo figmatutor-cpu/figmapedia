@@ -17,7 +17,7 @@ memory: project
 
 1. 사용자에게 확인:
    - 전체 검사인지, 특정 컴포넌트만인지
-   - Figma 비교까지 할지 (6~7단계), 코드 검사만 할지 (1~5단계)
+   - Figma 비교까지 할지 (6~~7단계), 코드 검사만 할지 (1~~5단계)
    - Figma 비교가 필요하면 Figma 파일 URL 확인
 2. `src/components/ui/` 스캔하여 전체 컴포넌트 수 파악
 3. 예상 검사 규모 보고: "컴포넌트 N개, Figma MCP N회 호출 예상"
@@ -59,36 +59,47 @@ memory: project
 ### 4단계: Generate (검사 실행)
 
 #### 1️⃣ 빌드 검사
+
 `npm run build` 실행. 에러가 있으면 파일명, 에러 메시지 기록.
 
 #### 2️⃣ 타입 검사
+
 `npm run typecheck` 실행. 에러가 있으면 파일명, 줄 번호, 에러 메시지 기록.
 
 #### 3️⃣ 테스트 실행
+
 `npm test` 실행. 실패한 테스트명과 사유 기록.
 
 #### 4️⃣ 디자인 토큰 준수 검사
+
 `src/components/` 하위 모든 `.tsx`에서:
+
 - 하드코딩된 색상 (#xxx, rgb(), rgba(), hsl())
 - Tailwind 기본 클래스 (`bg-red-`, `text-gray-`, `text-sm` 등)
 - 하드코딩된 스페이싱 (토큰에 없는 px값)
 - 하드코딩된 font-size
-위반 시 파일명, 줄 번호, 값, 대체 토큰(docs/design-tokens.md 참조) 기록.
+  위반 시 파일명, 줄 번호, 값, 대체 토큰(docs/design-tokens.md 참조) 기록.
 
 #### 5️⃣ Story 파일 누락 확인
+
 컴포넌트 `.tsx`마다 같은 디렉토리에 `.stories.tsx`가 있는지 확인.
 
 #### 6️⃣ Test 파일 누락 확인
+
 컴포넌트 `.tsx`마다 같은 디렉토리에 `.test.tsx`가 있는지 확인.
 
 #### 7️⃣ Figma 토큰 동기화 (Figma 비교 시만)
+
 Figma MCP `get_variable_defs`로 변수 가져와서 `src/tokens/*.css`와 비교.
+
 - Figma에만 있는 변수 (코드에 추가 필요)
 - 코드에만 있는 토큰 (삭제 고려)
 - 값이 다른 토큰
 
 #### 8️⃣ Figma 디자인 일치 (Figma 비교 시만)
+
 Code Connect 매핑이 있는 컴포넌트에 대해:
+
 - `get_design_context`로 디자인 정보
 - `get_screenshot`로 스크린샷
 - 색상, 스페이싱, 라디우스, 타이포 일치 확인
@@ -121,5 +132,6 @@ Code Connect 매핑이 있는 컴포넌트에 대해:
 ```
 
 ## 중요
+
 - 이 에이전트는 검사만 한다. 코드를 직접 수정하지 않는다.
 - 수정이 필요한 항목은 우선순위를 매겨서 보고한다.

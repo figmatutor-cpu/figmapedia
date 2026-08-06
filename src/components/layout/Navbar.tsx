@@ -8,9 +8,8 @@ import { NAV_ITEMS } from "@/lib/navigation";
 import { useSearchContext } from "@/components/search/SearchProvider";
 import { SearchIcon } from "@/components/ui/SearchIcon";
 
-// 네비게이션에 노출할 항목 (커뮤니티 메뉴는 헤더에서 숨김 — 라우트/데이터는 유지)
-const VISIBLE_NAV_ITEMS = NAV_ITEMS.filter((item) => item.key !== "community");
-
+// 피그마 리소스 / AI리포트는 NAV_ITEMS(섹션 DB 기반)에 속하지 않아
+// 아래에서 개별 Link로 렌더한다 — 순서상 항상 마지막에 위치
 export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
@@ -79,7 +78,7 @@ export function Navbar() {
 
         {/* Desktop nav — visible above xl-nav breakpoint */}
         <nav className="hidden xl-nav:flex items-center gap-6">
-          {VISIBLE_NAV_ITEMS.map((item) => (
+          {NAV_ITEMS.map((item) => (
             <Link
               key={item.key}
               href={item.href}
@@ -98,12 +97,14 @@ export function Navbar() {
           >
             피그마 리소스
           </Link>
-          <span className="flex items-center gap-1.5 text-sm leading-none whitespace-nowrap text-gray-500 cursor-default select-none">
+          <Link
+            href="/ai-report"
+            className={`text-sm leading-none whitespace-nowrap transition-colors hover:text-white ${
+              isActive("/ai-report") ? "text-white" : "text-gray-400"
+            }`}
+          >
             AI리포트
-            <span className="px-1.5 py-0.5 rounded-full text-[10px] leading-none bg-white/10 text-gray-400 border border-white/10">
-              준비중
-            </span>
-          </span>
+          </Link>
         </nav>
 
         {/* Right-side actions: search icon + mobile hamburger */}
@@ -197,7 +198,7 @@ export function Navbar() {
                      ${isOpen ? "max-h-[1000px] opacity-100 pt-4 pb-5" : "max-h-0 opacity-0 pt-0 pb-0 pointer-events-none"}`}
       >
         <nav className="flex flex-col items-center space-y-4 text-base w-full">
-          {VISIBLE_NAV_ITEMS.map((item) => (
+          {NAV_ITEMS.map((item) => (
             <Link
               key={item.key}
               href={item.href}
@@ -220,12 +221,16 @@ export function Navbar() {
           >
             피그마 리소스
           </Link>
-          <div className="flex items-center justify-center gap-1.5 w-full text-center text-gray-500 cursor-default select-none">
+          <Link
+            href="/ai-report"
+            className={`transition-colors w-full text-center ${
+              isActive("/ai-report")
+                ? "text-white"
+                : "text-gray-300 hover:text-white"
+            }`}
+          >
             AI리포트
-            <span className="px-1.5 py-0.5 rounded-full text-[10px] leading-none bg-white/10 text-gray-400 border border-white/10">
-              준비중
-            </span>
-          </div>
+          </Link>
         </nav>
       </div>
     </header>

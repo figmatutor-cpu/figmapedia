@@ -5,7 +5,9 @@
 import { readFileSync } from "fs";
 import { extname } from "path";
 
-const input = JSON.parse(readFileSync("/dev/stdin", "utf8").catch?.() ?? process.argv[2] ?? "{}");
+const input = JSON.parse(
+  readFileSync("/dev/stdin", "utf8").catch?.() ?? process.argv[2] ?? "{}",
+);
 
 // stdin에서 읽기 (cross-platform)
 let raw = "";
@@ -28,7 +30,13 @@ if (!filePath) process.exit(0);
 // 검사 제외 대상
 const ext = extname(filePath);
 const skipPatterns = [".css", ".json", ".svg"];
-const skipPaths = ["tokens/", "tailwind.config", ".test.", ".spec.", "node_modules"];
+const skipPaths = [
+  "tokens/",
+  "tailwind.config",
+  ".test.",
+  ".spec.",
+  "node_modules",
+];
 
 if (skipPatterns.includes(ext)) process.exit(0);
 if (skipPaths.some((p) => filePath.includes(p))) process.exit(0);

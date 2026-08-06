@@ -90,8 +90,8 @@ function AISummaryCard({
           <p className="text-xs text-gray-500 mb-1.5">출처</p>
           <ul className="space-y-1 min-w-0">
             {sources?.map((item) => {
-              const href = item.id.startsWith("community-")
-                ? `/community/${item.id.replace("community-", "")}`
+              const href = item.id.startsWith("ai-report-")
+                ? `/ai-report/${item.id.replace("ai-report-", "")}`
                 : (item.link ?? `/entry/${item.id}`);
               const isExternal = !!item.link && item.link.startsWith("http");
               return (

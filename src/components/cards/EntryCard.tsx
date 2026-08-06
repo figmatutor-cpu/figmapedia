@@ -209,9 +209,9 @@ export function EntryCard({
     );
   }
 
-  // 커뮤니티 게시글 → /community/{id}
-  const entryHref = entry.id.startsWith("community-")
-    ? `/community/${entry.id.replace("community-", "")}`
+  // AI리포트 뉴스레터 → /ai-report/{호수}
+  const entryHref = entry.id.startsWith("ai-report-")
+    ? `/ai-report/${entry.id.replace("ai-report-", "")}`
     : `/entry/${entry.id}`;
 
   return (
