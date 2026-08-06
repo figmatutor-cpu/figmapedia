@@ -8,7 +8,7 @@ import { NAV_ITEMS } from "@/lib/navigation";
 import { useSearchContext } from "@/components/search/SearchProvider";
 import { SearchIcon } from "@/components/ui/SearchIcon";
 
-// 피그마 리소스 / AI리포트는 NAV_ITEMS(섹션 DB 기반)에 속하지 않아
+// 피그마 리소스 / AI 리포트는 NAV_ITEMS(섹션 DB 기반)에 속하지 않아
 // 아래에서 개별 Link로 렌더한다 — 순서상 항상 마지막에 위치
 export function Navbar() {
   const pathname = usePathname();
@@ -103,7 +103,7 @@ export function Navbar() {
               isActive("/ai-report") ? "text-white" : "text-gray-400"
             }`}
           >
-            AI리포트
+            AI 리포트
           </Link>
         </nav>
 
@@ -229,7 +229,7 @@ export function Navbar() {
                 : "text-gray-300 hover:text-white"
             }`}
           >
-            AI리포트
+            AI 리포트
           </Link>
         </nav>
       </div>

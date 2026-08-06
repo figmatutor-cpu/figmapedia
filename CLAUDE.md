@@ -98,11 +98,19 @@ NOTION_API_KEY          — Notion Integration 토큰
 NOTION_DATABASE_ID      — 메인 Q&A 데이터베이스 ID
 GEMINI_API_KEY          — Google Gemini API 키
 REVALIDATION_SECRET     — Notion webhook 인증 토큰
+AI_REPORT_URL           — AI 리포트 앱 origin (reports.json + iframe 본문)
 NEXT_PUBLIC_SITE_URL    — 사이트 URL (로컬: http://localhost:3000)
 ```
 
 - `.env.local`에서 직접 관리
 - Vercel: `npx vercel env add <NAME> production`
+
+---
+
+## 표기 규칙
+
+- "AI 리포트" (띄어쓰기 O). 이 문자열은 search-index의 `section`/`categories` 키이자
+  `/api/ai-search` 프롬프트의 섹션 라벨이므로, 바꾸면 양쪽을 반드시 동시에 수정할 것.
 
 ---
 

@@ -57,6 +57,13 @@ Notion 콘텐츠 추가/수정
 - concurrency: 내부 Notion API → 3, 외부 OG 스크래핑 → 10
 - 우선순위: OG 이미지(link) → Notion 블록 첫 이미지
 
+## AI 리포트 (ai-report.ts) — Notion 아님
+
+- 목록 소스: `${AI_REPORT_URL}/reports.json` (외부 앱 huddlingclub-report), 본문은 iframe 임베드
+- `unstable_cache` 내부 `fetch`에 cache 옵션 지정 금지 — 캐시 스코프 충돌
+- `AI_REPORT_URL` 미설정/fetch 실패 시 빈 배열 폴백 (엠티 스테이트)
+- `draft: true` 또는 미래 `publishedAt`은 `getPublishedIssues`에서 제외
+
 ## Gemini AI (gemini.ts)
 
 - 모델: `gemini-2.5-flash` (다른 모델 404 에러)

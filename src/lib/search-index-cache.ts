@@ -81,7 +81,7 @@ export const getCachedSearchIndex = unstable_cache(
         .map((item) => ({ ...item, section: "피그마 용어" })),
     ];
 
-    // AI리포트 뉴스레터 — 발행일이 지난 호만 (reports.json 기준)
+    // AI 리포트 뉴스레터 — 발행일이 지난 호만 (reports.json 기준)
     let reportItems: SearchIndexItem[] = [];
     try {
       const reports = await getPublishedIssues();
@@ -89,15 +89,15 @@ export const getCachedSearchIndex = unstable_cache(
         id: `ai-report-${r.issue}`,
         // "1호"로도 검색되게 라벨을 제목에 포함
         title: `${formatIssueLabel(r.issue)} · ${r.title}`,
-        categories: ["AI리포트"],
+        categories: ["AI 리포트"],
         author: "허들링 클럽",
         link: null,
         publishedDate: r.publishedAt,
-        section: "AI리포트",
+        section: "AI 리포트",
         lastEditedTime: r.publishedAt,
       }));
     } catch {
-      // 리포트 앱 미배포 등 — AI리포트 없이 진행
+      // 리포트 앱 미배포 등 — AI 리포트 없이 진행
     }
 
     // Map figma resources to search index items

@@ -14,6 +14,20 @@
 - 모든 섹션 페이지는 `SectionPageLayout` 공통 컴포넌트 사용
 - 각 섹션 page.tsx는 서버 컴포넌트로 `getCachedSectionData()` 호출 후 초기 데이터를 props로 전달
 
+### AI 리포트 (Notion 아님 — 외부 앱 + iframe)
+
+| 경로                     | 파일                             | 비고                                          |
+| ------------------------ | -------------------------------- | --------------------------------------------- |
+| `/ai-report`             | `ai-report/page.tsx`             | 목록 1페이지 (static)                         |
+| `/ai-report/page/[page]` | `ai-report/page/[page]/page.tsx` | 2페이지 이상. `generateStaticParams` 프리렌더 |
+| `/ai-report/[issue]`     | `ai-report/[issue]/page.tsx`     | 상세 — 본문은 리포트 앱 iframe + 댓글         |
+
+- 목록 렌더링은 `components/ai-report/IssueList.tsx`를 두 라우트가 공유
+- 페이지네이션을 `?page=`가 아닌 경로로 둔 이유: `searchParams`를 읽으면
+  라우트가 dynamic으로 내려가 HTML CDN 캐싱을 잃는다
+- 2페이지 이상은 `robots: noindex, follow` (본문 없는 목록 하위 페이지)
+- 데이터/캐시 규칙은 `src/lib/CLAUDE.md`의 AI 리포트 항목 참조
+
 ## API 라우트
 
 | 엔드포인트                        | 메서드 | 역할                                         |

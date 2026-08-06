@@ -32,16 +32,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { issue: rawIssue } = await params;
   const issueNumber = parseIssueParam(rawIssue);
-  if (issueNumber === null) return { title: "AI리포트" };
+  if (issueNumber === null) return { title: "AI 리포트" };
 
   const report = await getPublishedIssue(issueNumber);
-  if (!report) return { title: "AI리포트" };
+  if (!report) return { title: "AI 리포트" };
 
   const title = `${formatIssueLabel(report.issue)} · ${report.title}`;
   const description =
     report.summary ||
-    `허들링 클럽 AI리포트 ${formatIssueLabel(report.issue)} (${formatIssueDateLong(report.publishedAt)})`;
-  const thumbnailUrl = report.thumbnail ? toReportUrl(report.thumbnail) : null;
+    `허들링 클럽 AI 리포트 ${formatIssueLabel(report.issue)} (${formatIssueDateLong(report.publishedAt)})`;
 
   return {
     title,
@@ -53,7 +52,6 @@ export async function generateMetadata({
       type: "article",
       publishedTime: report.publishedAt,
       url: `${SITE_URL}/ai-report/${report.issue}`,
-      ...(thumbnailUrl ? { images: [{ url: thumbnailUrl }] } : {}),
     },
   };
 }
@@ -140,7 +138,7 @@ export default async function AiReportIssuePage({
         <ReportEmbed
           src={embedUrl}
           origin={origin}
-          title={`AI리포트 ${formatIssueLabel(report.issue)} — ${report.title}`}
+          title={`AI 리포트 ${formatIssueLabel(report.issue)} — ${report.title}`}
         />
       </div>
 

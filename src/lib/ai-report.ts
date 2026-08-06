@@ -1,7 +1,7 @@
 import { unstable_cache } from "next/cache";
 
 /**
- * AI리포트 — 격주 발행 뉴스레터 아카이브
+ * AI 리포트 — 격주 발행 뉴스레터 아카이브
  *
  * 본문은 별도 Next.js 앱(huddlingclub-report)에서 렌더하고 iframe으로 임베드한다.
  * 목록 메타데이터는 그 앱의 `public/reports.json` 하나만 읽는다.
@@ -19,8 +19,6 @@ export interface AiReportIssue {
   publishedAt: string;
   /** 리포트 앱 기준 절대 경로 (예: /community/report/001) */
   path: string;
-  /** 리포트 앱 기준 절대 경로 또는 외부 URL. 없으면 카드에 썸네일 미표시 */
-  thumbnail?: string | null;
   /** true면 발행일과 무관하게 숨김 (작성 중) */
   draft?: boolean;
 }
@@ -79,10 +77,6 @@ function normalize(raw: unknown): AiReportIssue | null {
     summary: typeof r.summary === "string" ? r.summary.trim() : "",
     publishedAt: r.publishedAt,
     path: r.path.trim(),
-    thumbnail:
-      typeof r.thumbnail === "string" && r.thumbnail.trim()
-        ? r.thumbnail.trim()
-        : null,
     draft: r.draft === true,
   };
 }
@@ -102,14 +96,14 @@ const fetchIssues = unstable_cache(
       // 여기서 cache 옵션을 지정하면 캐시 스코프와 충돌한다.
       const res = await fetch(`${REPORT_ORIGIN}/reports.json`);
       if (!res.ok) {
-        console.error(`AI리포트: reports.json 응답 ${res.status}`);
+        console.error(`AI 리포트: reports.json 응답 ${res.status}`);
         return [];
       }
 
       const json = await res.json();
       const list = Array.isArray(json) ? json : json?.reports;
       if (!Array.isArray(list)) {
-        console.error("AI리포트: reports.json 형식이 배열이 아님");
+        console.error("AI 리포트: reports.json 형식이 배열이 아님");
         return [];
       }
 
@@ -119,7 +113,7 @@ const fetchIssues = unstable_cache(
         .sort((a, b) => b.issue - a.issue);
     } catch (error) {
       // 리포트 앱 미배포 또는 일시 장애 — 엠티 스테이트로 폴백
-      console.error("AI리포트: reports.json 조회 실패", error);
+      console.error("AI 리포트: reports.json 조회 실패", error);
       return [];
     }
   },

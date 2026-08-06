@@ -209,7 +209,7 @@ export function EntryCard({
     );
   }
 
-  // AI리포트 뉴스레터 → /ai-report/{호수}
+  // AI 리포트 뉴스레터 → /ai-report/{호수}
   const entryHref = entry.id.startsWith("ai-report-")
     ? `/ai-report/${entry.id.replace("ai-report-", "")}`
     : `/entry/${entry.id}`;

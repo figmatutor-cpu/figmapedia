@@ -73,7 +73,7 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: true,
       },
-      // 커뮤니티 폐지 → AI리포트 아카이브로 대체 (기존 색인 URL 보존)
+      // 커뮤니티 폐지 → AI 리포트 아카이브로 대체 (기존 색인 URL 보존)
       {
         source: "/community/:path*",
         destination: "/ai-report",

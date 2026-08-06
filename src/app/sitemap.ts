@@ -68,7 +68,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "UXUI 용어",
   ]);
 
-  // AI리포트 — 발행된 호만 (미발행 호는 getPublishedIssues에서 제외됨)
+  // AI 리포트 — 발행된 호만 (미발행 호는 getPublishedIssues에서 제외됨)
   let reportPages: MetadataRoute.Sitemap = [];
   try {
     const reports = await getPublishedIssues();
