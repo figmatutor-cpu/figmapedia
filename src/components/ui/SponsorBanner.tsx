@@ -19,18 +19,18 @@ export function SponsorBanner({ className }: SponsorBannerProps) {
   useEffect(() => {
     setIsMounted(true);
     try {
-      if (localStorage.getItem(STORAGE_KEY) === "1") {
+      if (sessionStorage.getItem(STORAGE_KEY) === "1") {
         setIsDismissed(true);
       }
     } catch {
-      // private mode 등 localStorage 미지원 환경 — 무시
+      // private mode 등 sessionStorage 미지원 환경 — 무시
     }
   }, []);
 
   const handleClose = () => {
     setIsDismissed(true);
     try {
-      localStorage.setItem(STORAGE_KEY, "1");
+      sessionStorage.setItem(STORAGE_KEY, "1");
     } catch {
       // noop
     }
