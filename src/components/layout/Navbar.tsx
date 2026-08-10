@@ -4,14 +4,14 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { NAV_ITEMS } from "@/lib/navigation";
+import { NAV_ITEMS, SIGNUP_LINK, SIGNUP_LABEL } from "@/lib/navigation";
 import { useSearchContext } from "@/components/search/SearchProvider";
 import { SearchIcon } from "@/components/ui/SearchIcon";
 
-// 피그마 리소스 / AI 리포트는 NAV_ITEMS(섹션 DB 기반)에 속하지 않아
+// 피그마 리소스 / AI 리포트 / 가입하기는 NAV_ITEMS(섹션 DB 기반)에 속하지 않아
 // 아래에서 개별 Link로 렌더한다.
 // 노출 순서: NAV_ITEMS[0](AI & Figma 팁) → AI 리포트 → 나머지 NAV_ITEMS
-//          → 피그마 리소스 (데스크탑/모바일 동일)
+//          → 피그마 리소스 → 가입하기(외부 링크) (데스크탑/모바일 동일)
 const [PRIMARY_NAV_ITEM, ...REST_NAV_ITEMS] = NAV_ITEMS;
 
 export function Navbar() {
@@ -117,6 +117,14 @@ export function Navbar() {
           >
             피그마 리소스
           </Link>
+          <a
+            href={SIGNUP_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm leading-none whitespace-nowrap text-gray-400 transition-colors hover:text-white"
+          >
+            {SIGNUP_LABEL}
+          </a>
         </nav>
 
         {/* Right-side actions: search icon + mobile hamburger */}
@@ -253,6 +261,14 @@ export function Navbar() {
           >
             피그마 리소스
           </Link>
+          <a
+            href={SIGNUP_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full text-center text-gray-300 transition-colors hover:text-white"
+          >
+            {SIGNUP_LABEL}
+          </a>
         </nav>
       </div>
     </header>

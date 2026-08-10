@@ -163,3 +163,7 @@ export const NAV_ITEMS: NavItem[] = [
 
 export const CTA_LINK = "https://open.kakao.com/o/gPjVAOXf";
 export const CTA_LABEL = "오카방 참여하기";
+
+/** GNB 우측 끝 가입하기 메뉴 — 외부 폼(Tally)으로 새 탭 이동 */
+export const SIGNUP_LINK = "https://tally.so/r/GxVDYj";
+export const SIGNUP_LABEL = "가입하기";
