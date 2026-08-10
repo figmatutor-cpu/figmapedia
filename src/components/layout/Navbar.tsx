@@ -10,7 +10,10 @@ import { SearchIcon } from "@/components/ui/SearchIcon";
 
 // 피그마 리소스 / AI 리포트는 NAV_ITEMS(섹션 DB 기반)에 속하지 않아
 // 아래에서 개별 Link로 렌더한다.
-// 노출 순서: AI 리포트 → NAV_ITEMS → 피그마 리소스 (데스크탑/모바일 동일)
+// 노출 순서: NAV_ITEMS[0](AI 및 피그마 팁) → AI 리포트 → 나머지 NAV_ITEMS
+//          → 피그마 리소스 (데스크탑/모바일 동일)
+const [PRIMARY_NAV_ITEM, ...REST_NAV_ITEMS] = NAV_ITEMS;
+
 export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
@@ -80,6 +83,14 @@ export function Navbar() {
         {/* Desktop nav — visible above xl-nav breakpoint */}
         <nav className="hidden xl-nav:flex items-center gap-6">
           <Link
+            href={PRIMARY_NAV_ITEM.href}
+            className={`text-sm leading-none whitespace-nowrap transition-colors hover:text-white ${
+              isActive(PRIMARY_NAV_ITEM.href) ? "text-white" : "text-gray-400"
+            }`}
+          >
+            {PRIMARY_NAV_ITEM.label}
+          </Link>
+          <Link
             href="/ai-report"
             className={`text-sm leading-none whitespace-nowrap transition-colors hover:text-white ${
               isActive("/ai-report") ? "text-white" : "text-gray-400"
@@ -87,7 +98,7 @@ export function Navbar() {
           >
             AI 리포트
           </Link>
-          {NAV_ITEMS.map((item) => (
+          {REST_NAV_ITEMS.map((item) => (
             <Link
               key={item.key}
               href={item.href}
@@ -200,6 +211,16 @@ export function Navbar() {
       >
         <nav className="flex flex-col items-center space-y-4 text-base w-full">
           <Link
+            href={PRIMARY_NAV_ITEM.href}
+            className={`transition-colors w-full text-center ${
+              isActive(PRIMARY_NAV_ITEM.href)
+                ? "text-white"
+                : "text-gray-300 hover:text-white"
+            }`}
+          >
+            {PRIMARY_NAV_ITEM.label}
+          </Link>
+          <Link
             href="/ai-report"
             className={`transition-colors w-full text-center ${
               isActive("/ai-report")
@@ -209,7 +230,7 @@ export function Navbar() {
           >
             AI 리포트
           </Link>
-          {NAV_ITEMS.map((item) => (
+          {REST_NAV_ITEMS.map((item) => (
             <Link
               key={item.key}
               href={item.href}
