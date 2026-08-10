@@ -10,7 +10,7 @@ import { SearchIcon } from "@/components/ui/SearchIcon";
 
 // 피그마 리소스 / AI 리포트는 NAV_ITEMS(섹션 DB 기반)에 속하지 않아
 // 아래에서 개별 Link로 렌더한다.
-// 노출 순서: NAV_ITEMS[0](AI 및 피그마 팁) → AI 리포트 → 나머지 NAV_ITEMS
+// 노출 순서: NAV_ITEMS[0](AI & Figma 팁) → AI 리포트 → 나머지 NAV_ITEMS
 //          → 피그마 리소스 (데스크탑/모바일 동일)
 const [PRIMARY_NAV_ITEM, ...REST_NAV_ITEMS] = NAV_ITEMS;
 

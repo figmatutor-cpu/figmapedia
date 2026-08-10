@@ -38,7 +38,7 @@ export interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
   {
     key: "figma-info",
-    label: "AI 및 피그마 팁",
+    label: "AI & Figma 팁",
     href: "/figma-info",
     subTabs: [
       {
