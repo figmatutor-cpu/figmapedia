@@ -8,6 +8,15 @@
     />
     <title>AI Report 1호 — 내 클로드 코드는 왜 점점 멍청해질까?</title>
     <style>
+      /* 소식지 본문은 iframe 문서라 부모 페이지(next/font)의 Pretendard를
+         상속받지 못한다. 같은 오리진의 폰트 파일을 직접 등록한다. */
+      @font-face {
+        font-family: "Pretendard Variable";
+        font-weight: 45 920;
+        font-style: normal;
+        font-display: swap;
+        src: url("/fonts/PretendardVariable.woff2") format("woff2-variations");
+      }
       body {
         width: 100%;
         margin: 0;
@@ -742,7 +751,7 @@
                       <div>
                         <span style="font-size: 14px; color: #a1a1ad"
                           >디스코드에 공유된 리포트 중,
-                          <br class="m-br" />멤버들이 가장 반응이 좋았던
+                          <br class="m-br" />가장 반응이 좋았던
                           실험을&nbsp;진행한 <br class="d-br" />Winner에게
                           <br class="m-br" />직접 실험 과정을 들어봤어요.</span
                         >
@@ -1969,7 +1978,7 @@
                         style="
                           margin: 0 auto;
                           border-collapse: separate;
-                          border-radius: 3px;
+                          border-radius: 10px;
                           border: 3px solid #0058e0;
                           background: #0058e0;
                         "
@@ -1981,7 +1990,7 @@
                               valign="top"
                               style="
                                 background: #0058e0;
-                                border-radius: 3px;
+                                border-radius: 10px;
                                 padding: 0;
                               "
                             >
@@ -1994,9 +2003,12 @@
                                   color: #ffffff;
                                   text-decoration: none;
                                   font-family:
+                                    &quot;Pretendard Variable&quot;,
+                                    Pretendard,
+                                    -apple-system,
                                     &quot;Apple SD Gothic Neo&quot;,
-                                    AppleSDGothic, &quot;Malgun Gothic&quot;,
-                                    dotum, arial, sans-serif;
+                                    &quot;Malgun Gothic&quot;,
+                                    sans-serif;
                                   text-align: center;
                                   padding: 19px 20px;
                                   box-sizing: border-box;
@@ -2952,7 +2964,7 @@
                         style="
                           margin: 0 auto;
                           border-collapse: separate;
-                          border-radius: 3px;
+                          border-radius: 10px;
                           border: 3px solid #0058e0;
                           background: #0058e0;
                         "
@@ -2964,7 +2976,7 @@
                               valign="top"
                               style="
                                 background: #0058e0;
-                                border-radius: 3px;
+                                border-radius: 10px;
                                 padding: 0;
                               "
                             >
@@ -2977,9 +2989,12 @@
                                   color: #ffffff;
                                   text-decoration: none;
                                   font-family:
+                                    &quot;Pretendard Variable&quot;,
+                                    Pretendard,
+                                    -apple-system,
                                     &quot;Apple SD Gothic Neo&quot;,
-                                    AppleSDGothic, &quot;Malgun Gothic&quot;,
-                                    dotum, arial, sans-serif;
+                                    &quot;Malgun Gothic&quot;,
+                                    sans-serif;
                                   text-align: center;
                                   padding: 19px 20px;
                                   box-sizing: border-box;
@@ -3004,7 +3019,7 @@
                         style="
                           margin: 0 auto;
                           border-collapse: separate;
-                          border-radius: 3px;
+                          border-radius: 10px;
                           border: 2px solid #7aa2ff;
                         "
                       >
@@ -3013,7 +3028,7 @@
                             <td
                               align="center"
                               valign="top"
-                              style="border-radius: 3px; padding: 0"
+                              style="border-radius: 10px; padding: 0"
                             >
                               <a
                                 href="https://open.kakao.com/o/gPjVAOXf"
@@ -3024,9 +3039,12 @@
                                   color: #7aa2ff;
                                   text-decoration: none;
                                   font-family:
+                                    &quot;Pretendard Variable&quot;,
+                                    Pretendard,
+                                    -apple-system,
                                     &quot;Apple SD Gothic Neo&quot;,
-                                    AppleSDGothic, &quot;Malgun Gothic&quot;,
-                                    dotum, arial, sans-serif;
+                                    &quot;Malgun Gothic&quot;,
+                                    sans-serif;
                                   text-align: center;
                                   padding: 19px 20px;
                                   box-sizing: border-box;
