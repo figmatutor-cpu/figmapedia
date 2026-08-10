@@ -53,7 +53,9 @@ export function ReportEmbed({ src, origin, title }: ReportEmbedProps) {
       loading="lazy"
       // 리포트 본문은 우리가 관리하는 앱이지만 최소 권한만 허용
       sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
-      className={`w-full rounded-xl border border-white/10 bg-white ${
+      // 리포트 본문이 다크라 테두리 없이 페이지 배경과 이어 붙인다.
+      // bg는 로드 전 흰 화면이 번쩍이지 않도록 사이트 배경색으로 둔다.
+      className={`w-full rounded-xl bg-bg-base ${
         height === null ? "h-[calc(100vh-8rem)]" : ""
       }`}
       style={height === null ? undefined : { height }}

@@ -14,6 +14,9 @@ import {
 // 발행일 게이팅이 날짜에 의존하므로 정적으로 굳히지 않는다
 export const revalidate = 600;
 
+/** 댓글 노출 여부. 운영 판단으로 현재 숨김 상태 */
+const SHOW_COMMENTS = false;
+
 const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://huddling.ai"
 ).trim();
@@ -142,10 +145,12 @@ export default async function AiReportIssuePage({
         />
       </div>
 
-      {/* 댓글 */}
-      <div className="mx-auto max-w-4xl">
-        <ReportComments issue={report.issue} />
-      </div>
+      {/* 댓글 — 현재 숨김. 다시 켜려면 SHOW_COMMENTS 를 true 로 */}
+      {SHOW_COMMENTS && (
+        <div className="mx-auto max-w-4xl">
+          <ReportComments issue={report.issue} />
+        </div>
+      )}
     </div>
   );
 }
