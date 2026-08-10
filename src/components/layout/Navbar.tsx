@@ -9,7 +9,8 @@ import { useSearchContext } from "@/components/search/SearchProvider";
 import { SearchIcon } from "@/components/ui/SearchIcon";
 
 // 피그마 리소스 / AI 리포트는 NAV_ITEMS(섹션 DB 기반)에 속하지 않아
-// 아래에서 개별 Link로 렌더한다 — 순서상 항상 마지막에 위치
+// 아래에서 개별 Link로 렌더한다.
+// 노출 순서: AI 리포트 → NAV_ITEMS → 피그마 리소스 (데스크탑/모바일 동일)
 export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
@@ -78,6 +79,14 @@ export function Navbar() {
 
         {/* Desktop nav — visible above xl-nav breakpoint */}
         <nav className="hidden xl-nav:flex items-center gap-6">
+          <Link
+            href="/ai-report"
+            className={`text-sm leading-none whitespace-nowrap transition-colors hover:text-white ${
+              isActive("/ai-report") ? "text-white" : "text-gray-400"
+            }`}
+          >
+            AI 리포트
+          </Link>
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.key}
@@ -96,14 +105,6 @@ export function Navbar() {
             }`}
           >
             피그마 리소스
-          </Link>
-          <Link
-            href="/ai-report"
-            className={`text-sm leading-none whitespace-nowrap transition-colors hover:text-white ${
-              isActive("/ai-report") ? "text-white" : "text-gray-400"
-            }`}
-          >
-            AI 리포트
           </Link>
         </nav>
 
@@ -198,6 +199,16 @@ export function Navbar() {
                      ${isOpen ? "max-h-[1000px] opacity-100 pt-4 pb-5" : "max-h-0 opacity-0 pt-0 pb-0 pointer-events-none"}`}
       >
         <nav className="flex flex-col items-center space-y-4 text-base w-full">
+          <Link
+            href="/ai-report"
+            className={`transition-colors w-full text-center ${
+              isActive("/ai-report")
+                ? "text-white"
+                : "text-gray-300 hover:text-white"
+            }`}
+          >
+            AI 리포트
+          </Link>
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.key}
@@ -220,16 +231,6 @@ export function Navbar() {
             }`}
           >
             피그마 리소스
-          </Link>
-          <Link
-            href="/ai-report"
-            className={`transition-colors w-full text-center ${
-              isActive("/ai-report")
-                ? "text-white"
-                : "text-gray-300 hover:text-white"
-            }`}
-          >
-            AI 리포트
           </Link>
         </nav>
       </div>
