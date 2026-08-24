@@ -28,6 +28,9 @@ export async function POST(request: NextRequest) {
     // Revalidate all cache tags (Next.js 16: second arg required)
     revalidateTag("search-index", "max");
     revalidateTag("section-data", "max");
+    // AI 리포트 목록(reports.json)은 Vercel Data Cache에 남아 배포로 갱신되지 않는다.
+    // 이 태그가 없으면 새 호가 목록에 뜨기까지 revalidate 600초를 기다려야 한다.
+    revalidateTag("ai-report", "max");
 
     // 임베딩 동기화 트리거 (fire-and-forget)
     const baseUrl = (
