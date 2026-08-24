@@ -4,6 +4,7 @@ import {
   formatIssueDateLong,
   formatIssueDateShort,
   formatIssueLabel,
+  isWithinNewWindow,
   type AiReportIssue,
 } from "@/lib/ai-report";
 
@@ -34,7 +35,13 @@ export function totalPagesFor(issueCount: number): number {
  * 호수는 좌측 고정폭 열, 날짜는 우측 정렬로 떨어뜨려 한 열로 읽히게 한다.
  * 행 하단 언더바 라인으로만 구분하고, 호버 시 행 전체를 밝힌다.
  */
-function IssueRow({ report }: { report: AiReportIssue }) {
+function IssueRow({
+  report,
+  isNew,
+}: {
+  report: AiReportIssue;
+  isNew: boolean;
+}) {
   return (
     <Link
       href={`/ai-report/${report.issue}`}
@@ -48,6 +55,16 @@ function IssueRow({ report }: { report: AiReportIssue }) {
       <h2 className="min-w-0 flex-1 text-sm sm:text-base text-gray-200 group-hover:text-white transition-colors truncate">
         {report.title}
       </h2>
+
+      {/* NEW — 최신 호 + 발행 2주 이내에만. 제목이 길어도 눌리지 않게 shrink-0 */}
+      {isNew && (
+        <span
+          aria-label="새 호"
+          className="shrink-0 rounded-full bg-blue-500/15 px-1.5 py-0.5 text-xxs font-bold tracking-wide text-blue-300"
+        >
+          NEW
+        </span>
+      )}
 
       <time
         dateTime={report.publishedAt}
@@ -273,6 +290,13 @@ export function IssueList({
     currentPage * PER_PAGE,
   );
 
+  // NEW 라벨은 전체 목록의 최신 호 1개에만 (reports는 호수 내림차순).
+  // 페이지를 넘겨 봐도 라벨이 페이지별로 다시 붙지 않는다.
+  const newestIssue =
+    reports[0] && isWithinNewWindow(reports[0].publishedAt)
+      ? reports[0].issue
+      : null;
+
   return (
     <div className="min-h-screen bg-bg-base pt-28 pb-16">
       <div className="mx-auto max-w-4xl px-4">
@@ -289,7 +313,11 @@ export function IssueList({
           <>
             <div>
               {pageReports.map((report) => (
-                <IssueRow key={report.issue} report={report} />
+                <IssueRow
+                  key={report.issue}
+                  report={report}
+                  isNew={report.issue === newestIssue}
+                />
               ))}
             </div>
             <Pagination current={currentPage} total={totalPages} />

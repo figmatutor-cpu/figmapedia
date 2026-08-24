@@ -50,6 +50,30 @@ function todayInKST(): string {
   return new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Seoul" });
 }
 
+/**
+ * NEW 라벨을 유지하는 기간(일). 격주 발행 주기에 맞춘다.
+ *
+ * 라벨 판정은 "최신 호" 조건과 함께 쓰인다(IssueList 참고):
+ * - 최신 호 조건 → 다음 호가 올라오면 이전 호는 즉시 라벨을 잃는다
+ * - 이 기간 조건 → 발행이 밀려 최신 호가 오래 남아도 라벨이 무한히 붙지 않는다
+ */
+export const NEW_LABEL_DAYS = 14;
+
+/**
+ * 발행일이 오늘(KST) 기준 NEW_LABEL_DAYS일 이내인지.
+ *
+ * 두 날짜를 모두 UTC 자정으로 파싱해 일수 차이를 낸다.
+ * (로컬 타임존/DST에 따라 하루가 밀리는 것을 막는다)
+ */
+export function isWithinNewWindow(publishedAt: string): boolean {
+  const published = Date.parse(`${publishedAt}T00:00:00Z`);
+  if (Number.isNaN(published)) return false;
+
+  const today = Date.parse(`${todayInKST()}T00:00:00Z`);
+  const days = (today - published) / 86_400_000;
+  return days >= 0 && days < NEW_LABEL_DAYS;
+}
+
 /** 호수 → 댓글 테이블에 저장하는 키 (예: 1 → "report-001") */
 export function issueCommentKey(issue: number): string {
   return `report-${String(issue).padStart(3, "0")}`;
