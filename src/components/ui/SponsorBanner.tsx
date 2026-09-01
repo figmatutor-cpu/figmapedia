@@ -53,7 +53,7 @@ export function SponsorBanner({ className }: SponsorBannerProps) {
       >
         <span className="flex-1 text-left sm:text-center">
           <span className="font-medium text-white">
-            성장하는 실무자들을 위한 AI 커뮤니티,
+            성장하는 디자이너, IT 실무자를 위한 AI 커뮤니티
           </span>{" "}
           <span className="text-gray-300">허들링 클럽 3기 대기 신청</span>
         </span>
