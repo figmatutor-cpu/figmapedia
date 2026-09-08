@@ -3666,80 +3666,27 @@
       </table>
     </div>
 
-    <!-- 실험 카드 이미지 확대 팝업 (르네상스 정물화 카드는 외부 링크라 제외) -->
-    <div
-      id="report-lightbox"
-      onclick="window.reportCloseLightbox && window.reportCloseLightbox()"
-      style="
-        display: none;
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        box-sizing: border-box;
-        background: rgba(5, 5, 16, 0.92);
-        cursor: zoom-out;
-      "
-    >
-      <img
-        id="report-lightbox-img"
-        src=""
-        alt=""
-        onclick="event.stopPropagation()"
-        style="
-          max-width: 100%;
-          max-height: 100%;
-          border-radius: 8px;
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-          cursor: default;
-        "
-      />
-      <div
-        onclick="window.reportCloseLightbox && window.reportCloseLightbox()"
-        style="
-          position: absolute;
-          top: 16px;
-          right: 20px;
-          width: 36px;
-          height: 36px;
-          border-radius: 999px;
-          background: #14141f;
-          border: 1px solid #2a2a38;
-          color: #e8e8ee;
-          font-size: 20px;
-          line-height: 36px;
-          text-align: center;
-          cursor: pointer;
-          font-family: Arial, sans-serif;
-        "
-      >
-        &times;
-      </div>
-    </div>
-
     <script>
       // 실험 카드 이미지 확대 팝업.
+      // 이 문서는 iframe 안에서 렌더되고, iframe 자체 높이가 콘텐츠 전체
+      // 높이로 늘어나 있어(height 핸드셰이크 참고) iframe 내부에서는
+      // position:fixed로 브라우저 화면 기준 오버레이를 만들 수 없다.
+      // 그래서 팝업은 부모(ReportEmbed.tsx)에 postMessage로 요청하고,
+      // 실제 모달은 부모 페이지가 렌더링한다.
       (function () {
-        var lb = document.getElementById("report-lightbox");
-        var lbImg = document.getElementById("report-lightbox-img");
         window.reportOpenLightbox = function (src, alt) {
-          if (!lb || !lbImg) return;
-          lbImg.src = src;
-          lbImg.alt = alt || "";
-          lb.style.display = "flex";
-          document.body.style.overflow = "hidden";
+          try {
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage(
+                { type: "huddling-report:lightbox", src: src, alt: alt || "" },
+                "*",
+              );
+              return;
+            }
+          } catch (e) {}
+          // iframe이 아닌 곳에서 이 문서를 직접 연 경우(standalone) 대비.
+          window.open(src, "_blank");
         };
-        window.reportCloseLightbox = function () {
-          if (!lb) return;
-          lb.style.display = "none";
-          lbImg.src = "";
-          document.body.style.overflow = "";
-        };
-        document.addEventListener("keydown", function (e) {
-          if (e.key === "Escape") window.reportCloseLightbox();
-        });
       })();
     </script>
 

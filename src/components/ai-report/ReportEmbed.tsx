@@ -12,6 +12,8 @@ interface ReportEmbedProps {
 
 /** 리포트 앱이 보내는 높이 메시지 타입 */
 const HEIGHT_MESSAGE_TYPE = "huddling-report:height";
+/** 리포트 앱이 보내는 이미지 확대 팝업 요청 메시지 타입 */
+const LIGHTBOX_MESSAGE_TYPE = "huddling-report:lightbox";
 
 /**
  * 리포트 본문 iframe.
@@ -26,6 +28,9 @@ const HEIGHT_MESSAGE_TYPE = "huddling-report:height";
  */
 export function ReportEmbed({ src, origin, title }: ReportEmbedProps) {
   const [height, setHeight] = useState<number | null>(null);
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(
+    null,
+  );
 
   useEffect(() => {
     function handleMessage(event: MessageEvent) {
@@ -33,32 +38,87 @@ export function ReportEmbed({ src, origin, title }: ReportEmbedProps) {
 
       const data = event.data;
       if (!data || typeof data !== "object") return;
-      if (data.type !== HEIGHT_MESSAGE_TYPE) return;
 
-      const next = Number(data.height);
-      if (!Number.isFinite(next) || next <= 0) return;
+      if (data.type === HEIGHT_MESSAGE_TYPE) {
+        const next = Number(data.height);
+        if (!Number.isFinite(next) || next <= 0) return;
 
-      // 비정상적으로 큰 값 방어
-      setHeight(Math.min(Math.ceil(next), 200_000));
+        // 비정상적으로 큰 값 방어
+        setHeight(Math.min(Math.ceil(next), 200_000));
+        return;
+      }
+
+      if (data.type === LIGHTBOX_MESSAGE_TYPE) {
+        // 리포트 본문 iframe은 콘텐츠 전체 높이만큼 늘어나 있어(위 높이
+        // 핸드셰이크 참고) 그 안에서는 position:fixed로 브라우저 화면
+        // 기준 오버레이를 만들 수 없다. 그래서 팝업은 부모(이 컴포넌트)
+        // 가 실제 뷰포트 기준으로 렌더링한다.
+        const nextSrc = typeof data.src === "string" ? data.src : "";
+        if (!nextSrc) return;
+        setLightbox({
+          src: nextSrc,
+          alt: typeof data.alt === "string" ? data.alt : "",
+        });
+      }
     }
 
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
   }, [origin]);
 
+  useEffect(() => {
+    if (!lightbox) return;
+
+    function handleKeydown(event: KeyboardEvent) {
+      if (event.key === "Escape") setLightbox(null);
+    }
+
+    document.addEventListener("keydown", handleKeydown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKeydown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [lightbox]);
+
   return (
-    <iframe
-      src={src}
-      title={title}
-      loading="lazy"
-      // 리포트 본문은 우리가 관리하는 앱이지만 최소 권한만 허용
-      sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
-      // 리포트 본문이 다크라 테두리 없이 페이지 배경과 이어 붙인다.
-      // bg는 로드 전 흰 화면이 번쩍이지 않도록 사이트 배경색으로 둔다.
-      className={`w-full rounded-xl bg-bg-base ${
-        height === null ? "h-[calc(100vh-8rem)]" : ""
-      }`}
-      style={height === null ? undefined : { height }}
-    />
+    <>
+      <iframe
+        src={src}
+        title={title}
+        loading="lazy"
+        // 리포트 본문은 우리가 관리하는 앱이지만 최소 권한만 허용
+        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+        // 리포트 본문이 다크라 테두리 없이 페이지 배경과 이어 붙인다.
+        // bg는 로드 전 흰 화면이 번쩍이지 않도록 사이트 배경색으로 둔다.
+        className={`w-full rounded-xl bg-bg-base ${
+          height === null ? "h-[calc(100vh-8rem)]" : ""
+        }`}
+        style={height === null ? undefined : { height }}
+      />
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-6 backdrop-blur-sm"
+          onClick={() => setLightbox(null)}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element -- 원격 서명 URL, next/image 최적화 대상 아님 */}
+          <img
+            src={lightbox.src}
+            alt={lightbox.alt}
+            onClick={(event) => event.stopPropagation()}
+            className="max-h-full max-w-full rounded-xl shadow-2xl"
+          />
+          <button
+            type="button"
+            onClick={() => setLightbox(null)}
+            aria-label="닫기"
+            className="absolute top-4 right-5 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/10 text-lg text-white hover:bg-white/20"
+          >
+            &times;
+          </button>
+        </div>
+      )}
+    </>
   );
 }
