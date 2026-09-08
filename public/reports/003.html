@@ -1,0 +1,3771 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <title>
+      AI Report 3호 — 누구세요...? 매번 달라지는 AI 이미지 일관성 유지 비법
+    </title>
+    <style>
+      /* 소식지 본문은 iframe 문서라 부모 페이지(next/font)의 Pretendard를
+         상속받지 못한다. 같은 오리진의 폰트 파일을 직접 등록한다. */
+      @font-face {
+        font-family: "Pretendard Variable";
+        font-weight: 45 920;
+        font-style: normal;
+        font-display: swap;
+        src: url("/fonts/PretendardVariable.woff2") format("woff2-variations");
+      }
+      body {
+        width: 100%;
+        margin: 0;
+      }
+      @media only screen and (max-width: 640px) {
+        .stb-left-cell,
+        .stb-right-cell {
+          max-width: 100% !important;
+          width: 100% !important;
+          box-sizing: border-box;
+        }
+        .stb-half {
+          display: block !important;
+          width: 100% !important;
+        }
+        img.stb-justify {
+          width: 100% !important;
+        }
+      }
+      html,
+      body {
+        background: #050510;
+      }
+      /* 모바일 전용 / 데스크탑 전용 줄바꿈 */
+      .m-br {
+        display: none;
+      }
+      @media only screen and (max-width: 640px) {
+        .m-br {
+          display: inline;
+        }
+        .d-br {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body style="width: 100%; margin: 0px">
+    <div
+      id="report-root"
+      style="width: 100%; padding: 40px 0; margin: 0px auto; display: block"
+    >
+      <table
+        class="stb-container"
+        cellpadding="0"
+        cellspacing="0"
+        border="0"
+        align="center"
+        style="
+          margin: 0px auto;
+          width: 94%;
+          max-width: 630px;
+          background: #050510;
+          box-sizing: border-box;
+        "
+      >
+        <tbody>
+          <tr>
+            <td
+              style="
+                width: 100%;
+                max-width: 630px;
+                margin: 0 auto;
+                padding: 0;
+                background: #050510;
+              "
+            >
+              <!-- ============ 인트로 ============ -->
+              <table
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="max-width: 630px"
+              >
+                <tbody>
+                  <tr>
+                    <td style="height: 35px; line-height: 35px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="padding: 0 25px">
+                      <img
+                        src="https://img2.stibee.com/447006_3535457_1786292322774113437.png"
+                        width="146"
+                        alt=""
+                        style="
+                          width: 146px;
+                          max-width: 100%;
+                          height: auto;
+                          display: inline;
+                          vertical-align: bottom;
+                          border: 0;
+                        "
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 5px 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        font-size: 16px;
+                        line-height: 1.7;
+                        color: #e8e8ee;
+                      "
+                    >
+                      <span style="font-weight: bold"
+                        >혼자였다면 며칠을 헤맸을 문제들.</span
+                      ><br />
+                      <span style="font-weight: bold"
+                        >우리가 함께 만든
+                        <span style="color: #7aa2ff">허들링</span>을
+                        공유합니다</span
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 5px 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        line-height: 1.7;
+                      "
+                    >
+                      <span style="font-size: 14px; color: #a1a1ad"
+                        >먼저 뛰어든 First Penguin의 경험이
+                        <br class="m-br" />다음 사람의 성장으로 이어진 한 주를
+                        모았습니다.</span
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="height: 35px; line-height: 35px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 15px">
+                      <div
+                        style="
+                          border-top: 1px solid #2f2f3d;
+                          height: 0;
+                          font-size: 0;
+                          line-height: 0;
+                        "
+                      >
+                        &nbsp;
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="height: 40px; line-height: 40px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- ============ Cycle Live ============ -->
+              <table
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="max-width: 630px"
+              >
+                <tbody>
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 5px 15px 15px 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        line-height: 1.7;
+                      "
+                    >
+                      <div>
+                        <span
+                          style="
+                            font-size: 16px;
+                            color: #7aa2ff;
+                            font-weight: bold;
+                          "
+                          >Cycle Live</span
+                        >
+                      </div>
+                      <div>
+                        <span
+                          style="
+                            font-size: 26px;
+                            color: #ffffff;
+                            font-weight: bold;
+                          "
+                          >싸이클 라이브</span
+                        >
+                      </div>
+                      <div>
+                        <span style="font-size: 14px; color: #a1a1ad"
+                          >이번 허들링 클럽 싸이클에서는 생성형 AI로 이미지를
+                          제작할 때<br class="m-br"
+                        /></span>
+                      </div>
+                      <div>
+                        <span style="font-size: 14px; color: #a1a1ad"
+                          >일관성을 유지하면서 아웃풋을 만드는 방법에 대해
+                          다뤄보았습니다.</span
+                        >
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style="
+                        padding: 15px 15px 25px 15px;
+                        font-size: 0;
+                        line-height: 0;
+                      "
+                    >
+                      <div
+                        style="
+                          width: 100%;
+                          position: relative;
+                          padding-bottom: 56.25%;
+                        "
+                      >
+                        <iframe
+                          class="embedvideo"
+                          style="
+                            display: block;
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+                            background: #000;
+                          "
+                          src="https://www.youtube.com/embed/41nwrUbhyOs"
+                          title="YouTube video player"
+                          frameborder="0"
+                          allow="
+                            accelerometer;
+                            autoplay;
+                            clipboard-write;
+                            encrypted-media;
+                            gyroscope;
+                            picture-in-picture;
+                          "
+                          allowfullscreen
+                        ></iframe>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 0 15px">
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: column;
+                          align-items: flex-start;
+                          gap: 12px;
+                          width: 100%;
+                          padding: 20px;
+                          border-radius: 16px;
+                          border: 1px solid #2a2a38;
+                          box-sizing: border-box;
+                          font-family:
+                            &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                            &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        "
+                      >
+                        <div
+                          style="
+                            padding: 2px 6px;
+                            border-radius: 6px;
+                            background: #33333f;
+                            color: #f2f2f7;
+                            width: 120px;
+                            text-align: center;
+                            font-size: 14px;
+                            font-weight: 600;
+                            line-height: 150%;
+                          "
+                        >
+                          영상 하이라이트 요약
+                        </div>
+                        <div
+                          style="
+                            font-size: 14px;
+                            font-weight: 400;
+                            line-height: 150%;
+                            color: #e8e8ee;
+                          "
+                        >
+                          생성형 AI로 캐릭터를 만들 때 일관성이 깨지는 원인을
+                          유형별로 진단하고, Element·Binding과 마스터 프롬프트로
+                          캐릭터와 3D 아이콘 세트를 안정적으로 확장하는 방법을
+                          배웁니다.<br /><br />- 개념 및 용어 : Element = 반복
+                          등장 요소를 자산으로 등록(피그마 컴포넌트와 동일) /
+                          Binding = 그 요소를 장면 속 누구에게 적용할지 연결 /
+                          제작 흐름은 Element → Binding → Prompt → Result.<br />-
+                          오류와 해 4유형 : ①정체성 붕괴(다른 캐릭터 등장)
+                          ②디테일 붕괴(손·눈·소품) ③질감·톤 불일치 ④요소 누락.
+                          원인은 외모 블록이 특정 가능할 만큼 정밀하지 않거나,
+                          하면 안 되는 것에 제약을 안 걸었거나, 프롬프트가 길어
+                          후반부가 잘리기 때문.<br />- 추가 팁 : 작은 단위부터
+                          쌓기, 잘 나온 이미지는 다음 베이스로 재사용, Element는
+                          최대 4개, 변주는 하나씩 바꿔 비교할 것.
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="height: 40px; line-height: 40px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 15px">
+                      <div
+                        style="
+                          border-top: 1px solid #2f2f3d;
+                          height: 0;
+                          font-size: 0;
+                          line-height: 0;
+                        "
+                      >
+                        &nbsp;
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="height: 40px; line-height: 40px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- ============ Huddling LAB ============ -->
+              <table
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="max-width: 630px"
+              >
+                <tbody>
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 5px 15px 15px 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        line-height: 1.7;
+                      "
+                    >
+                      <div>
+                        <span
+                          style="
+                            font-size: 16px;
+                            color: #7aa2ff;
+                            font-weight: bold;
+                          "
+                          >Huddling LAB</span
+                        >
+                      </div>
+                      <div>
+                        <span
+                          style="
+                            font-size: 26px;
+                            color: #ffffff;
+                            font-weight: bold;
+                          "
+                          >실험 결과 리포트</span
+                        >
+                      </div>
+                      <div>
+                        <span style="font-size: 14px; color: #a1a1ad"
+                          >싸이클 라이브를 통해 주어진 <br class="m-br" />2가지
+                          실험의 결과물 일부를 소개합니다.</span
+                        >
+                      </div>
+                      <div>
+                        <span style="font-size: 14px; color: #a1a1ad"
+                          >실험 주제 : 일관성 있는 3D 아이콘 세트 이미지 제작
+                          <br class="m-br" />| 나만의 캐릭터 에셋 만들고 연출컷
+                          만들어보기</span
+                        >
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- 실험 카드 2x2 -->
+              <table
+                role="presentation"
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="
+                  width: 100%;
+                  border-collapse: collapse;
+                  background: #050510;
+                "
+              >
+                <tbody>
+                  <tr>
+                    <td align="center" style="padding: 0">
+                      <div
+                        style="
+                          width: 100%;
+                          max-width: 616px;
+                          margin: 0 auto;
+                          font-size: 0;
+                          text-align: center;
+                        "
+                      >
+                        <!-- 실험 1 -->
+                        <div
+                          style="
+                            display: inline-block;
+                            width: 308px;
+                            max-width: 100%;
+                            vertical-align: top;
+                            font-size: 0;
+                            text-align: left;
+                          "
+                        >
+                          <div style="padding: 0 4px 24px 4px">
+                            <a
+                              href="https://beautiful-croquembouche-682a98.netlify.app/"
+                              target="_blank"
+                              style="display: block; text-decoration: none"
+                            >
+                              <table
+                                role="presentation"
+                                width="100%"
+                                cellpadding="0"
+                                cellspacing="0"
+                                border="0"
+                                style="
+                                  width: 100%;
+                                  border-collapse: separate;
+                                  border: 1px solid #2a2a38;
+                                  border-radius: 12px;
+                                  background: #14141f;
+                                  text-align: left;
+                                  font-family:
+                                    &quot;Pretendard Variable&quot;,
+                                    Pretendard,
+                                    -apple-system,
+                                    &quot;Apple SD Gothic Neo&quot;,
+                                    &quot;Malgun Gothic&quot;,
+                                    sans-serif;
+                                "
+                              >
+                                <tbody>
+                                  <tr>
+                                    <td style="padding: 0">
+                                      <div
+                                        style="
+                                          width: 100%;
+                                          height: 186px;
+                                          background-color: #1a1a26;
+                                          background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/3st%20newsletter%20img/out1.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy8zc3QgbmV3c2xldHRlciBpbWcvb3V0MS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg4NzA5OTUxLCJleHAiOjE5NDYzODk5NTF9.E3RObZkkW4r4zOqEuSUF8ApLuGYUmTGf6MmPoNTGuxU&quot;);
+                                          background-size: cover;
+                                          background-position: center center;
+                                          background-repeat: no-repeat;
+                                          border-radius: 12px 12px 0 0;
+                                        "
+                                      ></div>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td style="padding: 20px 16px">
+                                      <div
+                                        style="
+                                          font-size: 15px;
+                                          font-weight: 700;
+                                          line-height: 1.5;
+                                          color: #e8e8ee;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        르네상스 정물화 아이콘 세트
+                                      </div>
+                                      <div
+                                        style="
+                                          margin-top: 12px;
+                                          font-size: 13px;
+                                          font-weight: 400;
+                                          line-height: 1.6;
+                                          color: #a1a1ad;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        르네상스 정물화 화풍의 커머스 아이콘
+                                        제작 + 커서 반응 인터랙티브 사이트까지
+                                        구현한 작업
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </a>
+                          </div>
+                        </div>
+
+                        <!-- 실험 2 -->
+                        <div
+                          style="
+                            display: inline-block;
+                            width: 308px;
+                            max-width: 100%;
+                            vertical-align: top;
+                            font-size: 0;
+                            text-align: left;
+                          "
+                        >
+                          <div style="padding: 0 4px 24px 4px">
+                            <table
+                              role="presentation"
+                              width="100%"
+                              cellpadding="0"
+                              cellspacing="0"
+                              border="0"
+                              style="
+                                width: 100%;
+                                border-collapse: separate;
+                                border: 1px solid #2a2a38;
+                                border-radius: 12px;
+                                background: #14141f;
+                                text-align: left;
+                                font-family:
+                                  &quot;Pretendard Variable&quot;,
+                                  Pretendard,
+                                  -apple-system,
+                                  &quot;Apple SD Gothic Neo&quot;,
+                                  &quot;Malgun Gothic&quot;,
+                                  sans-serif;
+                              "
+                            >
+                              <tbody>
+                                <tr>
+                                  <td style="padding: 0">
+                                    <div
+                                      onclick="
+                                        window.reportOpenLightbox &&
+                                          window.reportOpenLightbox(
+                                            'https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/3st%20newsletter%20img/out2.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy8zc3QgbmV3c2xldHRlciBpbWcvb3V0Mi5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg4NzA5OTgzLCJleHAiOjE5NDYzODk5ODN9.918wLjJGkU7nuJt6QWIYVAotBoq0IFBAWE1rVs_fi1k',
+                                            '도자기 질감 아이콘 세트',
+                                          )
+                                      "
+                                      style="
+                                        width: 100%;
+                                        height: 186px;
+                                        background-color: #1a1a26;
+                                        background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/3st%20newsletter%20img/out2.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy8zc3QgbmV3c2xldHRlciBpbWcvb3V0Mi5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg4NzA5OTgzLCJleHAiOjE5NDYzODk5ODN9.918wLjJGkU7nuJt6QWIYVAotBoq0IFBAWE1rVs_fi1k&quot;);
+                                        background-size: cover;
+                                        background-position: center center;
+                                        background-repeat: no-repeat;
+                                        border-radius: 12px 12px 0 0;
+                                        cursor: pointer;
+                                      "
+                                    ></div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 20px 16px">
+                                    <div
+                                      style="
+                                        font-size: 15px;
+                                        font-weight: 700;
+                                        line-height: 1.5;
+                                        color: #e8e8ee;
+                                        word-break: break-word;
+                                      "
+                                    >
+                                      도자기 질감 아이콘 세트
+                                    </div>
+                                    <div
+                                      style="
+                                        margin-top: 12px;
+                                        font-size: 13px;
+                                        font-weight: 400;
+                                        line-height: 1.6;
+                                        color: #a1a1ad;
+                                        word-break: break-word;
+                                      "
+                                    >
+                                      표면 손누름 자국, 불완전한 모서리, 색
+                                      경계까지 고려한 도자기 아이콘
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        <!-- 실험 3 -->
+                        <div
+                          style="
+                            display: inline-block;
+                            width: 308px;
+                            max-width: 100%;
+                            vertical-align: top;
+                            font-size: 0;
+                            text-align: left;
+                          "
+                        >
+                          <div style="padding: 0 4px 24px 4px">
+                            <table
+                              role="presentation"
+                              width="100%"
+                              cellpadding="0"
+                              cellspacing="0"
+                              border="0"
+                              style="
+                                width: 100%;
+                                border-collapse: separate;
+                                border: 1px solid #2a2a38;
+                                border-radius: 12px;
+                                background: #14141f;
+                                text-align: left;
+                                font-family:
+                                  &quot;Pretendard Variable&quot;,
+                                  Pretendard,
+                                  -apple-system,
+                                  &quot;Apple SD Gothic Neo&quot;,
+                                  &quot;Malgun Gothic&quot;,
+                                  sans-serif;
+                              "
+                            >
+                              <tbody>
+                                <tr>
+                                  <td style="padding: 0">
+                                    <div
+                                      onclick="
+                                        window.reportOpenLightbox &&
+                                          window.reportOpenLightbox(
+                                            'https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/3st%20newsletter%20img/out3.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy8zc3QgbmV3c2xldHRlciBpbWcvb3V0My5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg4NzEwMDM4LCJleHAiOjE5NDYzOTAwMzh9.i5VLq-4luC_1UVHKknmEa7vwqAvtFFz2JtfndAZcDOA',
+                                            '나를 표현하는 수달 아돌',
+                                          )
+                                      "
+                                      style="
+                                        width: 100%;
+                                        height: 186px;
+                                        background-color: #1a1a26;
+                                        background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/3st%20newsletter%20img/out3.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy8zc3QgbmV3c2xldHRlciBpbWcvb3V0My5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg4NzEwMDM4LCJleHAiOjE5NDYzOTAwMzh9.i5VLq-4luC_1UVHKknmEa7vwqAvtFFz2JtfndAZcDOA&quot;);
+                                        background-size: cover;
+                                        background-position: center center;
+                                        background-repeat: no-repeat;
+                                        border-radius: 12px 12px 0 0;
+                                        cursor: pointer;
+                                      "
+                                    ></div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 20px 16px">
+                                    <div
+                                      style="
+                                        font-size: 15px;
+                                        font-weight: 700;
+                                        line-height: 1.5;
+                                        color: #e8e8ee;
+                                        word-break: break-word;
+                                      "
+                                    >
+                                      나를 표현하는 수달 '아돌'
+                                    </div>
+                                    <div
+                                      style="
+                                        margin-top: 12px;
+                                        font-size: 13px;
+                                        font-weight: 400;
+                                        line-height: 1.6;
+                                        color: #a1a1ad;
+                                        word-break: break-word;
+                                      "
+                                    >
+                                      털색, 얼굴·배의 영역, 또렷한 눈,
+                                      베이비스키마 비율 같은 핵심 요소를
+                                      각도별로 일관되게 구현
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        <!-- 실험 4 -->
+                        <div
+                          style="
+                            display: inline-block;
+                            width: 308px;
+                            max-width: 100%;
+                            vertical-align: top;
+                            font-size: 0;
+                            text-align: left;
+                          "
+                        >
+                          <div style="padding: 0 4px 24px 4px">
+                            <table
+                              role="presentation"
+                              width="100%"
+                              cellpadding="0"
+                              cellspacing="0"
+                              border="0"
+                              style="
+                                width: 100%;
+                                border-collapse: separate;
+                                border: 1px solid #2a2a38;
+                                border-radius: 12px;
+                                background: #14141f;
+                                text-align: left;
+                                font-family:
+                                  &quot;Pretendard Variable&quot;,
+                                  Pretendard,
+                                  -apple-system,
+                                  &quot;Apple SD Gothic Neo&quot;,
+                                  &quot;Malgun Gothic&quot;,
+                                  sans-serif;
+                              "
+                            >
+                              <tbody>
+                                <tr>
+                                  <td style="padding: 0">
+                                    <div
+                                      onclick="
+                                        window.reportOpenLightbox &&
+                                          window.reportOpenLightbox(
+                                            'https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/3st%20newsletter%20img/out4.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy8zc3QgbmV3c2xldHRlciBpbWcvb3V0NC5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg4NzEwMTIxLCJleHAiOjE5NDYzOTAxMjF9.67uSMbXgZTDr6ThEJMb9iBBdxiORpeDJvwe3O4S6eNw',
+                                            '주방&amp;음식 클레이 아이콘',
+                                          )
+                                      "
+                                      style="
+                                        width: 100%;
+                                        height: 186px;
+                                        background-color: #1a1a26;
+                                        background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/3st%20newsletter%20img/out4.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy8zc3QgbmV3c2xldHRlciBpbWcvb3V0NC5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg4NzEwMTIxLCJleHAiOjE5NDYzOTAxMjF9.67uSMbXgZTDr6ThEJMb9iBBdxiORpeDJvwe3O4S6eNw&quot;);
+                                        background-size: cover;
+                                        background-position: center center;
+                                        background-repeat: no-repeat;
+                                        border-radius: 12px 12px 0 0;
+                                        cursor: pointer;
+                                      "
+                                    ></div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 20px 16px">
+                                    <div
+                                      style="
+                                        font-size: 15px;
+                                        font-weight: 700;
+                                        line-height: 1.5;
+                                        color: #e8e8ee;
+                                        word-break: break-word;
+                                      "
+                                    >
+                                      주방&amp;음식 클레이 아이콘
+                                    </div>
+                                    <div
+                                      style="
+                                        margin-top: 12px;
+                                        font-size: 13px;
+                                        font-weight: 400;
+                                        line-height: 1.6;
+                                        color: #a1a1ad;
+                                        word-break: break-word;
+                                      "
+                                    >
+                                      AI 이미지 특유의 자글거리는 질감을
+                                      '클레이'라는 소재로 보완한 작업물
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="max-width: 630px"
+              >
+                <tbody>
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 15px 15px 0 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        font-size: 16px;
+                        line-height: 1.7;
+                        color: #e8e8ee;
+                      "
+                    >
+                      <div>
+                        <span style="font-size: 14px"
+                          >해당 실험 결과는 허들링 클럽 멤버십에서 나온
+                          <span style="font-weight: bold; color: #7aa2ff"
+                            >157개의 실험 결과</span
+                          >
+                          중 일부 입니다.</span
+                        >
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="height: 40px; line-height: 40px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 15px">
+                      <div
+                        style="
+                          border-top: 1px solid #2f2f3d;
+                          height: 0;
+                          font-size: 0;
+                          line-height: 0;
+                        "
+                      >
+                        &nbsp;
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="height: 40px; line-height: 40px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- ============ Cycle Winner Interview ============ -->
+              <table
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="max-width: 630px"
+              >
+                <tbody>
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 5px 25px 15px 25px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        line-height: 1.7;
+                      "
+                    >
+                      <div>
+                        <span
+                          style="
+                            font-size: 16px;
+                            color: #7aa2ff;
+                            font-weight: bold;
+                          "
+                          >Cycle Winner Interview</span
+                        >
+                      </div>
+                      <div>
+                        <span
+                          style="
+                            font-size: 26px;
+                            color: #ffffff;
+                            font-weight: bold;
+                          "
+                          >사이클 위너를 소개합니다</span
+                        >
+                      </div>
+                      <div>
+                        <span style="font-size: 14px; color: #a1a1ad"
+                          >디스코드에 공유된 리포트 중, 멤버들이 가장 반응이
+                          좋았던 실험을 진행한</span
+                        >
+                      </div>
+                      <div>
+                        <span style="font-size: 14px; color: #a1a1ad"
+                          >Winner에게 직접 실험 과정을 들어봤어요.</span
+                        >
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table
+                role="presentation"
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="
+                  width: 100%;
+                  border-collapse: collapse;
+                  background: #050510;
+                "
+              >
+                <tbody>
+                  <tr>
+                    <td align="center" style="padding: 0">
+                      <table
+                        role="presentation"
+                        width="578"
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                        style="
+                          width: 100%;
+                          max-width: 578px;
+                          border-collapse: separate;
+                          border: 1px solid #2a2a38;
+                          border-radius: 16px;
+                          background: #14141f;
+                        "
+                      >
+                        <tbody>
+                          <tr>
+                            <td style="padding: 32px">
+                              <table
+                                role="presentation"
+                                width="100%"
+                                cellpadding="0"
+                                cellspacing="0"
+                                border="0"
+                                style="width: 100%; border-collapse: collapse"
+                              >
+                                <tbody>
+                                  <tr>
+                                    <td
+                                      width="60"
+                                      valign="top"
+                                      style="width: 60px; padding-right: 16px"
+                                    >
+                                      <img
+                                        alt="프로필"
+                                        src="https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/3st%20newsletter%20img/jihye%20profile.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy8zc3QgbmV3c2xldHRlciBpbWcvamloeWUgcHJvZmlsZS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg4Njk5OTE0LCJleHAiOjIxMDQwNTk5MTR9.iqfQ66F5Y60hn6-KGGPo_9HOO1XX2qxVGrZUf_SbgBE"
+                                        width="60"
+                                        height="60"
+                                        style="
+                                          display: block;
+                                          width: 60px;
+                                          height: 60px;
+                                          border: 1.5px solid #2a2a38;
+                                          border-radius: 30px;
+                                          background: #1a1a26;
+                                          object-fit: cover;
+                                        "
+                                      />
+                                    </td>
+                                    <td
+                                      valign="top"
+                                      style="
+                                        font-family:
+                                          &quot;Pretendard Variable&quot;,
+                                          Pretendard,
+                                          -apple-system,
+                                          &quot;Apple SD Gothic Neo&quot;,
+                                          &quot;Malgun Gothic&quot;,
+                                          sans-serif;
+                                      "
+                                    >
+                                      <div style="margin: 0 0 4px 0">
+                                        <span
+                                          style="
+                                            font-size: 20px;
+                                            font-weight: 700;
+                                            line-height: 30px;
+                                            color: #e8e8ee;
+                                            vertical-align: middle;
+                                          "
+                                          >최지혜</span
+                                        ><span
+                                          style="
+                                            display: inline-block;
+                                            margin-left: 6px;
+                                            padding: 2px 6px;
+                                            border-radius: 6px;
+                                            background: #33333f;
+                                            font-size: 14px;
+                                            font-weight: 600;
+                                            line-height: 21px;
+                                            color: #f2f2f7;
+                                            white-space: nowrap;
+                                            vertical-align: middle;
+                                          "
+                                          >허들링 클럽 1기</span
+                                        >
+                                      </div>
+                                      <div
+                                        style="
+                                          font-size: 16px;
+                                          font-weight: 500;
+                                          line-height: 24px;
+                                          color: #8b8b98;
+                                        "
+                                      >
+                                        UX/UI 디자이너
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+
+                              <div style="margin-top: 16px">
+                                <a
+                                  href="https://www.linkedin.com/in/jhchoi0825/"
+                                  target="_blank"
+                                  style="
+                                    display: inline-block;
+                                    margin: 0 8px 8px 0;
+                                    padding: 7px 12px;
+                                    border: 1px solid #2a2a38;
+                                    border-radius: 8px;
+                                    background: #14141f;
+                                    text-decoration: none;
+                                    font-family:
+                                      &quot;Pretendard Variable&quot;,
+                                      Pretendard,
+                                      -apple-system,
+                                      &quot;Apple SD Gothic Neo&quot;,
+                                      &quot;Malgun Gothic&quot;,
+                                      sans-serif;
+                                    font-size: 16px;
+                                    font-weight: 600;
+                                    line-height: 24px;
+                                    color: #e8e8ee;
+                                    white-space: nowrap;
+                                  "
+                                >
+                                  <img
+                                    src="https://i.namu.wiki/i/bpwPjFKqHj4IbGdgiBnuiKA65Ou3SxdryNCkTFgzilxJAhhxpTm8-sfD4Fv3twqHW0eAwIKPNkC9zDoqPIYykA.svg"
+                                    width="16"
+                                    height="16"
+                                    style="
+                                      width: 16px;
+                                      height: 16px;
+                                      border: 0;
+                                      vertical-align: middle;
+                                      margin-right: 6px;
+                                    "
+                                  /><span
+                                    style="
+                                      vertical-align: middle;
+                                      color: #e8e8ee;
+                                    "
+                                    >Linkedin</span
+                                  >
+                                </a>
+                                <a
+                                  href="https://zzzyeahhh.com"
+                                  target="_blank"
+                                  style="
+                                    display: inline-block;
+                                    margin: 0 8px 8px 0;
+                                    padding: 7px 12px;
+                                    border: 1px solid #2a2a38;
+                                    border-radius: 8px;
+                                    background: #14141f;
+                                    text-decoration: none;
+                                    font-family:
+                                      &quot;Pretendard Variable&quot;,
+                                      Pretendard,
+                                      -apple-system,
+                                      &quot;Apple SD Gothic Neo&quot;,
+                                      &quot;Malgun Gothic&quot;,
+                                      sans-serif;
+                                    font-size: 16px;
+                                    font-weight: 600;
+                                    line-height: 24px;
+                                    color: #e8e8ee;
+                                    white-space: nowrap;
+                                  "
+                                >
+                                  <img
+                                    src="https://freight.cargo.site/w/1500/q/75/i/P2633286914113965353390450196056/choijihye_logo.png"
+                                    width="16"
+                                    height="16"
+                                    style="
+                                      width: 16px;
+                                      height: 16px;
+                                      border: 0;
+                                      vertical-align: middle;
+                                      margin-right: 6px;
+                                    "
+                                  /><span
+                                    style="
+                                      vertical-align: middle;
+                                      color: #e8e8ee;
+                                    "
+                                    >Portfolio</span
+                                  >
+                                </a>
+                              </div>
+
+                              <div
+                                style="
+                                  margin-top: 24px;
+                                  max-height: 430px;
+                                  overflow-y: auto;
+                                  overflow-x: hidden;
+                                "
+                              >
+                                <!-- Q1 -->
+                                <table
+                                  role="presentation"
+                                  width="100%"
+                                  cellpadding="0"
+                                  cellspacing="0"
+                                  border="0"
+                                  style="
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    margin-bottom: 24px;
+                                  "
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7aa2ff;
+                                        "
+                                      >
+                                        Q.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #e8e8ee;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        안녕하세요. 자기소개 부탁드립니다.
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        colspan="2"
+                                        height="10"
+                                        style="
+                                          height: 10px;
+                                          line-height: 10px;
+                                          font-size: 0;
+                                        "
+                                      >
+                                        &nbsp;
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7c7c8a;
+                                        "
+                                      >
+                                        A.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 400;
+                                          line-height: 1.5;
+                                          color: #b9b9c4;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        안녕하세요. 저는 서비스 기획자 겸 UX/UI
+                                        디자이너로 약 4년 반 정도 일하다가
+                                        현재는 결혼해서 남편을 따라 잠시 미국
+                                        뉴욕에서 지내고 있는 최지혜입니다.
+                                        현재는 해외 거주로 인해 잠시 1년 정도
+                                        휴식하고 있습니다. 혹시 링크드인 하고
+                                        계시다면 저와 1촌을 맺어주시면 너무 좋을
+                                        것 같습니다!<br /><br />
+                                        위에 포트폴리오 사이트는 제가 좀 더
+                                        아카데믹하게 만든 재밌는 디자인들이랑
+                                        회사에서 했던 작업물을 모아둔 포트폴리오
+                                        사이트인데 최근에 포트폴리오를 다시
+                                        수정하고 있는 중이라 사이트가 좀
+                                        소박하지만 즐겨주시면 감사하겠습니다.
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+                                <!-- Q2 -->
+                                <table
+                                  role="presentation"
+                                  width="100%"
+                                  cellpadding="0"
+                                  cellspacing="0"
+                                  border="0"
+                                  style="
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    margin-bottom: 24px;
+                                  "
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7aa2ff;
+                                        "
+                                      >
+                                        Q.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #e8e8ee;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        해외 거주 중이신데 허들링 클럽에는
+                                        어떻게 합류하셨는지 궁금해요.
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        colspan="2"
+                                        height="10"
+                                        style="
+                                          height: 10px;
+                                          line-height: 10px;
+                                          font-size: 0;
+                                        "
+                                      >
+                                        &nbsp;
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7c7c8a;
+                                        "
+                                      >
+                                        A.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 400;
+                                          line-height: 1.5;
+                                          color: #b9b9c4;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        작년에 결혼과 동시에 퇴사하고 해외에서
+                                        생활하게 되면서 자연스럽게 실무와 잠시
+                                        거리가 생겼는데요. 시간이 지날수록 실무
+                                        감각이 조금씩 떨어지고 있다는 게
+                                        느껴지더라고요. 그러던 중 피그마피디아
+                                        시절부터 팔로우하고 있던 인스타그램에서
+                                        우연히 허들링 클럽 모집 게시물을 보게
+                                        됐습니다. 그때 '이거라도 꾸준히 하면서
+                                        내 실력을 계속 키워야겠다!'라는 생각이
+                                        들어 참여하게 됐어요.
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+                                <!-- Q3 -->
+                                <table
+                                  role="presentation"
+                                  width="100%"
+                                  cellpadding="0"
+                                  cellspacing="0"
+                                  border="0"
+                                  style="
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    margin-bottom: 24px;
+                                  "
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7aa2ff;
+                                        "
+                                      >
+                                        Q.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #e8e8ee;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        합류해 주셔서 감사합니다. 이번에 사이클
+                                        위너로 선정되었습니다. 이번 실험에서
+                                        진행한 내용을 소개해 주세요.
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        colspan="2"
+                                        height="10"
+                                        style="
+                                          height: 10px;
+                                          line-height: 10px;
+                                          font-size: 0;
+                                        "
+                                      >
+                                        &nbsp;
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7c7c8a;
+                                        "
+                                      >
+                                        A.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 400;
+                                          line-height: 1.5;
+                                          color: #b9b9c4;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        이번 실험에서는 제가 현재 작업하고 있는
+                                        개인 프로젝트인 우리나라의 거지맵에서
+                                        영감을 받아 뉴욕의 가성비 식당을 예산에
+                                        맞게 찾아주는 서비스를 제작하고 있었는데
+                                        그 과정에서 지도 핀에 대표로 파는 음식
+                                        아이콘이 가격과 함께 떴으면 해서 이번
+                                        실험을 기회 삼아 제작하게 되었습니다.
+                                        <img
+                                          alt=""
+                                          src="https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/3st%20newsletter%20img/interview%20img%201.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy8zc3QgbmV3c2xldHRlciBpbWcvaW50ZXJ2aWV3IGltZyAxLnBuZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODg3MDE4NzQsImV4cCI6MjEwNDA2MTg3NH0.9VjiVPjrvAQHDPBuNeGO8I3OzZYrIHdVE1YvUKjlWzA"
+                                          style="
+                                            display: block;
+                                            width: 100%;
+                                            object-fit: cover;
+                                            border-radius: 8px;
+                                            margin: 8px 0;
+                                          "
+                                        />
+                                        위와 같이 현재 디자인해서 라이브러리로
+                                        만들어 둔 상태이고, 나중에 UI에도
+                                        적용돼서 완성되면 보여드리겠습니다!
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+                                <!-- Q4 -->
+                                <table
+                                  role="presentation"
+                                  width="100%"
+                                  cellpadding="0"
+                                  cellspacing="0"
+                                  border="0"
+                                  style="
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    margin-bottom: 24px;
+                                  "
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7aa2ff;
+                                        "
+                                      >
+                                        Q.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #e8e8ee;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        실제 프로젝트에 적용하셨다니 멋져요!
+                                        평소 실무나 작업에서도 생성형 AI를
+                                        적극적으로 활용하시는 편이었나요?
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        colspan="2"
+                                        height="10"
+                                        style="
+                                          height: 10px;
+                                          line-height: 10px;
+                                          font-size: 0;
+                                        "
+                                      >
+                                        &nbsp;
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7c7c8a;
+                                        "
+                                      >
+                                        A.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 400;
+                                          line-height: 1.5;
+                                          color: #b9b9c4;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        꽤 적극적으로 활용하는 편이었던 것
+                                        같아요. 직전 회사에서 GPT를 활용한
+                                        생성형 AI 디바이스를 만드는 프로젝트에
+                                        참여했고, 초기 기획부터 론칭과 운영까지
+                                        경험했습니다. 해당 프로젝트가 2025년 iF
+                                        Design Award를 수상하기도
+                                        했는데요.(여기서 살짝 자랑 좀 할게요)<br /><br />
+                                        당시 회사에서도 2023년쯤부터 GPT와
+                                        Claude 같은 생성형 AI를 적극적으로
+                                        활용하는 분위기여서 자연스럽게 실무
+                                        전반에서 AI를 많이 사용하게 됐습니다.
+                                        특히 서비스 기획자로서 단순히 자료를
+                                        찾거나 문서를 작성하는 용도보다는, 제가
+                                        기획한 내용을 검증하고 구체화하는
+                                        과정에서 AI를 많이 활용했습니다.
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+                                <!-- Q5 -->
+                                <table
+                                  role="presentation"
+                                  width="100%"
+                                  cellpadding="0"
+                                  cellspacing="0"
+                                  border="0"
+                                  style="
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    margin-bottom: 24px;
+                                  "
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7aa2ff;
+                                        "
+                                      >
+                                        Q.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #e8e8ee;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        이미 AI 친화적인 환경에서 업무를
+                                        해보셨군요. 이번 실험을 진행하면서 느낀
+                                        점이나 신경 쓴 점이 있나요?
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        colspan="2"
+                                        height="10"
+                                        style="
+                                          height: 10px;
+                                          line-height: 10px;
+                                          font-size: 0;
+                                        "
+                                      >
+                                        &nbsp;
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7c7c8a;
+                                        "
+                                      >
+                                        A.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 400;
+                                          line-height: 1.5;
+                                          color: #b9b9c4;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        이번 실험에서 가장 신경 썼던 부분은 내가
+                                        원하는 스타일의 '일관성'을 어떻게
+                                        정의하고 유지할 것인가였습니다.<br /><br />
+                                        처음에는 같은 프롬프트를 사용하고 "같은
+                                        스타일로 만들어줘"라고 요청하면 어느
+                                        정도 비슷한 결과가 나올 거라고
+                                        생각했는데, 실제로 해보니 생각보다 쉽지
+                                        않았습니다. 같은 3D 아이콘이라고 해도
+                                        오브젝트마다 형태나 재질감, 광택, 카메라
+                                        각도, 조명 등이 조금씩 달라지면서 하나의
+                                        세트처럼 보이지 않는 경우가 많았습니다.
+                                        또한 Claude에 힉스필드 MCP를 연결한
+                                        버전, Claude Code에서 적용한 버전,
+                                        GPT까지 세 곳 모두 똑같은 프롬프트를
+                                        적용했을 때 정말 다 다르게 나와서
+                                        어디부터 어떻게 고쳐야 할지 처음엔
+                                        막막했습니다.<br /><br />
+                                        그래서 단순히 프롬프트를 길게
+                                        작성하기보다는, 제가 원하는 스타일을
+                                        AI가 이해할 수 있는 '규칙'으로 만드는 데
+                                        신경을 많이 썼습니다. 형태, 재질, 조명,
+                                        카메라, 색감처럼 스타일을 구성하는
+                                        요소를 하나씩 나누고, 잘 나온 결과물을
+                                        기준으로 스타일 anchor와 QA 규칙을
+                                        정리하면서 스킬 엠디 파일을 계속
+                                        수정했습니다. 특히 md 파일 만들 때
+                                        GPT에게 아이콘 레퍼런스를 던져주면서
+                                        이런 스타일로 만들고 싶고, 지금 만들고
+                                        있는 프로젝트 UI에서 map 위에 표시될
+                                        아이콘을 만들고 싶다 등등 구체적으로
+                                        요청사항을 주니 프로젝트의 성격을
+                                        파악해서 나만의 프로젝트 전용 아이콘
+                                        제작 md 파일을 만들어주더라고요.<br /><br />
+                                        결국 이번 실험을 하면서 AI 이미지 생성도
+                                        단순히 좋은 프롬프트 하나를 만드는 것이
+                                        아니라, 원하는 결과를 규칙으로 상세하게
+                                        정의하고 → 생성하고 → 비교하고 → 다시
+                                        규칙을 수정하는 반복적인 과정이
+                                        중요하다는 걸 가장 크게 느꼈습니다.<br /><br />
+                                        개인적으로는 이미지를 만드는 실험이기도
+                                        했지만, 동시에 제가 막연하게만 생각했던
+                                        '이 스타일이 좋다'를 언어와 규칙으로
+                                        구체화해 보는 과정이어서 힘들었지만
+                                        재미있었습니다.
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+                                <!-- Q6 -->
+                                <table
+                                  role="presentation"
+                                  width="100%"
+                                  cellpadding="0"
+                                  cellspacing="0"
+                                  border="0"
+                                  style="
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    margin-bottom: 24px;
+                                  "
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7aa2ff;
+                                        "
+                                      >
+                                        Q.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #e8e8ee;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        조금 더 디테일한 작업 과정이 궁금해요.
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        colspan="2"
+                                        height="10"
+                                        style="
+                                          height: 10px;
+                                          line-height: 10px;
+                                          font-size: 0;
+                                        "
+                                      >
+                                        &nbsp;
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7c7c8a;
+                                        "
+                                      >
+                                        A.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 400;
+                                          line-height: 1.5;
+                                          color: #b9b9c4;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        <img
+                                          alt=""
+                                          src="https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/3st%20newsletter%20img/interview%20img%202.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy8zc3QgbmV3c2xldHRlciBpbWcvaW50ZXJ2aWV3IGltZyAyLnBuZyIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3ODg3MDMwNzYsImV4cCI6MjEwNDA2MzA3Nn0.77UQV0rA8HRZzK8RT-W_C1Rtzb-bB3Ieq96X9--OmwM"
+                                          style="
+                                            display: block;
+                                            width: 100%;
+                                            object-fit: cover;
+                                            border-radius: 8px;
+                                            margin-bottom: 8px;
+                                          "
+                                        />
+                                        첫 번째 이미지가 GPT 버전이었고, 두 번째
+                                        이미지는 Claude였는데, GPT는 md 파일을
+                                        줘도 쓸데없이 사실적으로 표현을 하길래
+                                        제발 참고해 달라고 얘기해야 되더라고요.
+                                        md 파일을 만드는 과정에서 제 프로젝트를
+                                        너무 파악해버린 나머지 그냥 냅다
+                                        사실적으로 만들어버리더라고요. 의외로
+                                        Claude(힉스필드 MCP 연결)에서는 정말
+                                        요구한 대로 딱 만들고 1~2번 수정한 게
+                                        다였습니다.<br /><br />
+                                        힉스필드를 인스타에서 많이 활용하시는 거
+                                        보고 언젠가 써먹어봐야지 막연하게만
+                                        생각했는데 이번 기회에 써볼 수 있어서
+                                        즐거웠습니다! 덕분에 제 개인 프로젝트의
+                                        브랜드 인트로 영상으로 써볼 수 있을 거
+                                        같아서 아이콘 만든 것을 엘리먼트로
+                                        저장한 뒤 영상 만들 때 엘리먼트를
+                                        가져와서 테스트로 만들어봤는데 괜찮게
+                                        나온 거 같아 앞으로도 잘 활용해볼 수
+                                        있을 거 같습니다.
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+                                <!-- Q7 -->
+                                <table
+                                  role="presentation"
+                                  width="100%"
+                                  cellpadding="0"
+                                  cellspacing="0"
+                                  border="0"
+                                  style="
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    margin-bottom: 24px;
+                                  "
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7aa2ff;
+                                        "
+                                      >
+                                        Q.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #e8e8ee;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        이번 실험에서 아이콘 작업 말고 캐릭터
+                                        작업도 하신 거로 알고 있어요. 그 과정도
+                                        궁금해요.
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        colspan="2"
+                                        height="10"
+                                        style="
+                                          height: 10px;
+                                          line-height: 10px;
+                                          font-size: 0;
+                                        "
+                                      >
+                                        &nbsp;
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7c7c8a;
+                                        "
+                                      >
+                                        A.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 400;
+                                          line-height: 1.5;
+                                          color: #b9b9c4;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        처음 캐릭터를 제작할 땐 2D 일러스트
+                                        스타일로 해볼까 하다가 뭔가 영 감을 못
+                                        잡아 하는 거 같아 좀 더 확실한 레퍼런스
+                                        이미지를 주고 3D의 3등신 피규어로
+                                        만들어야겠다 하고 프롬프트를 적용하니
+                                        원하는 스타일대로 뽑히게 되었습니다.
+                                        <img
+                                          alt=""
+                                          src="https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/3st%20newsletter%20img/newsletter%20img%203.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy8zc3QgbmV3c2xldHRlciBpbWcvbmV3c2xldHRlciBpbWcgMy5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg4NzA0NDUzLCJleHAiOjIxMDQwNjQ0NTN9.ck1bVVst-2TKC5JckvBN_yXnhL3tgX2Q0S6Sma271iU"
+                                          style="
+                                            display: block;
+                                            width: 100%;
+                                            object-fit: cover;
+                                            border-radius: 8px;
+                                            margin: 8px 0;
+                                          "
+                                        />
+                                        사실 이 캐릭터는 저를 50% 정도 투영한
+                                        캐릭터인데요. 이름은 '앨런'이고, 밖에
+                                        나갈 때 꼭 에어팟을 끼고 음악을 듣기
+                                        때문에 에어팟을 낀 모습이 기본 모습이
+                                        되었습니다. 그리고 캡모자에 회색 후드,
+                                        청바지, 흰색 운동화 이 세트는 제가 20대
+                                        때 학교 다닐 때 많이 입고 다녔던
+                                        착장이었지만 뉴욕에서 많은 사람들이 입고
+                                        다니는 룩 중 하나라 이러한 요소를 넣었고
+                                        여기에 제가 직접 스케치한 현재 허들링
+                                        클럽에서 프로필 이미지로 쓰고 있기도 한
+                                        제 모습을 바탕으로 만들어달라고
+                                        했습니다. 확실히 어느 정도 스케치된
+                                        레퍼런스가 있으면 좀 더 정확하게 만들어
+                                        주는 게 있는 거 같습니다.
+                                        <img
+                                          alt=""
+                                          src="https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/3st%20newsletter%20img/newsletter%20img%204.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy8zc3QgbmV3c2xldHRlciBpbWcvbmV3c2xldHRlciBpbWcgNC5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg4NzA0ODAxLCJleHAiOjIxMDQwNjQ4MDF9.PimqbS-LtwTSH_uJFoiy9Ei8Xzrdc2CYrRtEzSIe3oI"
+                                          style="
+                                            display: block;
+                                            width: 100%;
+                                            object-fit: cover;
+                                            border-radius: 8px;
+                                            margin: 8px 0;
+                                          "
+                                        />
+                                        또한 캐릭터가 들 수 있는 물건, 아니면
+                                        자주 쓴다는 어떤 설정을 가진 오브젝트를
+                                        만들 때도 레퍼런스 이미지를 첨부해서
+                                        여기에 추가적으로 덧붙일 요소들만 상세히
+                                        적으면 이미지가 굉장히 잘 나오더라고요.
+                                        이제 엘리먼트로 등록된 요소를 이용해서
+                                        전체적인 이미지를 만들 때 디테일하게
+                                        장소와 상황을 설명하지 않고 한 문장으로
+                                        말하니 뭔가 어색하게 이미지가 만들어져서
+                                        좀 더 디테일한 버전으로 바꾸고 영어
+                                        프롬프트로 던져주니 훨씬 더 잘 나오는
+                                        경향이 있었습니다.
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+                                <!-- Q8 -->
+                                <table
+                                  role="presentation"
+                                  width="100%"
+                                  cellpadding="0"
+                                  cellspacing="0"
+                                  border="0"
+                                  style="
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    margin-bottom: 24px;
+                                  "
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7aa2ff;
+                                        "
+                                      >
+                                        Q.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #e8e8ee;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        자세한 과정 공유 감사드립니다. 혹시 다른
+                                        분들의 실험 결과물도 보셨나요?
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        colspan="2"
+                                        height="10"
+                                        style="
+                                          height: 10px;
+                                          line-height: 10px;
+                                          font-size: 0;
+                                        "
+                                      >
+                                        &nbsp;
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7c7c8a;
+                                        "
+                                      >
+                                        A.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 400;
+                                          line-height: 1.5;
+                                          color: #b9b9c4;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        정말 다들 퀄리티가 엄청나서 하나만 꼽을
+                                        수 없지만, 그중에서 조성빈 님께서 만드신
+                                        인터랙티브 르네상스 정물화 아이콘이
+                                        굉장히 인상적이었습니다. 브라우저 커서를
+                                        따라서 이동할 때마다 자동으로 시점이
+                                        트래킹되면서 2.5D 같은 느낌이 나는 게
+                                        굉장히 신기했습니다. 어떻게 하신 건지
+                                        너무 궁금하더라고요. 나중에 어떻게
+                                        구현하셨는지 알려주시면 너무 좋을 것
+                                        같습니다.
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+                                <!-- Q9 -->
+                                <table
+                                  role="presentation"
+                                  width="100%"
+                                  cellpadding="0"
+                                  cellspacing="0"
+                                  border="0"
+                                  style="
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    margin-bottom: 24px;
+                                  "
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7aa2ff;
+                                        "
+                                      >
+                                        Q.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #e8e8ee;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        저도 말씀주신 결과물 인상깊게 봤습니다.
+                                        앞으로 더 해보고 싶은 작업이나 실험이
+                                        있나요?
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        colspan="2"
+                                        height="10"
+                                        style="
+                                          height: 10px;
+                                          line-height: 10px;
+                                          font-size: 0;
+                                        "
+                                      >
+                                        &nbsp;
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7c7c8a;
+                                        "
+                                      >
+                                        A.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 400;
+                                          line-height: 1.5;
+                                          color: #b9b9c4;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        요즘 보면 Claude나 Codex로 홈페이지까지
+                                        만든다고 하던데 어디까지 만들 수 있는지
+                                        궁금합니다! 최근 Lovable로 포트폴리오
+                                        페이지를 만들어보고 있는데 생각보다
+                                        결과물의 퀄리티가 좋아서 이것저것
+                                        테스트해보면서 만들어보고 있는데
+                                        재밌더라고요. 그리고 나중에 허들링 클럽
+                                        실험이 좀 더 진행되고 나면 AI 해커톤처럼
+                                        한 번 허들링 클럽 서비스 만들기 대회
+                                        이런 걸 열어도 좋을 거 같아요. 그러면
+                                        AI를 이용한 나만의 서비스를 만들어 본
+                                        경험도 생기니까 모두에게 일석이조가 되지
+                                        않을까 생각합니다!
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+                                <!-- Q10 -->
+                                <table
+                                  role="presentation"
+                                  width="100%"
+                                  cellpadding="0"
+                                  cellspacing="0"
+                                  border="0"
+                                  style="width: 100%; border-collapse: collapse"
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7aa2ff;
+                                        "
+                                      >
+                                        Q.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #e8e8ee;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        마지막으로 허들링 클럽에 앞으로 기대하는
+                                        점도 공유해 주세요.
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        colspan="2"
+                                        height="10"
+                                        style="
+                                          height: 10px;
+                                          line-height: 10px;
+                                          font-size: 0;
+                                        "
+                                      >
+                                        &nbsp;
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td
+                                        width="24"
+                                        valign="top"
+                                        style="
+                                          width: 24px;
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 700;
+                                          line-height: 1.8;
+                                          color: #7c7c8a;
+                                        "
+                                      >
+                                        A.
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          font-family:
+                                            &quot;Pretendard Variable&quot;,
+                                            Pretendard,
+                                            -apple-system,
+                                            &quot;Apple SD Gothic Neo&quot;,
+                                            &quot;Malgun Gothic&quot;,
+                                            sans-serif;
+                                          font-size: 14px;
+                                          font-weight: 400;
+                                          line-height: 1.5;
+                                          color: #b9b9c4;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        실제로 참여해 보니 라이브 강의도 도움이
+                                        많이 됐지만, 개인적으로는 다른 분들이
+                                        실험을 통해 만든 결과물을 공유해 주시는
+                                        게 정말 좋았습니다. 같은 주제를 가지고도
+                                        접근하는 방식이나 결과물이 전혀 다르기도
+                                        하고, '어떻게 이런 생각을 했지?' 싶을
+                                        정도로 아이디어가 좋은 분들이 정말
+                                        많더라고요. 다른 분들의 작업을 보는 것
+                                        자체가 새로운 자극이 됐고, 저도 다음
+                                        실험을 할 때 아이디어를 고민하거나 접근
+                                        방식을 정하는 데 많은 도움이 됐습니다.
+                                        그리고 앞으로는 또 어떤 새로운 주제로
+                                        실험하게 될지도 기대가 되고요.<br /><br />
+                                        감사합니다.
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="max-width: 630px"
+              >
+                <tbody>
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        font-size: 16px;
+                        line-height: 1.7;
+                        color: #e8e8ee;
+                      "
+                    >
+                      <div>
+                        <span style="font-size: 14px; color: #a1a1ad"
+                          >인터뷰 전문은 허들링 클럽에서 읽으실 수 있어요.</span
+                        >
+                      </div>
+                      <div>
+                        <span style="font-size: 14px; color: #a1a1ad"
+                          >허들링 클럽은 3기 예약 모집 중입니다</span
+                        >
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="padding: 5px 15px 15px 15px">
+                      <table
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                        align="center"
+                        style="
+                          margin: 0 auto;
+                          border-collapse: separate;
+                          border-radius: 10px;
+                          border: 3px solid #0058e0;
+                          background: #0058e0;
+                        "
+                      >
+                        <tbody>
+                          <tr>
+                            <td
+                              align="center"
+                              valign="top"
+                              style="
+                                background: #0058e0;
+                                border-radius: 10px;
+                                padding: 0;
+                              "
+                            >
+                              <a
+                                href="https://tally.so/r/GxVDYj"
+                                target="_blank"
+                                style="
+                                  font-size: 16px;
+                                  display: inline-block;
+                                  color: #ffffff;
+                                  text-decoration: none;
+                                  font-family:
+                                    &quot;Pretendard Variable&quot;,
+                                    Pretendard,
+                                    -apple-system,
+                                    &quot;Apple SD Gothic Neo&quot;,
+                                    &quot;Malgun Gothic&quot;,
+                                    sans-serif;
+                                  text-align: center;
+                                  padding: 19px 20px;
+                                  box-sizing: border-box;
+                                  line-height: 1;
+                                "
+                                ><b>허들링 클럽 3기 오픈 알림 받기</b></a
+                              >
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="height: 40px; line-height: 40px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 15px">
+                      <div
+                        style="
+                          border-top: 1px solid #2f2f3d;
+                          height: 0;
+                          font-size: 0;
+                          line-height: 0;
+                        "
+                      >
+                        &nbsp;
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="height: 40px; line-height: 40px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- ============ AI News ============ -->
+              <table
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="max-width: 630px"
+              >
+                <tbody>
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 5px 15px 15px 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        line-height: 1.7;
+                      "
+                    >
+                      <div>
+                        <span
+                          style="
+                            font-size: 16px;
+                            color: #7aa2ff;
+                            font-weight: bold;
+                          "
+                          >AI News</span
+                        >
+                      </div>
+                      <div>
+                        <span
+                          style="
+                            font-size: 26px;
+                            color: #ffffff;
+                            font-weight: bold;
+                          "
+                          >AI 핫이슈</span
+                        >
+                      </div>
+                      <div>
+                        <span style="font-size: 14px; color: #a1a1ad"
+                          >최근 AI 동향이나 기술, <br class="m-br" />서비스나
+                          플랫폼 업데이트 내용 중<br />실무에 바로 적용할 만한
+                          이슈들만 골라왔어요.</span
+                        >
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table
+                role="presentation"
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="
+                  width: 100%;
+                  border-collapse: collapse;
+                  background: #050510;
+                "
+              >
+                <tbody>
+                  <tr>
+                    <td align="center" style="padding: 0">
+                      <div
+                        style="
+                          width: 100%;
+                          max-width: 616px;
+                          margin: 0 auto;
+                          font-size: 0;
+                          text-align: center;
+                        "
+                      >
+                        <!-- News 1: Adobe -->
+                        <div
+                          style="
+                            display: inline-block;
+                            width: 308px;
+                            max-width: 100%;
+                            vertical-align: top;
+                            font-size: 0;
+                            text-align: left;
+                          "
+                        >
+                          <div style="padding: 0 4px 24px 4px">
+                            <a
+                              href="https://blog.adobe.com/en/publish/2026/09/02/introducing-adobe-for-slack"
+                              target="_blank"
+                              style="display: block; text-decoration: none"
+                            >
+                              <table
+                                role="presentation"
+                                width="100%"
+                                cellpadding="0"
+                                cellspacing="0"
+                                border="0"
+                                style="
+                                  width: 100%;
+                                  border-collapse: separate;
+                                  border: 1px solid #2a2a38;
+                                  border-radius: 12px;
+                                  background: #14141f;
+                                  text-align: left;
+                                  font-family:
+                                    &quot;Pretendard Variable&quot;,
+                                    Pretendard,
+                                    -apple-system,
+                                    &quot;Apple SD Gothic Neo&quot;,
+                                    &quot;Malgun Gothic&quot;,
+                                    sans-serif;
+                                "
+                              >
+                                <tbody>
+                                  <tr>
+                                    <td style="padding: 0">
+                                      <table
+                                        role="presentation"
+                                        width="100%"
+                                        cellpadding="0"
+                                        cellspacing="0"
+                                        border="0"
+                                        style="
+                                          width: 100%;
+                                          height: 186px;
+                                          border-collapse: collapse;
+                                          background-color: #e8e8ee;
+                                          background-image: url(&quot;https://blog.adobe.com/en/publish/2026/09/02/media_1ebfcc916e25e5df6198b2883d4d2e0f1c5f85f6d.jpg?width=2000&amp;format=webply&amp;optimize=medium&quot;);
+                                          background-size: cover;
+                                          background-position: center center;
+                                          background-repeat: no-repeat;
+                                          border-radius: 12px 12px 0 0;
+                                        "
+                                      >
+                                        <tbody>
+                                          <tr>
+                                            <td
+                                              valign="top"
+                                              style="padding: 16px 16px 0 16px"
+                                            >
+                                              <span
+                                                style="
+                                                  display: inline-block;
+                                                  padding: 2px 6px;
+                                                  border-radius: 6px;
+                                                  background: #1b2440;
+                                                  font-size: 14px;
+                                                  font-weight: 600;
+                                                  line-height: 21px;
+                                                  color: #7aa2ff;
+                                                  white-space: nowrap;
+                                                "
+                                                >Adobe</span
+                                              >
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td
+                                              valign="bottom"
+                                              height="122"
+                                              style="
+                                                height: 122px;
+                                                padding: 10px 16px 20px 16px;
+                                                background-image: linear-gradient(
+                                                  to bottom,
+                                                  rgba(0, 0, 0, 0) 0%,
+                                                  rgba(0, 0, 0, 0.55) 45%,
+                                                  rgba(0, 0, 0, 0.88) 100%
+                                                );
+                                              "
+                                            >
+                                              <div
+                                                style="
+                                                  font-size: 12px;
+                                                  font-weight: 400;
+                                                  line-height: 18px;
+                                                  color: #ffffff;
+                                                "
+                                              >
+                                                2026.09.02
+                                              </div>
+                                              <div
+                                                style="
+                                                  margin-top: 4px;
+                                                  font-size: 14px;
+                                                  font-weight: 700;
+                                                  line-height: 21px;
+                                                  color: #ffffff;
+                                                  word-break: break-word;
+                                                "
+                                              >
+                                                Slack에서 Adobe로 이미지, PDF를
+                                                생성해 보세요.(Adobe for Slack
+                                                출시)
+                                              </div>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td style="padding: 8px 16px 20px 16px">
+                                      <div
+                                        style="
+                                          font-size: 14px;
+                                          font-weight: 400;
+                                          line-height: 1.6;
+                                          color: #a1a1ad;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        Slackbot에게 말하면 Firefly·Photoshop 등
+                                        70개 이상 Adobe 툴을 불러
+                                        이미지·영상·PDF를 만들어 줍니다.
+                                        Business+·Enterprise+ 대상으로
+                                        제공됩니다.
+                                      </div>
+                                      <div
+                                        style="
+                                          margin-top: 12px;
+                                          padding: 12px 16px;
+                                          border-radius: 8px;
+                                          background: #1b1b26;
+                                        "
+                                      >
+                                        <div
+                                          style="
+                                            font-size: 13px;
+                                            font-weight: 600;
+                                            line-height: 1.5;
+                                            color: #e8e8ee;
+                                          "
+                                        >
+                                          이 기술 이렇게 사용해보세요!
+                                        </div>
+                                        <div
+                                          style="
+                                            margin-top: 2px;
+                                            font-size: 13px;
+                                            font-weight: 400;
+                                            line-height: 1.6;
+                                            color: #e8e8ee;
+                                            word-break: break-word;
+                                          "
+                                        >
+                                          Slack 내 정보를 읽어와 이미지 생성도
+                                          가능하다고 합니다. 기획이 오간 대화가
+                                          있다면 슬랙봇을 호출해 이미지를 제작해
+                                          보세요.
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </a>
+                          </div>
+                        </div>
+
+                        <!-- News 2: Google Pics -->
+                        <div
+                          style="
+                            display: inline-block;
+                            width: 308px;
+                            max-width: 100%;
+                            vertical-align: top;
+                            font-size: 0;
+                            text-align: left;
+                          "
+                        >
+                          <div style="padding: 0 4px 24px 4px">
+                            <a
+                              href="https://blog.google/products-and-platforms/products/workspace/google-pics/"
+                              target="_blank"
+                              style="display: block; text-decoration: none"
+                            >
+                              <table
+                                role="presentation"
+                                width="100%"
+                                cellpadding="0"
+                                cellspacing="0"
+                                border="0"
+                                style="
+                                  width: 100%;
+                                  border-collapse: separate;
+                                  border: 1px solid #2a2a38;
+                                  border-radius: 12px;
+                                  background: #14141f;
+                                  text-align: left;
+                                  font-family:
+                                    &quot;Pretendard Variable&quot;,
+                                    Pretendard,
+                                    -apple-system,
+                                    &quot;Apple SD Gothic Neo&quot;,
+                                    &quot;Malgun Gothic&quot;,
+                                    sans-serif;
+                                "
+                              >
+                                <tbody>
+                                  <tr>
+                                    <td style="padding: 0">
+                                      <table
+                                        role="presentation"
+                                        width="100%"
+                                        cellpadding="0"
+                                        cellspacing="0"
+                                        border="0"
+                                        style="
+                                          width: 100%;
+                                          height: 186px;
+                                          border-collapse: collapse;
+                                          background-color: #e8e8ee;
+                                          background-image: url(&quot;https://storage.googleapis.com/gweb-uniblog-publish-prod/images/GooglePics_Hero.width-2200.format-webp.webp&quot;);
+                                          background-size: cover;
+                                          background-position: center center;
+                                          background-repeat: no-repeat;
+                                          border-radius: 12px 12px 0 0;
+                                        "
+                                      >
+                                        <tbody>
+                                          <tr>
+                                            <td
+                                              valign="top"
+                                              style="padding: 16px 16px 0 16px"
+                                            >
+                                              <span
+                                                style="
+                                                  display: inline-block;
+                                                  padding: 2px 6px;
+                                                  border-radius: 6px;
+                                                  background: #1b2440;
+                                                  font-size: 14px;
+                                                  font-weight: 600;
+                                                  line-height: 21px;
+                                                  color: #7aa2ff;
+                                                  white-space: nowrap;
+                                                "
+                                                >Google</span
+                                              >
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td
+                                              valign="bottom"
+                                              height="122"
+                                              style="
+                                                height: 122px;
+                                                padding: 10px 16px 20px 16px;
+                                                background-image: linear-gradient(
+                                                  to bottom,
+                                                  rgba(0, 0, 0, 0) 0%,
+                                                  rgba(0, 0, 0, 0.55) 45%,
+                                                  rgba(0, 0, 0, 0.88) 100%
+                                                );
+                                              "
+                                            >
+                                              <div
+                                                style="
+                                                  font-size: 12px;
+                                                  font-weight: 400;
+                                                  line-height: 18px;
+                                                  color: #ffffff;
+                                                "
+                                              >
+                                                2026.09.01
+                                              </div>
+                                              <div
+                                                style="
+                                                  margin-top: 4px;
+                                                  font-size: 14px;
+                                                  font-weight: 700;
+                                                  line-height: 21px;
+                                                  color: #ffffff;
+                                                  word-break: break-word;
+                                                "
+                                              >
+                                                Google Pics 출시
+                                              </div>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td style="padding: 8px 16px 20px 16px">
+                                      <div
+                                        style="
+                                          font-size: 14px;
+                                          font-weight: 400;
+                                          line-height: 1.6;
+                                          color: #a1a1ad;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        Google Docs나 Slides와 같은 Google
+                                        Workspace 내 도구들에서 나노바나나 기반
+                                        이미지 생성 및 편집을 지원합니다.(Drive
+                                        지원은 곧 출시 예정)
+                                      </div>
+                                      <div
+                                        style="
+                                          margin-top: 12px;
+                                          padding: 12px 16px;
+                                          border-radius: 8px;
+                                          background: #1b1b26;
+                                        "
+                                      >
+                                        <div
+                                          style="
+                                            font-size: 13px;
+                                            font-weight: 600;
+                                            line-height: 1.5;
+                                            color: #e8e8ee;
+                                          "
+                                        >
+                                          이 기술 이렇게 사용해보세요!
+                                        </div>
+                                        <div
+                                          style="
+                                            margin-top: 2px;
+                                            font-size: 13px;
+                                            font-weight: 400;
+                                            line-height: 1.6;
+                                            color: #e8e8ee;
+                                            word-break: break-word;
+                                          "
+                                        >
+                                          Workspace 비즈니스 고객 대상으로 순차
+                                          배포합니다. 구글독스 내에 필요한
+                                          이미지를 바로 생성하거나, 수정해
+                                          보세요.
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </a>
+                          </div>
+                        </div>
+
+                        <!-- News 3: GPT-6 Astra -->
+                        <div
+                          style="
+                            display: inline-block;
+                            width: 308px;
+                            max-width: 100%;
+                            vertical-align: top;
+                            font-size: 0;
+                            text-align: left;
+                          "
+                        >
+                          <div style="padding: 0 4px 24px 4px">
+                            <a
+                              href="https://openai.com/index/gpt-6-astra/"
+                              target="_blank"
+                              style="display: block; text-decoration: none"
+                            >
+                              <table
+                                role="presentation"
+                                width="100%"
+                                cellpadding="0"
+                                cellspacing="0"
+                                border="0"
+                                style="
+                                  width: 100%;
+                                  border-collapse: separate;
+                                  border: 1px solid #2a2a38;
+                                  border-radius: 12px;
+                                  background: #14141f;
+                                  text-align: left;
+                                  font-family:
+                                    &quot;Pretendard Variable&quot;,
+                                    Pretendard,
+                                    -apple-system,
+                                    &quot;Apple SD Gothic Neo&quot;,
+                                    &quot;Malgun Gothic&quot;,
+                                    sans-serif;
+                                "
+                              >
+                                <tbody>
+                                  <tr>
+                                    <td style="padding: 0">
+                                      <table
+                                        role="presentation"
+                                        width="100%"
+                                        cellpadding="0"
+                                        cellspacing="0"
+                                        border="0"
+                                        style="
+                                          width: 100%;
+                                          height: 186px;
+                                          border-collapse: collapse;
+                                          background-color: #e8e8ee;
+                                          background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/3st%20newsletter%20img/gpt6.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy8zc3QgbmV3c2xldHRlciBpbWcvZ3B0Ni5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg4NzEyMTEzLCJleHAiOjE5NDYzOTIxMTN9.q0rXz0Z3OIpFNGEbDZVzJ5YYU4PH0Ix7TxDbyLO82x0&quot;);
+                                          background-size: cover;
+                                          background-position: center center;
+                                          background-repeat: no-repeat;
+                                          border-radius: 12px 12px 0 0;
+                                        "
+                                      >
+                                        <tbody>
+                                          <tr>
+                                            <td
+                                              valign="top"
+                                              style="padding: 16px 16px 0 16px"
+                                            >
+                                              <span
+                                                style="
+                                                  display: inline-block;
+                                                  padding: 2px 6px;
+                                                  border-radius: 6px;
+                                                  background: #1b2440;
+                                                  font-size: 14px;
+                                                  font-weight: 600;
+                                                  line-height: 21px;
+                                                  color: #7aa2ff;
+                                                  white-space: nowrap;
+                                                "
+                                                >Open AI</span
+                                              >
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td
+                                              valign="bottom"
+                                              height="122"
+                                              style="
+                                                height: 122px;
+                                                padding: 10px 16px 20px 16px;
+                                                background-image: linear-gradient(
+                                                  to bottom,
+                                                  rgba(0, 0, 0, 0) 0%,
+                                                  rgba(0, 0, 0, 0.55) 45%,
+                                                  rgba(0, 0, 0, 0.88) 100%
+                                                );
+                                              "
+                                            >
+                                              <div
+                                                style="
+                                                  font-size: 12px;
+                                                  font-weight: 400;
+                                                  line-height: 18px;
+                                                  color: #ffffff;
+                                                "
+                                              >
+                                                2026.09.03
+                                              </div>
+                                              <div
+                                                style="
+                                                  margin-top: 4px;
+                                                  font-size: 14px;
+                                                  font-weight: 700;
+                                                  line-height: 21px;
+                                                  color: #ffffff;
+                                                  word-break: break-word;
+                                                "
+                                              >
+                                                GPT-6 Astra 공개
+                                              </div>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td style="padding: 8px 16px 20px 16px">
+                                      <div
+                                        style="
+                                          font-size: 14px;
+                                          font-weight: 400;
+                                          line-height: 1.6;
+                                          color: #a1a1ad;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        OpenAI가 새 최고 모델 GPT-6 Astra를
+                                        공개했습니다. 이전 모델보다 훨씬 더
+                                        빠르게 일을 끝내고 같은 작업 기준
+                                        2배까지 빠르게 작업을 진행합니다. 유료
+                                        사용자에게 순차적으로 제공됩니다.
+                                      </div>
+                                      <div
+                                        style="
+                                          margin-top: 12px;
+                                          padding: 12px 16px;
+                                          border-radius: 8px;
+                                          background: #1b1b26;
+                                        "
+                                      >
+                                        <div
+                                          style="
+                                            font-size: 13px;
+                                            font-weight: 600;
+                                            line-height: 1.5;
+                                            color: #e8e8ee;
+                                          "
+                                        >
+                                          이 기술 이렇게 사용해보세요!
+                                        </div>
+                                        <div
+                                          style="
+                                            margin-top: 2px;
+                                            font-size: 13px;
+                                            font-weight: 400;
+                                            line-height: 1.6;
+                                            color: #e8e8ee;
+                                            word-break: break-word;
+                                          "
+                                        >
+                                          필요 없는 내용을 늘어놓지 않고 핵심만
+                                          담는 쪽으로 훈련됐다고 합니다. 중요한
+                                          내용만 물어보고 사소한 건 알아서
+                                          작업한다고 하네요.
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </a>
+                          </div>
+                        </div>
+
+                        <!-- News 4: Gemini 3.8 Flash -->
+                        <div
+                          style="
+                            display: inline-block;
+                            width: 308px;
+                            max-width: 100%;
+                            vertical-align: top;
+                            font-size: 0;
+                            text-align: left;
+                          "
+                        >
+                          <div style="padding: 0 4px 24px 4px">
+                            <a
+                              href="https://blog.google/intl/ko-kr/company-news/technology/3-8-flash-and-3-8-flash-cyber-kr/"
+                              target="_blank"
+                              style="display: block; text-decoration: none"
+                            >
+                              <table
+                                role="presentation"
+                                width="100%"
+                                cellpadding="0"
+                                cellspacing="0"
+                                border="0"
+                                style="
+                                  width: 100%;
+                                  border-collapse: separate;
+                                  border: 1px solid #2a2a38;
+                                  border-radius: 12px;
+                                  background: #14141f;
+                                  text-align: left;
+                                  font-family:
+                                    &quot;Pretendard Variable&quot;,
+                                    Pretendard,
+                                    -apple-system,
+                                    &quot;Apple SD Gothic Neo&quot;,
+                                    &quot;Malgun Gothic&quot;,
+                                    sans-serif;
+                                "
+                              >
+                                <tbody>
+                                  <tr>
+                                    <td style="padding: 0">
+                                      <table
+                                        role="presentation"
+                                        width="100%"
+                                        cellpadding="0"
+                                        cellspacing="0"
+                                        border="0"
+                                        style="
+                                          width: 100%;
+                                          height: 186px;
+                                          border-collapse: collapse;
+                                          background-color: #e8e8ee;
+                                          background-image: url(&quot;https://storage.googleapis.com/gweb-uniblog-publish-prod/images/gemini-3-8_flash__blog__header__.width-2200.format-webp.webp&quot;);
+                                          background-size: cover;
+                                          background-position: center center;
+                                          background-repeat: no-repeat;
+                                          border-radius: 12px 12px 0 0;
+                                        "
+                                      >
+                                        <tbody>
+                                          <tr>
+                                            <td
+                                              valign="top"
+                                              style="padding: 16px 16px 0 16px"
+                                            >
+                                              <span
+                                                style="
+                                                  display: inline-block;
+                                                  padding: 2px 6px;
+                                                  border-radius: 6px;
+                                                  background: #1b2440;
+                                                  font-size: 14px;
+                                                  font-weight: 600;
+                                                  line-height: 21px;
+                                                  color: #7aa2ff;
+                                                  white-space: nowrap;
+                                                "
+                                                >Google</span
+                                              >
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td
+                                              valign="bottom"
+                                              height="122"
+                                              style="
+                                                height: 122px;
+                                                padding: 10px 16px 20px 16px;
+                                                background-image: linear-gradient(
+                                                  to bottom,
+                                                  rgba(0, 0, 0, 0) 0%,
+                                                  rgba(0, 0, 0, 0.55) 45%,
+                                                  rgba(0, 0, 0, 0.88) 100%
+                                                );
+                                              "
+                                            >
+                                              <div
+                                                style="
+                                                  font-size: 12px;
+                                                  font-weight: 400;
+                                                  line-height: 18px;
+                                                  color: #ffffff;
+                                                "
+                                              >
+                                                2026.09.02
+                                              </div>
+                                              <div
+                                                style="
+                                                  margin-top: 4px;
+                                                  font-size: 14px;
+                                                  font-weight: 700;
+                                                  line-height: 21px;
+                                                  color: #ffffff;
+                                                  word-break: break-word;
+                                                "
+                                              >
+                                                '제미나이 3.8 플래시'와 '3.8
+                                                플래시 사이버'를 소개합니다
+                                              </div>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td style="padding: 8px 16px 20px 16px">
+                                      <div
+                                        style="
+                                          font-size: 14px;
+                                          font-weight: 400;
+                                          line-height: 1.6;
+                                          color: #a1a1ad;
+                                          word-break: break-word;
+                                        "
+                                      >
+                                        Google이 Gemini 3.8 Flash와 3.8 Flash
+                                        Cyber를 출시했습니다. Gemini Flash
+                                        Cyber는 보안 작업 특화 모델로 페어윈드
+                                        프로그램을 통해 신뢰 기관에만 우선
+                                        제공된다.
+                                      </div>
+                                      <div
+                                        style="
+                                          margin-top: 12px;
+                                          padding: 12px 16px;
+                                          border-radius: 8px;
+                                          background: #1b1b26;
+                                        "
+                                      >
+                                        <div
+                                          style="
+                                            font-size: 13px;
+                                            font-weight: 600;
+                                            line-height: 1.5;
+                                            color: #e8e8ee;
+                                          "
+                                        >
+                                          이 기술 이렇게 사용해보세요!
+                                        </div>
+                                        <div
+                                          style="
+                                            margin-top: 2px;
+                                            font-size: 13px;
+                                            font-weight: 400;
+                                            line-height: 1.6;
+                                            color: #e8e8ee;
+                                            word-break: break-word;
+                                          "
+                                        >
+                                          3.7 플래시와 같은 속도로 코딩과 추론
+                                          성능은 끌어올린 모델입니다. 3.7과 같은
+                                          가격이라고 하니 같은 가격으로 3.8도
+                                          사용해 보세요!
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="max-width: 630px"
+              >
+                <tbody>
+                  <tr>
+                    <td style="height: 40px; line-height: 40px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 15px">
+                      <div
+                        style="
+                          border-top: 1px solid #2f2f3d;
+                          height: 0;
+                          font-size: 0;
+                          line-height: 0;
+                        "
+                      >
+                        &nbsp;
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="height: 40px; line-height: 40px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- ============ Get Involved ============ -->
+              <table
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="max-width: 630px"
+              >
+                <tbody>
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 5px 15px 15px 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        line-height: 1.7;
+                      "
+                    >
+                      <div>
+                        <span
+                          style="
+                            font-size: 16px;
+                            color: #7aa2ff;
+                            font-weight: bold;
+                          "
+                          >Get Involved</span
+                        >
+                      </div>
+                      <div>
+                        <span
+                          style="
+                            font-size: 26px;
+                            color: #ffffff;
+                            font-weight: bold;
+                          "
+                          >저희와 함께 성장하실래요?</span
+                        >
+                      </div>
+                      <div>
+                        <span style="font-size: 14px; color: #a1a1ad"
+                          >검증된 경험을 배우고 공유하며<br />순환하는 허들링
+                          클럽에서 함께 성장해봐요.</span
+                        >
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td align="center" style="padding: 5px 15px 15px 15px">
+                      <table
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                        align="center"
+                        style="
+                          margin: 0 auto;
+                          border-collapse: separate;
+                          border-radius: 10px;
+                          border: 1px solid #0058e0;
+                          background: #0058e0;
+                          width: 100%;
+                          max-width: 320px;
+                          box-sizing: border-box;
+                        "
+                      >
+                        <tbody>
+                          <tr>
+                            <td
+                              align="center"
+                              valign="top"
+                              style="
+                                background: #0058e0;
+                                border-radius: 10px;
+                                padding: 0;
+                              "
+                            >
+                              <a
+                                href="https://tally.so/r/GxVDYj"
+                                target="_blank"
+                                style="
+                                  font-size: 16px;
+                                  display: block;
+                                  color: #ffffff;
+                                  text-decoration: none;
+                                  font-family:
+                                    &quot;Pretendard Variable&quot;,
+                                    Pretendard,
+                                    -apple-system,
+                                    &quot;Apple SD Gothic Neo&quot;,
+                                    &quot;Malgun Gothic&quot;,
+                                    sans-serif;
+                                  text-align: center;
+                                  padding: 19px 20px;
+                                  box-sizing: border-box;
+                                  line-height: 1;
+                                "
+                                ><b>허들링 클럽 3기 오픈 알림 받기</b></a
+                              >
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td align="center" style="padding: 5px 15px 0 15px">
+                      <table
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                        align="center"
+                        style="
+                          margin: 0 auto;
+                          border-collapse: separate;
+                          border-radius: 10px;
+                          border: 1px solid #0058e0;
+                          width: 100%;
+                          max-width: 320px;
+                          box-sizing: border-box;
+                        "
+                      >
+                        <tbody>
+                          <tr>
+                            <td
+                              align="center"
+                              valign="top"
+                              style="border-radius: 10px; padding: 0"
+                            >
+                              <a
+                                href="https://open.kakao.com/o/gPjVAOXf"
+                                target="_blank"
+                                style="
+                                  font-size: 16px;
+                                  display: block;
+                                  color: #0058e0;
+                                  text-decoration: none;
+                                  font-family:
+                                    &quot;Pretendard Variable&quot;,
+                                    Pretendard,
+                                    -apple-system,
+                                    &quot;Apple SD Gothic Neo&quot;,
+                                    &quot;Malgun Gothic&quot;,
+                                    sans-serif;
+                                  text-align: center;
+                                  padding: 19px 20px;
+                                  box-sizing: border-box;
+                                  line-height: 1;
+                                "
+                                ><b>허들링 클럽 오픈카톡방 합류하기</b></a
+                              >
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 20px 15px 15px 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        line-height: 1.7;
+                      "
+                    >
+                      <span style="font-size: 12px; color: #8b8b98"
+                        >오픈카톡방 비밀번호 : Figma</span
+                      >
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td style="height: 50px; line-height: 50px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 실험 카드 이미지 확대 팝업 (르네상스 정물화 카드는 외부 링크라 제외) -->
+    <div
+      id="report-lightbox"
+      onclick="window.reportCloseLightbox && window.reportCloseLightbox()"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        box-sizing: border-box;
+        background: rgba(5, 5, 16, 0.92);
+        cursor: zoom-out;
+      "
+    >
+      <img
+        id="report-lightbox-img"
+        src=""
+        alt=""
+        onclick="event.stopPropagation()"
+        style="
+          max-width: 100%;
+          max-height: 100%;
+          border-radius: 8px;
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+          cursor: default;
+        "
+      />
+      <div
+        onclick="window.reportCloseLightbox && window.reportCloseLightbox()"
+        style="
+          position: absolute;
+          top: 16px;
+          right: 20px;
+          width: 36px;
+          height: 36px;
+          border-radius: 999px;
+          background: #14141f;
+          border: 1px solid #2a2a38;
+          color: #e8e8ee;
+          font-size: 20px;
+          line-height: 36px;
+          text-align: center;
+          cursor: pointer;
+          font-family: Arial, sans-serif;
+        "
+      >
+        &times;
+      </div>
+    </div>
+
+    <script>
+      // 실험 카드 이미지 확대 팝업.
+      (function () {
+        var lb = document.getElementById("report-lightbox");
+        var lbImg = document.getElementById("report-lightbox-img");
+        window.reportOpenLightbox = function (src, alt) {
+          if (!lb || !lbImg) return;
+          lbImg.src = src;
+          lbImg.alt = alt || "";
+          lb.style.display = "flex";
+          document.body.style.overflow = "hidden";
+        };
+        window.reportCloseLightbox = function () {
+          if (!lb) return;
+          lb.style.display = "none";
+          lbImg.src = "";
+          document.body.style.overflow = "";
+        };
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") window.reportCloseLightbox();
+        });
+      })();
+    </script>
+
+    <script>
+      // ReportEmbed.tsx가 기다리는 높이 핸드셰이크.
+      // 이게 없으면 iframe이 100vh 고정 + 내부 스크롤이 된다.
+      (function () {
+        var last = 0;
+        // scrollHeight 는 뷰포트보다 작아지지 않아 래칫이 생긴다. 콘텐츠 루트를 직접 잰다.
+        var root = document.getElementById("report-root");
+        function send() {
+          var h = Math.ceil(root.getBoundingClientRect().height);
+          if (h === last) return;
+          last = h;
+          parent.postMessage(
+            { type: "huddling-report:height", height: h },
+            "*",
+          );
+        }
+        window.addEventListener("load", send);
+        window.addEventListener("resize", send);
+        if (window.ResizeObserver) new ResizeObserver(send).observe(root);
+        setTimeout(send, 200);
+        setTimeout(send, 1000);
+        setTimeout(send, 2500); // 원격 이미지 로드 후
+      })();
+    </script>
+  </body>
+</html>
