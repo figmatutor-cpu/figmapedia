@@ -64,6 +64,8 @@ export function FloatingButton() {
       ? "96px"
       : "28px";
 
+  if (isHome) return null;
+
   return (
     <div
       style={{ bottom: bottomValue }}

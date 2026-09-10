@@ -1,0 +1,647 @@
+{
+  "lectures": [
+    {
+      "organization": "삼성",
+      "category": "대기업·계열",
+      "period": "2026-06",
+      "frequency": "1회"
+    },
+    {
+      "organization": "삼성SDS",
+      "category": "대기업·계열",
+      "period": "2023-12 ~ 2025-11",
+      "frequency": "5회+"
+    },
+    {
+      "organization": "SK",
+      "category": "대기업·계열",
+      "period": "2025-03",
+      "frequency": "2일 과정"
+    },
+    {
+      "organization": "SK텔레콤",
+      "category": "대기업·계열",
+      "period": "2023-11",
+      "frequency": "1회"
+    },
+    {
+      "organization": "LG전자",
+      "category": "대기업·계열",
+      "period": "2026-08",
+      "frequency": "1회"
+    },
+    {
+      "organization": "HSAD (LG애드)",
+      "category": "대기업·계열",
+      "period": "2026-08 ~ 09",
+      "frequency": "2회+"
+    },
+    {
+      "organization": "LG유플러스",
+      "category": "대기업·계열",
+      "period": "2026-08 ~ 09",
+      "frequency": "2차수"
+    },
+    {
+      "organization": "KT",
+      "category": "대기업·계열",
+      "period": "2026-06",
+      "frequency": "1회"
+    },
+    {
+      "organization": "현대자동차",
+      "category": "대기업·계열",
+      "period": "2024-04 ~ 06",
+      "frequency": "3회"
+    },
+    {
+      "organization": "현대카드",
+      "category": "대기업·계열",
+      "period": "2025-10",
+      "frequency": "3회+"
+    },
+    {
+      "organization": "GS리테일",
+      "category": "대기업·계열",
+      "period": "2026-05 ~ 06",
+      "frequency": "2회+"
+    },
+    {
+      "organization": "CJ그룹 (인재원·Youniverse)",
+      "category": "대기업·계열",
+      "period": "2026-04 ~ 07",
+      "frequency": "3회+"
+    },
+    {
+      "organization": "CJ올리브영",
+      "category": "대기업·계열",
+      "period": "2024-09, 2026-05",
+      "frequency": "2회"
+    },
+    {
+      "organization": "CJ올리브네트웍스",
+      "category": "대기업·계열",
+      "period": "2025-07, 2026-05",
+      "frequency": "2회"
+    },
+    {
+      "organization": "이노플레이 (CJ그룹사)",
+      "category": "대기업·계열",
+      "period": "2026-05",
+      "frequency": "1회"
+    },
+    {
+      "organization": "하나금융그룹",
+      "category": "금융",
+      "period": "2023-04",
+      "frequency": "1회"
+    },
+    {
+      "organization": "NH투자증권",
+      "category": "금융",
+      "period": "2024-08, 2026-04",
+      "frequency": "2회"
+    },
+    {
+      "organization": "키움증권",
+      "category": "금융",
+      "period": "2025-10",
+      "frequency": "4회"
+    },
+    {
+      "organization": "롯데카드",
+      "category": "금융",
+      "period": "2024-10",
+      "frequency": "1회"
+    },
+    {
+      "organization": "카카오뱅크",
+      "category": "금융",
+      "period": "2026-05 ~ 06",
+      "frequency": "2회"
+    },
+    {
+      "organization": "NICE평가정보",
+      "category": "금융",
+      "period": "2026-08 ~ 09",
+      "frequency": "2차수"
+    },
+    {
+      "organization": "인바디",
+      "category": "기타 기업",
+      "period": "2025-01",
+      "frequency": "1회"
+    },
+    {
+      "organization": "NHN",
+      "category": "IT·플랫폼",
+      "period": "2024-02 ~ 2026-09",
+      "frequency": "10회+ (최다)"
+    },
+    {
+      "organization": "NHN ad",
+      "category": "IT·플랫폼",
+      "period": "2025-05, 2025-09",
+      "frequency": "2회"
+    },
+    {
+      "organization": "네이버Z",
+      "category": "IT·플랫폼",
+      "period": "2024-10",
+      "frequency": "1회"
+    },
+    {
+      "organization": "카카오",
+      "category": "IT·플랫폼",
+      "period": "2024-11 ~ 2026-02",
+      "frequency": "8회+"
+    },
+    {
+      "organization": "카카오엔터테인먼트",
+      "category": "IT·플랫폼",
+      "period": "2026-04 ~ 05",
+      "frequency": "2회"
+    },
+    {
+      "organization": "카카오스타일",
+      "category": "IT·플랫폼",
+      "period": "2024",
+      "frequency": "1회"
+    },
+    {
+      "organization": "우아한형제들 (배달의민족)",
+      "category": "IT·플랫폼",
+      "period": "2023-10 ~ 2024-09",
+      "frequency": "5회+"
+    },
+    {
+      "organization": "넥슨",
+      "category": "IT·플랫폼",
+      "period": "2025-04 ~ 2026-06",
+      "frequency": "3회"
+    },
+    {
+      "organization": "티맵모빌리티",
+      "category": "IT·플랫폼",
+      "period": "2025-03, 2025-11",
+      "frequency": "2회"
+    },
+    {
+      "organization": "야놀자 / NOL",
+      "category": "IT·플랫폼",
+      "period": "2025-07, 2026-06",
+      "frequency": "2회+"
+    },
+    {
+      "organization": "여기어때",
+      "category": "IT·플랫폼",
+      "period": "2025-06",
+      "frequency": "2회"
+    },
+    {
+      "organization": "버킷플레이스 (오늘의집)",
+      "category": "IT·플랫폼",
+      "period": "2024-08",
+      "frequency": "1회"
+    },
+    {
+      "organization": "리디",
+      "category": "IT·플랫폼",
+      "period": "2025-05",
+      "frequency": "1회"
+    },
+    {
+      "organization": "밀리의 서재",
+      "category": "IT·플랫폼",
+      "period": "2025-05",
+      "frequency": "1회"
+    },
+    {
+      "organization": "와디즈",
+      "category": "IT·플랫폼",
+      "period": "2025-01",
+      "frequency": "1회"
+    },
+    {
+      "organization": "화해",
+      "category": "IT·플랫폼",
+      "period": "2025-01",
+      "frequency": "1회"
+    },
+    {
+      "organization": "번개장터",
+      "category": "IT·플랫폼",
+      "period": "2024-12",
+      "frequency": "1회"
+    },
+    {
+      "organization": "크몽",
+      "category": "IT·플랫폼",
+      "period": "2025-04",
+      "frequency": "1회"
+    },
+    {
+      "organization": "잡플래닛",
+      "category": "IT·플랫폼",
+      "period": "2025-06",
+      "frequency": "1회"
+    },
+    {
+      "organization": "NRISE (엔라이즈)",
+      "category": "IT·플랫폼",
+      "period": "2025-04",
+      "frequency": "1회"
+    },
+    {
+      "organization": "알서포트",
+      "category": "IT·플랫폼",
+      "period": "2025-02",
+      "frequency": "1회"
+    },
+    {
+      "organization": "디비피아 (DBpia)",
+      "category": "IT·플랫폼",
+      "period": "2026-06",
+      "frequency": "1회"
+    },
+    {
+      "organization": "앳홈",
+      "category": "IT·플랫폼",
+      "period": "2025-03",
+      "frequency": "1회"
+    },
+    {
+      "organization": "디어스",
+      "category": "IT·플랫폼",
+      "period": "2025",
+      "frequency": "1회"
+    },
+    {
+      "organization": "오픈패스",
+      "category": "IT·플랫폼",
+      "period": "2024-09, 2025-01",
+      "frequency": "2회"
+    },
+    {
+      "organization": "단군소프트",
+      "category": "IT·플랫폼",
+      "period": "2025-01",
+      "frequency": "주간 과정"
+    },
+    {
+      "organization": "시엔티테크",
+      "category": "IT·플랫폼",
+      "period": "2025-07",
+      "frequency": "1회"
+    },
+    {
+      "organization": "알제곱",
+      "category": "IT·플랫폼",
+      "period": "2026-06",
+      "frequency": "1회"
+    },
+    {
+      "organization": "MTOU",
+      "category": "IT·플랫폼",
+      "period": "2026-05",
+      "frequency": "1회"
+    },
+    {
+      "organization": "SBS",
+      "category": "미디어·엔터",
+      "period": "2025-04",
+      "frequency": "2회"
+    },
+    {
+      "organization": "iMBC",
+      "category": "미디어·엔터",
+      "period": "2025-09",
+      "frequency": "2차수"
+    },
+    {
+      "organization": "JYP엔터테인먼트",
+      "category": "미디어·엔터",
+      "period": "2024-12",
+      "frequency": "1회"
+    },
+    {
+      "organization": "위버스 (weverse)",
+      "category": "미디어·엔터",
+      "period": "2025-02",
+      "frequency": "1회"
+    },
+    {
+      "organization": "전자신문인터넷",
+      "category": "미디어·엔터",
+      "period": "2026-01",
+      "frequency": "1회"
+    },
+    {
+      "organization": "테크42",
+      "category": "미디어·엔터",
+      "period": "2024-11",
+      "frequency": "1회"
+    },
+    {
+      "organization": "아모레퍼시픽",
+      "category": "유통·소비재",
+      "period": "2024-10",
+      "frequency": "1회"
+    },
+    {
+      "organization": "이니스프리",
+      "category": "유통·소비재",
+      "period": "2024-10",
+      "frequency": "1회"
+    },
+    {
+      "organization": "러쉬코리아",
+      "category": "유통·소비재",
+      "period": "2024-12",
+      "frequency": "1회"
+    },
+    {
+      "organization": "실리콘투",
+      "category": "유통·소비재",
+      "period": "2025-02",
+      "frequency": "1회"
+    },
+    {
+      "organization": "호텔신라",
+      "category": "유통·소비재",
+      "period": "2026-08",
+      "frequency": "2회"
+    },
+    {
+      "organization": "신라면세점",
+      "category": "유통·소비재",
+      "period": "2023-12",
+      "frequency": "1회"
+    },
+    {
+      "organization": "레모네이드",
+      "category": "유통·소비재",
+      "period": "2024-06",
+      "frequency": "3회"
+    },
+    {
+      "organization": "해피문데이",
+      "category": "유통·소비재",
+      "period": "2024-11",
+      "frequency": "1회"
+    },
+    {
+      "organization": "더워터멜론",
+      "category": "유통·소비재",
+      "period": "2026-04",
+      "frequency": "1회 (컨설팅)"
+    },
+    {
+      "organization": "골드앤컴퍼니",
+      "category": "유통·소비재",
+      "period": "2026-04 ~ 05",
+      "frequency": "2회"
+    },
+    {
+      "organization": "룩캐스트",
+      "category": "유통·소비재",
+      "period": "2026-04 ~ 05",
+      "frequency": "2회"
+    },
+    {
+      "organization": "패스트캠퍼스 (데이원컴퍼니)",
+      "category": "교육·HRD",
+      "period": "2024-12 ~ 2026-09",
+      "frequency": "다수"
+    },
+    {
+      "organization": "멀티캠퍼스",
+      "category": "교육·HRD",
+      "period": "2025-07",
+      "frequency": "1회"
+    },
+    {
+      "organization": "콜로소",
+      "category": "교육·HRD",
+      "period": "2024-11",
+      "frequency": "녹화 제작"
+    },
+    {
+      "organization": "코멘토",
+      "category": "교육·HRD",
+      "period": "2022, 2024-08, 2025-01",
+      "frequency": "3회+"
+    },
+    {
+      "organization": "탈잉",
+      "category": "교육·HRD",
+      "period": "2022-01",
+      "frequency": "1회"
+    },
+    {
+      "organization": "제로베이스",
+      "category": "교육·HRD",
+      "period": "2024-12",
+      "frequency": "1회"
+    },
+    {
+      "organization": "디프렙",
+      "category": "교육·HRD",
+      "period": "2024-11",
+      "frequency": "1회"
+    },
+    {
+      "organization": "노트폴리오",
+      "category": "교육·HRD",
+      "period": "2023-12",
+      "frequency": "1회"
+    },
+    {
+      "organization": "러닝스푼즈",
+      "category": "교육·HRD",
+      "period": "2024-04",
+      "frequency": "1회"
+    },
+    {
+      "organization": "지피터스",
+      "category": "교육·HRD",
+      "period": "2026-06",
+      "frequency": "1회"
+    },
+    {
+      "organization": "에스티유니타스",
+      "category": "교육·HRD",
+      "period": "2024-07",
+      "frequency": "1회"
+    },
+    {
+      "organization": "오픈놀",
+      "category": "교육·HRD",
+      "period": "2025-04",
+      "frequency": "4회"
+    },
+    {
+      "organization": "온오프믹스",
+      "category": "교육·HRD",
+      "period": "2025-02",
+      "frequency": "1회"
+    },
+    {
+      "organization": "듀오톤",
+      "category": "기타 기업",
+      "period": "2023-12",
+      "frequency": "1회"
+    },
+    {
+      "organization": "다빈치",
+      "category": "기타 기업",
+      "period": "2025-04",
+      "frequency": "1회"
+    },
+    {
+      "organization": "더디엔에이",
+      "category": "기타 기업",
+      "period": "2025-09",
+      "frequency": "1회"
+    },
+    {
+      "organization": "아메바",
+      "category": "기타 기업",
+      "period": "2024-11",
+      "frequency": "1회"
+    },
+    {
+      "organization": "필그림",
+      "category": "기타 기업",
+      "period": "2024-07",
+      "frequency": "1회"
+    },
+    {
+      "organization": "누리미디어",
+      "category": "기타 기업",
+      "period": "2026-05",
+      "frequency": "1회"
+    },
+    {
+      "organization": "헤즈 / 반프",
+      "category": "기타 기업",
+      "period": "2025-02",
+      "frequency": "1회"
+    },
+    {
+      "organization": "홍익대학교",
+      "category": "대학",
+      "period": "2025-01 ~ 02",
+      "frequency": "특강"
+    },
+    {
+      "organization": "성균관대학교 (RISE 사업단)",
+      "category": "대학",
+      "period": "2026-02",
+      "frequency": "특강"
+    },
+    {
+      "organization": "덕성여자대학교",
+      "category": "대학",
+      "period": "2024-12",
+      "frequency": "특강"
+    },
+    {
+      "organization": "명지전문대학",
+      "category": "대학",
+      "period": "미상",
+      "frequency": "특강"
+    },
+    {
+      "organization": "인천가톨릭대학교",
+      "category": "대학",
+      "period": "2026-09",
+      "frequency": "2차시"
+    },
+    {
+      "organization": "수원대학교",
+      "category": "대학",
+      "period": "2025-06",
+      "frequency": "특강"
+    },
+    {
+      "organization": "경남대학교",
+      "category": "대학",
+      "period": "2024-10",
+      "frequency": "특강"
+    },
+    {
+      "organization": "대한상공회의소 경기인력개발원",
+      "category": "공공·기관",
+      "period": "2026-09",
+      "frequency": "1회"
+    },
+    {
+      "organization": "광주디자인진흥원",
+      "category": "공공·기관",
+      "period": "2026-08",
+      "frequency": "1회"
+    },
+    {
+      "organization": "부산디자인진흥원",
+      "category": "공공·기관",
+      "period": "2024-10",
+      "frequency": "1회"
+    },
+    {
+      "organization": "대구경북디자인진흥원",
+      "category": "공공·기관",
+      "period": "2025-06",
+      "frequency": "1회"
+    },
+    {
+      "organization": "서울디자인진흥원",
+      "category": "공공·기관",
+      "period": "2025-07",
+      "frequency": "1회"
+    },
+    {
+      "organization": "부산시인재개발원",
+      "category": "공공·기관",
+      "period": "2026-07",
+      "frequency": "2일 과정"
+    },
+    {
+      "organization": "서울시",
+      "category": "공공·기관",
+      "period": "2024-08",
+      "frequency": "2회"
+    },
+    {
+      "organization": "서울핀테크랩",
+      "category": "공공·기관",
+      "period": "2024-10",
+      "frequency": "1회"
+    },
+    {
+      "organization": "구름 (goorm) / 구름톤 유니브",
+      "category": "공공·기관",
+      "period": "2025-07",
+      "frequency": "해커톤 특강"
+    },
+    {
+      "organization": "K-DEVCON",
+      "category": "커뮤니티·컨퍼런스",
+      "period": "2025-02",
+      "frequency": "세션 발표"
+    },
+    {
+      "organization": "센텀 디지털위크",
+      "category": "커뮤니티·컨퍼런스",
+      "period": "2025-09",
+      "frequency": "행사 참여"
+    }
+  ],
+  "advisory": [
+    {
+      "organization": "서울경제진흥원 (SBA)",
+      "period": "2025-03 ~ 04",
+      "description": "커리큘럼 검토 자문"
+    }
+  ]
+}

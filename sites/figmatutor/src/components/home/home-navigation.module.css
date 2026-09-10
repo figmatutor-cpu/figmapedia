@@ -1,0 +1,19 @@
+.header { position: fixed; top: 0; inset-inline: 0; z-index: 50; background: oklch(.979 .006 250); color: oklch(.235 .022 260); border-bottom: 1px solid oklch(.86 .014 255); padding-inline: max(6vw, calc((100vw - 1280px) / 2)); }
+.row { display: flex; align-items: center; gap: 30px; min-height: 88px; }
+.logo { font-size: 25px; letter-spacing: -.07em; font-weight: 780; }
+.logo span { display: block; margin-top: 2px; font-size: 10px; letter-spacing: .02em; font-weight: 450; color: oklch(.47 .018 260); }
+.desktop { display: flex; gap: 24px; align-items: center; margin-left: auto; font-size: 13px; }
+.desktop a { padding-block: 15px; }
+.desktop a:hover { color: oklch(.47 .23 265); }
+.contact { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 17px; font-size: 12px; border: 1px solid oklch(.76 .016 255); border-radius: 4px; }
+.contact:hover { border-color: currentColor; }
+.toggle { display: none; width: 44px; height: 44px; align-items: center; justify-content: center; }
+.mobile { padding-block: 8px 18px; }
+.mobile[hidden] { display: none; }
+.mobile a { display: flex; align-items: center; justify-content: space-between; min-height: 50px; font-size: 15px; border-top: 1px solid oklch(.86 .014 255); }
+.header a:focus-visible, .header button:focus-visible { outline: 2px solid oklch(.47 .23 265); outline-offset: 4px; }
+.skip { position: absolute; top: -70px; background: oklch(.47 .23 265); color: oklch(.979 .006 250); padding: 12px; }
+.skip:focus { top: 8px; }
+@media (max-width: 1080px) { .desktop { display: none; } .contact { margin-left: auto; } .toggle { display: flex; } .row { gap: 12px; min-height: 76px; } }
+@media (max-width: 540px) { .header { padding-inline: 22px; } .logo { font-size: 22px; } .contact { padding-inline: 11px; gap: 6px; } }
+@media (min-width: 1081px) { .mobile { display: none; } }

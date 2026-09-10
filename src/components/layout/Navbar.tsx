@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { NAV_ITEMS, SIGNUP_LINK, SIGNUP_LABEL } from "@/lib/navigation";
 import { useSearchContext } from "@/components/search/SearchProvider";
+import { HomeNavigation } from "@/components/home/HomeNavigation";
 import { SearchIcon } from "@/components/ui/SearchIcon";
 
 // 피그마 리소스 / AI 리포트 / 가입하기는 NAV_ITEMS(섹션 DB 기반)에 속하지 않아
@@ -16,31 +17,18 @@ const [PRIMARY_NAV_ITEM, ...REST_NAV_ITEMS] = NAV_ITEMS;
 
 export function Navbar() {
   const pathname = usePathname();
-  const router = useRouter();
+  const { hasSearched } = useSearchContext();
+  if (pathname === "/" && !hasSearched) return <HomeNavigation />;
+  return <ResourceNavbar key={pathname} />;
+}
+
+function ResourceNavbar() {
+  const pathname = usePathname();
   const { toggleSearch, isSearchOpen, hasSearched, clearSearch } =
     useSearchContext();
   const isHome = pathname === "/";
   const [isOpen, setIsOpen] = useState(false);
-  const [headerShapeClass, setHeaderShapeClass] = useState("rounded-full");
-  const shapeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
-    if (shapeTimeoutRef.current) clearTimeout(shapeTimeoutRef.current);
-    if (isOpen) {
-      setHeaderShapeClass("rounded-xl");
-    } else {
-      shapeTimeoutRef.current = setTimeout(() => {
-        setHeaderShapeClass("rounded-full");
-      }, 300);
-    }
-    return () => {
-      if (shapeTimeoutRef.current) clearTimeout(shapeTimeoutRef.current);
-    };
-  }, [isOpen]);
+  const headerShapeClass = isOpen ? "rounded-xl" : "rounded-full";
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -142,7 +130,7 @@ export function Navbar() {
               }`}
               onClick={() => {
                 if (isHome && hasSearched) {
-                  router.push("/figma-info");
+                  clearSearch();
                 } else {
                   toggleSearch();
                 }
@@ -177,6 +165,8 @@ export function Navbar() {
           <button
             className="xl-nav:hidden flex items-center justify-center w-8 h-8 text-gray-300 focus:outline-none"
             onClick={() => setIsOpen(!isOpen)}
+            aria-expanded={isOpen}
+            aria-controls="resource-mobile-nav"
             aria-label={isOpen ? "메뉴 닫기" : "메뉴 열기"}
           >
             {isOpen ? (
@@ -214,6 +204,8 @@ export function Navbar() {
 
       {/* Mobile dropdown — below 1200px */}
       <div
+        id="resource-mobile-nav"
+        inert={!isOpen}
         className={`xl-nav:hidden flex flex-col items-center w-full transition-all ease-in-out duration-300 overflow-hidden
                      ${isOpen ? "max-h-[1000px] opacity-100 pt-4 pb-5" : "max-h-0 opacity-0 pt-0 pb-0 pointer-events-none"}`}
       >

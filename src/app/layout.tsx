@@ -33,11 +33,15 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "HuddlingClub",
+    default: "워크플로우 교육·컨설팅 | HuddlingClub",
     template: "%s | HuddlingClub",
   },
-  description: "AI 시대의 불안감, 행동으로 함께 이겨냅니다.",
+  description: "디자이너와 IT 팀의 워크플로우를 효율화하는 교육·컨설팅. AI 활용, 디자인 시스템, 직군 간 협업을 실제 업무에 연결합니다.",
   keywords: [
+    "워크플로우 컨설팅",
+    "기업 교육",
+    "디자인 업무 효율화",
+    "AI 워크플로우",
     "피그마",
     "Figma",
     "디자인 용어",
@@ -52,8 +56,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "HuddlingClub",
-    description: "AI 시대의 불안감, 행동으로 함께 이겨냅니다.",
+    title: "워크플로우 교육·컨설팅 | HuddlingClub",
+    description: "디자이너와 IT 팀의 워크플로우를 효율화하는 교육·컨설팅. AI 활용, 디자인 시스템, 직군 간 협업을 실제 업무에 연결합니다.",
     url: SITE_URL,
     siteName: "HuddlingClub",
     type: "website",
@@ -69,8 +73,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HuddlingClub",
-    description: "AI 시대의 불안감, 행동으로 함께 이겨냅니다.",
+    title: "워크플로우 교육·컨설팅 | HuddlingClub",
+    description: "디자이너와 IT 팀의 워크플로우를 효율화하는 교육·컨설팅. AI 활용, 디자인 시스템, 직군 간 협업을 실제 업무에 연결합니다.",
     images: ["/og-image.png?v=2"],
   },
   verification: {
@@ -123,7 +127,7 @@ gtag('config', 'G-BN35R5EHNE');`}
                   "@type": "WebSite",
                   name: "HuddlingClub",
                   url: SITE_URL,
-                  description: "AI 시대의 불안감, 행동으로 함께 이겨냅니다.",
+                  description: "디자이너와 IT 팀의 워크플로우를 효율화하는 교육·컨설팅. AI 활용, 디자인 시스템, 직군 간 협업을 실제 업무에 연결합니다.",
                   inLanguage: "ko",
                   potentialAction: {
                     "@type": "SearchAction",
