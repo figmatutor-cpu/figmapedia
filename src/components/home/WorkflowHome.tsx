@@ -49,7 +49,7 @@ export function WorkflowHome() {
 
       <EducationFaq />
 
-      <section id="contact" className={styles.contact} aria-labelledby="contact-heading"><h2 id="contact-heading">진짜 일을 잘 하는 팀은<br />늘 더 잘하는 방법을 고민합니다<TitlePeriod /></h2><p>지금 겪고 있는 업무의 어려움을 들려주세요.<br />팀에 맞는 교육과 컨설팅의 방향을 함께 찾겠습니다.</p><a href={CONTACT_URL} className={styles.contactButton}>교육·컨설팅 문의하기</a><div className={styles.contactNote}><span>참여 직군 · 개선하고 싶은 업무 · 희망 일정</span><span>문의 폼에 남겨주시면 구체적으로 논의할 수 있습니다.</span></div><a className={styles.email} href="mailto:yiseo@figmatutor.info">yiseo@figmatutor.info</a></section>
+      <section id="contact" className={styles.contact} aria-labelledby="contact-heading"><h2 id="contact-heading">진짜 일을 잘 하는 팀은<br />항상 다음을 준비합니다<TitlePeriod /></h2><p>지금 겪고 있는 업무의 어려움을 들려주세요.<br />팀에 맞는 교육과 컨설팅의 방향을 함께 찾겠습니다.</p><a href={CONTACT_URL} className={styles.contactButton}>교육·컨설팅 문의하기</a><div className={styles.contactNote}><span>참여 직군 · 개선하고 싶은 업무 · 희망 일정</span><span>문의 폼에 남겨주시면 구체적으로 논의할 수 있습니다.</span></div><a className={styles.email} href="mailto:yiseo@figmatutor.info">yiseo@figmatutor.info</a></section>
       <Footer />
     </div>
   );
