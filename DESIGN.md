@@ -37,3 +37,7 @@
 ## Search and answer content
 
 홈의 교육 FAQ는 강사 선택, 기업·직무별 교육, Figma AI·MCP, Claude Code, 바이브코딩의 대상과 범위를 설명한다. 공개 FAQ와 figmatutor.info 홈의 JSON-LD는 education-content.ts를 공유한다. 추천 순위나 성과를 만들어 넣지 않으며 실제 강의 이력과 커리큘럼으로 연결한다.
+
+## Team collaboration detail
+
+`/education/team-collaboration`는 메인 세 번째 교육에서 연결한다. Figma `bMenbRUNWUhOuCF4wHMWK2`, 섹션 `29:243`의 3부 구성을 교육 커리큘럼으로 정리했다. 원본 이미지 `29:310`은 `public/images/education/team-collaboration.png`로 보관한다. 에이전트 설정 → Discord·Obsidian·GitHub 지식 공유 → Gmail·Google Calendar·Fireflies 연결 순서다. 원문에 교육 시간이 없어 시간은 협의로 표시한다. 기존 상세 페이지의 스타일과 문의 동선을 재사용한다.
