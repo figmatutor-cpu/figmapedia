@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Footer } from "./Footer";
 import { TitlePeriod } from "./TitlePeriod";
 import { CONTACT_URL } from "./contact";
@@ -60,7 +60,7 @@ export function AiWorkflowCourse() {
         </section>
       </div>
       <section className={styles.contact} aria-labelledby="course-contact-heading">
-        <div className={styles.container}><p className={styles.eyebrow}>우리 팀의 업무에서 시작하세요</p><h2 id="course-contact-heading">어떤 반복 업무를<br />먼저 바꾸고 싶으신가요<TitlePeriod /></h2><p>참여 직군, 개선하고 싶은 업무, 희망 일정을 알려주세요.<br />팀에 맞는 실습 주제와 교육 범위를 함께 정하겠습니다.</p><a href={CONTACT_URL}>이 주제로 문의하기<ArrowUpRight size={20} aria-hidden="true" /></a></div>
+        <div className={styles.container}><p className={styles.eyebrow}>우리 팀의 업무에서 시작하세요</p><h2 id="course-contact-heading">어떤 반복 업무를<br />먼저 바꾸고 싶으신가요<TitlePeriod /></h2><p>참여 직군, 개선하고 싶은 업무, 희망 일정을 알려주세요.<br />팀에 맞는 실습 주제와 교육 범위를 함께 정하겠습니다.</p><a href={CONTACT_URL}>이 주제로 문의하기</a></div>
       </section>
     </article>
     <Footer />

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Footer } from "./Footer";
 import { TitlePeriod } from "./TitlePeriod";
 import { CONTACT_URL } from "./contact";
@@ -91,7 +91,7 @@ export function FigmaDesignSystemCourse() {
         </section>
       </div>
       <section className={styles.contact} aria-labelledby="course-contact-heading">
-        <div className={styles.container}><p className={styles.eyebrow}>우리 팀의 디자인 시스템에서 시작하세요</p><h2 id="course-contact-heading">디자인 기준이 이어지는<br />AI 작업 환경을 만들어보세요<TitlePeriod /></h2><p>사용 중인 디자인 시스템과 구현하고 싶은 화면을 알려주세요.<br />팀에 맞는 실습 주제와 교육 범위를 함께 정하겠습니다.</p><a href={CONTACT_URL}>이 주제로 문의하기<ArrowUpRight size={20} aria-hidden="true" /></a></div>
+        <div className={styles.container}><p className={styles.eyebrow}>우리 팀의 디자인 시스템에서 시작하세요</p><h2 id="course-contact-heading">디자인 기준이 이어지는<br />AI 작업 환경을 만들어보세요<TitlePeriod /></h2><p>사용 중인 디자인 시스템과 구현하고 싶은 화면을 알려주세요.<br />팀에 맞는 실습 주제와 교육 범위를 함께 정하겠습니다.</p><a href={CONTACT_URL}>이 주제로 문의하기</a></div>
       </section>
     </article>
     <Footer />
