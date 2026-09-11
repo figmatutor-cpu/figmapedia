@@ -34,12 +34,12 @@ export function WorkflowHome() {
 
       <section id="programs" className={styles.programs} aria-labelledby="programs-heading">
         <div className={styles.sectionHeading}><div><h2 id="programs-heading">디자이너와 IT 팀을 위한<span className={styles.programTitleBreak}> </span>실무 맞춤<span className={styles.desktopTitleSpace}> </span>교육<TitlePeriod /></h2></div><p>우리 팀의 실제 업무로 배우고,<br />현업에 적용할 AI 워크플로우를 만듭니다.</p></div>
-        <div>{programs.map(program => <article className={styles.program} key={program.number}><span className={styles.programNumber}>{program.number}</span><div><span className={styles.topic}>{program.topic}</span><h3>{program.href ? <Link className={styles.programTitleLink} href={program.href}>{program.title}<ArrowUpRight size={21} aria-hidden="true" /></Link> : program.title}</h3><p>{program.description}</p></div><div className={styles.programDetails}><span>함께하는 대상</span><p>{program.audience}</p><span>함께 만들 결과물</span><p>{program.output}</p><a href={CONTACT_URL}>이 주제로 문의하기 <ArrowUpRight size={16} /></a></div></article>)}</div>
+        <div>{programs.map(program => <article className={styles.program} key={program.number}><span className={styles.programNumber}>{program.number}</span><div><span className={styles.topic}>{program.topic}</span><h3>{program.href ? <Link className={styles.programTitleLink} href={program.href}><span style={{ whiteSpace: "pre-line" }}>{program.title}</span><ArrowUpRight size={21} aria-hidden="true" /></Link> : program.title}</h3><p>{program.description}</p></div><div className={styles.programDetails}><span>함께하는 대상</span><p>{program.audience}</p><span>함께 만들 결과물</span><p>{program.output}</p><a href={CONTACT_URL}>이 주제로 문의하기 <ArrowUpRight size={16} /></a></div></article>)}</div>
       </section>
 
       <LectureHistory />
 
-      <section className={styles.process} aria-labelledby="process-heading"><div className={styles.sectionHeading}><div><h2 id="process-heading">모든 교육은 컨설팅 후<br />우리 조직 맞춤형으로 기획됩니다<TitlePeriod /></h2></div><p>한 번의 강의부터 팀 단위 컨설팅까지.<br />필요한 깊이에 맞춰 함께합니다.</p></div><ol className={styles.processSteps}>{[
+      <section className={styles.process} aria-labelledby="process-heading"><div className={styles.sectionHeading}><div><h2 id="process-heading">모든 교육은 컨설팅 후<br />조직 맞춤형으로 기획 및 진행됩니다<TitlePeriod /></h2></div><p>한 번의 강의부터 팀 단위 컨설팅까지.<br />필요한 깊이에 맞춰 함께합니다.</p></div><ol className={styles.processSteps}>{[
         ["진단", "현재 조직에서 겪고 있는 문제를 파악합니다.", "참여 직군, 사용하는 도구, 반복되는 작업과 협업의 어려움을 살펴봅니다."],
         ["설계와 교육", "문제를 해결하기 위한 커리큘럼 및 교안/실습 제작", "컨설팅 단계에서 확인한 문제를 해결하기 위한 커리큘럼 및 교안, 실습 과제가 제작됩니다."],
         ["적용과 정리", "계속 쓸 수 있게 남깁니다", "실무에서 적용하는 방법을 배워보고, 계속 사용할 수 있는 템플릿과 가이드로 남깁니다. 컨설팅 등 추가 후속 지원 범위도 협의 가능합니다."],

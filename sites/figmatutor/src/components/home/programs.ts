@@ -12,7 +12,7 @@ export const programs = [
     number: "02",
     href: "/education/figma-design-system",
     topic: "Figma AI · Figma MCP · 디자인 시스템",
-    title: "우리 디자인 시스템 기반으로 바이브 코딩하기",
+    title: "우리 디자인 시스템 기반으로\n바이브 코딩하기",
     description: "AI가 디자인 구조와 규칙을 잘 이해할 수 있도록 Figma 디자인 시스템을 정리하는 방법을 배웁니다. 그리고 디자인 시스템을 코드화하고 프로토타이핑하는 과정에서 일관된 산출물을 뽑아낼 수 있도록 디자인 하네스를 설정하고, 우리 팀에 맞는 작업 환경을 구축하는 방법을 배웁니다.",
     audience: "디자이너 · 디자인 리드",
     output: "AI가 활용할 수 있는 Figma 디자인 시스템과\n이를 연결한 AI 작업환경, 디자인 하네스",
