@@ -61,7 +61,7 @@ export function FigmaDesignSystemCourse() {
         <Link className={styles.back} href="/#programs"><ArrowLeft size={16} aria-hidden="true" />교육 프로그램</Link>
         <header className={styles.heading}>
           <p className={styles.eyebrow}>Figma 디자인 시스템 · 디자인 하네스 · 바이브 코딩</p>
-          <h1>{program.title}<TitlePeriod /></h1>
+          <h1 className={courseStyles.lineBreaks}>{program.title.replace(" 기반으로 ", " 기반으로\n")}<TitlePeriod /></h1>
         </header>
         <div className={courseStyles.images}>
           <figure className={styles.figure}>
@@ -87,7 +87,7 @@ export function FigmaDesignSystemCourse() {
         </section>
         <section className={styles.outcomes} aria-labelledby="audience-heading">
           <div><h2 id="audience-heading">함께하는 대상</h2><p>{program.audience}</p></div>
-          <div><h2>함께 만들 결과물</h2><p>{program.output}</p></div>
+          <div><h2>함께 만들 결과물</h2><p className={courseStyles.lineBreaks}>{program.output}</p></div>
         </section>
       </div>
       <section className={styles.contact} aria-labelledby="course-contact-heading">

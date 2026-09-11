@@ -37,7 +37,7 @@
 .note { font-size: 13px; color: var(--muted); line-height: 1.8; border-top: 1px solid var(--line); padding-top: 24px; }
 .outcomes { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; padding-block: 72px 88px; }
 .outcomes h2 { font-size: 15px; color: var(--muted); font-weight: 500; margin-bottom: 18px; }
-.outcomes p { font-size: 23px; font-weight: 550; line-height: 1.65; letter-spacing: -.025em; }
+.outcomes p { white-space: pre-line; font-size: 23px; font-weight: 550; line-height: 1.65; letter-spacing: -.025em; }
 .contact { background: oklch(.22 .008 260); color: oklch(.97 .005 260); text-align: center; padding-block: 80px; }
 .contact .eyebrow { color: oklch(.76 .008 260); }
 .contact h2 { font-size: clamp(30px, 3.5vw, 44px); line-height: 1.4; font-weight: 600; letter-spacing: -.04em; }

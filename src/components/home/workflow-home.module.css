@@ -37,7 +37,7 @@
 .program p { font-size: 14px; line-height: 1.8; color: var(--muted); margin-top: 14px; max-width: 520px; }
 .programDetails { padding-left: 22px; }
 .programDetails > span { display: block; font-size: 10px; color: var(--muted); }
-.programDetails p { margin: 4px 0 17px; color: var(--ink); font-size: 12px; }
+.programDetails p { white-space: pre-line; margin: 4px 0 17px; color: var(--ink); font-size: 12px; }
 .programDetails a { display: inline-flex; gap: 8px; align-items: center; min-height: 44px; font-size: 12px; font-weight: 600; color: var(--accent); }
 .process { padding-block: 100px; }
 .processSteps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; list-style: none; padding: 0; }

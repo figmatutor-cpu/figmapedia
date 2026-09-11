@@ -3,3 +3,5 @@
 .sessionOutput { margin-top: 24px; font-size: 14px !important; }
 .sessionOutput strong { display: block; color: var(--ink); font-size: 13px; font-weight: 550; margin-bottom: 5px; }
 @media (max-width: 540px) { .images { gap: 24px; } }
+
+.lineBreaks { white-space: pre-line; }

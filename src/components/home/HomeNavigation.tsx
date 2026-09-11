@@ -27,7 +27,7 @@ export function HomeNavigation() {
     <a className={styles.skip} href="#main-content">본문으로 건너뛰기</a>
     <div className={styles.row}><Link className={styles.logo} href="/" aria-label="FigmaTutor 홈"><BrandLogo priority /></Link>
       <nav aria-label="주 메뉴" className={styles.desktop}>{links.map(([label, href]) => <a key={href} href={href}>{label}</a>)}</nav>
-      <a className={styles.contact} href={CONTACT_URL}>문의하기 <ArrowUpRight size={16} /></a>
+      <a className={styles.contact} href={CONTACT_URL}>문의하기</a>
       <button id="home-menu-toggle" className={styles.toggle} aria-label={open ? "메뉴 닫기" : "메뉴 열기"} aria-expanded={open} aria-controls="home-mobile-nav" onClick={() => setOpen(!open)}>{open ? <X size={22} /> : <Menu size={22} />}</button>
     </div>
     <nav id="home-mobile-nav" aria-label="모바일 주 메뉴" className={styles.mobile} hidden={!open}>{links.map(([label, href]) => <a key={href} href={href} onClick={() => setOpen(false)}>{label}<ArrowUpRight size={17} /></a>)}<a href={CONTACT_URL} onClick={() => setOpen(false)}>교육·컨설팅 문의<ArrowUpRight size={17} /></a></nav>
