@@ -20,6 +20,23 @@
     "대한상공회의소 경기인력개발원": {
       "organization": "대한상공회의소",
       "period": "2026-09"
+    },
+    "삼성": {
+      "organization": "삼성전자"
     }
-  }
+  },
+  "communityEvents": [
+    {
+      "organization": "Figma 공식 후원 AI 해커톤",
+      "category": "커뮤니티·컨퍼런스",
+      "period": "2026-08",
+      "frequency": "운영"
+    },
+    {
+      "organization": "Tech42 디지털마케팅 인사이트",
+      "category": "커뮤니티·컨퍼런스",
+      "period": "2024-11",
+      "frequency": "연사 참여"
+    }
+  ]
 }
