@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { programs } from "./programs";
 
 const program = programs[0];
-const title = "AI 업무 자동화 교육 | 반복 업무를 줄이는 AI 워크플로우 | 피그마튜터";
+const title = "Claude Code 디자이너 교육 · AI 업무 자동화 | 피그마튜터 하이서";
 const description = "브랜드·경쟁사 컨텍스트 작성부터 역할별 AI 에이전트 제작, CLAUDE.md로 연결하는 자동화까지. 디자이너·PM·IT 실무자를 위한 7시간 실습 교육입니다.";
 export const aiWorkflowMetadata: Metadata = {
   title,

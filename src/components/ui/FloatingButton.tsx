@@ -64,7 +64,7 @@ export function FloatingButton() {
       ? "96px"
       : "28px";
 
-  if (isHome || pathname === "/education/ai-workflow") return null;
+  if (isHome || (pathname === "/education/ai-workflow" || pathname === "/education/figma-design-system")) return null;
 
   return (
     <div

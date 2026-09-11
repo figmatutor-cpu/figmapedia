@@ -21,7 +21,7 @@ export function AiWorkflowCourse() {
       <div className={styles.container}>
         <Link className={styles.back} href="/#programs"><ArrowLeft size={16} aria-hidden="true" />교육 프로그램</Link>
         <header className={styles.heading}>
-          <p className={styles.eyebrow}>AI 업무 자동화 교육</p>
+          <p className={styles.eyebrow}>Claude Code 디자이너 교육 · AI 업무 자동화</p>
           <h1>{program.title}<TitlePeriod /></h1>
         </header>
         <figure className={styles.figure}>

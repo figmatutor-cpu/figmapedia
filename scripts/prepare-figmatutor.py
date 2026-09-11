@@ -13,7 +13,7 @@ paths = [
     Path("src/data/lecture-overrides.json"),
     *[p.relative_to(root) for p in (root / "public/images/footer").glob("*.svg")],
     Path("public/og-highstand.png"),
-    Path("public/images/education/ai-workflow-curriculum.png"),
+    *[p.relative_to(root) for p in (root / "public/images/education").glob("*.png")],
     *[p.relative_to(root) for p in (root / "public/images/approach").glob("*.png")],
     Path("public/logo.svg"),
     Path("public/gnb-logo.svg"),

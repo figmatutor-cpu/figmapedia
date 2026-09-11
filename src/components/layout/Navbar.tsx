@@ -18,7 +18,7 @@ const [PRIMARY_NAV_ITEM, ...REST_NAV_ITEMS] = NAV_ITEMS;
 export function Navbar() {
   const pathname = usePathname();
   const { hasSearched } = useSearchContext();
-  if ((pathname === "/" && !hasSearched) || pathname === "/education/ai-workflow") return <HomeNavigation />;
+  if ((pathname === "/" && !hasSearched) || (pathname === "/education/ai-workflow" || pathname === "/education/figma-design-system")) return <HomeNavigation />;
   return <ResourceNavbar key={pathname} />;
 }
 

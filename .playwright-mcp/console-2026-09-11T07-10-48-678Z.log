@@ -1,0 +1,13 @@
+[   39850ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3004/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   39949ms] [LOG] [HMR] connected @ http://localhost:3004/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   40154ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3004/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  100058ms] [WARNING] Image with src "http://localhost:3004/gnb-logo.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio. @ http://localhost:3004/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  935901ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3004/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  936048ms] [LOG] [HMR] connected @ http://localhost:3004/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  936199ms] [WARNING] Image with src "http://localhost:3004/gnb-logo.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio. @ http://localhost:3004/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  936250ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3004/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  937273ms] [LOG] [Fast Refresh] done in 1125ms @ http://localhost:3004/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  937375ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3004/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  968058ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3004/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  968124ms] [LOG] [HMR] connected @ http://localhost:3004/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  968317ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3004/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297

@@ -1,0 +1,254 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "본문으로 건너뛰기" [ref=e3] [cursor=pointer]:
+      - /url: "#main-content"
+    - generic [ref=e4]:
+      - link "Highstand 홈" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img "Highstand" [ref=e6]
+        - generic [ref=e7]: 실무자 눈높이에 맞는 직무 교육을 추구합니다.
+      - navigation "주 메뉴" [ref=e8]:
+        - link "접근 방식" [ref=e9] [cursor=pointer]:
+          - /url: "#approach"
+        - link "교육·컨설팅" [ref=e10] [cursor=pointer]:
+          - /url: "#programs"
+        - link "강의 이력" [ref=e11] [cursor=pointer]:
+          - /url: "#experience"
+        - link "실무자료실" [ref=e12] [cursor=pointer]:
+          - /url: https://huddling.ai/
+        - link "커뮤니티" [ref=e13] [cursor=pointer]:
+          - /url: https://huddling.club/
+      - link "문의하기" [ref=e14] [cursor=pointer]:
+        - /url: https://tally.so/r/ZjJQry
+  - main [ref=e18]:
+    - generic [ref=e19]:
+      - region [ref=e20]:
+        - generic [ref=e21]:
+          - heading "실무에 바로 적용하는 AI+Figma 효율화, 워크플로우 효율화, 업무 자동화 교육" [level=1] [ref=e22]:
+            - generic [aria-hidden] [ref=e24]: 실무에 바로 적용하는
+            - generic [ref=e26]:
+              - generic [ref=e27]: AI+Figma 효율화 교육.
+              - generic [ref=e28]: 워크플로우 효율화 교육.
+              - generic [ref=e29]: 업무 자동화 교육.
+          - paragraph [ref=e30]: 반복 업무는 줄이고, 중요한 판단에 집중하도록.여러분과 팀의 실제 업무에 맞춰 배우고, 바로 적용합니다.
+          - generic [ref=e31]:
+            - link "교육·컨설팅 문의" [ref=e32] [cursor=pointer]:
+              - /url: https://tally.so/r/ZjJQry
+            - link "교육 프로그램 살펴보기" [ref=e36] [cursor=pointer]:
+              - /url: "#programs"
+          - button "제목 자동 전환 일시정지" [ref=e39] [cursor=pointer]
+      - generic [ref=e43]:
+        - paragraph [ref=e44]:
+          - text: 삼성SDS · 카카오 · NHN · 현대자동차 · 카카오뱅크 등
+          - strong [ref=e45]: 100개 조직의 강의 진행 이력
+        - link "강의·자문 이력 보기" [ref=e46] [cursor=pointer]:
+          - /url: "#experience"
+      - region [ref=e49]:
+        - generic [ref=e50]:
+          - generic [ref=e51]:
+            - heading "새로운 도구를 배우는 일을 넘어 내 업무가 달라지는 경험으로." [level=2] [ref=e52]: 새로운 도구를 배우는 일을 넘어내 업무가 달라지는 경험으로.
+            - generic [ref=e53]:
+              - paragraph [ref=e54]: 기능을 아는 것과 현업에서 활용하는 것 사이에는 간격이 있습니다. 어떤 업무를 줄이고 싶은지, 어느 단계에서 협업이 막히는지부터 함께 살펴봅니다.
+              - paragraph [ref=e55]: 교육의 출발점은 여러분의 실제 업무입니다. 팀의 역할과 숙련도에 맞춰 배우고, 직접 적용하고, 계속 사용할 수 있는 방법을 정리합니다.
+            - navigation "SNS 링크" [ref=e56]:
+              - link "인스타그램 (새 탭)" [ref=e57] [cursor=pointer]:
+                - /url: https://www.instagram.com/figma_tutor
+              - link "유튜브 (새 탭)" [ref=e58] [cursor=pointer]:
+                - /url: https://www.youtube.com/@figma_tutor
+              - link "쓰레드 (새 탭)" [ref=e59] [cursor=pointer]:
+                - /url: https://www.threads.com/@figma_tutor
+              - link "링크드인 (새 탭)" [ref=e60] [cursor=pointer]:
+                - /url: https://www.linkedin.com/in/figmatutor
+          - list "직군별 업무 고민" [ref=e62]:
+            - listitem [ref=e63]:
+              - generic [ref=e65]:
+                - paragraph [ref=e66]: “아이디어를 빠르게 프로토타이핑으로 구현해보고 싶은데, 우리 서비스 톤에 맞게 하기가 어려워요...”
+                - generic [ref=e67]: 기획자
+            - listitem [ref=e68]:
+              - generic [ref=e70]:
+                - paragraph [ref=e71]: “SNS콘텐츠처럼 반복 업무를 자동화하고 더 중요한 일에 집중하고 싶어요.”
+                - generic [ref=e72]: 마케터
+            - listitem [ref=e73]:
+              - generic [ref=e75]:
+                - paragraph [ref=e76]: “AI를 내 작업에 어떻게 반영해야 할지 막막해요”
+                - generic [ref=e77]: 디자이너
+      - region [ref=e78]:
+        - generic [ref=e79]:
+          - heading "디자이너와 IT 팀을 위한 실무 맞춤 교육." [level=2] [ref=e81]
+          - paragraph [ref=e82]: 우리 팀의 실제 업무로 배우고,현업에 적용할 AI 워크플로우를 만듭니다.
+        - generic [ref=e83]:
+          - article [ref=e84]:
+            - generic [ref=e85]: "01"
+            - generic [ref=e86]:
+              - text: AI 워크플로우 · 업무 자동화
+              - heading "반복 업무를 줄이는 AI 워크플로우" [level=3] [ref=e87]
+              - paragraph [ref=e88]: 리서치부터 기획, 화면 설계서 작성, UI 디자인까지. 업무 흐름 속 반복 작업을 AI로 자동화하는 방법을 배웁니다. 우리 조직의 규칙에 맞는 하네스, 스킬, 서브 에이전트를 만들고 새로운 일하는 방식을 설계합니다.
+            - generic [ref=e89]:
+              - generic [ref=e90]: 함께하는 대상
+              - paragraph [ref=e91]: 디자이너 · PM · IT 실무자
+              - generic [ref=e92]: 함께 만들 결과물
+              - paragraph [ref=e93]: 리서치·기획·와이어프레임·UI 디자인 실습 결과물과 조직 맞춤형 AI 작업 환경
+              - link "이 주제로 문의하기" [ref=e94] [cursor=pointer]:
+                - /url: https://tally.so/r/ZjJQry
+          - article [ref=e98]:
+            - generic [ref=e99]: "02"
+            - generic [ref=e100]:
+              - text: Figma · 디자인 시스템 · AI 작업 환경
+              - heading "AI가 이해하는 디자인 시스템" [level=3] [ref=e101]
+              - paragraph [ref=e102]: AI가 디자인의 구조와 규칙을 이해할 수 있도록 Figma 디자인 시스템을 정리합니다. AI 에이전트를 활용해 시스템을 구축하고, 우리 팀의 디자인 기준을 따르는 AI 작업 환경을 직접 설정합니다.
+            - generic [ref=e103]:
+              - generic [ref=e104]: 함께하는 대상
+              - paragraph [ref=e105]: 디자이너 · 디자인 리드
+              - generic [ref=e106]: 함께 만들 결과물
+              - paragraph [ref=e107]: AI가 활용할 수 있는 Figma 디자인 시스템과 이를 연결한 AI 작업 환경
+              - link "이 주제로 문의하기" [ref=e108] [cursor=pointer]:
+                - /url: https://tally.so/r/ZjJQry
+          - article [ref=e112]:
+            - generic [ref=e113]: "03"
+            - generic [ref=e114]:
+              - text: 기획 · 디자인 · 개발 협업
+              - heading "AI로 연결하는 팀의 협업 흐름" [level=3] [ref=e115]
+              - paragraph [ref=e116]: 요구사항 정리부터 프로토타입 제작, 개발 핸드오프까지. 직군 사이를 잇는 협업 과정을 AI로 효율화하는 방법을 배웁니다. 우리 디자인 시스템을 바탕으로 기획·디자인·개발이 이어지는 워크플로우를 설계합니다.
+            - generic [ref=e117]:
+              - generic [ref=e118]: 함께하는 대상
+              - paragraph [ref=e119]: PM · 디자이너 · 개발자
+              - generic [ref=e120]: 함께 만들 결과물
+              - paragraph [ref=e121]: 우리 디자인 시스템을 적용한 화면 설계서·프로토타입과 개발 핸드오프 프로세스
+              - link "이 주제로 문의하기" [ref=e122] [cursor=pointer]:
+                - /url: https://tally.so/r/ZjJQry
+      - region [ref=e126]:
+        - generic [ref=e127]:
+          - heading "다양한 조직의 현장에서 쌓아온 교육 경험." [level=2] [ref=e129]: 다양한 조직의 현장에서쌓아온 교육 경험.
+          - paragraph [ref=e130]: 기업과 플랫폼, 대학과 공공기관까지.2022년부터 이어온 강의와 자문 이력을 소개합니다.
+        - generic [ref=e131]:
+          - generic [ref=e132]:
+            - heading "여러 차례 이어진 교육" [level=3] [ref=e133]
+            - paragraph [ref=e134]: 한 조직에서 반복해 진행한주요 강의 이력입니다.
+          - generic [ref=e135]:
+            - generic [ref=e136]:
+              - strong [ref=e137]: NHN
+              - generic [ref=e138]: 2024-02 ~ 2026-09
+              - generic [ref=e139]: 10회+
+            - generic [ref=e140]:
+              - strong [ref=e141]: 카카오
+              - generic [ref=e142]: 2024-11 ~ 2026-02
+              - generic [ref=e143]: 8회+
+            - generic [ref=e144]:
+              - strong [ref=e145]: 삼성SDS
+              - generic [ref=e146]: 2023-12 ~ 2025-11
+              - generic [ref=e147]: 5회+
+            - generic [ref=e148]:
+              - strong [ref=e149]: 우아한형제들 (배달의민족)
+              - generic [ref=e150]: 2023-10 ~ 2024-09
+              - generic [ref=e151]: 5회+
+        - generic [ref=e152]:
+          - heading "컨설팅과 교육 자문" [level=3] [ref=e153]
+          - generic [ref=e154]:
+            - paragraph [ref=e155]:
+              - strong [ref=e156]: 더워터멜론
+              - generic [ref=e157]: 2026-04 · 컨설팅 1회
+            - paragraph [ref=e158]:
+              - strong [ref=e159]: 서울경제진흥원 (SBA)
+              - generic [ref=e160]: 2025-03 ~ 04 · 커리큘럼 검토 자문
+        - group [ref=e161]:
+          - generic "전체 강의 이력 살펴보기 100개 조직 기록" [ref=e162] [cursor=pointer]:
+            - generic [ref=e163]:
+              - text: 전체 강의 이력 살펴보기
+              - generic [ref=e164]: 100개 조직 기록
+      - region [ref=e167]:
+        - generic [ref=e168]:
+          - heading "배운 다음 날에도 이어지는 변화." [level=2] [ref=e170]: 배운 다음 날에도이어지는 변화.
+          - paragraph [ref=e171]: 한 번의 강의부터 팀 단위 컨설팅까지.필요한 깊이에 맞춰 함께합니다.
+        - list [ref=e172]:
+          - listitem [ref=e173]:
+            - generic [ref=e174]: 01 / 진단
+            - heading "지금의 업무를 이해합니다" [level=3] [ref=e178]
+            - paragraph [ref=e179]: 참여 직군, 사용하는 도구, 반복되는 작업과 협업의 어려움을 살펴봅니다.
+          - listitem [ref=e180]:
+            - generic [ref=e181]: 02 / 설계와 교육
+            - heading "우리 팀의 사례로 배웁니다" [level=3] [ref=e185]
+            - paragraph [ref=e186]: 실제 과제를 바탕으로 커리큘럼을 구성하고, 적용 방법을 함께 실습합니다.
+          - listitem [ref=e187]:
+            - generic [ref=e188]: 03 / 적용과 정리
+            - heading "계속 쓸 수 있게 남깁니다" [level=3] [ref=e190]
+            - paragraph [ref=e191]: 실습 결과를 검토하고 템플릿과 가이드로 정리합니다. 후속 지원 범위는 협의합니다.
+      - region [ref=e192]:
+        - generic [ref=e193]:
+          - heading "오늘의 업무부터, 한 걸음 더." [level=2] [ref=e195]
+          - paragraph [ref=e196]: 실무에서 바로 꺼내 쓰는 지식과 도구.필요한 정보를 찾아보세요.
+        - link "실무자료실에서 검색하기" [ref=e197] [cursor=pointer]:
+          - /url: https://huddling.ai/
+        - generic [ref=e201]:
+          - link [ref=e202] [cursor=pointer]:
+            - /url: https://huddling.ai/figma-info
+            - generic [ref=e203]:
+              - heading "AI & Figma 실무 팁" [level=3] [ref=e204]
+              - paragraph [ref=e205]: 막히는 작업에서 바로 찾아보는 Q&A
+          - link [ref=e209] [cursor=pointer]:
+            - /url: https://huddling.ai/prompt-pedia
+            - generic [ref=e210]:
+              - heading "프롬프트 피디아" [level=3] [ref=e211]
+              - paragraph [ref=e212]: 업무에 맞게 바꿔 쓰는 프롬프트
+          - link [ref=e216] [cursor=pointer]:
+            - /url: https://huddling.ai/figma-resource
+            - generic [ref=e217]:
+              - heading "디자인 리소스" [level=3] [ref=e218]
+              - paragraph [ref=e219]: 템플릿과 튜토리얼로 시작하는 실습
+          - link [ref=e223] [cursor=pointer]:
+            - /url: https://huddling.ai/uxui-study
+            - generic [ref=e224]:
+              - heading "UX/UI 스터디" [level=3] [ref=e225]
+              - paragraph [ref=e226]: 설계의 근거를 넓히는 아티클과 용어
+          - link [ref=e230] [cursor=pointer]:
+            - /url: https://huddling.ai/ai-report
+            - generic [ref=e231]:
+              - heading "AI 리포트" [level=3] [ref=e232]
+              - paragraph [ref=e233]: 실무에 연결해 읽는 AI 소식
+          - link [ref=e237] [cursor=pointer]:
+            - /url: https://huddling.ai/kiosk-food
+            - generic [ref=e238]:
+              - heading "키오스크 레퍼런스" [level=3] [ref=e239]
+              - paragraph [ref=e240]: 실제 사용 맥락을 살펴보는 화면 사례
+        - generic [ref=e244]:
+          - paragraph [ref=e245]: 함께 배우고 실험하는 동료가 필요하다면
+          - link "허들링 클럽 둘러보기" [ref=e246] [cursor=pointer]:
+            - /url: https://huddling.club/
+      - region [ref=e250]:
+        - heading "진짜 일을 잘 하는 팀은 늘 더 잘하는 방법을 고민합니다." [level=2] [ref=e251]: 진짜 일을 잘 하는 팀은늘 더 잘하는 방법을 고민합니다.
+        - paragraph [ref=e252]: 지금 겪고 있는 업무의 어려움을 들려주세요.팀에 맞는 교육과 컨설팅의 방향을 함께 찾겠습니다.
+        - link "교육·컨설팅 문의하기" [ref=e253] [cursor=pointer]:
+          - /url: https://tally.so/r/ZjJQry
+        - generic [ref=e257]:
+          - generic [ref=e258]: 참여 직군 · 개선하고 싶은 업무 · 희망 일정
+          - generic [ref=e259]: 문의 폼에 남겨주시면 구체적으로 논의할 수 있습니다.
+        - link "yiseo@figmatutor.info" [ref=e260] [cursor=pointer]:
+          - /url: mailto:yiseo@figmatutor.info
+      - generic [ref=e262]:
+        - generic [ref=e263]:
+          - link "HighStand 홈" [ref=e264] [cursor=pointer]:
+            - /url: /
+            - img "HighStand" [ref=e265]
+          - generic [ref=e266]:
+            - generic [ref=e267]:
+              - term [ref=e268]: "대표자:"
+              - definition [ref=e269]: 하이서
+            - generic [ref=e270]:
+              - term [ref=e271]: "사업장 주소:"
+              - definition [ref=e272]:
+                - generic [ref=e273]: 경기도 성남시 중원구 광명로 377 신구대학교 창업관 808호
+            - generic [ref=e274]:
+              - term [ref=e275]: "사업자 등록번호:"
+              - definition [ref=e276]: 430-36-01441
+        - generic [ref=e277]:
+          - navigation "SNS 링크" [ref=e278]:
+            - link "인스타그램 (새 탭)" [ref=e279] [cursor=pointer]:
+              - /url: https://www.instagram.com/figma_tutor
+            - link "유튜브 (새 탭)" [ref=e280] [cursor=pointer]:
+              - /url: https://www.youtube.com/@figma_tutor
+            - link "쓰레드 (새 탭)" [ref=e281] [cursor=pointer]:
+              - /url: https://www.threads.com/@figma_tutor
+            - link "링크드인 (새 탭)" [ref=e282] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/figmatutor
+          - paragraph [ref=e283]: ©2026 Highstand. All rights reserved.
+  - button "Open Next.js Dev Tools" [ref=e289] [cursor=pointer]
+  - alert [ref=e293]

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { educationTitle, educationDescription } from "@/components/home/education-content";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -8,8 +9,8 @@ const pretendard = localFont({
   display: "swap",
   weight: "45 920",
 });
-const title = "피그마튜터 하이서 ㅣ 디자이너와 IT팀을 위한 AI&Figma 실무 맞춤 교육";
-const description = "피그마튜터 하이서의 디자이너와 IT팀을 위한 AI&Figma 실무 맞춤 교육. 교육 후 바로 적용할 수 있는 워크플로우 효율화, 업무 자동화, 디자인 시스템 교육과 컨설팅을 제공합니다.";
+const title = `${educationTitle} | 피그마튜터 하이서`;
+const description = educationDescription;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://figmatutor.info"),
