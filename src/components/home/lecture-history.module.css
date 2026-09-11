@@ -26,7 +26,7 @@
 .searchRow { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 20px; }
 .searchRow > p { flex-shrink: 0; font-size: 12px; color: var(--muted); }
 .search { display: flex; gap: 10px; align-items: center; width: min(100%, 350px); padding: 0 14px; border: 1px solid var(--line); border-radius: 4px; }
-.search input { background: transparent; color: var(--ink); min-width: 0; width: 100%; min-height: 46px; outline: none; font-size: 14px; }
+.search input { background: transparent; color: var(--ink); min-width: 0; width: 100%; min-height: 46px; outline: none; font-size: 16px; }
 .search input::placeholder { color: var(--muted); }
 .srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .records { list-style: none; padding: 0; }
