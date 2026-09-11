@@ -56,7 +56,7 @@ export function AiWorkflowCourse() {
         </section>
         <section className={styles.outcomes} aria-labelledby="audience-heading">
           <div><h2 id="audience-heading">함께하는 대상</h2><p>{program.audience}</p></div>
-          <div><h2>함께 만들 결과물</h2><p>{program.output}</p></div>
+          <div><h2>함께 만들 결과물</h2><p>콘텐츠 템플릿, 조직 맞춤형 AI 하네스(서브에이전트, 스킬, 훅 등)</p></div>
         </section>
       </div>
       <section className={styles.contact} aria-labelledby="course-contact-heading">
