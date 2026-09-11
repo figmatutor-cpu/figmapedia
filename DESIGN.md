@@ -29,3 +29,7 @@
 ## Lecture data
 
 원본은 프로젝트 루트의 `figmatutor_lectures.csv`다. `python3 scripts/sync-lectures.py`로 `src/data/lectures.json`을 갱신한다. 강의 진행 100개 조직 기록과 명시적인 커리큘럼 자문 1건을 반영했다. 문의·미팅은 실적에 포함하지 않는다. 기관 이름, 시기, 횟수·과정 단위는 원본을 유지한다. 강의명과 기관별 주제, 성과 수치, 만족도는 원본에 없으므로 추정하지 않는다. 근거 소스에 적힌 개인 메일·캘린더 정보는 공개 데이터에 포함하지 않는다.
+
+## Education detail
+
+`/education/ai-workflow`는 메인 첫 교육 제목에서 연결한다. 제목 → Figma 원본 강의 이미지 → 소개 → 7시간 기본 커리큘럼 → 대상·산출물 → 문의 순서로 구성한다. 커리큘럼은 Figma `bMenbRUNWUhOuCF4wHMWK2`, 노드 `30:842`를 바탕으로 컨텍스트 문서, 역할별 에이전트 4종, CLAUDE.md 연결·검증 과정을 설명한다. 대상·산출물은 `src/components/home/programs.ts`를 메인과 공유한다. 상세 페이지는 데스크톱 최대 1120px, 태블릿 좌우 40px, 모바일 좌우 20px을 사용한다. 문의 링크는 기존 Tally 폼을 사용한다.

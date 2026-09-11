@@ -7,7 +7,7 @@ import { BrandLogo } from "./BrandLogo";
 import { CONTACT_URL } from "./contact";
 import styles from "./home-navigation.module.css";
 
-const links = [["접근 방식", "#approach"], ["교육·컨설팅", "#programs"], ["강의 이력", "#experience"], ["실무자료실", "https://huddling.ai/"], ["커뮤니티", "https://huddling.club/"]];
+const links = [["접근 방식", "/#approach"], ["교육·컨설팅", "/#programs"], ["강의 이력", "/#experience"], ["실무자료실", "https://huddling.ai/"], ["커뮤니티", "https://huddling.club/"]];
 
 export function HomeNavigation() {
   const [open, setOpen] = useState(false);

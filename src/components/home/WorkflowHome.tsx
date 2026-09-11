@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { programs } from "./programs";
 import { Approach } from "./Approach";
 import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
 import { Hero } from "./Hero";
@@ -10,32 +12,7 @@ import { CONTACT_URL } from "./contact";
 import { TitlePeriod } from "./TitlePeriod";
 import styles from "./workflow-home.module.css";
 
-const programs = [
-  {
-    number: "01",
-    topic: "AI 워크플로우 · 업무 자동화",
-    title: "반복 업무를 줄이는 AI 워크플로우",
-    description: "리서치부터 기획, 화면 설계서 작성, UI 디자인까지. 업무 흐름 속 반복 작업을 AI로 자동화하는 방법을 배웁니다. 우리 조직의 규칙에 맞는 하네스, 스킬, 서브 에이전트를 만들고 새로운 일하는 방식을 설계합니다.",
-    audience: "디자이너 · PM · IT 실무자",
-    output: "리서치·기획·와이어프레임·UI 디자인 실습 결과물과 조직 맞춤형 AI 작업 환경",
-  },
-  {
-    number: "02",
-    topic: "Figma · 디자인 시스템 · AI 작업 환경",
-    title: "AI가 이해하는 디자인 시스템",
-    description: "AI가 디자인의 구조와 규칙을 이해할 수 있도록 Figma 디자인 시스템을 정리합니다. AI 에이전트를 활용해 시스템을 구축하고, 우리 팀의 디자인 기준을 따르는 AI 작업 환경을 직접 설정합니다.",
-    audience: "디자이너 · 디자인 리드",
-    output: "AI가 활용할 수 있는 Figma 디자인 시스템과 이를 연결한 AI 작업 환경",
-  },
-  {
-    number: "03",
-    topic: "기획 · 디자인 · 개발 협업",
-    title: "AI로 연결하는 팀의 협업 흐름",
-    description: "요구사항 정리부터 프로토타입 제작, 개발 핸드오프까지. 직군 사이를 잇는 협업 과정을 AI로 효율화하는 방법을 배웁니다. 우리 디자인 시스템을 바탕으로 기획·디자인·개발이 이어지는 워크플로우를 설계합니다.",
-    audience: "PM · 디자이너 · 개발자",
-    output: "우리 디자인 시스템을 적용한 화면 설계서·프로토타입과 개발 핸드오프 프로세스",
-  },
-];
+
 const resources = [
   ["AI & Figma 실무 팁", "막히는 작업에서 바로 찾아보는 Q&A", "/figma-info"],
   ["프롬프트 피디아", "업무에 맞게 바꿔 쓰는 프롬프트", "/prompt-pedia"],
@@ -56,7 +33,7 @@ export function WorkflowHome() {
 
       <section id="programs" className={styles.programs} aria-labelledby="programs-heading">
         <div className={styles.sectionHeading}><div><h2 id="programs-heading">디자이너와 IT 팀을 위한<span className={styles.programTitleBreak}> </span>실무 맞춤<span className={styles.desktopTitleSpace}> </span>교육<TitlePeriod /></h2></div><p>우리 팀의 실제 업무로 배우고,<br />현업에 적용할 AI 워크플로우를 만듭니다.</p></div>
-        <div>{programs.map(program => <article className={styles.program} key={program.number}><span className={styles.programNumber}>{program.number}</span><div><span className={styles.topic}>{program.topic}</span><h3>{program.title}</h3><p>{program.description}</p></div><div className={styles.programDetails}><span>함께하는 대상</span><p>{program.audience}</p><span>함께 만들 결과물</span><p>{program.output}</p><a href={CONTACT_URL}>이 주제로 문의하기 <ArrowUpRight size={16} /></a></div></article>)}</div>
+        <div>{programs.map(program => <article className={styles.program} key={program.number}><span className={styles.programNumber}>{program.number}</span><div><span className={styles.topic}>{program.topic}</span><h3>{program.href ? <Link className={styles.programTitleLink} href={program.href}>{program.title}<ArrowUpRight size={21} aria-hidden="true" /></Link> : program.title}</h3><p>{program.description}</p></div><div className={styles.programDetails}><span>함께하는 대상</span><p>{program.audience}</p><span>함께 만들 결과물</span><p>{program.output}</p><a href={CONTACT_URL}>이 주제로 문의하기 <ArrowUpRight size={16} /></a></div></article>)}</div>
       </section>
 
       <LectureHistory />

@@ -109,3 +109,7 @@
 @media (max-width: 540px) { .clientStrip { padding: 25px 22px; align-items: start; flex-direction: column; gap: 10px; } .clientStrip p { font-size: 12px; } }
 
 @media (max-width: 540px) { .programTitleBreak { display: block; } .desktopTitleSpace { display: none; } }
+
+.programTitleLink { display: inline-flex; align-items: baseline; gap: 10px; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.programTitleLink svg { flex-shrink: 0; align-self: center; }
+.programTitleLink:hover { text-decoration-thickness: 2px; }

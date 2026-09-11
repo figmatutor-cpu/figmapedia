@@ -5,6 +5,6 @@ import { Footer } from "./Footer";
 
 export function FooterWrapper() {
   const pathname = usePathname();
-  if (pathname === "/") return null;
+  if (pathname === "/" || pathname === "/education/ai-workflow") return null;
   return <Footer />;
 }
