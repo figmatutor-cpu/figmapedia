@@ -40,4 +40,4 @@
 
 ## Team collaboration detail
 
-`/education/team-collaboration`는 메인 세 번째 교육에서 연결한다. Figma `bMenbRUNWUhOuCF4wHMWK2`, 섹션 `29:243`의 3부 구성을 교육 커리큘럼으로 정리했다. 원본 이미지 `29:310`은 `public/images/education/team-collaboration.png`로 보관한다. 에이전트 설정 → Discord·Obsidian·GitHub 지식 공유 → Gmail·Google Calendar·Fireflies 연결 순서다. 원문에 교육 시간이 없어 시간은 협의로 표시한다. 기존 상세 페이지의 스타일과 문의 동선을 재사용한다.
+`/education/team-collaboration`는 메인 세 번째 교육에서 연결한다. Figma `bMenbRUNWUhOuCF4wHMWK2`, 섹션 `29:243`의 3부 구성을 교육 커리큘럼으로 정리했다. 원본 이미지 `29:310`은 `public/images/education/team-collaboration.png`로 보관한다. 에이전트 설정 → Slack 또는 Discord·Obsidian·GitHub 지식 공유 → Gmail·Google Calendar·Fireflies 연결 순서다. 원문에 교육 시간이 없어 시간은 협의로 표시한다. 기존 상세 페이지의 스타일과 문의 동선을 재사용한다.

@@ -19,7 +19,7 @@ export function Hero() {
           <span aria-hidden="true" className={`${styles.heroSubjects} ${paused ? styles.paused : ""}`}>
             <span className={styles.rotatingWords}>
               {titles.map((title, index) => (
-                <span key={title} className={styles.rotatingWord} style={{ animationDelay: `${-((titles.length - index) % titles.length) * 3}s` }}>{title}<TitlePeriod /></span>
+                <span key={title} className={styles.rotatingWord} style={{ animationDelay: `${-((titles.length - index) % titles.length) * 2.5}s` }}>{title}<TitlePeriod /></span>
               ))}
             </span>
           </span>

@@ -22,7 +22,7 @@ export const programs = [
     href: "/education/team-collaboration",
     topic: "AI 에이전트 · 팀 지식 공유 · 협업 자동화",
     title: "AI로 연결하는 팀의 협업 흐름",
-    description: "반복되는 질문과 흩어진 업무 정보를 팀이 함께 활용할 수 있도록 연결합니다. 우리 조직의 맥락을 기억하는 AI 에이전트를 설정하고, Discord·Obsidian으로 지식을 공유하며 메일·일정·회의록을 하나의 협업 흐름으로 연결하는 방법을 배웁니다.",
+    description: "반복되는 질문과 흩어진 업무 정보를 팀이 함께 활용할 수 있도록 연결합니다. 우리 조직의 맥락을 기억하는 AI 에이전트를 설정하고, Slack 또는 Discord·Obsidian으로 지식을 공유하며 메일·일정·회의록을 하나의 협업 흐름으로 연결하는 방법을 배웁니다.",
     audience: "PM · 디자이너 · 개발자",
     output: "팀 전용 AI 에이전트와 공유 지식 저장소,\n메일·일정·회의록을 연결한 협업 워크플로우",
   },

@@ -6,7 +6,8 @@
     "다빈치",
     "제로베이스",
     "온오프믹스",
-    "네이버Z"
+    "네이버Z",
+    "아모레퍼시픽"
   ],
   "addOrganizations": [
     {
@@ -23,9 +24,18 @@
     },
     "삼성": {
       "organization": "삼성전자"
+    },
+    "이니스프리": {
+      "organization": "아모레퍼시픽 이니스프리"
     }
   },
   "communityEvents": [
+    {
+      "organization": "Framer 해커톤",
+      "category": "커뮤니티·컨퍼런스",
+      "period": "2026-09",
+      "frequency": ""
+    },
     {
       "organization": "Figma 공식 후원 AI 해커톤",
       "category": "커뮤니티·컨퍼런스",

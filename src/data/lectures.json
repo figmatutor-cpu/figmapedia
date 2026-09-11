@@ -325,13 +325,7 @@
       "frequency": "1회"
     },
     {
-      "organization": "아모레퍼시픽",
-      "category": "유통·소비재",
-      "period": "2024-10",
-      "frequency": "1회"
-    },
-    {
-      "organization": "이니스프리",
+      "organization": "아모레퍼시픽 이니스프리",
       "category": "유통·소비재",
       "period": "2024-10",
       "frequency": "1회"
@@ -609,6 +603,12 @@
     }
   ],
   "communityEvents": [
+    {
+      "organization": "Framer 해커톤",
+      "category": "커뮤니티·컨퍼런스",
+      "period": "2026-09",
+      "frequency": ""
+    },
     {
       "organization": "Figma 공식 후원 AI 해커톤",
       "category": "커뮤니티·컨퍼런스",

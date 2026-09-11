@@ -21,22 +21,22 @@ const modules = [
     output: "팀의 업무 맥락과 실행 규칙을 반영한 AI 에이전트 작업 환경",
   },
   {
-    title: "Discord와 Obsidian으로 하나의 소통 창구 만들기",
-    description: "개인이 가진 정보를 팀이 함께 활용할 수 있도록 연결합니다. Discord에서 에이전트와 대화하고, Obsidian에 팀의 지식을 정리하며, GitHub로 변경 내용을 공유하는 흐름을 만듭니다.",
+    title: "Slack 또는 Discord와 Obsidian으로 하나의 소통 창구 만들기",
+    description: "개인이 가진 정보를 팀이 함께 활용할 수 있도록 연결합니다. Slack 또는 Discord에서 에이전트와 대화하고, Obsidian에 팀의 지식을 정리하며, GitHub로 변경 내용을 공유하는 흐름을 만듭니다.",
     practice: [
-      "Discord 봇 생성과 Hermes Agent 연결",
+      "Slack 또는 Discord 봇 생성과 Hermes Agent 연결",
       "Obsidian 볼트 생성과 팀의 지식 저장 구조 설정",
       "에이전트가 참고할 볼트 사용 규칙 작성",
       "GitHub를 통한 양방향 동기화와 봇의 지식 조회 확인",
     ],
-    output: "팀이 함께 사용하는 Discord 봇과 Obsidian 지식 저장소, GitHub 동기화 흐름",
+    output: "팀이 함께 사용하는 Slack 또는 Discord 봇과 Obsidian 지식 저장소, GitHub 동기화 흐름",
   },
   {
     title: "메일·일정·회의록을 실제 협업 흐름으로 연결하기",
     description: "팀이 이미 사용하는 도구를 연결해 대화가 다음 업무로 이어지도록 만듭니다. 회의 기록을 요약하고 지식 저장소에 남긴 뒤, 다음 회의 안건과 액션 아이템으로 이어지는 과정을 실습합니다.",
     practice: [
       "Gmail·Google Calendar·Fireflies 연결",
-      "Discord 봇을 통한 일정 예약과 회의록·액션 아이템 확인",
+      "Slack 또는 Discord 봇을 통한 일정 예약과 회의록·액션 아이템 확인",
       "Fireflies 회의 기록 → 봇의 요약 보고 → Obsidian 저장 흐름 구성",
       "저장된 회의록을 바탕으로 다음 회의 안건 도출",
       "우리 팀의 병목 구간에 맞춰 협업 워크플로우 적용",
@@ -55,7 +55,7 @@ export function TeamCollaborationCourse() {
           <h1>AI로 연결하는<br />팀의 협업 흐름<TitlePeriod /></h1>
         </header>
         <figure className={styles.figure}>
-          <Image src="/images/education/team-collaboration.png" alt="팀의 협업 문제, 맥락을 기억하는 Hermes Agent, Discord 봇과 Obsidian 지식 저장소의 연결을 소개하는 강의 슬라이드 5장" width={1358} height={688} priority sizes="(max-width: 540px) calc(100vw - 40px), (max-width: 1100px) calc(100vw - 80px), 1120px" />
+          <Image src="/images/education/team-collaboration.png" alt="팀의 협업 문제, 맥락을 기억하는 Hermes Agent, Slack 또는 Discord 봇과 Obsidian 지식 저장소의 연결을 소개하는 강의 슬라이드 5장" width={1358} height={688} priority sizes="(max-width: 540px) calc(100vw - 40px), (max-width: 1100px) calc(100vw - 80px), 1120px" />
           <figcaption>강의 자료 미리보기 · 팀의 맥락을 기억하고 지식을 공유하는 AI 협업 환경</figcaption>
         </figure>
         <div className={styles.introduction}>
