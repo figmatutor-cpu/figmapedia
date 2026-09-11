@@ -8,8 +8,14 @@ root = Path(__file__).resolve().parents[1]
 site = root / "sites/figmatutor"
 subprocess.run([sys.executable, str(root / "scripts/sync-lectures.py")], check=True)
 paths = [
-    *[p.relative_to(root) for p in (root / "src/components/home").iterdir() if p.suffix in {".tsx", ".css"}],
+    *[p.relative_to(root) for p in (root / "src/components/home").iterdir() if p.suffix in {".tsx", ".ts", ".css"}],
     Path("src/data/lectures.json"),
+    Path("src/data/lecture-overrides.json"),
+    *[p.relative_to(root) for p in (root / "public/images/footer").glob("*.svg")],
+    Path("public/og-highstand.png"),
+    *[p.relative_to(root) for p in (root / "public/images/approach").glob("*.png")],
+    Path("public/logo.svg"),
+    Path("public/favicon.svg"),
     Path("public/fonts/PretendardVariable.woff2"),
     Path("public/images/team/figma_tutor.png"),
 ]

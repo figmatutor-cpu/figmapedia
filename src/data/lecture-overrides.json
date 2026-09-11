@@ -1,0 +1,25 @@
+{
+  "excludeOrganizations": [
+    "이노플레이 (CJ그룹사)",
+    "SK",
+    "러닝스푼즈",
+    "다빈치",
+    "제로베이스",
+    "온오프믹스",
+    "네이버Z"
+  ],
+  "addOrganizations": [
+    {
+      "organization": "부산 인재원",
+      "category": "공공·기관",
+      "period": "2026-08",
+      "frequency": "미상"
+    }
+  ],
+  "updateOrganizations": {
+    "대한상공회의소 경기인력개발원": {
+      "organization": "대한상공회의소",
+      "period": "2026-09"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+.footer { background: #fff; color: #2d2e2e; border-top: 1px solid #e6e8ec; padding: 64px clamp(40px, 8.333vw, 160px) 48px; }
+.inner { max-width: 1600px; margin-inline: auto; }
+.branding { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.logo { display: inline-flex; align-items: center; min-height: 28.252px; }
+.logo img { width: 164px; height: 28.252px; }
+.details { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 0; font-size: 16px; line-height: 1.4; }
+.details > div { display: flex; align-items: baseline; gap: 5px; min-width: 0; }
+.details > div + div::before { content: ""; border-left: 1px solid #6b6f76; height: 12px; margin-right: 11px; }
+.details dt { flex-shrink: 0; }
+.details dt::after { content: ":"; }
+.details dd { margin: 0; }
+.details address { font-style: normal; }
+.meta { display: flex; flex-direction: row-reverse; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid #e6e8ec; margin-top: 24px; padding-top: 24px; }
+.social { display: flex; align-items: center; gap: 20px; flex-shrink: 0; }
+.social a { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; }
+.social img { width: 40px; height: 40px; }
+.social a:hover { opacity: .65; }
+.copyright { color: #6b6f76; font-size: 12px; line-height: 1.5; }
+@media (max-width: 1100px) {
+  .footer { padding: 56px 40px 48px; }
+  .branding { gap: 40px; }
+  .details { display: block; font-size: 12px; }
+  .details > div, .details dt, .details dd, .details address { display: inline; }
+  .details dt { margin-right: 5px; }
+  .details > div + div::before { display: inline-block; margin-left: 12px; }
+  .details > div:last-child { display: block; }
+  .details > div:last-child::before { display: none; }
+  .meta { flex-direction: column; align-items: stretch; gap: 32px; border: 0; margin-top: 40px; padding-top: 0; }
+  .social { align-self: flex-end; gap: 4px; }
+  .social img { width: 32px; height: 32px; }
+  .copyright { border-top: 1px solid #e6e8ec; padding-top: 40px; }
+}
+@media (max-width: 600px) {
+  .footer { padding: 48px 24px 40px; }
+  .branding { gap: 32px; }
+  .details { display: flex; flex-direction: column; gap: 20px; }
+  .details > div, .details > div:last-child { display: flex; flex-direction: column; gap: 6px; }
+  .details dt, .details dd, .details address { display: block; }
+  .details > div + div::before { display: none; }
+  .details dt { font-weight: 400; }
+  .details dt::after { content: none; }
+  .details dd { color: #6b6f76; }
+  .meta { margin-top: 32px; gap: 32px; }
+  .copyright { padding-top: 32px; }
+}

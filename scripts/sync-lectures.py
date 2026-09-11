@@ -16,6 +16,20 @@ lectures = [
      "period": row["시기"], "frequency": row["횟수"]}
     for row in rows if row["상태"] == "강의 진행"
 ]
+# Apply the site owner's corrections after importing the source records.
+overrides_path = root / "src/data/lecture-overrides.json"
+if overrides_path.exists():
+    overrides = json.loads(overrides_path.read_text(encoding="utf-8"))
+    excluded = set(overrides["excludeOrganizations"])
+    lectures = [item for item in lectures if item["organization"] not in excluded]
+    updates = overrides.get("updateOrganizations", {})
+    lectures = [{**item, **updates.get(item["organization"], {})} for item in lectures]
+    names = {item["organization"] for item in lectures}
+    for item in overrides["addOrganizations"]:
+        if item["organization"] not in names and item["organization"] not in excluded:
+            lectures.append(item)
+            names.add(item["organization"])
+
 # This advisory engagement is explicitly described in the source. Other
 # non-lecture entries are partnership meetings/content, not consulting work.
 advisory = [
