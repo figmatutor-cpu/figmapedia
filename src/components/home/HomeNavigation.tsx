@@ -25,7 +25,7 @@ export function HomeNavigation() {
 
   return <header className={styles.header}>
     <a className={styles.skip} href="#main-content">본문으로 건너뛰기</a>
-    <div className={styles.row}><Link className={styles.logo} href="/" aria-label="Highstand 홈"><BrandLogo priority /><span>실무자 눈높이에 맞는 직무 교육을 추구합니다.</span></Link>
+    <div className={styles.row}><Link className={styles.logo} href="/" aria-label="FigmaTutor 홈"><BrandLogo priority /><span>실무자 눈높이에 맞는 직무 교육을 추구합니다.</span></Link>
       <nav aria-label="주 메뉴" className={styles.desktop}>{links.map(([label, href]) => <a key={href} href={href}>{label}</a>)}</nav>
       <a className={styles.contact} href={CONTACT_URL}>문의하기 <ArrowUpRight size={16} /></a>
       <button id="home-menu-toggle" className={styles.toggle} aria-label={open ? "메뉴 닫기" : "메뉴 열기"} aria-expanded={open} aria-controls="home-mobile-nav" onClick={() => setOpen(!open)}>{open ? <X size={22} /> : <Menu size={22} />}</button>

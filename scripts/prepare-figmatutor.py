@@ -15,6 +15,7 @@ paths = [
     Path("public/og-highstand.png"),
     *[p.relative_to(root) for p in (root / "public/images/approach").glob("*.png")],
     Path("public/logo.svg"),
+    Path("public/gnb-logo.svg"),
     Path("public/favicon.svg"),
     Path("public/fonts/PretendardVariable.woff2"),
     Path("public/images/team/figma_tutor.png"),
