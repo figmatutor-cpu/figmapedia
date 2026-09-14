@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const STORAGE_KEY = "huddling-club-3rd-open-banner-dismissed";
-const SPONSOR_URL = "https://www.huddling.club/shop_view/?idx=14";
+const STORAGE_KEY = "huddling-club-3rd-banner-dismissed";
+const SPONSOR_URL = "https://tally.so/r/GxVDYj";
 
 interface SponsorBannerProps {
   className?: string;
@@ -55,7 +55,7 @@ export function SponsorBanner({ className }: SponsorBannerProps) {
           <span className="font-medium text-white">
             성장하는 디자이너, IT 실무자를 위한 AI 커뮤니티
           </span>{" "}
-          <span className="text-gray-300">허들링 클럽 3기 모집 오픈</span>
+          <span className="text-gray-300">허들링 클럽 3기 대기 신청</span>
         </span>
         <span className="hidden shrink-0 items-center justify-center rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-black transition-colors hover:bg-gray-100 sm:inline-flex">
           바로가기
