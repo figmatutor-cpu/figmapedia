@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useSearchContext } from "@/components/search/SearchProvider";
 
-const PRE_REGISTER_LINK = "https://tally.so/r/GxVDYj";
+const PRE_REGISTER_LINK = "https://www.huddling.club/shop_view/?idx=14";
 
 export function FloatingButton() {
   const [footerVisible, setFooterVisible] = useState(false);
@@ -69,7 +69,7 @@ export function FloatingButton() {
       style={{ bottom: bottomValue }}
       className="fixed right-7 z-50 flex flex-col items-end gap-3 transition-[bottom] duration-200"
     >
-      {/* 허들링 클럽 사전 신청 CTA */}
+      {/* 허들링 클럽 3기 모집 CTA */}
       <div className="relative">
         <span className="absolute inset-0 rounded-[1000px] bg-white/20 animate-[floating-ripple_2s_ease-out_infinite]" />
         <span className="absolute inset-0 rounded-[1000px] bg-white/15 animate-[floating-ripple_2s_ease-out_0.6s_infinite]" />
@@ -95,7 +95,7 @@ export function FloatingButton() {
           <span className="text-center font-bold leading-tight text-sm select-none whitespace-nowrap">
             허들링 클럽
             <br />
-            3기 대기 신청
+            3기 오픈
           </span>
         </a>
       </div>
