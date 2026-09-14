@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { educationTitle, educationDescription } from "@/components/home/education-content";
 import Script from "next/script";
 import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
@@ -34,15 +33,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${educationTitle} | HuddlingClub`,
+    default: "HuddlingClub",
     template: "%s | HuddlingClub",
   },
-  description: educationDescription,
+  description: "AI 시대의 불안감, 행동으로 함께 이겨냅니다.",
   keywords: [
-    "워크플로우 컨설팅",
-    "기업 교육",
-    "디자인 업무 효율화",
-    "AI 워크플로우",
     "피그마",
     "Figma",
     "디자인 용어",
@@ -57,8 +52,8 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/" },
   openGraph: {
-    title: `${educationTitle} | HuddlingClub`,
-    description: educationDescription,
+    title: "HuddlingClub",
+    description: "AI 시대의 불안감, 행동으로 함께 이겨냅니다.",
     url: SITE_URL,
     siteName: "HuddlingClub",
     type: "website",
@@ -74,8 +69,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${educationTitle} | HuddlingClub`,
-    description: educationDescription,
+    title: "HuddlingClub",
+    description: "AI 시대의 불안감, 행동으로 함께 이겨냅니다.",
     images: ["/og-image.png?v=2"],
   },
   verification: {
@@ -128,7 +123,7 @@ gtag('config', 'G-BN35R5EHNE');`}
                   "@type": "WebSite",
                   name: "HuddlingClub",
                   url: SITE_URL,
-                  description: educationDescription,
+                  description: "AI 시대의 불안감, 행동으로 함께 이겨냅니다.",
                   inLanguage: "ko",
                   potentialAction: {
                     "@type": "SearchAction",

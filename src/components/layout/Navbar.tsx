@@ -6,7 +6,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { NAV_ITEMS, SIGNUP_LINK, SIGNUP_LABEL } from "@/lib/navigation";
 import { useSearchContext } from "@/components/search/SearchProvider";
-import { HomeNavigation } from "@/components/home/HomeNavigation";
 import { SearchIcon } from "@/components/ui/SearchIcon";
 
 // 피그마 리소스 / AI 리포트 / 가입하기는 NAV_ITEMS(섹션 DB 기반)에 속하지 않아
@@ -17,8 +16,6 @@ const [PRIMARY_NAV_ITEM, ...REST_NAV_ITEMS] = NAV_ITEMS;
 
 export function Navbar() {
   const pathname = usePathname();
-  const { hasSearched } = useSearchContext();
-  if ((pathname === "/" && !hasSearched) || (pathname === "/education/ai-workflow" || pathname === "/education/figma-design-system" || pathname === "/education/team-collaboration")) return <HomeNavigation />;
   return <ResourceNavbar key={pathname} />;
 }
 

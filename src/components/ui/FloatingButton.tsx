@@ -64,8 +64,6 @@ export function FloatingButton() {
       ? "96px"
       : "28px";
 
-  if (isHome || (pathname === "/education/ai-workflow" || pathname === "/education/figma-design-system" || pathname === "/education/team-collaboration")) return null;
-
   return (
     <div
       style={{ bottom: bottomValue }}
