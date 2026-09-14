@@ -165,5 +165,5 @@ export const CTA_LINK = "https://open.kakao.com/o/gPjVAOXf";
 export const CTA_LABEL = "오카방 참여하기";
 
 /** GNB 우측 끝 가입하기 메뉴 — 허들링 클럽 3기 모집 페이지로 새 탭 이동 */
-export const SIGNUP_LINK = "https://www.huddling.club/shop_view/?idx=14";
+export const SIGNUP_LINK = "https://www.huddling.club/shop_view?idx=14";
 export const SIGNUP_LABEL = "가입하기";
