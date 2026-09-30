@@ -70,6 +70,7 @@ export default function HomePage() {
 
       {/* Single persistent search — never unmounts, position via bottom only */}
       <div
+        data-home-search-position={searchAtBottom ? "bottom" : "hero"}
         className={`fixed left-1/2 -translate-x-1/2 z-40 w-full px-4 ${
           searchAtBottom
             ? "bottom-6 max-w-3xl"

@@ -61,7 +61,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     const inputPl = "pl-[28px]";
 
     return (
-      <div className={className}>
+      <div className={className} data-search-input>
         <div
           className={`relative rounded-2xl p-[2px] ${shadow} bg-linear-to-br from-white/10 via-white/5 to-black/20`}
         >

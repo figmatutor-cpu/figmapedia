@@ -180,6 +180,19 @@ body {
   scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 }
 
+/* Follow the actual home search position, including scrolling before a search. */
+body:has([data-home-search-position="bottom"]) .floating-promo {
+  --floating-search-clearance: 96px;
+}
+
+/* Leave the mobile keyboard and search controls unobstructed while editing. */
+@media (max-width: 767px) {
+  body:has([data-search-input]:focus-within) .floating-promo {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
 @keyframes floating-ripple {
   0% {
     transform: scale(1);

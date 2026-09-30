@@ -66,8 +66,8 @@ export function FloatingButton() {
 
   return (
     <div
-      style={{ bottom: bottomValue }}
-      className="fixed right-7 z-50 flex flex-col items-end gap-3 transition-[bottom] duration-200"
+      style={{ bottom: `max(${bottomValue}, var(--floating-search-clearance, 28px))` }}
+      className="floating-promo fixed right-7 z-50 flex flex-col items-end gap-3 transition-[bottom] duration-200"
     >
       {/* 허들링 클럽 3기 모집 CTA */}
       <div className="relative">
