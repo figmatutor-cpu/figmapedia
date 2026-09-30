@@ -17,6 +17,8 @@ export interface AiReportIssue {
   summary: string;
   /** 발행일 YYYY-MM-DD (KST 기준). 이 날짜 전에는 목록에 노출되지 않는다 */
   publishedAt: string;
+  /** 발행인 표기 (예: "뜨이(김대일)"). 없으면 표시하지 않는다 */
+  publisher?: string;
   /** 리포트 앱 기준 절대 경로 (예: /community/report/001) */
   path: string;
   /** true면 발행일과 무관하게 숨김 (작성 중) */
@@ -100,6 +102,10 @@ function normalize(raw: unknown): AiReportIssue | null {
     title: r.title.trim(),
     summary: typeof r.summary === "string" ? r.summary.trim() : "",
     publishedAt: r.publishedAt,
+    publisher:
+      typeof r.publisher === "string" && r.publisher.trim()
+        ? r.publisher.trim()
+        : undefined,
     path: r.path.trim(),
     draft: r.draft === true,
   };

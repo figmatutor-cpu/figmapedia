@@ -106,6 +106,7 @@ export default async function AiReportIssuePage({
           </span>
           <span className="text-xs text-gray-500">
             {formatIssueDateLong(report.publishedAt)}
+            {report.publisher && ` · ${report.publisher}`}
           </span>
         </div>
 

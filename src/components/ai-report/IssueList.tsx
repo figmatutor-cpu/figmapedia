@@ -66,6 +66,13 @@ function IssueRow({
         </span>
       )}
 
+      {/* 발행인 — 모바일은 행이 좁아 숨긴다 */}
+      {report.publisher && (
+        <span className="hidden sm:inline shrink-0 text-xs text-gray-600 group-hover:text-gray-400 transition-colors">
+          {report.publisher}
+        </span>
+      )}
+
       <time
         dateTime={report.publishedAt}
         className="shrink-0 text-xxs sm:text-xs tabular-nums text-gray-600 group-hover:text-gray-400 transition-colors"
