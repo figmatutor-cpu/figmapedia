@@ -1,0 +1,20 @@
+/*
+ * Storybook 전용 보정
+ * - next/font(layout.tsx)가 주입하는 폰트 변수를 대신 정의
+ * - 실제 사이트의 body 배경(bg-bg-base)을 캔버스에도 적용
+ */
+@font-face {
+  font-family: "Pretendard Variable";
+  src: url("/fonts/PretendardVariable.woff2") format("woff2");
+  font-weight: 45 920;
+  font-display: swap;
+}
+
+:root {
+  --font-pretendard: "Pretendard Variable";
+  --font-geist-mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+body.sb-show-main {
+  background: var(--color-bg-base);
+}
