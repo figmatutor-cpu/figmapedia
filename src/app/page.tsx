@@ -19,6 +19,7 @@ const HeroWave = dynamic(
 export default function HomePage() {
   const { hasSearched } = useSearchContext();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   useEffect(() => {
     if (hasSearched) {
@@ -34,6 +35,13 @@ export default function HomePage() {
   }, [hasSearched]);
 
   const searchAtBottom = hasSearched || isScrolled;
+
+  // Mobile only: while typing, pin search just below the navbar (84px) so the
+  // keyboard and iOS AutoFill bar never cover it. 148px = 96px top + 52px input.
+  // Position still changes via `bottom` only to keep input focus on iOS.
+  const focusedMobileClass = isSearchFocused
+    ? "max-md:bottom-[calc(100%_-_var(--spacing)*37)] max-md:translate-y-0"
+    : "";
 
   return (
     <main className="bg-bg-base">
@@ -68,6 +76,15 @@ export default function HomePage() {
         </>
       )}
 
+      {/* Mobile focus backdrop — dims content behind the pinned search */}
+      {isSearchFocused && (
+        <div
+          className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm md:hidden"
+          aria-hidden="true"
+          onClick={() => (document.activeElement as HTMLElement | null)?.blur()}
+        />
+      )}
+
       {/* Single persistent search — never unmounts, position via bottom only */}
       <div
         data-home-search-position={searchAtBottom ? "bottom" : "hero"}
@@ -75,7 +92,7 @@ export default function HomePage() {
           searchAtBottom
             ? "bottom-6 max-w-3xl"
             : "bottom-1/2 translate-y-1/2 max-w-[600px]"
-        }`}
+        } ${focusedMobileClass}`}
       >
         {/* Hero text — CSS hide instead of unmount to prevent layout shift */}
         <div
@@ -83,7 +100,7 @@ export default function HomePage() {
             searchAtBottom
               ? "max-h-0 opacity-0 mb-0"
               : "max-h-40 opacity-100 mb-8"
-          }`}
+          } ${isSearchFocused ? "max-md:max-h-0 max-md:opacity-0 max-md:mb-0" : ""}`}
           aria-hidden={searchAtBottom}
         >
           <h1 className="text-white text-2xl sm:text-4xl font-semibold tracking-tight drop-shadow-[0_1px_8px_rgba(31,61,188,0.25)] leading-snug">
@@ -96,7 +113,10 @@ export default function HomePage() {
             정보를 한곳에서.
           </p>
         </div>
-        <HeroSearch />
+        <HeroSearch
+          onFocus={() => setIsSearchFocused(true)}
+          onBlur={() => setIsSearchFocused(false)}
+        />
       </div>
     </main>
   );

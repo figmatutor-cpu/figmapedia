@@ -9,7 +9,12 @@ import {
   TYPING_ANIMATION,
 } from "@/lib/constants";
 
-export function HeroSearch() {
+interface HeroSearchProps {
+  onFocus?: () => void;
+  onBlur?: () => void;
+}
+
+export function HeroSearch({ onFocus, onBlur }: HeroSearchProps = {}) {
   const { query, setQuery, triggerAISearch, isAISearching, cancelAISearch } =
     useSearchContext();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -101,6 +106,8 @@ export function HeroSearch() {
       isSearching={isAISearching}
       placeholder={animatedPlaceholder}
       variant="hero"
+      onFocus={onFocus}
+      onBlur={onBlur}
       className="w-full max-w-[600px] mx-auto"
     />
   );

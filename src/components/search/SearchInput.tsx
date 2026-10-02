@@ -13,6 +13,8 @@ interface SearchInputProps {
   placeholder?: string;
   variant: "hero" | "overlay";
   className?: string;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
@@ -26,6 +28,8 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       placeholder = "검색어를 입력하세요",
       variant,
       className = "",
+      onFocus,
+      onBlur,
     },
     ref,
   ) {
@@ -76,6 +80,8 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
               value={query}
               onChange={(e) => onQueryChange(e.target.value)}
               onKeyDown={handleKeyDown}
+              onFocus={onFocus}
+              onBlur={onBlur}
               placeholder={placeholder}
               className={`w-full rounded-2xl ${bgClass} border border-white/10 text-white placeholder:text-white/40 outline-none focus:ring-2 focus:ring-brand-blue/40 focus:border-brand-blue/40 backdrop-blur-md ${inputPl} pr-[100px] h-12 sm:h-14 text-base`}
               autoComplete="off"
@@ -83,6 +89,8 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
             />
             <button
               type="button"
+              // Keep input focus on press so a focus-driven layout shift can't move the button before click
+              onMouseDown={(e) => e.preventDefault()}
               onClick={handleSearchClick}
               disabled={!isSearching && !query.trim()}
               className={`absolute right-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center gap-1.5 h-9 px-4 rounded-xl text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap ${
