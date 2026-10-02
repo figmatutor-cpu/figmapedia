@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { HeroSearch } from "@/components/search/HeroSearch";
 import { SearchResults } from "@/components/search/SearchResults";
 import { useSearchContext } from "@/components/search/SearchProvider";
 import { SponsorBanner } from "@/components/ui/SponsorBanner";
-import { HomeSections } from "@/components/hero/HomeSections";
 
 const HeroWave = dynamic(
   () =>
@@ -18,40 +17,41 @@ const HeroWave = dynamic(
 
 export default function HomePage() {
   const { hasSearched } = useSearchContext();
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
 
+  // iOS pans the visual viewport when the keyboard opens, which would push the
+  // pinned search off-screen. Track the pan and offset the search back into view.
   useEffect(() => {
-    if (hasSearched) {
-      setIsScrolled(false);
-      return;
-    }
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > window.innerHeight * 0.3);
+    const vv = window.visualViewport;
+    const el = searchContainerRef.current;
+    if (!isSearchFocused || !vv || !el) return;
+    const update = () =>
+      el.style.setProperty("--vv-offset", `${vv.offsetTop}px`);
+    update();
+    vv.addEventListener("resize", update);
+    vv.addEventListener("scroll", update);
+    return () => {
+      vv.removeEventListener("resize", update);
+      vv.removeEventListener("scroll", update);
+      el.style.removeProperty("--vv-offset");
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [hasSearched]);
+  }, [isSearchFocused]);
 
-  const searchAtBottom = hasSearched || isScrolled;
+  const searchAtBottom = hasSearched;
 
   // Mobile only: while typing, pin search just below the navbar (84px) so the
   // keyboard and iOS AutoFill bar never cover it. 148px = 96px top + 52px input.
   // Position still changes via `bottom` only to keep input focus on iOS.
   const focusedMobileClass = isSearchFocused
-    ? "max-md:bottom-[calc(100%_-_var(--spacing)*37)] max-md:translate-y-0"
+    ? "max-md:bottom-[calc(100%_-_var(--spacing)*37)] max-md:translate-y-(--vv-offset,0px)"
     : "";
 
   return (
     <main className="bg-bg-base">
-      {/* Hero background — faded when scrolled, hidden during search */}
+      {/* Hero background — hidden during search */}
       {!hasSearched && (
-        <div
-          className={`fixed inset-0 overflow-hidden transition-opacity duration-300 ${
-            isScrolled ? "opacity-0 pointer-events-none" : "opacity-100"
-          }`}
-        >
+        <div className="fixed inset-0 overflow-hidden">
           <HeroWave />
         </div>
       )}
@@ -66,16 +66,6 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* Below the fold: hero spacer + section cards */}
-      {!hasSearched && (
-        <>
-          <div className="h-screen" aria-hidden="true" />
-          <div className="relative z-10 bg-bg-base">
-            <HomeSections />
-          </div>
-        </>
-      )}
-
       {/* Mobile focus backdrop — dims content behind the pinned search */}
       {isSearchFocused && (
         <div
@@ -87,6 +77,7 @@ export default function HomePage() {
 
       {/* Single persistent search — never unmounts, position via bottom only */}
       <div
+        ref={searchContainerRef}
         data-home-search-position={searchAtBottom ? "bottom" : "hero"}
         className={`fixed left-1/2 -translate-x-1/2 z-40 w-full px-4 ${
           searchAtBottom
