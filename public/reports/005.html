@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <title>AI Report 5호 — MCP로 어디까지 할 수 있을까?</title>
+    <style>
+      /* 소식지 본문은 iframe 문서라 부모 페이지(next/font)의 Pretendard를
+         상속받지 못한다. 같은 오리진의 폰트 파일을 직접 등록한다. */
+      @font-face {
+        font-family: "Pretendard Variable";
+        font-weight: 45 920;
+        font-style: normal;
+        font-display: swap;
+        src: url("/fonts/PretendardVariable.woff2") format("woff2-variations");
+      }
+      body {
+        width: 100%;
+        margin: 0;
+      }
+      @media only screen and (max-width: 640px) {
+        .stb-left-cell,
+        .stb-right-cell {
+          max-width: 100% !important;
+          width: 100% !important;
+          box-sizing: border-box;
+        }
+        .stb-half {
+          display: block !important;
+          width: 100% !important;
+        }
+        img.stb-justify {
+          width: 100% !important;
+        }
+      }
+      html,
+      body {
+        background: #050510;
+      }
+      /* 모바일 전용 / 데스크탑 전용 줄바꿈 */
+      .m-br {
+        display: none;
+      }
+      @media only screen and (max-width: 640px) {
+        .m-br {
+          display: inline;
+        }
+        .d-br {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body style="width: 100%; margin: 0px">
+    <div
+      id="report-root"
+      style="width: 100%; padding: 40px 0; margin: 0px auto; display: block"
+    >
+      <table
+        class="stb-container"
+        cellpadding="0"
+        cellspacing="0"
+        border="0"
+        align="center"
+        style="
+          margin: 0px auto;
+          width: 94%;
+          max-width: 630px;
+          background: #050510;
+          box-sizing: border-box;
+        "
+      >
+        <tbody>
+          <tr>
+            <td
+              style="
+                width: 100%;
+                max-width: 630px;
+                margin: 0 auto;
+                padding: 0;
+                background: #050510;
+              "
+            >
+              <!-- ============ 인트로 ============ -->
+              <table
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="max-width: 630px"
+              >
+                <tbody>
+                  <tr>
+                    <td style="height: 35px; line-height: 35px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="padding: 0 25px">
+                      <img
+                        src="https://img2.stibee.com/447006_3535457_1786292322774113437.png"
+                        width="146"
+                        alt=""
+                        style="
+                          width: 146px;
+                          max-width: 100%;
+                          height: auto;
+                          display: inline;
+                          vertical-align: bottom;
+                          border: 0;
+                        "
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 5px 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        font-size: 16px;
+                        line-height: 1.7;
+                        color: #e8e8ee;
+                      "
+                    >
+                      <span style="font-weight: bold"
+                        >혼자였다면 며칠을 헤맸을 문제들.</span
+                      ><br />
+                      <span style="font-weight: bold"
+                        >우리가 함께 만든
+                        <span style="color: #7aa2ff">허들링</span>을
+                        공유합니다</span
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 5px 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        line-height: 1.7;
+                      "
+                    >
+                      <span style="font-size: 14px; color: #a1a1ad"
+                        >먼저 뛰어든 First Penguin의 경험이
+                        <br class="m-br" />다음 사람의 성장으로 이어진 한 주를
+                        모았습니다.</span
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="height: 35px; line-height: 35px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 15px">
+                      <div
+                        style="
+                          border-top: 1px solid #2f2f3d;
+                          height: 0;
+                          font-size: 0;
+                          line-height: 0;
+                        "
+                      >
+                        &nbsp;
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="height: 40px; line-height: 40px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+
+              <!-- ============ Cycle Live ============ -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 630px">
+                <tbody>
+                  <tr>
+                    <td align="center" style="padding: 5px 15px 15px 15px; font-family: &quot;Apple SD Gothic Neo&quot;, AppleSDGothic, &quot;Malgun Gothic&quot;, dotum, arial, sans-serif; line-height: 1.7">
+                      <div><span style="font-size: 16px; color: #7aa2ff; font-weight: bold">Cycle Live</span></div>
+                      <div><span style="font-size: 26px; color: #ffffff; font-weight: bold">싸이클 라이브</span></div>
+                      <div><span style="font-size: 14px; color: #a1a1ad">9월 허들링 클럽의 3번째 싸이클에서는 MCP의 개념부터<br class="m-br" /></span></div>
+                      <div><span style="font-size: 14px; color: #a1a1ad">실무 활용 조합, 나아가 <br class="m-br" />직접 MCP 서버까지 제작해 보았습니다.</span></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 15px 15px 25px 15px; font-size: 0; line-height: 0">
+                      <div style="width: 100%; position: relative; padding-bottom: 56.25%">
+                        <iframe class="embedvideo" style="display: block; position: absolute; width: 100%; height: 100%; background: #000" src="https://www.youtube.com/embed/LpgmoGjMZPY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 0 15px">
+                      <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px; width: 100%; padding: 20px; border-radius: 16px; border: 1px solid #2a2a38; box-sizing: border-box; font-family: &quot;Apple SD Gothic Neo&quot;, AppleSDGothic, &quot;Malgun Gothic&quot;, dotum, arial, sans-serif">
+                        <div style="padding: 2px 6px; border-radius: 6px; background: #33333f; color: #f2f2f7; width: 120px; text-align: center; font-size: 14px; font-weight: 600; line-height: 150%">영상 하이라이트 요약</div>
+                        <div style="font-size: 14px; font-weight: 400; line-height: 150%; color: #e8e8ee">
+                          유용한 MCP 조합부터 폰트 서치 및 설치 MCP 서버를 제작하는 라이브를 진행했습니다.<br /><br />- MCP 개념 : LLM 도구와 다른 서비스를 연결하는 표준으로, AI가 외부 데이터를 읽고 쓰고 작업하도록 "손과 발"을 달아준다.<br />- 커넥터·플러그인 : Claude나 GPT의 커넥터와 플러그인도 결국 플랫폼이 MCP를 쉽게 연결하도록 설정해 둔 것이다.<br />- 워크플로우 조합 : MCP를 하나만 쓰기보다 여러 개를 묶어 쓰는 것을 권하며, 예로 Figma·Playwright·Talk to Figma MCP를 묶은 디자인 QA 에이전트와 Figma·Whimsical MCP를 묶은 와이어프레임 생성 에이전트를 든다.<br />- 직접 제작 : 목적과 요구사항, 지켜야 할 점(예: 폰트 저작권 확인, 억지 다운로드 금지)을 쪼개 전달하면 AI가 서버까지 구축
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 630px">
+                <tbody>
+                  <tr><td style="height: 40px; line-height: 40px; font-size: 0">&nbsp;</td></tr>
+                  <tr>
+                    <td style="padding: 5px 15px">
+                      <div style="border-top: 1px solid #2f2f3d; height: 0; font-size: 0; line-height: 0">&nbsp;</div>
+                    </td>
+                  </tr>
+                  <tr><td style="height: 40px; line-height: 40px; font-size: 0">&nbsp;</td></tr>
+                </tbody>
+              </table>
+
+              <!-- ============ Huddling LAB ============ -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 630px">
+                <tbody>
+                  <tr>
+                    <td align="center" style="padding: 5px 15px 15px 15px; font-family: &quot;Apple SD Gothic Neo&quot;, AppleSDGothic, &quot;Malgun Gothic&quot;, dotum, arial, sans-serif; line-height: 1.7">
+                      <div><span style="font-size: 16px; color: #7aa2ff; font-weight: bold">Huddling LAB</span></div>
+                      <div><span style="font-size: 26px; color: #ffffff; font-weight: bold">실험 결과 리포트</span></div>
+                      <div><span style="font-size: 14px; color: #a1a1ad">싸이클 라이브를 통해 주어진 <br class="m-br" />실험의 결과물 일부를 소개합니다.</span></div>
+                      <div><span style="font-size: 14px; color: #a1a1ad">실험 주제 : 나만의 유용한 MCP 서버 소개하기</span></div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- 실험 카드 2x2 -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: collapse; background: #050510">
+                <tbody>
+                  <tr>
+                    <td align="center" style="padding: 0">
+                      <div style="width: 100%; max-width: 616px; margin: 0 auto; font-size: 0; text-align: center">
+
+                        <!-- 실험 1 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                              <tbody>
+                                <tr>
+                                  <td style="padding: 0">
+                                    <div onclick="window.reportOpenLightbox &amp;&amp; window.reportOpenLightbox('https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/5st/1.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy81c3QvMS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMTk1NjIzLCJleHAiOjIxMDY1NTU2MjN9.06ujt0lWFvcO6o4bVTp3z_by14IkJFqSxzOcjoXa0SQ', '카카오톡 캘린더 일정 등록 MCP')" style="width: 100%; height: 186px; background-color: #1a1a26; background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/5st/1.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy81c3QvMS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMTk1NjIzLCJleHAiOjIxMDY1NTU2MjN9.06ujt0lWFvcO6o4bVTp3z_by14IkJFqSxzOcjoXa0SQ&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0; cursor: pointer"></div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 20px 16px">
+                                    <div style="font-size: 15px; font-weight: 700; line-height: 1.5; color: #e8e8ee; word-break: break-word">카카오톡 캘린더 일정 등록 MCP</div>
+                                    <div style="margin-top: 12px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">Discord 공지 내용을 ChatGPT에 붙여넣으면 일정 정보를 자동으로 분석해 카카오톡 캘린더에 등록해주는 MCP를 구현</div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        <!-- 실험 2 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                              <tbody>
+                                <tr>
+                                  <td style="padding: 0">
+                                    <div onclick="window.reportOpenLightbox &amp;&amp; window.reportOpenLightbox('https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/5st/2.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy81c3QvMi5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMTk1NjcyLCJleHAiOjIxMDY1NTU2NzJ9.VRuH2b1biDrtODN-nmtG9cwUDrGGK0NHZZubsRSSiIs', 'Blender MCP로 3D 캐릭터 제작')" style="width: 100%; height: 186px; background-color: #1a1a26; background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/5st/2.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy81c3QvMi5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMTk1NjcyLCJleHAiOjIxMDY1NTU2NzJ9.VRuH2b1biDrtODN-nmtG9cwUDrGGK0NHZZubsRSSiIs&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0; cursor: pointer"></div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 20px 16px">
+                                    <div style="font-size: 15px; font-weight: 700; line-height: 1.5; color: #e8e8ee; word-break: break-word">Blender MCP로 3D 캐릭터 제작</div>
+                                    <div style="margin-top: 12px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">Blender MCP를 사용했습니다. 자연어(또는 이미지 기반 지시)로 Blender 안에서 3D 오브젝트를 생성·수정하고, 나중에는 리깅까지 가능하게 해주는 MCP</div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        <!-- 실험 3 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                              <tbody>
+                                <tr>
+                                  <td style="padding: 0">
+                                    <div onclick="window.reportOpenLightbox &amp;&amp; window.reportOpenLightbox('https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/5st/3.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy81c3QvMy5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMTk1NzAyLCJleHAiOjIxMDY1NTU3MDJ9.hPPo_JVUNZp6O1gQ8_u7D3Cu3RMcMDJ6Szvdbp850FY', 'LottieFiles MCP로 모션 제작')" style="width: 100%; height: 186px; background-color: #1a1a26; background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/5st/3.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy81c3QvMy5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMTk1NzAyLCJleHAiOjIxMDY1NTU3MDJ9.hPPo_JVUNZp6O1gQ8_u7D3Cu3RMcMDJ6Szvdbp850FY&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0; cursor: pointer"></div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 20px 16px">
+                                    <div style="font-size: 15px; font-weight: 700; line-height: 1.5; color: #e8e8ee; word-break: break-word">LottieFiles MCP로 모션 제작</div>
+                                    <div style="margin-top: 12px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">LottieFiles MCP는 Lottie 애니메이션 플랫폼 LottieFiles를 Claude와 연결해 주는 MCP. Claude에서 LottieFiles를 검색해 별도 설치 없이 사용 가능</div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        <!-- 실험 4 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                              <tbody>
+                                <tr>
+                                  <td style="padding: 0">
+                                    <div onclick="window.reportOpenLightbox &amp;&amp; window.reportOpenLightbox('https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/5st/4.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy81c3QvNC5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMTk1NzQxLCJleHAiOjIxMDY1NTU3NDF9.sbBULOcBzI-mqUTWk46BDpA85vtSOiSy1-AuJEfctv8', '구글 캘린더에 일정 등록 MCP')" style="width: 100%; height: 186px; background-color: #1a1a26; background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/5st/4.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy81c3QvNC5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMTk1NzQxLCJleHAiOjIxMDY1NTU3NDF9.sbBULOcBzI-mqUTWk46BDpA85vtSOiSy1-AuJEfctv8&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0; cursor: pointer"></div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 20px 16px">
+                                    <div style="font-size: 15px; font-weight: 700; line-height: 1.5; color: #e8e8ee; word-break: break-word">구글 캘린더에 일정 등록 MCP</div>
+                                    <div style="margin-top: 12px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">네이버 카페 확인 → 새 글·수정 글 확인 → Claude가 일정 분석 → 미리보기 확인 및 승인 → Google Calendar 등록해주는 MCP</div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 630px">
+                <tbody>
+                  <tr><td style="height: 40px; line-height: 40px; font-size: 0">&nbsp;</td></tr>
+                  <tr>
+                    <td style="padding: 5px 15px">
+                      <div style="border-top: 1px solid #2f2f3d; height: 0; font-size: 0; line-height: 0">&nbsp;</div>
+                    </td>
+                  </tr>
+                  <tr><td style="height: 40px; line-height: 40px; font-size: 0">&nbsp;</td></tr>
+                </tbody>
+              </table>
+
+              <!-- ============ AI News ============ -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 630px">
+                <tbody>
+                  <tr>
+                    <td align="center" style="padding: 5px 15px 15px 15px; font-family: &quot;Apple SD Gothic Neo&quot;, AppleSDGothic, &quot;Malgun Gothic&quot;, dotum, arial, sans-serif; line-height: 1.7">
+                      <div><span style="font-size: 16px; color: #7aa2ff; font-weight: bold">AI News</span></div>
+                      <div><span style="font-size: 26px; color: #ffffff; font-weight: bold">AI 핫이슈</span></div>
+                      <div><span style="font-size: 14px; color: #a1a1ad">최근 AI 동향이나 기술, <br class="m-br" />서비스나 플랫폼 업데이트 내용 중<br />실무에 바로 적용할 만한 이슈들만 골라왔어요.</span></div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: collapse; background: #050510">
+                <tbody>
+                  <tr>
+                    <td align="center" style="padding: 0">
+                      <div style="width: 100%; max-width: 616px; margin: 0 auto; font-size: 0; text-align: center">
+
+                        <!-- News 1: dots를 소개합니다 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <a href="https://openai.com/ko-KR/index/introducing-dots/" target="_blank" style="display: block; text-decoration: none">
+                              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                                <tbody>
+                                  <tr>
+                                    <td style="padding: 0">
+                                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; height: 186px; border-collapse: collapse; background-color: #1a1a26; background-image: url(&quot;https://images.ctfassets.net/kftzwdyauwt9/1xROyxcQu9wVqdHbbOjetz/4598e195e1e8acb11b66dd7f340fde12/introducing-dots-carousel-feedback.png?w=3840&amp;q=90&amp;fm=webp&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0">
+                                        <tbody>
+                                          <tr>
+                                            <td valign="top" style="padding: 16px 16px 0 16px">
+                                              <span style="display: inline-block; padding: 2px 6px; border-radius: 6px; background: #1b2440; font-size: 14px; font-weight: 600; line-height: 21px; color: #7aa2ff; white-space: nowrap">Open AI</span>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td valign="bottom" height="122" style="height: 122px; padding: 10px 16px 20px 16px; background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.88) 100%)">
+                                              <div style="font-size: 12px; font-weight: 400; line-height: 18px; color: #ffffff">2026.09.29</div>
+                                              <div style="margin-top: 4px; font-size: 14px; font-weight: 700; line-height: 21px; color: #ffffff; word-break: break-word">dots를 소개합니다</div>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td style="padding: 8px 16px 20px 16px">
+                                      <div style="font-size: 14px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">OpenAI가 자체 클라우드 컴퓨터에서 24시간 일하는 상시 에이전트 dots를 출시했습니다. GPT‑6 Astra 기반이며 4,000개 넘는 앱에 연결됩니다. 지원 지역의 요금제에 순차 제공됩니다.</div>
+                                      <div style="margin-top: 12px; padding: 12px 16px; border-radius: 8px; background: #1b1b26">
+                                        <div style="font-size: 13px; font-weight: 600; line-height: 1.5; color: #e8e8ee">이 기술 이렇게 사용해보세요!</div>
+                                        <div style="margin-top: 2px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #e8e8ee; word-break: break-word">내 클라우드에서 직접 일을 분석하고 처리까지 해주는 상시작동 AI 입니다. 연결되는 앱이 굉장히 많으니 반복적으로 하던 일을 맡겨보세요!</div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </a>
+                          </div>
+                        </div>
+
+                        <!-- News 2: OpenRig: 멀티 에이전트 하네스 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <a href="https://discuss.pytorch.kr/t/openrig-claude-code-codex/12042" target="_blank" style="display: block; text-decoration: none">
+                              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                                <tbody>
+                                  <tr>
+                                    <td style="padding: 0">
+                                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; height: 186px; border-collapse: collapse; background-color: #1a1a26; background-image: url(&quot;https://openrig.dev/images/agent-roster-2026-09-30.jpg&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0">
+                                        <tbody>
+                                          <tr>
+                                            <td valign="top" style="padding: 16px 16px 0 16px">
+                                              <span style="display: inline-block; padding: 2px 6px; border-radius: 6px; background: #1b2440; font-size: 14px; font-weight: 600; line-height: 21px; color: #7aa2ff; white-space: nowrap">OpenRig</span>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td valign="bottom" height="122" style="height: 122px; padding: 10px 16px 20px 16px; background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.88) 100%)">
+                                              <div style="font-size: 12px; font-weight: 400; line-height: 18px; color: #ffffff">2026.09.29</div>
+                                              <div style="margin-top: 4px; font-size: 14px; font-weight: 700; line-height: 21px; color: #ffffff; word-break: break-word">OpenRig: 멀티 에이전트 하네스</div>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td style="padding: 8px 16px 20px 16px">
+                                      <div style="font-size: 14px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">Claude Code와 Codex 세션을 YAML로 정의한 한 팀으로 띄우는 로컬 오픈소스 하네스 OpenRig가 출시 되었습니다. Claude Code와 Codex 세션들을 저장하고 불러올 수 있습니다.</div>
+                                      <div style="margin-top: 12px; padding: 12px 16px; border-radius: 8px; background: #1b1b26">
+                                        <div style="font-size: 13px; font-weight: 600; line-height: 1.5; color: #e8e8ee">이 기술 이렇게 사용해보세요!</div>
+                                        <div style="margin-top: 2px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #e8e8ee; word-break: break-word">Claude Code와 Codex를 모두 사용하고 계신분 있나요? 두 모델의 세션관리가 어려웠던 분이 있다면 한번 사용해 보세요!</div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </a>
+                          </div>
+                        </div>
+
+                        <!-- News 3: GPT-6.1 Sol -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <a href="https://openai.com/ko-KR/index/introducing-gpt-6-1-sol/" target="_blank" style="display: block; text-decoration: none">
+                              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                                <tbody>
+                                  <tr>
+                                    <td style="padding: 0">
+                                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; height: 186px; border-collapse: collapse; background-color: #1a1a26; background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/5st/5.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy81c3QvNS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkxMTk4MjQyLCJleHAiOjIxMDY1NTgyNDJ9.LZLnoYMyH76XViOcXBwUuu8WTkzQ15LEGGkXTFdO1Zk&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0">
+                                        <tbody>
+                                          <tr>
+                                            <td valign="top" style="padding: 16px 16px 0 16px">
+                                              <span style="display: inline-block; padding: 2px 6px; border-radius: 6px; background: #1b2440; font-size: 14px; font-weight: 600; line-height: 21px; color: #7aa2ff; white-space: nowrap">Open AI</span>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td valign="bottom" height="122" style="height: 122px; padding: 10px 16px 20px 16px; background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.88) 100%)">
+                                              <div style="font-size: 12px; font-weight: 400; line-height: 18px; color: #ffffff">2026.09.29</div>
+                                              <div style="margin-top: 4px; font-size: 14px; font-weight: 700; line-height: 21px; color: #ffffff; word-break: break-word">GPT-6.1 Sol</div>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td style="padding: 8px 16px 20px 16px">
+                                      <div style="font-size: 14px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">OpenAI가 GPT‑6 Sol의 후속 모델 GPT‑6.1 Sol을 출시했습니다. 코딩과 전문 업무에서 Astra에 근접하면서 토큰 가격은 5분의 1입니다.</div>
+                                      <div style="margin-top: 12px; padding: 12px 16px; border-radius: 8px; background: #1b1b26">
+                                        <div style="font-size: 13px; font-weight: 600; line-height: 1.5; color: #e8e8ee">이 기술 이렇게 사용해보세요!</div>
+                                        <div style="margin-top: 2px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #e8e8ee; word-break: break-word">캐시 입력이 표준가보다 95% 싸다고 합니다. 컨텍스트를 많이 먹거나 재사용이 많은 에이전트를 Sol 모델로 돌려보세요!</div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </a>
+                          </div>
+                        </div>
+
+                        <!-- News 4: MS 첫 스트리밍 전사 모델, 1위로 데뷔 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <a href="https://microsoft.ai/news/our-first-streaming-transcription-model/" target="_blank" style="display: block; text-decoration: none">
+                              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                                <tbody>
+                                  <tr>
+                                    <td style="padding: 0">
+                                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; height: 186px; border-collapse: collapse; background-color: #1a1a26; background-image: url(&quot;https://microsoft.ai/wp-content/uploads/2026/10/quotation_marks_swarm_hq.webp&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0">
+                                        <tbody>
+                                          <tr>
+                                            <td valign="top" style="padding: 16px 16px 0 16px">
+                                              <span style="display: inline-block; padding: 2px 6px; border-radius: 6px; background: #1b2440; font-size: 14px; font-weight: 600; line-height: 21px; color: #7aa2ff; white-space: nowrap">MS</span>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td valign="bottom" height="122" style="height: 122px; padding: 10px 16px 20px 16px; background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.88) 100%)">
+                                              <div style="font-size: 12px; font-weight: 400; line-height: 18px; color: #ffffff">2026.10.01</div>
+                                              <div style="margin-top: 4px; font-size: 14px; font-weight: 700; line-height: 21px; color: #ffffff; word-break: break-word">MS 첫 스트리밍 전사 모델, 1위로 데뷔</div>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td style="padding: 8px 16px 20px 16px">
+                                      <div style="font-size: 14px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">Microsoft AI가 60개 언어를 실시간으로 받아쓰는 MAI-Transcribe-2-Streaming을 내놨습니다. 음성 수신 후 100ms 남짓 만에 첫 부분 전사를 내고 Artificial Analysis 정확도 1위 입니다.</div>
+                                      <div style="margin-top: 12px; padding: 12px 16px; border-radius: 8px; background: #1b1b26">
+                                        <div style="font-size: 13px; font-weight: 600; line-height: 1.5; color: #e8e8ee">이 기술 이렇게 사용해보세요!</div>
+                                        <div style="margin-top: 2px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #e8e8ee; word-break: break-word">연말까지 오디오 1시간당 $0.54인 도입가로 이용할 수 있다고 합니다. 추론을 통해 전사 응답 지연을 줄였다고 하니 긴 회의나 상담 전사에 효율적일 것 같습니다.</div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </a>
+                          </div>
+                        </div>
+
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 630px">
+                <tbody>
+                  <tr><td style="height: 40px; line-height: 40px; font-size: 0">&nbsp;</td></tr>
+                  <tr>
+                    <td style="padding: 5px 15px">
+                      <div style="border-top: 1px solid #2f2f3d; height: 0; font-size: 0; line-height: 0">&nbsp;</div>
+                    </td>
+                  </tr>
+                  <tr><td style="height: 40px; line-height: 40px; font-size: 0">&nbsp;</td></tr>
+                </tbody>
+              </table>
+
+              <!-- ============ Get Involved ============ -->
+              <table
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="max-width: 630px"
+              >
+                <tbody>
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 5px 15px 15px 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        line-height: 1.7;
+                      "
+                    >
+                      <div>
+                        <span
+                          style="
+                            font-size: 16px;
+                            color: #7aa2ff;
+                            font-weight: bold;
+                          "
+                          >Get Involved</span
+                        >
+                      </div>
+                      <div>
+                        <span
+                          style="
+                            font-size: 26px;
+                            color: #ffffff;
+                            font-weight: bold;
+                          "
+                          >저희와 함께 성장하실래요?</span
+                        >
+                      </div>
+                      <div>
+                        <span style="font-size: 14px; color: #a1a1ad"
+                          >검증된 경험을 배우고 공유하며<br />순환하는 허들링
+                          클럽에서 함께 성장해봐요.</span
+                        >
+                      </div>
+                      <div style="margin-top: 20px">
+                        <span
+                          style="
+                            font-size: 20px;
+                            color: #ffffff;
+                            font-weight: bold;
+                          "
+                          >4기 대기 신청을 받고 있습니다.</span
+                        >
+                      </div>
+                      <div style="margin-top: 12px">
+                        <span style="font-size: 14px; color: #e8e8ee"
+                          >허들링 클럽 4기로 합류하고<br />꾸준한 AI 습관을
+                          만드는 것을 넘어,<br />업계의 파도를 만드는 퍼스트
+                          펭귄이 되어보세요.</span
+                        >
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td align="center" style="padding: 5px 15px 15px 15px">
+                      <table
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                        align="center"
+                        style="
+                          margin: 0 auto;
+                          border-collapse: separate;
+                          border-radius: 10px;
+                          border: 1px solid #0058e0;
+                          background: #0058e0;
+                          width: 100%;
+                          max-width: 320px;
+                          box-sizing: border-box;
+                        "
+                      >
+                        <tbody>
+                          <tr>
+                            <td
+                              align="center"
+                              valign="top"
+                              style="
+                                background: #0058e0;
+                                border-radius: 10px;
+                                padding: 0;
+                              "
+                            >
+                              <a
+                                href="https://tally.so/r/aQVM9q"
+                                target="_blank"
+                                style="
+                                  font-size: 16px;
+                                  display: block;
+                                  color: #ffffff;
+                                  text-decoration: none;
+                                  font-family:
+                                    &quot;Pretendard Variable&quot;,
+                                    Pretendard,
+                                    -apple-system,
+                                    &quot;Apple SD Gothic Neo&quot;,
+                                    &quot;Malgun Gothic&quot;,
+                                    sans-serif;
+                                  text-align: center;
+                                  padding: 19px 20px;
+                                  box-sizing: border-box;
+                                  line-height: 1;
+                                "
+                                ><b>허들링 클럽 4기 대기 신청하기</b></a
+                              >
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td align="center" style="padding: 5px 15px 0 15px">
+                      <table
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                        align="center"
+                        style="
+                          margin: 0 auto;
+                          border-collapse: separate;
+                          border-radius: 10px;
+                          border: 1px solid #0058e0;
+                          width: 100%;
+                          max-width: 320px;
+                          box-sizing: border-box;
+                        "
+                      >
+                        <tbody>
+                          <tr>
+                            <td
+                              align="center"
+                              valign="top"
+                              style="border-radius: 10px; padding: 0"
+                            >
+                              <a
+                                href="https://open.kakao.com/o/gPjVAOXf"
+                                target="_blank"
+                                style="
+                                  font-size: 16px;
+                                  display: block;
+                                  color: #0058e0;
+                                  text-decoration: none;
+                                  font-family:
+                                    &quot;Pretendard Variable&quot;,
+                                    Pretendard,
+                                    -apple-system,
+                                    &quot;Apple SD Gothic Neo&quot;,
+                                    &quot;Malgun Gothic&quot;,
+                                    sans-serif;
+                                  text-align: center;
+                                  padding: 19px 20px;
+                                  box-sizing: border-box;
+                                  line-height: 1;
+                                "
+                                ><b>허들링 클럽 오픈카톡방 합류하기</b></a
+                              >
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 20px 15px 15px 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        line-height: 1.7;
+                      "
+                    >
+                      <span style="font-size: 12px; color: #8b8b98"
+                        >오픈카톡방 비밀번호 : figma</span
+                      >
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td style="height: 50px; line-height: 50px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      // 실험 카드 이미지 확대 팝업.
+      // 이 문서는 iframe 안에서 렌더되고, iframe 자체 높이가 콘텐츠 전체
+      // 높이로 늘어나 있어(height 핸드셰이크 참고) iframe 내부에서는
+      // position:fixed로 브라우저 화면 기준 오버레이를 만들 수 없다.
+      // 그래서 팝업은 부모(ReportEmbed.tsx)에 postMessage로 요청하고,
+      // 실제 모달은 부모 페이지가 렌더링한다.
+      (function () {
+        window.reportOpenLightbox = function (src, alt) {
+          try {
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage(
+                { type: "huddling-report:lightbox", src: src, alt: alt || "" },
+                "*",
+              );
+              return;
+            }
+          } catch (e) {}
+          // iframe이 아닌 곳에서 이 문서를 직접 연 경우(standalone) 대비.
+          window.open(src, "_blank");
+        };
+      })();
+    </script>
+
+    <script>
+      // ReportEmbed.tsx가 기다리는 높이 핸드셰이크.
+      // 이게 없으면 iframe이 100vh 고정 + 내부 스크롤이 된다.
+      (function () {
+        var last = 0;
+        // scrollHeight 는 뷰포트보다 작아지지 않아 래칫이 생긴다. 콘텐츠 루트를 직접 잰다.
+        var root = document.getElementById("report-root");
+        function send() {
+          var h = Math.ceil(root.getBoundingClientRect().height);
+          if (h === last) return;
+          last = h;
+          parent.postMessage(
+            { type: "huddling-report:height", height: h },
+            "*",
+          );
+        }
+        window.addEventListener("load", send);
+        window.addEventListener("resize", send);
+        if (window.ResizeObserver) new ResizeObserver(send).observe(root);
+        setTimeout(send, 200);
+        setTimeout(send, 1000);
+        setTimeout(send, 2500); // 원격 이미지 로드 후
+      })();
+    </script>
+  </body>
+</html>
