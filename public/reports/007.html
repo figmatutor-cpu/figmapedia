@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <title>AI Report 7호 — 하네스로 기획부터 디자인까지 한 흐름으로!?</title>
+    <style>
+      /* 소식지 본문은 iframe 문서라 부모 페이지(next/font)의 Pretendard를
+         상속받지 못한다. 같은 오리진의 폰트 파일을 직접 등록한다. */
+      @font-face {
+        font-family: "Pretendard Variable";
+        font-weight: 45 920;
+        font-style: normal;
+        font-display: swap;
+        src: url("/fonts/PretendardVariable.woff2") format("woff2-variations");
+      }
+      body {
+        width: 100%;
+        margin: 0;
+      }
+      @media only screen and (max-width: 640px) {
+        .stb-left-cell,
+        .stb-right-cell {
+          max-width: 100% !important;
+          width: 100% !important;
+          box-sizing: border-box;
+        }
+        .stb-half {
+          display: block !important;
+          width: 100% !important;
+        }
+        img.stb-justify {
+          width: 100% !important;
+        }
+      }
+      html,
+      body {
+        background: #050510;
+      }
+      /* 모바일 전용 / 데스크탑 전용 줄바꿈 */
+      .m-br {
+        display: none;
+      }
+      @media only screen and (max-width: 640px) {
+        .m-br {
+          display: inline;
+        }
+        .d-br {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body style="width: 100%; margin: 0px">
+    <div
+      id="report-root"
+      style="width: 100%; padding: 40px 0; margin: 0px auto; display: block"
+    >
+      <table
+        class="stb-container"
+        cellpadding="0"
+        cellspacing="0"
+        border="0"
+        align="center"
+        style="
+          margin: 0px auto;
+          width: 94%;
+          max-width: 630px;
+          background: #050510;
+          box-sizing: border-box;
+        "
+      >
+        <tbody>
+          <tr>
+            <td
+              style="
+                width: 100%;
+                max-width: 630px;
+                margin: 0 auto;
+                padding: 0;
+                background: #050510;
+              "
+            >
+              <!-- ============ 인트로 ============ -->
+              <table
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="max-width: 630px"
+              >
+                <tbody>
+                  <tr>
+                    <td style="height: 35px; line-height: 35px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="padding: 0 25px">
+                      <img
+                        src="https://img2.stibee.com/447006_3535457_1786292322774113437.png"
+                        width="146"
+                        alt=""
+                        style="
+                          width: 146px;
+                          max-width: 100%;
+                          height: auto;
+                          display: inline;
+                          vertical-align: bottom;
+                          border: 0;
+                        "
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 5px 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        font-size: 16px;
+                        line-height: 1.7;
+                        color: #e8e8ee;
+                      "
+                    >
+                      <span style="font-weight: bold"
+                        >혼자였다면 며칠을 헤맸을 문제들.</span
+                      ><br />
+                      <span style="font-weight: bold"
+                        >우리가 함께 만든
+                        <span style="color: #7aa2ff">허들링</span>을
+                        공유합니다</span
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 5px 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        line-height: 1.7;
+                      "
+                    >
+                      <span style="font-size: 14px; color: #a1a1ad"
+                        >먼저 뛰어든 First Penguin의 경험이
+                        <br class="m-br" />다음 사람의 성장으로 이어진 한 주를
+                        모았습니다.</span
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="height: 35px; line-height: 35px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px 15px">
+                      <div
+                        style="
+                          border-top: 1px solid #2f2f3d;
+                          height: 0;
+                          font-size: 0;
+                          line-height: 0;
+                        "
+                      >
+                        &nbsp;
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="height: 40px; line-height: 40px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+
+
+
+
+              <!-- ============ Cycle Live ============ -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 630px">
+                <tbody>
+                  <tr>
+                    <td align="center" style="padding: 5px 15px 15px 15px; font-family: &quot;Apple SD Gothic Neo&quot;, AppleSDGothic, &quot;Malgun Gothic&quot;, dotum, arial, sans-serif; line-height: 1.7">
+                      <div><span style="font-size: 16px; color: #7aa2ff; font-weight: bold">Cycle Live</span></div>
+                      <div><span style="font-size: 26px; color: #ffffff; font-weight: bold">사이클 라이브</span></div>
+                      <div><span style="font-size: 14px; color: #a1a1ad">이번 허들링 클럽 사이클에서는 하네스를 활용해<br class="m-br" /></span></div>
+                      <div><span style="font-size: 14px; color: #a1a1ad">기획부터 디자인까지 한 흐름으로 <br class="m-br" />작업해보는 워크플로우를 배웠습니다.</span></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 15px 15px 25px 15px; font-size: 0; line-height: 0">
+                      <div style="width: 100%; position: relative; padding-bottom: 56.25%">
+                        <iframe class="embedvideo" style="display: block; position: absolute; width: 100%; height: 100%; background: #000" src="https://www.youtube.com/embed/LJlk79woZsk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 0 15px">
+                      <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px; width: 100%; padding: 20px; border-radius: 16px; border: 1px solid #2a2a38; box-sizing: border-box; font-family: &quot;Apple SD Gothic Neo&quot;, AppleSDGothic, &quot;Malgun Gothic&quot;, dotum, arial, sans-serif">
+                        <div style="padding: 2px 6px; border-radius: 6px; background: #33333f; color: #f2f2f7; width: 120px; text-align: center; font-size: 14px; font-weight: 600; line-height: 150%">영상 하이라이트 요약</div>
+                        <div style="font-size: 14px; font-weight: 400; line-height: 150%; color: #e8e8ee">
+                          디자인 하네스를 활용해 레퍼런스 조사부터 디자인 생성까지 만들어 보았습니다. AI와 인터뷰를 통해 우리 서비스에 딱 맞는 디자인 하네스를 직접 구축하는 방법을 배웠습니다.<br /><br />- 도메인 주도 설계(DDD) : 코드나 기술보다 서비스·비즈니스 원칙과 유저 스토리를 먼저 정의한 뒤 설계하는 방식<br />- 서비스 도메인 : 서비스 사용자가 어떻게 작업하고 행동하는지 인터뷰로 구체적으로 뽑아낸 내용<br />- 작업 도메인 : 내가 실제로 일하는 프로세스(예: 레퍼런스 → 화면 설계 → 피그마 와이어프레임)를 인터뷰로 뽑아낸 내용<br />- 도메인 스토리텔링 인터뷰 : 위 두 도메인을 끌어내기 위해 AI와 진행하는 인터뷰 방식
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 630px">
+                <tbody>
+                  <tr><td style="height: 40px; line-height: 40px; font-size: 0">&nbsp;</td></tr>
+                  <tr>
+                    <td style="padding: 5px 15px">
+                      <div style="border-top: 1px solid #2f2f3d; height: 0; font-size: 0; line-height: 0">&nbsp;</div>
+                    </td>
+                  </tr>
+                  <tr><td style="height: 40px; line-height: 40px; font-size: 0">&nbsp;</td></tr>
+                </tbody>
+              </table>
+
+              <!-- ============ Huddling LAB ============ -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 630px">
+                <tbody>
+                  <tr>
+                    <td align="center" style="padding: 5px 15px 15px 15px; font-family: &quot;Apple SD Gothic Neo&quot;, AppleSDGothic, &quot;Malgun Gothic&quot;, dotum, arial, sans-serif; line-height: 1.7">
+                      <div><span style="font-size: 16px; color: #7aa2ff; font-weight: bold">Huddling LAB</span></div>
+                      <div><span style="font-size: 26px; color: #ffffff; font-weight: bold">실험 결과 리포트</span></div>
+                      <div><span style="font-size: 14px; color: #a1a1ad">사이클 라이브에서 배운 내용을 활용한 <br class="m-br" />실험의 결과물 일부를 소개합니다.</span></div>
+                      <div><span style="font-size: 14px; color: #a1a1ad">실험 주제 : 내 작업에 필요한 커스텀 하네스 제작하기</span></div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- 실험 카드 2x3 -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: collapse; background: #050510">
+                <tbody>
+                  <tr>
+                    <td align="center" style="padding: 0">
+                      <div style="width: 100%; max-width: 616px; margin: 0 auto; font-size: 0; text-align: center">
+
+                        <!-- 실험 1 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                              <tbody>
+                                <tr>
+                                  <td style="padding: 0">
+                                    <div onclick="window.reportOpenLightbox &amp;&amp; window.reportOpenLightbox('https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/7st/lab1.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy83c3QvbGFiMS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkzNTk5MTY0LCJleHAiOjE5NTEyNzkxNjR9.2WV0e2NMmV0ECiw-YUsX_d41MYvBC7xcga6dC8l4aHE', '‘디발사전’ 제작 하네스')" style="width: 100%; height: 186px; background-color: #1a1a26; background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/7st/lab1.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy83c3QvbGFiMS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkzNTk5MTY0LCJleHAiOjE5NTEyNzkxNjR9.2WV0e2NMmV0ECiw-YUsX_d41MYvBC7xcga6dC8l4aHE&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0; cursor: pointer"></div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 20px 16px">
+                                    <div style="font-size: 15px; font-weight: 700; line-height: 1.5; color: #e8e8ee; word-break: break-word">‘디발사전’ 제작 하네스</div>
+                                    <div style="margin-top: 12px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">개발 지식 학습과 협업을 위한 실무 지식 사전 '디발사전' 구축을 위한 하네스 제작. 사람의 판단이 개입하는 부분에 대한 인사이트를 배움.</div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        <!-- 실험 2 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                              <tbody>
+                                <tr>
+                                  <td style="padding: 0">
+                                    <div onclick="window.reportOpenLightbox &amp;&amp; window.reportOpenLightbox('https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/7st/lab2.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy83c3QvbGFiMi5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkzNTk5MTkzLCJleHAiOjE5NTEyNzkxOTN9.mUdKta_QUqnfKrzzSDdX0VTeqlzm2iyHcMCnMN_wz4s', '하네스 기반 AI 오피스 구축')" style="width: 100%; height: 186px; background-color: #1a1a26; background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/7st/lab2.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy83c3QvbGFiMi5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkzNTk5MTkzLCJleHAiOjE5NTEyNzkxOTN9.mUdKta_QUqnfKrzzSDdX0VTeqlzm2iyHcMCnMN_wz4s&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0; cursor: pointer"></div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 20px 16px">
+                                    <div style="font-size: 15px; font-weight: 700; line-height: 1.5; color: #e8e8ee; word-break: break-word">하네스 기반 AI 오피스 구축</div>
+                                    <div style="margin-top: 12px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">기획, 작업, 검증하는 하네스의 구조를 AI 오피스로 구현. PRD를 넣으면 5명의 가상 직원이 작업 후 디자인 산출물 3장이 제작됨.</div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        <!-- 실험 3 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                              <tbody>
+                                <tr>
+                                  <td style="padding: 0">
+                                    <div onclick="window.reportOpenLightbox &amp;&amp; window.reportOpenLightbox('https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/7st/lab3.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy83c3QvbGFiMy5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkzNTk5MjEzLCJleHAiOjE5NTEyNzkyMTN9.BWcrshw6H3aLaKAVkAYP1Hof8t1oG7MJMgP8uUS7esU', 'AI 숏츠 컨텐츠 자동화 하네스')" style="width: 100%; height: 186px; background-color: #1a1a26; background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/7st/lab3.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy83c3QvbGFiMy5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkzNTk5MjEzLCJleHAiOjE5NTEyNzkyMTN9.BWcrshw6H3aLaKAVkAYP1Hof8t1oG7MJMgP8uUS7esU&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0; cursor: pointer"></div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 20px 16px">
+                                    <div style="font-size: 15px; font-weight: 700; line-height: 1.5; color: #e8e8ee; word-break: break-word">AI 숏츠 컨텐츠 자동화 하네스</div>
+                                    <div style="margin-top: 12px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">시나리오 작성부터 영상 편집까지 자동화 하는 하네스 구축. 기존 3~4시간 작업 시간을 하네스로 1시간까지 단축 성공.</div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        <!-- 실험 4 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                              <tbody>
+                                <tr>
+                                  <td style="padding: 0">
+                                    <div onclick="window.reportOpenLightbox &amp;&amp; window.reportOpenLightbox('https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/7st/lab4.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy83c3QvbGFiNC5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkzNTk5MjM5LCJleHAiOjE5NTEyNzkyMzl9.5pVz5dypZ35FECaVacsJUrIYx5OOZwvhYDs6M4PyIAA', '레퍼런스 수집·컨셉 정리 하네스')" style="width: 100%; height: 186px; background-color: #1a1a26; background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/7st/lab4.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy83c3QvbGFiNC5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkzNTk5MjM5LCJleHAiOjE5NTEyNzkyMzl9.5pVz5dypZ35FECaVacsJUrIYx5OOZwvhYDs6M4PyIAA&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0; cursor: pointer"></div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 20px 16px">
+                                    <div style="font-size: 15px; font-weight: 700; line-height: 1.5; color: #e8e8ee; word-break: break-word">레퍼런스 수집·컨셉 정리 하네스</div>
+                                    <div style="margin-top: 12px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">카피·기획서만 넣으면 Figma 보드까지 제작해주는 하네스 구축. 검증 과정을 조금더 고도화해서 실무에 직접적으로 활용해볼 예정.</div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        <!-- 실험 5 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                              <tbody>
+                                <tr>
+                                  <td style="padding: 0">
+                                    <div onclick="window.reportOpenLightbox &amp;&amp; window.reportOpenLightbox('https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/7st/lab5.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy83c3QvbGFiNS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkzNTk5MjQzLCJleHAiOjE5NTEyNzkyNDN9.GZknk57w7aToX-CMNg5NJATB1B03UtoIH_ci4MXUXE4', '카드뉴스 제작 자동화 하네스')" style="width: 100%; height: 186px; background-color: #1a1a26; background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/7st/lab5.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy83c3QvbGFiNS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkzNTk5MjQzLCJleHAiOjE5NTEyNzkyNDN9.GZknk57w7aToX-CMNg5NJATB1B03UtoIH_ci4MXUXE4&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0; cursor: pointer"></div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 20px 16px">
+                                    <div style="font-size: 15px; font-weight: 700; line-height: 1.5; color: #e8e8ee; word-break: break-word">카드뉴스 제작 자동화 하네스</div>
+                                    <div style="margin-top: 12px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">주제를 넣으면 자료 조사부터 카드뉴스 제작, 검수와 수정까지 한 흐름으로 이어가는 하네스 구축. 설명 방식과 수정 기준을 구체적으로 전달하는 법을 배움.</div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        <!-- 실험 6 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                              <tbody>
+                                <tr>
+                                  <td style="padding: 0">
+                                    <div onclick="window.reportOpenLightbox &amp;&amp; window.reportOpenLightbox('https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/7st/lab6.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy83c3QvbGFiNi5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkzNTk5MjQ3LCJleHAiOjE5NTEyNzkyNDd9.xZCyfpJnK0EvrZJdzX1tNdOvZ9r4z2CGM7ZAyPZ2PKU', '디자인 수정~브라우저 QA까지')" style="width: 100%; height: 186px; background-color: #1a1a26; background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/7st/lab6.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy83c3QvbGFiNi5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzkzNTk5MjQ3LCJleHAiOjE5NTEyNzkyNDd9.xZCyfpJnK0EvrZJdzX1tNdOvZ9r4z2CGM7ZAyPZ2PKU&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0; cursor: pointer"></div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 20px 16px">
+                                    <div style="font-size: 15px; font-weight: 700; line-height: 1.5; color: #e8e8ee; word-break: break-word">디자인 수정~브라우저 QA까지</div>
+                                    <div style="margin-top: 12px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">디자이너가 주요 변경을 항목별로 승인하며 파일 버전과 승인 기록을 남기는 하네스를 구현. 하네스의 검증과 시각적 완성도의 간극을 줄이는 방안 탐색 중.</div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 630px">
+                <tbody>
+                  <tr>
+                    <td align="center" style="padding: 15px; font-family: &quot;Apple SD Gothic Neo&quot;, AppleSDGothic, &quot;Malgun Gothic&quot;, dotum, arial, sans-serif; font-size: 16px; line-height: 1.7; color: #e8e8ee">
+                      <div><span style="font-size: 14px; color: #a1a1ad">해당 실험 결과는 허들링 클럽 멤버십에서 나온 <br class="m-br" />실험 결과 중 일부 입니다.</span></div>
+                      <div><span style="font-size: 14px; color: #a1a1ad">다른 멤버들의 실험결과가 궁금하다면 <br class="m-br" />허들링 클럽에 합류해 보세요!</span></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="padding: 5px 15px 15px 15px">
+                      <table cellpadding="0" cellspacing="0" border="0" align="center" style="margin: 0 auto; border-collapse: separate; border-radius: 10px; border: 3px solid #0058e0; background: #0058e0">
+                        <tbody>
+                          <tr>
+                            <td align="center" valign="top" style="background: #0058e0; border-radius: 10px; padding: 0">
+                              <a href="https://tally.so/r/aQVM9q" target="_blank" style="font-size: 16px; display: inline-block; color: #ffffff; text-decoration: none; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif; text-align: center; padding: 19px 20px; box-sizing: border-box; line-height: 1"><b>허들링 클럽 4기 오픈 알림 받기</b></a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 630px">
+                <tbody>
+                  <tr><td style="height: 40px; line-height: 40px; font-size: 0">&nbsp;</td></tr>
+                  <tr>
+                    <td style="padding: 5px 15px">
+                      <div style="border-top: 1px solid #2f2f3d; height: 0; font-size: 0; line-height: 0">&nbsp;</div>
+                    </td>
+                  </tr>
+                  <tr><td style="height: 40px; line-height: 40px; font-size: 0">&nbsp;</td></tr>
+                </tbody>
+              </table>
+
+              <!-- ============ AI News ============ -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 630px">
+                <tbody>
+                  <tr>
+                    <td align="center" style="padding: 5px 15px 15px 15px; font-family: &quot;Apple SD Gothic Neo&quot;, AppleSDGothic, &quot;Malgun Gothic&quot;, dotum, arial, sans-serif; line-height: 1.7">
+                      <div><span style="font-size: 16px; color: #7aa2ff; font-weight: bold">AI News</span></div>
+                      <div><span style="font-size: 26px; color: #ffffff; font-weight: bold">AI 핫이슈</span></div>
+                      <div><span style="font-size: 14px; color: #a1a1ad">최근 AI 동향이나 기술, <br class="m-br" />서비스나 플랫폼 업데이트 내용 중<br />실무에 바로 적용할 만한 이슈들만 골라왔어요.</span></div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: collapse; background: #050510">
+                <tbody>
+                  <tr>
+                    <td align="center" style="padding: 0">
+                      <div style="width: 100%; max-width: 616px; margin: 0 auto; font-size: 0; text-align: center">
+
+
+                        <!-- News 1: ChatGPT Dot 에이전트에 문자로 일 시키는 방법 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <a href="https://x.com/ChatGPT/status/2115496387613786374" target="_blank" style="display: block; text-decoration: none">
+                              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                                <tbody>
+                                  <tr>
+                                    <td style="padding: 0">
+                                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; height: 186px; border-collapse: collapse; background-color: #1a1a26; background-image: url(&quot;https://i0.wp.com/cdn.dtmg.xyz/uploads/2026/10/chatgpt-dot-agent-imessage-rcs.jpg?resize=1350%2C810&amp;ssl=1&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0">
+                                        <tbody>
+                                          <tr>
+                                            <td valign="top" style="padding: 16px 16px 0 16px">
+                                              <span style="display: inline-block; padding: 2px 6px; border-radius: 6px; background: #1b2440; font-size: 14px; font-weight: 600; line-height: 21px; color: #7aa2ff; white-space: nowrap">OpenAI</span>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td valign="bottom" height="122" style="height: 122px; padding: 10px 16px 20px 16px; background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.88) 100%)">
+                                              <div style="font-size: 12px; font-weight: 400; line-height: 18px; color: #ffffff">2026.10.28</div>
+                                              <div style="margin-top: 4px; font-size: 14px; font-weight: 700; line-height: 21px; color: #ffffff; word-break: break-word">ChatGPT Dot 에이전트에 문자로 일 시키는 방법</div>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td style="padding: 8px 16px 20px 16px">
+                                      <div style="font-size: 14px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">iMessage로 Dot에게 작업 내용을 보내 작업을 맡기고 진행 상황을 문자로 받을 수 있습니다. 1:1 대화만 지원하고 그룹 채팅·전화·FaceTime은 지원하지 않습니다.</div>
+                                      <div style="margin-top: 12px; padding: 12px 16px; border-radius: 8px; background: #1b1b26">
+                                        <div style="font-size: 13px; font-weight: 600; line-height: 1.5; color: #e8e8ee">이 기술 이렇게 사용해보세요!</div>
+                                        <div style="margin-top: 2px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #e8e8ee; word-break: break-word">미국에서 베타로 먼저 열리고 다른 국가에도 확대됩니다. 아이폰+지피티를 사용하고 계신 분이라면 문자로 업무 지시 및 결과 받아보세요!</div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </a>
+                          </div>
+                        </div>
+
+                        <!-- News 2: ChatGPT와 Codex 사용량 한도 통합 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <a href="https://help.openai.com/en/articles/20001625-understanding-chatgpt-and-codex-usage-limits" target="_blank" style="display: block; text-decoration: none">
+                              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                                <tbody>
+                                  <tr>
+                                    <td style="padding: 0">
+                                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; height: 186px; border-collapse: collapse; background-color: #1a1a26; background-image: url(&quot;https://luminabench.com/media/journal/chatgpt-codex-shared-usage-limits.png&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0">
+                                        <tbody>
+                                          <tr>
+                                            <td valign="top" style="padding: 16px 16px 0 16px">
+                                              <span style="display: inline-block; padding: 2px 6px; border-radius: 6px; background: #1b2440; font-size: 14px; font-weight: 600; line-height: 21px; color: #7aa2ff; white-space: nowrap">OpenAI</span>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td valign="bottom" height="122" style="height: 122px; padding: 10px 16px 20px 16px; background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.88) 100%)">
+                                              <div style="font-size: 12px; font-weight: 400; line-height: 18px; color: #ffffff">2026.10.31</div>
+                                              <div style="margin-top: 4px; font-size: 14px; font-weight: 700; line-height: 21px; color: #ffffff; word-break: break-word">ChatGPT와 Codex 사용량 한도 통합</div>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td style="padding: 8px 16px 20px 16px">
+                                      <div style="font-size: 14px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">다가오는 12월부터 Plus·Pro·Business 요금제의 ChatGPT와 Codex 사용량 한도가 하나로 합쳐집니다. 사용량은 토큰 단위로 측정되고, 복잡한 작업일수록 더 많이 차감됩니다.</div>
+                                      <div style="margin-top: 12px; padding: 12px 16px; border-radius: 8px; background: #1b1b26">
+                                        <div style="font-size: 13px; font-weight: 600; line-height: 1.5; color: #e8e8ee">이 기술 이렇게 사용해보세요!</div>
+                                        <div style="margin-top: 2px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #e8e8ee; word-break: break-word">가벼운 질문은 Instant나 Light 같은 가벼운 추론 모델로 바꿔서 코딩이나 딥싱킹 같은 주요 작업용 토큰을 관리하세요!</div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </a>
+                          </div>
+                        </div>
+
+                        <!-- News 3: Gemini로 문서·PDF·프레젠테이션·스프레드시트 등을 바로 생성 및 편집 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <a href="https://blog.google/innovation-and-ai/products/gemini-app/edit-files-directly/" target="_blank" style="display: block; text-decoration: none">
+                              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                                <tbody>
+                                  <tr>
+                                    <td style="padding: 0">
+                                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; height: 186px; border-collapse: collapse; background-color: #1a1a26; background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/7st/thumbnail?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy83c3QvdGh1bWJuYWlsIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MzYwMzE0NCwiZXhwIjoxOTUxMjgzMTQ0fQ.SQJgWjJkMOyj4MEEJZBWYYbcnwaAkj5SKLPU1W8ahuo&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0">
+                                        <tbody>
+                                          <tr>
+                                            <td valign="top" style="padding: 16px 16px 0 16px">
+                                              <span style="display: inline-block; padding: 2px 6px; border-radius: 6px; background: #1b2440; font-size: 14px; font-weight: 600; line-height: 21px; color: #7aa2ff; white-space: nowrap">Google</span>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td valign="bottom" height="122" style="height: 122px; padding: 10px 16px 20px 16px; background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.88) 100%)">
+                                              <div style="font-size: 12px; font-weight: 400; line-height: 18px; color: #ffffff">2026.10.29</div>
+                                              <div style="margin-top: 4px; font-size: 14px; font-weight: 700; line-height: 21px; color: #ffffff; word-break: break-word">Gemini로 문서·PDF·프레젠테이션·스프레드시트 등을 바로 생성 및 편집</div>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td style="padding: 8px 16px 20px 16px">
+                                      <div style="font-size: 14px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">Gemini 채팅 안에서 문서·PDF·슬라이드·시트·코드를 만들고 전체 화면에서 직접 고치거나 구간을 지정해 수정을 맡길 수 있습니다. PDF는 웹·모바일 모두, 나머지 형식은 웹에서만 가능합니다.</div>
+                                      <div style="margin-top: 12px; padding: 12px 16px; border-radius: 8px; background: #1b1b26">
+                                        <div style="font-size: 13px; font-weight: 600; line-height: 1.5; color: #e8e8ee">이 기술 이렇게 사용해보세요!</div>
+                                        <div style="margin-top: 2px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #e8e8ee; word-break: break-word">손글씨 메모나 이미지를 바로 채팅에 올려 PDF에 반영해보세요! 무료 사용자까지 모두 열려있다고 합니다.</div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </a>
+                          </div>
+                        </div>
+
+                        <!-- News 4: Figma MCP로 외부 AI에서 Weave 사용하기 -->
+                        <div style="display: inline-block; width: 308px; max-width: 100%; vertical-align: top; font-size: 0; text-align: left">
+                          <div style="padding: 0 4px 24px 4px">
+                            <a href="https://help.weavy.ai/en/articles/16202764-running-weave-tools-and-models-from-external-agents-mcp" target="_blank" style="display: block; text-decoration: none">
+                              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border: 1px solid #2a2a38; border-radius: 12px; background: #14141f; text-align: left; font-family: &quot;Pretendard Variable&quot;, Pretendard, -apple-system, &quot;Apple SD Gothic Neo&quot;, &quot;Malgun Gothic&quot;, sans-serif">
+                                <tbody>
+                                  <tr>
+                                    <td style="padding: 0">
+                                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; height: 186px; border-collapse: collapse; background-color: #1a1a26; background-image: url(&quot;https://hmgyoqymifgcamjfacbo.supabase.co/storage/v1/object/sign/HC/7st/weave.png?token=eyJraWQiOiJiZGEyMmQ4Ni0wZWJmLTQ3NTgtOTBhYS1mZTdmMGFhZWZmOGYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJIQy83c3Qvd2VhdmUucG5nIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MzYwNDMzOCwiZXhwIjoxOTUxMjg0MzM4fQ.6PnSVB6ys4RLVVtMysHuWXIe-1T9A43z5q9Wxo6mqjg&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; border-radius: 12px 12px 0 0">
+                                        <tbody>
+                                          <tr>
+                                            <td valign="top" style="padding: 16px 16px 0 16px">
+                                              <span style="display: inline-block; padding: 2px 6px; border-radius: 6px; background: #1b2440; font-size: 14px; font-weight: 600; line-height: 21px; color: #7aa2ff; white-space: nowrap">Figma</span>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td valign="bottom" height="122" style="height: 122px; padding: 10px 16px 20px 16px; background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.88) 100%)">
+                                              <div style="font-size: 12px; font-weight: 400; line-height: 18px; color: #ffffff">2026.10.27</div>
+                                              <div style="margin-top: 4px; font-size: 14px; font-weight: 700; line-height: 21px; color: #ffffff; word-break: break-word">Figma MCP로 외부 AI에서 Weave 사용하기</div>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td style="padding: 8px 16px 20px 16px">
+                                      <div style="font-size: 14px; font-weight: 400; line-height: 1.6; color: #a1a1ad; word-break: break-word">이제 Figma MCP를 활용해서 Figma Weave를 다른 AI 에이전트에서 사용 가능합니다. 클링이나 나노바나나 같은 weave의 주요 모델도 모두 사용 가능합니다.</div>
+                                      <div style="margin-top: 12px; padding: 12px 16px; border-radius: 8px; background: #1b1b26">
+                                        <div style="font-size: 13px; font-weight: 600; line-height: 1.5; color: #e8e8ee">이 기술 이렇게 사용해보세요!</div>
+                                        <div style="margin-top: 2px; font-size: 13px; font-weight: 400; line-height: 1.6; color: #e8e8ee; word-break: break-word">Figma MCP로 호출한 Weave로 제작한 결과물은 Weave의 토큰을 사용합니다. Figma AI 토큰과 별도이니 유의하세요!</div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </a>
+                          </div>
+                        </div>
+
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 630px">
+                <tbody>
+                  <tr><td style="height: 40px; line-height: 40px; font-size: 0">&nbsp;</td></tr>
+                  <tr>
+                    <td style="padding: 5px 15px">
+                      <div style="border-top: 1px solid #2f2f3d; height: 0; font-size: 0; line-height: 0">&nbsp;</div>
+                    </td>
+                  </tr>
+                  <tr><td style="height: 40px; line-height: 40px; font-size: 0">&nbsp;</td></tr>
+                </tbody>
+              </table>
+
+              <!-- ============ Get Involved ============ -->
+              <table
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="max-width: 630px"
+              >
+                <tbody>
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 5px 15px 15px 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        line-height: 1.7;
+                      "
+                    >
+                      <div>
+                        <span
+                          style="
+                            font-size: 16px;
+                            color: #7aa2ff;
+                            font-weight: bold;
+                          "
+                          >Get Involved</span
+                        >
+                      </div>
+                      <div>
+                        <span
+                          style="
+                            font-size: 26px;
+                            color: #ffffff;
+                            font-weight: bold;
+                          "
+                          >저희와 함께 성장하실래요?</span
+                        >
+                      </div>
+                      <div>
+                        <span style="font-size: 14px; color: #a1a1ad"
+                          >검증된 경험을 배우고 공유하며<br />순환하는 허들링
+                          클럽에서 함께 성장해봐요.</span
+                        >
+                      </div>
+                      <div style="margin-top: 20px">
+                        <span
+                          style="
+                            font-size: 20px;
+                            color: #ffffff;
+                            font-weight: bold;
+                          "
+                          >4기 대기 신청을 받고 있습니다.</span
+                        >
+                      </div>
+                      <div style="margin-top: 12px">
+                        <span style="font-size: 14px; color: #e8e8ee"
+                          >허들링 클럽 4기로 합류하고<br />꾸준한 AI 습관을
+                          만드는 것을 넘어,<br />업계의 파도를 만드는 퍼스트
+                          펭귄이 되어보세요.</span
+                        >
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td align="center" style="padding: 5px 15px 15px 15px">
+                      <table
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                        align="center"
+                        style="
+                          margin: 0 auto;
+                          border-collapse: separate;
+                          border-radius: 10px;
+                          border: 1px solid #0058e0;
+                          background: #0058e0;
+                          width: 100%;
+                          max-width: 320px;
+                          box-sizing: border-box;
+                        "
+                      >
+                        <tbody>
+                          <tr>
+                            <td
+                              align="center"
+                              valign="top"
+                              style="
+                                background: #0058e0;
+                                border-radius: 10px;
+                                padding: 0;
+                              "
+                            >
+                              <a
+                                href="https://tally.so/r/aQVM9q"
+                                target="_blank"
+                                style="
+                                  font-size: 16px;
+                                  display: block;
+                                  color: #ffffff;
+                                  text-decoration: none;
+                                  font-family:
+                                    &quot;Pretendard Variable&quot;,
+                                    Pretendard,
+                                    -apple-system,
+                                    &quot;Apple SD Gothic Neo&quot;,
+                                    &quot;Malgun Gothic&quot;,
+                                    sans-serif;
+                                  text-align: center;
+                                  padding: 19px 20px;
+                                  box-sizing: border-box;
+                                  line-height: 1;
+                                "
+                                ><b>허들링 클럽 4기 오픈 알림 받기</b></a
+                              >
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td align="center" style="padding: 5px 15px 0 15px">
+                      <table
+                        cellpadding="0"
+                        cellspacing="0"
+                        border="0"
+                        align="center"
+                        style="
+                          margin: 0 auto;
+                          border-collapse: separate;
+                          border-radius: 10px;
+                          border: 1px solid #0058e0;
+                          width: 100%;
+                          max-width: 320px;
+                          box-sizing: border-box;
+                        "
+                      >
+                        <tbody>
+                          <tr>
+                            <td
+                              align="center"
+                              valign="top"
+                              style="border-radius: 10px; padding: 0"
+                            >
+                              <a
+                                href="https://open.kakao.com/o/gPjVAOXf"
+                                target="_blank"
+                                style="
+                                  font-size: 16px;
+                                  display: block;
+                                  color: #0058e0;
+                                  text-decoration: none;
+                                  font-family:
+                                    &quot;Pretendard Variable&quot;,
+                                    Pretendard,
+                                    -apple-system,
+                                    &quot;Apple SD Gothic Neo&quot;,
+                                    &quot;Malgun Gothic&quot;,
+                                    sans-serif;
+                                  text-align: center;
+                                  padding: 19px 20px;
+                                  box-sizing: border-box;
+                                  line-height: 1;
+                                "
+                                ><b>허들링 클럽 오픈카톡방 합류하기</b></a
+                              >
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td
+                      align="center"
+                      style="
+                        padding: 20px 15px 15px 15px;
+                        font-family:
+                          &quot;Apple SD Gothic Neo&quot;, AppleSDGothic,
+                          &quot;Malgun Gothic&quot;, dotum, arial, sans-serif;
+                        line-height: 1.7;
+                      "
+                    >
+                      <span style="font-size: 12px; color: #8b8b98"
+                        >오픈카톡방 비밀번호 : figma</span
+                      >
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td style="height: 50px; line-height: 50px; font-size: 0">
+                      &nbsp;
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      // 실험 카드 이미지 확대 팝업.
+      // 이 문서는 iframe 안에서 렌더되고, iframe 자체 높이가 콘텐츠 전체
+      // 높이로 늘어나 있어(height 핸드셰이크 참고) iframe 내부에서는
+      // position:fixed로 브라우저 화면 기준 오버레이를 만들 수 없다.
+      // 그래서 팝업은 부모(ReportEmbed.tsx)에 postMessage로 요청하고,
+      // 실제 모달은 부모 페이지가 렌더링한다.
+      (function () {
+        window.reportOpenLightbox = function (src, alt) {
+          try {
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage(
+                { type: "huddling-report:lightbox", src: src, alt: alt || "" },
+                "*",
+              );
+              return;
+            }
+          } catch (e) {}
+          // iframe이 아닌 곳에서 이 문서를 직접 연 경우(standalone) 대비.
+          window.open(src, "_blank");
+        };
+      })();
+    </script>
+
+    <script>
+      // ReportEmbed.tsx가 기다리는 높이 핸드셰이크.
+      // 이게 없으면 iframe이 100vh 고정 + 내부 스크롤이 된다.
+      (function () {
+        var last = 0;
+        // scrollHeight 는 뷰포트보다 작아지지 않아 래칫이 생긴다. 콘텐츠 루트를 직접 잰다.
+        var root = document.getElementById("report-root");
+        function send() {
+          var h = Math.ceil(root.getBoundingClientRect().height);
+          if (h === last) return;
+          last = h;
+          parent.postMessage(
+            { type: "huddling-report:height", height: h },
+            "*",
+          );
+        }
+        window.addEventListener("load", send);
+        window.addEventListener("resize", send);
+        if (window.ResizeObserver) new ResizeObserver(send).observe(root);
+        setTimeout(send, 200);
+        setTimeout(send, 1000);
+        setTimeout(send, 2500); // 원격 이미지 로드 후
+      })();
+    </script>
+  </body>
+</html>
+
