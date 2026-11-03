@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SponsorBanner } from "@/components/ui/SponsorBanner";
+import { ChannelLinks } from "./ChannelLinks";
 import {
   formatIssueDateLong,
   formatIssueDateShort,
@@ -310,9 +311,12 @@ export function IssueList({
         <SponsorBanner />
 
         <h1 className="text-xl font-bold text-white mb-2">AI 리포트</h1>
-        <p className="text-gray-400 mb-8 text-sm sm:text-base">
-          격주로 발행되는 허들링 클럽 뉴스레터 아카이브입니다
-        </p>
+        <div className="mb-8 flex items-center justify-between gap-4">
+          <p className="text-gray-400 text-sm sm:text-base">
+            격주로 발행되는 허들링 클럽 뉴스레터 아카이브입니다
+          </p>
+          <ChannelLinks />
+        </div>
 
         {reports.length === 0 ? (
           <EmptyState next={next} />

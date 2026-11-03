@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ReportEmbed } from "@/components/ai-report/ReportEmbed";
 import { ReportComments } from "@/components/ai-report/ReportComments";
+import { ChannelLinks } from "@/components/ai-report/ChannelLinks";
 import {
   getPublishedIssue,
   getReportOrigin,
@@ -115,26 +116,7 @@ export default async function AiReportIssuePage({
           <p className="text-sm text-gray-400 mb-4">{report.summary}</p>
         )}
 
-        <a
-          href={bodyUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-white transition-colors mb-6"
-        >
-          새 창에서 보기
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            aria-hidden="true"
-          >
-            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-            <path d="M15 3h6v6M10 14L21 3" />
-          </svg>
-        </a>
+        <ChannelLinks className="mb-6" />
       </div>
 
       {/* 본문 — 리포트 앱을 iframe으로 격리 임베드 */}
