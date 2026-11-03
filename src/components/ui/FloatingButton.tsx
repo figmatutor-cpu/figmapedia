@@ -95,7 +95,7 @@ export function FloatingButton() {
           <span className="text-center font-bold leading-tight text-sm select-none whitespace-nowrap">
             허들링 클럽
             <br />
-            4기 대기 신청
+            4기 얼리버드
           </span>
         </a>
       </div>
