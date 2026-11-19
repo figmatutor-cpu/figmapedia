@@ -5,7 +5,8 @@ import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const STORAGE_KEY = "huddling-club-4th-waitlist-banner-dismissed";
-const SPONSOR_URL = "http://pf.kakao.com/_xdAxjXX";
+const SPONSOR_URL =
+  "https://www.huddling.club/all/?idx=15&utm_source=huddling_ai&utm_medium=banner&utm_campaign=idx15_nov2026&utm_content=top_banner";
 
 interface SponsorBannerProps {
   className?: string;
@@ -55,9 +56,7 @@ export function SponsorBanner({ className }: SponsorBannerProps) {
           <span className="font-medium text-white">
             성장하는 디자이너, IT 실무자를 위한 AI 커뮤니티
           </span>{" "}
-          <span className="text-gray-300">
-            허들링 클럽 채널 추가하고 얼리버드 할인 쿠폰 받기
-          </span>
+          <span className="text-gray-300">허들링 클럽 4기 모집중</span>
         </span>
         <span className="hidden shrink-0 items-center justify-center rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-black transition-colors hover:bg-gray-100 sm:inline-flex">
           바로가기
